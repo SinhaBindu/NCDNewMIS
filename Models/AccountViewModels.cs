@@ -50,7 +50,7 @@ namespace NCDNewMIS.Models
     {
         [Required]
         [Display(Name = "Email")]
-        [EmailAddress]
+        //[EmailAddress]
         public string Email { get; set; }
 
         [Required]
@@ -65,8 +65,8 @@ namespace NCDNewMIS.Models
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        //[EmailAddress]
+        [Display(Name = "User")]
         public string Email { get; set; }
 
         [Required]

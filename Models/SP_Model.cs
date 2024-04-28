@@ -17,5 +17,13 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataSet SPLoginCheck1(LoginModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_LoginCheck1");
+            sp.Command.AddParameter("@MobileNo", model.UserName, DbType.String);
+            sp.Command.AddParameter("@Password", model.Password, DbType.String);
+            DataSet dt = sp.ExecuteDataSet();
+            return dt;
+        }
     }
 }

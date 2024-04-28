@@ -40,32 +40,50 @@ namespace NCDNewMIS.Controllers
                 {
                     if ((accessToken).ToLower() == (strtoken).ToLower())
                     {
-                        DataTable dt = new DataTable();
-                        dt = SP_Model.SPLoginCheck(model);
-                        if (dt.Rows.Count > 0)
+                        DataSet ds = new DataSet();
+                        ds = SP_Model.SPLoginCheck1(model);
+                        string RetVal = string.Empty;
+                        string jsval = string.Empty;
+                        string jsval2 = string.Empty;
+                        for (int i = 0; i < ds.Tables.Count; i++)
                         {
-                            tbl_Login tbl = new tbl_Login();
-                            tbl.RegMapId_fk = Convert.ToInt32(dt.Rows[0]["RegMapId_pk"].ToString());
-                            tbl.RegId_fk =Convert.ToInt32(dt.Rows[0]["RegId_pk"].ToString());
-                            tbl.UserName = model.UserName;
-                            tbl.Password = model.Password;
-                            tbl.Version = model.Version;
-                            tbl.IsActive = true;
-                            tbl.CreatedBy = dt.Rows[0]["RegMapId_pk"].ToString();  
-                            tbl.CreatedOn= DateTime.Now;
-                            db_.tbl_Login.Add(tbl);
-                            int res = await db_.SaveChangesAsync();
-                            if (res > 0)
+                            for (int j = 0; j < ds.Tables[i].Rows.Count; j++)
                             {
-                                strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginsuccess);
-                                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                                jsval = jsval + ds.Tables[i].Rows[j].ItemArray[0].ToString();
                             }
+                            jsval = jsval.Remove(0, 1).Split(']')[0];
+                            jsval = jsval + "],";
+                            jsval2 = jsval2 + jsval;
+                            jsval = string.Empty;
                         }
-                        else
-                        {
-                            strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginfailed);
-                            return Json(strMsg, JsonRequestBehavior.AllowGet);
-                        }
+                        jsval = "{" + jsval2.Remove(jsval2.Length - 1, 1) + "}";
+
+                        //if (dt.Rows.Count > 0)
+                        //{
+                        //    tbl_Login tbl = new tbl_Login();
+                        //    tbl.RegMapId_fk = Convert.ToInt32(dt.Rows[0]["RegMapId_pk"].ToString());
+                        //    tbl.RegId_fk =Convert.ToInt32(dt.Rows[0]["RegId_pk"].ToString());
+                        //    tbl.UserName = model.UserName;
+                        //    tbl.Password = model.Password;
+                        //    tbl.Version = model.Version;
+                        //    tbl.IsActive = true;
+                        //    tbl.CreatedBy = dt.Rows[0]["RegMapId_pk"].ToString();  
+                        //    tbl.CreatedOn= DateTime.Now;
+                        //    db_.tbl_Login.Add(tbl);
+                        //    int res = await db_.SaveChangesAsync();
+                        //    if (res > 0)
+                        //    {
+                        //        strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginsuccess);
+                        //        return Json(strMsg, JsonRequestBehavior.AllowGet);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginfailed);
+                        //    return Json(strMsg, JsonRequestBehavior.AllowGet);
+                        //}
+                        strMsg = jsval;
+                        return Json(strMsg, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {

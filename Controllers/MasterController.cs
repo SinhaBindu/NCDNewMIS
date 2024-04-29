@@ -21,7 +21,7 @@ namespace NCDNewMIS.Controllers
         [AllowAnonymous]
         [HttpPost]
         [EnableCors("*")]
-        public async Task<JsonResult> LoginPost(LoginModel model)
+        public async Task<string> LoginPost(LoginModel model)
         {
             var accessToken = HttpContext.Request.Headers["Authorization"];
             NCD_DBEntities db_ = new NCD_DBEntities();
@@ -32,7 +32,7 @@ namespace NCDNewMIS.Controllers
             var date = DateTime.Now;
             if (!ModelState.IsValid)
             {
-                return Json(CommonModel.GetEnumDisplayName(Enums.AlterMsg.Required), JsonRequestBehavior.AllowGet);
+                return CommonModel.GetEnumDisplayName(Enums.AlterMsg.Required);// Json(CommonModel.GetEnumDisplayName(Enums.AlterMsg.Required), JsonRequestBehavior.AllowGet);
             }
             try
             {
@@ -82,27 +82,26 @@ namespace NCDNewMIS.Controllers
                         //    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginfailed);
                         //    return Json(strMsg, JsonRequestBehavior.AllowGet);
                         //}
-                        strMsg = jsval;
-                        return Json(strMsg, JsonRequestBehavior.AllowGet);
+                       // strMsg = jsval;
+                        return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
                         strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityToken);
-                        return Json(strMsg, JsonRequestBehavior.AllowGet);
+                        return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                     }
                 }
                 else
                 {
                     strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityTokenNot);
-                    return Json(strMsg, JsonRequestBehavior.AllowGet);
+                    return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
                 string msg = ex.Message;
-                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+                return msg;// Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
-            return Json(CommonModel.GetEnumDisplayName(Enums.AlterMsg.Error), JsonRequestBehavior.AllowGet);
         }
 
     }

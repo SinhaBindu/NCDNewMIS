@@ -1,4 +1,5 @@
-﻿using SubSonic.Schema;
+﻿using NCDNewMIS.Controllers;
+using SubSonic.Schema;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,6 +23,16 @@ namespace NCDNewMIS.Models
             StoredProcedure sp = new StoredProcedure("SP_LoginCheck1");
             sp.Command.AddParameter("@MobileNo", model.UserName, DbType.String);
             sp.Command.AddParameter("@Password", model.Password, DbType.String);
+            DataSet dt = sp.ExecuteDataSet();
+            return dt;
+        }
+        public static DataSet SP_JsonPostData(PostDataModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_JsonPostData");
+            sp.Command.AddParameter("@UserName", model.UserName, DbType.String);
+            sp.Command.AddParameter("@Password", model.UserName, DbType.String);
+            sp.Command.AddParameter("@Version", model.Password, DbType.String);
+            sp.Command.AddParameter("@JsonData", model.Password, DbType.String);
             DataSet dt = sp.ExecuteDataSet();
             return dt;
         }

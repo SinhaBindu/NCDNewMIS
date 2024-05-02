@@ -126,6 +126,7 @@ namespace NCDNewMIS.Controllers
             }
             try
             {
+
                 //if (!string.IsNullOrWhiteSpace(strtoken))
                 //{
                 if ((accessToken).ToLower() == (strtoken).ToLower())

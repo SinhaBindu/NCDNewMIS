@@ -97,7 +97,6 @@ namespace NCDNewMIS.Controllers
                         strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityToken);
                         return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                     }
-                }
                 //}
                 //else
                 //{
@@ -112,6 +111,7 @@ namespace NCDNewMIS.Controllers
                 return msg;// Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
+
 
 
         [AllowAnonymous]

@@ -32,9 +32,9 @@ namespace NCDNewMIS.Models
         {
             StoredProcedure sp = new StoredProcedure("SP_JsonPostData");
             sp.Command.AddParameter("@UserName", model.UserName, DbType.String);
-            sp.Command.AddParameter("@Password", model.UserName, DbType.String);
-            sp.Command.AddParameter("@Version", model.Password, DbType.String);
-            sp.Command.AddParameter("@JsonData", model.Password, DbType.String);
+            sp.Command.AddParameter("@Password", model.Password, DbType.String);
+            sp.Command.AddParameter("@Version", model.Version, DbType.String);
+            sp.Command.AddParameter("@JsonData", model.JsonData, DbType.String);
             DataSet dt = sp.ExecuteDataSet();
             return dt;
         }

@@ -117,11 +117,16 @@ namespace NCDNewMIS.Controllers
         [AllowAnonymous]
         [HttpPost]
         [EnableCors("*")]
-        public async Task<string> JsonPostData(PostDataModel model)
+        public async Task<string> JsonPostData(string UserName,string Password,string Version, string JsonData)
         {
             var accessToken = "";// HttpContext.Request.Headers["Authorization"];
             NCD_DBEntities db_ = new NCD_DBEntities();
             //var passwordHasher = new Microsoft.AspNet.Identity.PasswordHasher();
+            PostDataModel model = new PostDataModel();
+            model.UserName = UserName;
+            model.Password = Password;
+            model.Version = Version;
+            model.JsonData = JsonData;
             accessToken = "";
             string strtoken = ""; //Bearer ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==//"ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==";
             string strMsg = "";
@@ -137,24 +142,32 @@ namespace NCDNewMIS.Controllers
                 //{
                 if ((accessToken).ToLower() == (strtoken).ToLower())
                 {
-                    DataSet ds = new DataSet();
-                    ds = SP_Model.SP_JsonPostData(model);
+                    DataTable ds = new DataTable();
+                   ds = SP_Model.SP_JsonPostData(model);
                     string RetVal = string.Empty;
                     string jsval = string.Empty;
                     string jsval2 = string.Empty;
-                    //for (int i = 0; i < ds.Tables.Count; i++)
-                    //{
-                    //    for (int j = 0; j < ds.Tables[i].Rows.Count; j++)
-                    //    {
-                    //        jsval = jsval + ds.Tables[i].Rows[j].ItemArray[0].ToString();
-                    //    }
-                    //    jsval = jsval.Remove(0, 1).Split(']')[0];
-                    //    jsval = jsval + "],";
-                    //    jsval2 = jsval2 + jsval;
-                    //    jsval = string.Empty;
-                    //}
-                    //jsval = "{" + jsval2.Remove(jsval2.Length - 1, 1) + "}";
-                    jsval = "Success";
+                    int i = 0;
+                    i = Convert.ToInt32(ds.Rows[0][0]);
+                    if (i > 0)
+                    {
+                        jsval = "{\"Table\":[{\"RetValue\":\"Success\"}]}";
+                    }
+                    else
+                    {
+                        if (i == -2)
+                        {
+                            jsval = "{\"Table\":[{\"RetValue\":\"Invalid Json Data\"}]}";
+                        }
+                        else if (i == -3)
+                        {
+                            jsval = "{\"Table\":[{\"RetValue\":\"Invalid User\"}]}";
+                        }
+                        else
+                        {
+                            jsval = "{\"Table\":[{\"RetValue\":\"Failed\"}]}";
+                        }
+                    }
                     return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                 }
                 else

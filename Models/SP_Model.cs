@@ -28,14 +28,15 @@ namespace NCDNewMIS.Models
             DataSet dt = sp.ExecuteDataSet();
             return dt;
         }
-        public static DataSet SP_JsonPostData(PostDataModel model)
+        public static DataTable SP_JsonPostData(PostDataModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_JsonPostData");
             sp.Command.AddParameter("@UserName", model.UserName, DbType.String);
             sp.Command.AddParameter("@Password", model.Password, DbType.String);
             sp.Command.AddParameter("@Version", model.Version, DbType.String);
             sp.Command.AddParameter("@JsonData", model.JsonData, DbType.String);
-            DataSet dt = sp.ExecuteDataSet();
+            sp.Command.AddParameter("@RowAfected", 0, DbType.Int32);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
     }

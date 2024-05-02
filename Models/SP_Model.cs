@@ -15,6 +15,7 @@ namespace NCDNewMIS.Models
             StoredProcedure sp = new StoredProcedure("SP_LoginCheck");
             sp.Command.AddParameter("@MobileNo", model.UserName, DbType.String);
             sp.Command.AddParameter("@Password", model.Password, DbType.String);
+            sp.Command.AddParameter("@Version", model.Version, DbType.String);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
@@ -23,6 +24,7 @@ namespace NCDNewMIS.Models
             StoredProcedure sp = new StoredProcedure("SP_LoginCheck1");
             sp.Command.AddParameter("@MobileNo", model.UserName, DbType.String);
             sp.Command.AddParameter("@Password", model.Password, DbType.String);
+            sp.Command.AddParameter("@Version", model.Version, DbType.String);
             DataSet dt = sp.ExecuteDataSet();
             return dt;
         }

@@ -85,7 +85,11 @@ namespace NCDNewMIS.Controllers
                         //    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginfailed);
                         //    return Json(strMsg, JsonRequestBehavior.AllowGet);
                         //}
+
+                       // strMsg = jsval;
+
                         // strMsg = jsval;
+
                         return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                     }
                     else
@@ -93,12 +97,14 @@ namespace NCDNewMIS.Controllers
                         strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityToken);
                         return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                     }
+                }
                 //}
                 //else
                 //{
                 //    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityTokenNot);
                 //    return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                 //}
+
             }
             catch (Exception ex)
             {

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using NCDNewMIS.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace NCDNewMIS.Controllers
 {
@@ -23,11 +26,11 @@ namespace NCDNewMIS.Controllers
         [EnableCors("*")]
         public async Task<string> LoginPost(LoginModel model)
         {
-            var accessToken = HttpContext.Request.Headers["Authorization"];
+            var accessToken = "";// HttpContext.Request.Headers["Authorization"];
             NCD_DBEntities db_ = new NCD_DBEntities();
             //var passwordHasher = new Microsoft.AspNet.Identity.PasswordHasher();
-
-            string strtoken = "Bearer ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg=="; //"ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==";
+            accessToken = "";
+            string strtoken = ""; //Bearer ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==//"ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==";
             string strMsg = "";
             var date = DateTime.Now;
             if (!ModelState.IsValid)
@@ -36,8 +39,8 @@ namespace NCDNewMIS.Controllers
             }
             try
             {
-                if (!string.IsNullOrWhiteSpace(strtoken))
-                {
+                //if (!string.IsNullOrWhiteSpace(strtoken))
+                //{
                     if ((accessToken).ToLower() == (strtoken).ToLower())
                     {
                         DataSet ds = new DataSet();
@@ -82,7 +85,11 @@ namespace NCDNewMIS.Controllers
                         //    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginfailed);
                         //    return Json(strMsg, JsonRequestBehavior.AllowGet);
                         //}
+
                        // strMsg = jsval;
+
+                        // strMsg = jsval;
+
                         return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                     }
                     else
@@ -91,11 +98,13 @@ namespace NCDNewMIS.Controllers
                         return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                     }
                 }
-                else
-                {
-                    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityTokenNot);
-                    return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
-                }
+                //}
+                //else
+                //{
+                //    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityTokenNot);
+                //    return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
+                //}
+
             }
             catch (Exception ex)
             {
@@ -103,6 +112,69 @@ namespace NCDNewMIS.Controllers
                 return msg;// Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        [EnableCors("*")]
+        public async Task<string> JsonPostData(PostDataModel model)
+        {
+            var accessToken = "";// HttpContext.Request.Headers["Authorization"];
+            NCD_DBEntities db_ = new NCD_DBEntities();
+            //var passwordHasher = new Microsoft.AspNet.Identity.PasswordHasher();
+            accessToken = "";
+            string strtoken = ""; //Bearer ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==//"ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==";
+            string strMsg = "";
+            var date = DateTime.Now;
+            if (!ModelState.IsValid)
+            {
+                return CommonModel.GetEnumDisplayName(Enums.AlterMsg.Required);// Json(CommonModel.GetEnumDisplayName(Enums.AlterMsg.Required), JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                //if (!string.IsNullOrWhiteSpace(strtoken))
+                //{
+                if ((accessToken).ToLower() == (strtoken).ToLower())
+                {
+                    DataSet ds = new DataSet();
+                    ds = SP_Model.SP_JsonPostData(model);
+                    string RetVal = string.Empty;
+                    string jsval = string.Empty;
+                    string jsval2 = string.Empty;
+                    //for (int i = 0; i < ds.Tables.Count; i++)
+                    //{
+                    //    for (int j = 0; j < ds.Tables[i].Rows.Count; j++)
+                    //    {
+                    //        jsval = jsval + ds.Tables[i].Rows[j].ItemArray[0].ToString();
+                    //    }
+                    //    jsval = jsval.Remove(0, 1).Split(']')[0];
+                    //    jsval = jsval + "],";
+                    //    jsval2 = jsval2 + jsval;
+                    //    jsval = string.Empty;
+                    //}
+                    //jsval = "{" + jsval2.Remove(jsval2.Length - 1, 1) + "}";
+                    jsval = "Success";
+                    return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityToken);
+                    return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
+                }
+                //}
+                //else
+                //{
+                //    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityTokenNot);
+                //    return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
+                //}
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                return msg;// Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
     }
 }

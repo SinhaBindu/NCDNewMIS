@@ -137,18 +137,17 @@ namespace NCDNewMIS.Controllers
             }
             try
             {
-
                 //if (!string.IsNullOrWhiteSpace(strtoken))
                 //{
                 if ((accessToken).ToLower() == (strtoken).ToLower())
                 {
-                    DataTable ds = new DataTable();
-                   ds = SP_Model.SP_JsonPostData(model);
+                    DataTable dt = new DataTable();
+                     dt = SP_Model.SP_JsonPostData(model);
                     string RetVal = string.Empty;
                     string jsval = string.Empty;
                     string jsval2 = string.Empty;
                     int i = 0;
-                    i = Convert.ToInt32(ds.Rows[0][0]);
+                    i = Convert.ToInt32(dt.Rows[0][0]);
                     if (i > 0)
                     {
                         jsval = "{\"Table\":[{\"RetValue\":\"Success\"}]}";

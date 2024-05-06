@@ -39,5 +39,11 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataSet SP_RowDataShow()
+        {
+            StoredProcedure sp = new StoredProcedure("SP_RowDataShow");
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
     }
 }

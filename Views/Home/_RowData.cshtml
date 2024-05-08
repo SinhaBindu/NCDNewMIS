@@ -13,17 +13,28 @@
     table.dataTable td.dt-type-date {
         text-align: left !important;
     }
+    .tblth{
+        vertical-align:middle !important;
+        font-size:8px !important;
+    }
+    .tbltd {
+        vertical-align: middle !important;
+        font-size: 8px !important;
+    }
+    .table > :not(caption) > * > * {
+        padding:0px !important;
+    }
 </style>
 <div class="bg-light rounded h-100 p-4">
     <div class="table-responsive">
-        <table class="table table-bordered table-striped" id="tbl">
+        <table class="table table-bordered table-striped small" id="tbl">
             <thead class="text-center">
                 <tr>
                     <th class="text-center tblth">Srno.</th>
                     <th class="text-center tblth">Screening Types</th>
                     <th class="text-center tblth">Survey Date</th>
                     <th class="text-center tblth">Household ID</th>
-                    <th class="text-center tblth">Household head name</th>
+                    <th class="text-center tblth">Household <br />head name</th>
                     <th class="text-center tblth">No of Member</th>
                     <th class="text-center tblth">Member Id</th>
                     <th class="text-center tblth">Member Name</th>
@@ -67,44 +78,44 @@
                         foreach (DataRow dr in dt.Rows)
                         {
                                 <tr>
-                                    <td class="text-center">@(srno++)</td>
-                                    <td class="text-center bg-success text-white fw-bold"><strong>@dr["ScreeningTypes"]</strong></td>
-                                    <td class="text-center bg-success text-white fw-bold"><strong>@dr["SurveyDt"]</strong></td>
-                                    <td class="text-left"> @dr["HId"] </td>
-                                    <td class="text-left"> @dr["HHHeadName"] </td>
-                                    <td class="text-left"> @dr["NoofMember"] </td>
-                                    <td class="text-left"> @dr["MemberId"] </td>
-                                    <td class="text-left"> @dr["MemberName"] </td>
-                                    <td class="text-left"> @dr["HHHeadMobile"] </td>
-                                    <td class="text-left"> @dr["Age"] </td>
-                                    <td class="text-left"> @dr["Gender"] </td>
-                                    <td class="text-left"> @dr["Aashaplusdevicevalue"] </td>
+                                    <td class="text-center tbltd">@(srno++)</td>
+                                    <td class="text-center tbltd bg-success text-white fw-bold"><strong>@dr["ScreeningTypes"]</strong></td>
+                                    <td class="text-center tbltd bg-success text-white fw-bold"><strong>@dr["SurveyDt"]</strong></td>
+                                    <td class="text-left tbltd"> @dr["HId"] </td>
+                                    <td class="text-left tbltd"> @dr["HHHeadName"] </td>
+                                    <td class="text-center tbltd"> @dr["NoofMember"] </td>
+                                    <td class="text-left tbltd"> @dr["MemberId"] </td>
+                                    <td class="text-left tbltd"> @dr["MemberName"] </td>
+                                    <td class="text-center tbltd"> @dr["HHHeadMobile"] </td>
+                                    <td class="text-center tbltd"> @dr["Age"] </td>
+                                    <td class="text-center tbltd"> @dr["Gender"] </td>
+                                    <td class="text-left tbltd"> @dr["Aashaplusdevicevalue"] </td>
 
-                                    <td class="text-left"> @dr["Hypertensionvalue"] </td>
-                                    <td class="text-left"> @dr["HypertensionMeditationValue"] </td>
-                                    <td class="text-left"> @dr["HypertensionMeditationValueStrng"] </td>
-                                    <td class="text-left"> @dr["OtherValueHyper"] </td>
+                                    <td class="text-left tbltd"> @dr["Hypertensionvalue"] </td>
+                                    <td class="text-left tbltd"> @dr["HypertensionMeditationValue"] </td>
+                                    <td class="text-left tbltd"> @dr["HypertensionMeditationValueStrng"] </td>
+                                    <td class="text-left tbltd"> @dr["OtherValueHyper"] </td>
 
-                                    <td class="text-left"> @dr["Diabitisevalue"] </td>
-                                    <td class="text-left"> @dr["DiabitiseMeditationValue"] </td>
-                                    <td class="text-left"> @dr["DiabitiseMeditationValueStrng"] </td>
-                                    <td class="text-left"> @dr["OtherValueDiabtise"] </td>
+                                    <td class="text-left tbltd"> @dr["Diabitisevalue"] </td>
+                                    <td class="text-left tbltd"> @dr["DiabitiseMeditationValue"] </td>
+                                    <td class="text-left tbltd"> @dr["DiabitiseMeditationValueStrng"] </td>
+                                    <td class="text-left tbltd"> @dr["OtherValueDiabtise"] </td>
 
-                                    <td class="text-left"> @dr["HypertensionReading"] </td>
-                                    <td class="text-left"> @dr["BpReading"] </td>
-                                    <td class="text-left"> @dr["ReferPHCHypertension"] </td>
-                                    <td class="text-left"> @dr["RandomBloodSugar"] </td>
-                                    <td class="text-left"> @dr["RBSreading"] </td>
-                                    <td class="text-left"> @dr["VisitPHCSugar"] </td>
-                                    <td class="text-left"> @dr["ReportedBy"] </td>
-                                    <td class="text-left"> @dr["ReportedNo"] </td>
-                                    <td class="text-left"> @dr["District"] </td>
-                                    <td class="text-left"> @dr["Block"] </td>
-                                    <td class="text-left"> @dr["CHCN"] </td>
-                                    <td class="text-left"> @dr["PHC"] </td>
-                                    <td class="text-left"> @dr["SubCenter"] </td>
-                                    <td class="text-left"> @dr["GP"] </td>
-                                    <td class="text-left"> @dr["Village"] </td>
+                                    <td class="text-left tbltd"> @dr["HypertensionReading"] </td>
+                                    <td class="text-left tbltd"> @dr["BpReading"] </td>
+                                    <td class="text-left tbltd"> @dr["ReferPHCHypertension"] </td>
+                                    <td class="text-left tbltd"> @dr["RandomBloodSugar"] </td>
+                                    <td class="text-left tbltd"> @dr["RBSreading"] </td>
+                                    <td class="text-left tbltd"> @dr["VisitPHCSugar"] </td>
+                                    <td class="text-left tbltd"> @dr["ReportedBy"] </td>
+                                    <td class="text-center tbltd "> @dr["ReportedNo"] </td>
+                                    <td class="text-left tbltd small"> @dr["District"] </td>
+                                    <td class="text-left tbltd small"> @dr["Block"] </td>
+                                    <td class="text-left tbltd small"> @dr["CHCN"] </td>
+                                    <td class="text-left tbltd small"> @dr["PHC"] </td>
+                                    <td class="text-left tbltd small"> @dr["SubCenter"] </td>
+                                    <td class="text-left tbltd small"> @dr["GP"] </td>
+                                    <td class="text-left tbltd small"> @dr["Village"] </td>
                                 </tr>
                         }
                     }

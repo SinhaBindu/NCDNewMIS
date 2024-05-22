@@ -2,40 +2,88 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
     <title>@ViewBag.Title - Home</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-     
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+    <!-- FAVICONS ICON -->
+    <link rel="shortcut icon" type="image/png" href="~/Content/assets/images/favicon.png">
+    <!-- ICONS -->
+    <link rel="stylesheet" href="~/Content/assets/icons/flaticon/flaticon.css">
+    <link rel="stylesheet" href="~/Content/assets/icons/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="~/Content/assets/icons/line-awesome/css/line-awesome.min.css">
+    <!-- NICE SELECT -->
+    <link href="~/Content/assets/vendor/niceselect/css/nice-select.css" rel="stylesheet">
+    <!-- STYLESHEETS -->
+    <link href="~/Content/assets/vendor/powerful-calendar/style.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/powerful-calendar/theme.css" rel="stylesheet">
+
+    <!-- STYLE CSS -->
+    <link href="~/Content/assets/css/style.css" rel="stylesheet">
+
+    <style>
+        .sidebar-right-trigger {
+            display: none !important;
+        }
+    </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    @*<li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
-                </ul>
-                 @Html.Partial("_LoginPartial")
-            </div>
+<body class="selection:text-white selection:bg-primary">
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - PCI India</p>
-        </footer>
     </div>
+
+    @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+            <div class="container">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </nav>*@
+    <div id="main-wrapper">
+
+        <!-- Header start -->
+        @Html.Partial("_Header")
+        <!-- Header end -->
+        <!-- Sidebar start -->
+        @Html.Partial("_Sidebar")
+
+        <!-- Content body start -->
+        @RenderBody()
+
+        @Html.Partial("_Footer")
+    </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <!-- Required vendors -->
+    <script src="~/Content/assets/vendor/global/global.min.js"></script>
+    <script src="~/Content/assets/vendor/chart.js/chart.bundle.min.js"></script>
+    <script src="~/Content/assets/vendor/apexchart/apexchart.js"></script>
+    <script src="~/Content/assets/vendor/peity/jquery.peity.min.js"></script>
+
+    <!-- Dashboard 1 -->
+    <script src="~/Content/assets/js/dashboard/dashboard-1.js"></script>
+
+    <script src="~/Content/assets/vendor/niceselect/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/assets/vendor/powerful-calendar/calendar.min.js"></script>
+    <script src="~/Content/assets/js/custom.js"></script>
+    <script src="~/Content/assets/js/deznav-init.js"></script>
+    <script src="~/Content/assets/js/demo.js"></script>
+    <script src="~/Content/assets/js/styleSwitcher.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿using NCDNewMIS.Controllers;
+﻿using NCDNewMIS.Models;
 using SubSonic.Schema;
 using System;
 using System.Collections.Generic;

@@ -1,43 +1,81 @@
 ﻿@model NCDNewMIS.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register Page</title>
 
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="~/Content/assets/icons/flaticon/flaticon.css">
+    <link rel="stylesheet" href="~/Content/assets/icons/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="~/Content/assets/icons/line-awesome/css/line-awesome.min.css">
+    <!-- NICE SELECT -->
+    <link href="~/Content/assets/vendor/niceselect/css/nice-select.css" rel="stylesheet">
+    <!-- STYLESHEETS -->
+    <link href="~/Content/assets/vendor/powerful-calendar/style.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/powerful-calendar/theme.css" rel="stylesheet">
 
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="row">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    <!-- STYLE CSS -->
+    <link href="~/Content/assets/css/style.css" rel="stylesheet">
+    <style>
+        .btn-rgstr {
+            cursor: pointer
+        }
+    </style>
+</head>
+<body>
+    <div class="fix-wrapper min-h-screen flex py-[30px] items-center justify-center">
+        <div class="container p-5">
+            <div class="row justify-center">
+                <div class="lg:w-[41.66%] md:w-1/2">
+                    <div class="card mb-0 h-auto">
+                        <div class="card-body p-[1.875rem]">
+                            <div class="text-center mb-4 flex justify-center">
+                                <img src="~/Content/assets/images/pci-logo.png" alt="" style="width: 90px">
+                            </div>
+                            <br />
+                            <h3 class="text-center mb-4">Register your account</h3>
+                            <main aria-labelledby="title">
+
+                                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                                    <div class="form-group mb-6">
+                                        @Html.LabelFor(m => m.Email, new { @class = "form-label font-medium text-[0.938rem] block" })
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "w-full focus:border-primary focus:outline-none form-control rounded-lg dark:bg-[#151515] bg-white border-[0.0625rem] border-[#e6e6e6] py-[0.3125rem] px-5 text-[#6e6e6e] h-[2.8rem]", placeholder = "Enter email" })
+                                    </div>
+                                    <div class="form-group mb-6">
+                                        @Html.LabelFor(m => m.Password, new { @class = "form-label font-medium text-[0.938rem] block" })
+                                        @Html.PasswordFor(m => m.Password, new { @class = "w-full focus:border-primary focus:outline-none form-control rounded-lg dark:bg-[#151515] bg-white border-[0.0625rem] border-[#e6e6e6] py-[0.3125rem] px-5 text-[#6e6e6e] h-[2.8rem]", placeholder = "Password" })
+                                    </div>
+                                    <div class="form-group mb-6">
+                                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "form-label font-medium text-[0.938rem] block" })
+                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "w-full focus:border-primary focus:outline-none form-control rounded-lg dark:bg-[#151515] bg-white border-[0.0625rem] border-[#e6e6e6] py-[0.3125rem] px-5 text-[#6e6e6e] h-[2.8rem]", placeholder = "Confirm Password" })
+                                    </div>
+                                    <div class="row">
+                                        <div class="offset-md-2 col-md-10">
+                                            <input type="submit" value="Register" class="btn-rgstr py-[0.65rem] px-5 rounded-lg font-normal text-[0.9375rem] bg-primary text-white w-full" />
+                                        </div>
+                                    </div>
+                                    <div class="new-account mt-3">
+                                        <p>Already have an account? <a class="text-primary" href="~/Account/Login">Login</a></p>
+                                    </div>
+                                }
+                            </main>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            <div class="offset-md-2 col-md-10">
-                <input type="submit" value="Register" class="btn btn-outline-dark" />
-            </div>
-        </div>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
     }
-</main>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+</body>
+</html>

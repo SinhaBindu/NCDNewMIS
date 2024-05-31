@@ -45,6 +45,7 @@
                                 <img src="~/Content/assets/images/pci-logo.png" alt="" style="width: 90px" />
                             </div>
                             <br />
+                            <h2 class="text-center mb-4 text-primary font-bold ">ACT-2</h2>
                             <h2 class="text-center mb-4">Login</h2>
                             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
                             {
@@ -67,7 +68,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-row flex flex-wrap justify-between align-baseline mb-4">
+                                @*<div class="form-row flex flex-wrap justify-between align-baseline mb-4">
                                     <div class="form-group sm:mb-4 mb-1">
                                         <div class="form-check custom-checkbox ms-1">
                                             @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input ml-0" })
@@ -77,16 +78,16 @@
                                     <div class="form-group ms-2">
                                         <a href="#">Forgot Password?</a>
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="row">
                                     <div class="offset-md-2 col-md-10">
                                         <input type="submit" value="Log in" class="btn-rgstr py-[0.65rem] px-5 rounded-lg font-normal text-[0.9375rem] bg-primary text-white w-full" />
                                     </div>
                                 </div>
                             }
-                            <div class="new-account mt-3">
+                            @*<div class="new-account mt-3">
                                 <p>Don't' have an account? <a class="text-primary" href="~/Account/Register">Register here</a></p>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>

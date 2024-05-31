@@ -1,0 +1,77 @@
+﻿@using System.Data
+@{
+    DataTable dt = new DataTable();
+    var columns = new List<string>();
+    if (Model != null)
+    {
+        dt = Model;
+        foreach (DataColumn dc in dt.Columns)
+        {
+            columns.Add(dc.ColumnName);
+        }
+        var ex = new List<string>() { "", "", "", "", "", "" };
+        columns = columns.Where(x => !ex.Any(y => y == x)).ToList();
+    }
+}
+
+<style>
+    #ListDataTable #tbl-body tr td {
+        padding: 11px 8px 0 8px !important;
+    }
+
+    .edit-icon .fa {
+        font-size: 17px;
+        color: #3FAEE2;
+    }
+</style>
+<div class="table-data">
+    <div class="table-responsive">
+        <div id="demo-dt-basic_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <table id="ListDataTable" class="table table-bordered table-striped">
+                <thead class="text-center">
+                    <tr>
+                        @{
+                            <th class="text-center">Srno.</th>
+                            foreach (string columnName in columns)
+                            {
+                                <th class="text-center">@columnName</th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (dt.Rows.Count > 0)
+                        {
+                            var sno = 1;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                <tr>
+                                    <td class="text-center">@(sno++)</td>
+                                    @foreach (string columnName in columns)
+                                    {
+                                        <td class="text-left">
+                                            @dr[columnName]
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="@columns.Count"><strong class="text-danger">Record Not Found !!</strong></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#ListDataTable").DataTable();
+    });
+</script>

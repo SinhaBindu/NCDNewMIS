@@ -112,7 +112,54 @@ namespace NCDNewMIS.Controllers
             }
         }
 
-
+        [AllowAnonymous]
+        [HttpPost]
+        [EnableCors("*")]
+        public async Task<string> JsonRegLocationData(int flg, int Isvalue, string value)
+        {
+            var accessToken = "";// HttpContext.Request.Headers["Authorization"];
+            NCD_DBEntities db_ = new NCD_DBEntities();
+            //var passwordHasher = new Microsoft.AspNet.Identity.PasswordHasher();
+            RegLocationModel model = new RegLocationModel();
+            model.flg = flg;
+            model.Isvalue = Isvalue;
+            model.value = value;
+            accessToken = "";
+            string strtoken = ""; //Bearer ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==//"ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==";
+            string strMsg = "";
+            var date = DateTime.Now;
+            if (!ModelState.IsValid)
+            {
+                return CommonModel.GetEnumDisplayName(Enums.AlterMsg.Required);// Json(CommonModel.GetEnumDisplayName(Enums.AlterMsg.Required), JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+               
+                    DataTable dt = new DataTable();
+                    dt = SP_Model.SP_RegLocation(model);
+                    string RetVal = string.Empty;
+                    string jsval = string.Empty;
+                    string jsval2 = string.Empty;
+               
+                    for (int j = 0; j < dt.Rows.Count; j++)
+                    {
+                        jsval = jsval + dt.Rows[j].ItemArray[0].ToString();
+                    }
+                    jsval = jsval.Remove(0, 1).Split(']')[0];
+                    jsval = jsval + "],";
+                    jsval2 = jsval2 + jsval;
+                    jsval = string.Empty;
+                
+                jsval = "{" + jsval2.Remove(jsval2.Length - 1, 1) + "}";
+                return jsval;
+               
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                return msg;// Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         [AllowAnonymous]
         [HttpPost]

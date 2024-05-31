@@ -39,11 +39,30 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataSet SP_BlockMapSubmission(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_BlockMapSubmission");
+            sp.Command.AddParameter("@Type", model.Type, DbType.String);
+            //sp.Command.AddParameter("@Block", model.Block, DbType.String);
+            sp.Command.AddParameter("@FromDt", model.FormDt, DbType.String);
+            sp.Command.AddParameter("@ToDt", model.ToDt, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
         public static DataSet SP_RowDataShow()
         {
             StoredProcedure sp = new StoredProcedure("SP_RowDataShow");
             DataSet ds = sp.ExecuteDataSet();
             return ds;
+        }
+        public static DataTable SP_RegLocation(RegLocationModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_RegLocation");
+            sp.Command.AddParameter("@flg", model.flg, DbType.Int32);
+            sp.Command.AddParameter("@Isvalue", model.Isvalue, DbType.Int32);
+            sp.Command.AddParameter("@value", model.value, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
         }
     }
 }

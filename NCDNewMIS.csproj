@@ -298,6 +298,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\PostDataModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -323,6 +324,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\RegLocationModel.cs" />
     <Compile Include="Models\SP_Model.cs" />
     <Compile Include="Models\tbl_Login.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
@@ -631,6 +633,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JS\Mapbundle.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -670,6 +673,12 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Scripts\JS\OdishaBlocks.js" />
+    <Content Include="Views\Home\AttendanceSub.cshtml" />
+    <Content Include="Views\Home\Blockmap.cshtml" />
+    <Content Include="Views\Home\_BlockData.cshtml" />
+    <Content Include="Views\Home\_DashboardmapBlock.cshtml" />
+    <Content Include="Views\Home\_BlockData - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

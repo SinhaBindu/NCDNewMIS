@@ -64,5 +64,14 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataSet SP_IndicatorData(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_IndicatorData");
+            sp.Command.AddParameter("@flg", model.DistrictBlockType, DbType.Int16);
+            sp.Command.AddParameter("@RoundType", model.RoundType, DbType.String);
+            sp.Command.AddParameter("@SType", model.SType, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
     }
 }

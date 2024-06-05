@@ -1,0 +1,176 @@
+﻿@model NCDNewMIS.Models.FilterModel
+@{
+    ViewBag.Title = "District & Block profile";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "District & Block profile";
+    ViewBag.SemiTitleLink = "/";
+    DateTime now = DateTime.Now;
+    var startDate = new DateTime(now.Year, now.Month, 1);
+    var endDate = startDate.AddMonths(1).AddDays(-1);
+}
+<!-- Content body start -->
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-lg flex items-center justify-between relative bg-white">
+            @*mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem]*@
+            <ol class="text-[0.875rem] flex items-center flex-wrap bg-transparent">
+                <li>
+                    <a href="javascript:void(0)" class="text-[#828690] dark:text-white text-[0.875rem]">
+                        @ViewBag.Title
+                    </a>
+                </li>
+                <li class="pl-2 before:content-['/'] before:font-[simple-line-icons] before:font-black before:text-xl before:leading-4 before:pr-2 before:float-left before:text-primary font-semibold" id="div-download"></li>
+            </ol>
+        </div>
+        <!-- Row -->
+        <div class="row">
+            <div class="w-full">
+                <div class="card">
+                    @using (Html.BeginForm("Districtmap", "Home", FormMethod.Post, new { @id = "tblList-frm", @class = "panel-body form-horizontal form-padding loader" }))
+                    {
+                        <div class="filter cm-content-box box-primary relative rounded-lg mb-0 bg-white dark:bg-[#1b1b1b]">
+                            @*<div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
+                                <div class="cpa text-dark dark:text-white text-base font-semibold">
+                                    <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+                                </div>
+                            </div>*@
+                            <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
+                                <div class="p-[1.875rem] max-sm:p-4">
+                                    <div class="row">
+                                        <div class="xl:w-1/4 sm:w-1/2 w-full mb-4 xl:mb-0">
+                                            <label class="form-label">Type</label>
+                                            <select class="form-control" name="DistrictBlockType" id="DistrictBlockType">
+                                                @foreach (var item in NCDNewMIS.Models.CommonModel.GetDistrictBlockType().ToList())
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="xl:w-1/4 sm:w-1/2 w-full mb-4 xl:mb-0">
+                                            <label class="form-label">Round Type</label>
+                                            <select class="form-control" name="RoundType" id="RoundType">
+                                                @foreach (var item in NCDNewMIS.Models.CommonModel.GetRoundType(true).ToList())
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="xl:w-1/4 sm:w-1/2 w-full mb-4 xl:mb-0" style="display:none">
+                                            <label class="form-label">Screening Type</label>
+                                            <select class="form-control" name="SType" id="SType">
+                                                @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @*<div class="col-md-12">@Html.Partial("_Alerts")</div>*@
+                    <div class="row">
+                        <div class="xl\:w-1\/2 sm:w-1/2 w-full mb-4 xl:mb-0" id="resultmap">
+                        </div>
+                        <div class="xl\:w-1\/2 sm:w-1/2 w-full mb-4 xl:mb-0" id="result">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="~/Scripts/JS/DistrictOdisha.js"></script>
+    <script src="~/Scripts/JS/MapDistrict.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            LoadReport();
+
+            $('#SType').change(function () {
+                LoadReport();
+            })
+            $('#RoundType').change(function () {
+                LoadReport();
+            })
+            $('#DistrictBlockType').change(function () {
+                LoadReport();
+            })
+
+        });
+        function LoadReport() {
+            var id = '#tblList-frm'
+            var url = $(id).attr("action");
+            var SType = $("#SType").val();
+            var RoundType = $("#RoundType").val();
+            var DistrictBlockType = $("#DistrictBlockType").val();
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType },
+                success: function (resp) {
+                    if (resp.IsSuccess) {
+                        $('#resultmap').html(resp.Datahtml);
+
+                        $('#result').html(resp.DataT);
+                        $('#tbl tr:last').remove();
+                        if ($.fn.dataTable.isDataTable('#tbl')) {
+                            $("#tbl").dataTable().fnDestroy();
+                        }
+                        table = $('#tbl').DataTable({
+                            scrollY: "400px",
+                            scrollX: true,
+                            fixedHeader: true,
+                            //scrollCollapse: true,
+                            //paging: false,
+                           
+                            pageLength: 100,
+                            fixedColumns: {
+                                leftColumns: 1,
+                                rightColumns: 1
+                            },
+                            buttons: [{
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i>Export</span>', title: 'Data Lists',//$('#IDDistrict option:selected').text() +
+                                className: 'btn btn-primary button-icon mr-3 mt-1 mb-1',
+                                filename: 'Data List',
+                                exportOptions: { modifier: { page: 'all' } }
+                            }],
+                        });
+                        //$('.dataTables_filter input[type="search"]').css(
+                        //    { 'width': '500px', 'display': 'inline-block' }
+                        //);
+                        $('#div-download').empty();
+                        table.buttons().container().appendTo($('#div-download'));
+
+                    }
+
+                },
+                error: function (req, error) {
+                    if (error === 'error') { error = req.statusText; }
+                    var errormsg = 'There was a communication error: ' + error;
+                    $('#result').html(errormsg);
+                }
+            });
+        }
+
+
+    </script>
+}

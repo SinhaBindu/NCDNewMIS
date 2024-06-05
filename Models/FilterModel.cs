@@ -12,5 +12,8 @@ namespace NCDNewMIS.Models
         public string FormDt { get; set; }
         public string ToDt { get; set; }
         public string Type { get; set; }
+        public string SType { get; set; }
+        public string RoundType { get; set; }
+        public string DistrictBlockType { get; set; }
     }
 }

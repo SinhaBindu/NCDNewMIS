@@ -913,6 +913,28 @@ namespace NCDNewMIS.Models
             }
             return list.ToList();
         }
+        public static List<SelectListItem> GetDistrictBlockType()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Value = "1", Text = "District" });
+            list.Add(new SelectListItem { Value = "2", Text = "Block" });
+            return list.ToList();
+        }
+        public static List<SelectListItem> GetRoundType(bool IsAll = false)
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Value = "1", Text = "Act-I" });
+            list.Add(new SelectListItem { Value = "2", Text = "Act-II" });
+            //if (IsAll)
+            //{
+            //    list.Insert(0, new SelectListItem { Value = "", Text = "All" });
+            //}
+            //else if (!IsAll)
+            //{
+            //    list.Insert(0, new SelectListItem { Value = "", Text = "Select" });
+            //}
+            return list.ToList();
+        }
         #endregion
 
         #region Date Formats Functions

@@ -105,6 +105,45 @@ namespace NCDNewMIS.Controllers
             }
         }
 
+        public ActionResult Districtmap()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Districtmap(string DistrictBlockType, string RoundType, string SType)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            FilterModel filterModel = new FilterModel();
+            filterModel.DistrictBlockType = DistrictBlockType; filterModel.RoundType = RoundType; filterModel.SType = SType;
+            ds = SP_Model.SP_IndicatorData(filterModel);
+            ViewBag.DistrictBlockType = DistrictBlockType;  
+            try
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    dt = ds.Tables[0];
+                    var html = ConvertViewToString("_DashboardmapDistrict", dt);
+                    var Dthtml = ConvertViewToString("_DistrictBlockIndicatorData", dt);
+                    //var dtjson = JsonConvert.SerializeObject(dt);
+                    var res = Json(new { IsSuccess = true, Datahtml = html, DataT = Dthtml }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+
         private string ConvertViewToString(string viewName, object model)
         {
             ViewData.Model = model;

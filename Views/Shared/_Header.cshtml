@@ -88,7 +88,7 @@
                                    href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
                                     <div class="header-info2 flex items-center text-right">
                                         <div class="header-media">
-                                            <img src="~/Content/assets/images/avatar/1.png" alt=""
+                                            <img src="~/Content/assets/images/profile/profile.png" alt=""
                                                  class="w-10 h-10   rounded-md">
                                         </div>
                                     </div>
@@ -98,16 +98,16 @@
                                     <div class="card border-0 mb-0">
                                         <div class="card-header relative flex items-center justify-between bg-transparent py-2 sm:px-[1.25rem] px-4 border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
                                             <div class="flex items-center">
-                                                <img src="~/Content/assets/images/avatar/1.png"
+                                                <img src="~/Content/assets/images/profile/profile.png"
                                                      class="avatar avatar-md mr-2.5 h-[2.813rem] w-[2.813rem] inline-block object-cover rounded-md"
                                                      alt="">
                                                 <div>
-                                                    <h6 class="text-sm">Hanuman Prajapati</h6>
-                                                    <span class="text-xs text-body-color">Web Designer</span>
+                                                    <h6 class="text-sm">Act-II</h6>
+                                                    <span class="text-xs text-body-color">@User.Identity.Name</span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body sm:py-2 border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
+                                        @*<div class="card-body sm:py-2 border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
                                             <a href="#"
                                                class="dropdown-item py-[0.6rem] px-[1.25rem] block w-full ai-icon hover:bg-primary-light group">
                                                 <svg class="inline-block" width="20" height="20"
@@ -127,9 +127,9 @@
                                                     Profile
                                                 </span>
                                             </a>
-                                        </div>
+                                        </div>*@
                                         <div class="card-footer px-0 py-2">
-                                            <a href="javascript:void(0);"
+                                            @*<a href="javascript:void(0);"
                                                class="dropdown-item py-[0.6rem] px-[1.25rem] text-base block w-full ai-icon">
                                                 <svg class="inline-block" width="20" height="20"
                                                      viewBox="0 0 24 24" fill="none"
@@ -146,7 +146,7 @@
                                                 <span class="ml-2 text-[13px] text-body-color group-hover:text-primary">
                                                     Settings
                                                 </span>
-                                            </a>
+                                            </a>*@
 
                                             @if (Request.IsAuthenticated)
                                             {

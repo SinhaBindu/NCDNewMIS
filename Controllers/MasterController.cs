@@ -134,7 +134,6 @@ namespace NCDNewMIS.Controllers
             }
             try
             {
-               
                     DataTable dt = new DataTable();
                     dt = SP_Model.SP_RegLocation(model);
                     string RetVal = string.Empty;
@@ -227,6 +226,62 @@ namespace NCDNewMIS.Controllers
                 //    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityTokenNot);
                 //    return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                 //}
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                return msg;// Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [EnableCors("*")]
+        public async Task<string> JsonPostRegistration(string JsonData)
+        {
+            var accessToken = "";// HttpContext.Request.Headers["Authorization"];
+            NCD_DBEntities db_ = new NCD_DBEntities();
+            //var passwordHasher = new Microsoft.AspNet.Identity.PasswordHasher();
+            PostDataModel model = new PostDataModel();
+            model.JsonData = JsonData;
+            accessToken = "";
+            string strtoken = ""; //Bearer ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==//"ALaPRfBMWBRDgurutJcdc4rRDsXmfK6EsI+hWtYTAUYQ/XPWUVbntbRKF8oJbTnpMg==";
+            string strMsg = "";
+            var date = DateTime.Now;
+            if (!ModelState.IsValid)
+            {
+                return CommonModel.GetEnumDisplayName(Enums.AlterMsg.Required);// Json(CommonModel.GetEnumDisplayName(Enums.AlterMsg.Required), JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                    DataTable dt = new DataTable();
+                    dt = SP_Model.uspRegistration(model);
+                    string RetVal = string.Empty;
+                    string jsval = string.Empty;
+                    string jsval2 = string.Empty;
+                    int i = 0;
+                    i = Convert.ToInt32(dt.Rows[0][0]);
+                    if (i > 0)
+                    {
+                        jsval = "{\"Table\":[{\"RetValue\":\"Success\"}]}";
+                    }
+                    else
+                    {
+                        if (i == -2)
+                        {
+                            jsval = "{\"Table\":[{\"RetValue\":\"Invalid Json Data\"}]}";
+                        }
+                        else if (i == -3)
+                        {
+                            jsval = "{\"Table\":[{\"RetValue\":\"Invalid User\"}]}";
+                        }
+                        else
+                        {
+                            jsval = "{\"Table\":[{\"RetValue\":\"Failed\"}]}";
+                        }
+                    }
+                    return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
+               
             }
             catch (Exception ex)
             {

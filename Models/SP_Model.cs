@@ -39,6 +39,14 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable uspRegistration(PostDataModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("uspRegistration");
+            sp.Command.AddParameter("@json", model.JsonData, DbType.String);
+            sp.Command.AddParameter("@RowAfected", 0, DbType.Int32);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
         public static DataSet SP_BlockMapSubmission(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_BlockMapSubmission");

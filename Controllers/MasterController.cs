@@ -269,7 +269,7 @@ namespace NCDNewMIS.Controllers
                     {
                         if (i == -2)
                         {
-                            jsval = "{\"Table\":[{\"RetValue\":\"Invalid Json Data\"}]}";
+                            jsval = "{\"Table\":[{\"RetValue\":\"Already Mobile No\"}]}";
                         }
                         else if (i == -3)
                         {

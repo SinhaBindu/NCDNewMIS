@@ -81,5 +81,14 @@ namespace NCDNewMIS.Models
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
+        public static DataSet SP_DistrictBlockData(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_DistBlockWiseData");
+            sp.Command.AddParameter("@flg", model.DistrictBlockType, DbType.Int16);
+            sp.Command.AddParameter("@RoundType", model.RoundType, DbType.String);
+            sp.Command.AddParameter("@SType", model.SType, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
     }
 }

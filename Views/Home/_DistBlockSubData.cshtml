@@ -1,0 +1,90 @@
+﻿@using System.Data
+@{
+    DataTable dt = new DataTable();
+    var columns = new List<string>();
+    if (Model != null)
+    {
+        dt = Model;
+        foreach (DataColumn dc in dt.Columns)
+        {
+            columns.Add(dc.ColumnName);
+        }
+        var ex = new List<string>() { "", "", "", "", "", "" };
+        columns = columns.Where(x => !ex.Any(y => y == x)).ToList();
+    }
+}
+<style>
+    table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled {
+        /*padding-right: 0px !important;*/
+    }
+</style>
+<h5 class="text-center">
+    @if (ViewBag.ST != null)
+    {
+        <strong class="text-bg-primary">@ViewBag.ST Submissions Data</strong>
+    }
+    else
+    {
+<strong class="text-bg-primary">Home and Camp Submissions Data</strong>
+    }
+
+</h5>
+<div class="bg-light rounded h-100 p-4">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped cell-border small" id="tbl" >
+            <thead class="text-center">
+                <tr>
+                    <th class="text-center">Srno.</th>
+                    <th class="text-center">District</th>
+                    <th class="text-center">Block</th>
+                    <th class="text-center">Total Member</th>
+                    <th class="text-center">Entry Member</th>
+                    <th class="text-center">Pending Member</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (dt.Rows.Count > 0)
+                    {
+                        var sno = 1;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            <tr>
+                                <td class="text-center">@(sno++)</td>
+                                <td class="text-center">@dr["District"]</td>
+                                <td class="text-center">@dr["Block"]</td>
+                                <td class="text-center">@dr["TM"]</td>
+                                <td class="text-center">@dr["EM"]</td>
+                                <td class="text-center"><strong class="text-warning">@dr["PM"]</strong></td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="@columns.Count"><strong class="text-danger">Record Not Found !!</strong></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+            <tfoot>
+                @if (dt.Rows.Count > 0)
+                {
+                    <tr>
+                        <td class="text-right" colspan="3"><strong>Grand Total :</strong></td>
+                        <td class="text-center"><strong>@dt.Compute("sum(TM)", string.Empty)</strong></td>
+                        <td class="text-center"><strong>@dt.Compute("sum(EM)", string.Empty)</strong></td>
+                        <td class="text-center"><strong>@dt.Compute("sum(PM)", string.Empty)</strong></td>
+                    </tr>
+                }
+            </tfoot>
+
+        </table>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#tbl").DataTable();
+    });
+</script>

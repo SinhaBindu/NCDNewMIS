@@ -633,6 +633,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JS\Chart.js" />
+    <Content Include="Scripts\JS\Export.js" />
     <Content Include="Scripts\JS\MapDistrict.js" />
     <Content Include="Scripts\JS\Mapbundle.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
@@ -684,6 +686,8 @@
     <Content Include="Views\Home\_DashboardmapDistrict.cshtml" />
     <Content Include="Views\Home\_DistrictBlockIndicatorData.cshtml" />
     <Content Include="Views\Home\Districtmap.cshtml" />
+    <Content Include="Views\Home\_DistBlockSubData.cshtml" />
+    <Content Include="Views\Home\SubmissionData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

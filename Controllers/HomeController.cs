@@ -117,7 +117,7 @@ namespace NCDNewMIS.Controllers
             FilterModel filterModel = new FilterModel();
             filterModel.DistrictBlockType = DistrictBlockType; filterModel.RoundType = RoundType; filterModel.SType = SType;
             ds = SP_Model.SP_IndicatorData(filterModel);
-            ViewBag.DistrictBlockType = DistrictBlockType;  
+            ViewBag.DistrictBlockType = DistrictBlockType;
             try
             {
                 if (ds.Tables.Count > 0)
@@ -167,6 +167,59 @@ namespace NCDNewMIS.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult SubmissionData()
+        {
+            return View();
+        }
+        public ActionResult GetSubmissionData(string DistrictBlockType, string RoundType, string SType)
+        {
+            DataSet ds = new DataSet();
+            FilterModel filterModel = new FilterModel();
+            filterModel.DistrictBlockType = DistrictBlockType; filterModel.RoundType = RoundType; filterModel.SType = SType;
+            try
+            {
+                ds = SP_Model.SP_DistrictBlockData(filterModel);
+                if (ds.Tables.Count > 0)
+                {
+                    DataTable dt = ds.Tables[0];
+                    ViewBag.ST = !string.IsNullOrWhiteSpace(filterModel.SType) ?
+                        CommonModel.GetScreeningType()?
+                        .FirstOrDefault(x => x.Value == filterModel.SType && !string.IsNullOrWhiteSpace(filterModel.SType)).Text : null;
+                    var resdt = JsonConvert.SerializeObject(dt);
+                    var Dthtml = ConvertViewToString("_DistBlockSubData", dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        var res = Json(new
+                        {
+                            IsSuccess = true,
+                            resData = resdt,
+                            reshtml = Dthtml
+                        }, JsonRequestBehavior.AllowGet);
+                        res.MaxJsonLength = int.MaxValue;
+                        return res;
+
+                    }
+                    else
+                    {
+                        var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                        res.MaxJsonLength = int.MaxValue;
+                        return res;
+                    }
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
         }
     }
 }

@@ -81,6 +81,17 @@ namespace NCDNewMIS.Models
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
+        public static DataSet SP_RegApproved(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_RegApproved");
+            sp.Command.AddParameter("@DistrictId", 0, DbType.Int16);
+            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.Int16);
+            sp.Command.AddParameter("@CHCId", model.CHCId, DbType.Int16);
+            sp.Command.AddParameter("@PHCId", model.PHCId, DbType.Int16);
+            sp.Command.AddParameter("@Approved", model.IsActive, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
         public static DataSet SP_DistrictBlockData(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("Usp_DistBlockWiseData");

@@ -75,19 +75,21 @@ function ChartDistBlockSub(Data) {
                     }
                 }
             },
-            series: [{
-                name: 'Total Member',
-                data: TM,
-                color: "#4743BA",
-            }, {
-                name: 'Entry Member',
-                data: EM,
-                color: "#8BC873",
-            }, {
-                name: 'Pending Member',
-                data: PM,
-                color: "#CC5C5D",
-            }]
+            series: [
+                //    {
+                //    name: 'Total Member',
+                //    data: TM,
+                //    color: "#4743BA",
+                //}, 
+                {
+                    name: 'Entry Member',
+                    data: EM,
+                    color: "#8BC873",
+                }, {
+                    name: 'Pending Member',
+                    data: PM,
+                    color: "#CC5C5D",
+                }]
         });
     }
 }

@@ -7,6 +7,17 @@
       <Diagram DiagramId="a6d8d1f9a1634b809cd6b36928222028" Name="Diagram1">
         <EntityTypeShape EntityType="NCD_DBModel.tbl_Register" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NCD_DBModel.tbl_Login" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="NCD_DBModel.AspNetRole" Width="1.5" PointX="3.75" PointY="6" />
+        <EntityTypeShape EntityType="NCD_DBModel.AspNetUser" Width="1.5" PointX="6" PointY="5" />
+        <EntityTypeShape EntityType="NCD_DBModel.Block_Master" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NCD_DBModel.CHC_Master" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NCD_DBModel.District_Master" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="NCD_DBModel.DistrictBlock_Master" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="NCD_DBModel.GP_Master" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="NCD_DBModel.PHC_Master" Width="1.5" PointX="8.75" PointY="8.75" />
+        <EntityTypeShape EntityType="NCD_DBModel.TBL_Emp" Width="1.5" PointX="4.75" PointY="9.75" />
+        <EntityTypeShape EntityType="NCD_DBModel.tbl_RegMappping" Width="1.5" PointX="10.75" PointY="0.75" />
+        <AssociationConnector Association="NCD_DBModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

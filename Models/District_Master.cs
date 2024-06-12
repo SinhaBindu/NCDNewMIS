@@ -12,18 +12,12 @@ namespace NCDNewMIS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Register
+    public partial class District_Master
     {
-        public int RegId_pk { get; set; }
-        public string FullName { get; set; }
-        public string Password { get; set; }
-        public string MobileNo { get; set; }
-        public string Version { get; set; }
+        public int DistrictId { get; set; }
+        public string District { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedOn { get; set; }
-        public Nullable<bool> IsApproved { get; set; }
+        public Nullable<System.DateTime> CreatedDt { get; set; }
     }
 }

@@ -12,18 +12,24 @@ namespace NCDNewMIS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Register
+    public partial class TBL_Emp
     {
-        public int RegId_pk { get; set; }
-        public string FullName { get; set; }
-        public string Password { get; set; }
+        public System.Guid EmpID_pk { get; set; }
+        public string UserID_fk { get; set; }
+        public string RoleID_fk { get; set; }
+        public Nullable<int> DistrictID { get; set; }
+        public Nullable<int> BlockID { get; set; }
+        public Nullable<int> Village { get; set; }
+        public string Other_Vo { get; set; }
+        public Nullable<int> Panchayat { get; set; }
+        public string Panchayat_Other { get; set; }
+        public string EmpName { get; set; }
+        public string Gender { get; set; }
         public string MobileNo { get; set; }
-        public string Version { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
-        public Nullable<bool> IsApproved { get; set; }
     }
 }

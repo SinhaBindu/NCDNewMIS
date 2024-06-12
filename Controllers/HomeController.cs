@@ -144,6 +144,106 @@ namespace NCDNewMIS.Controllers
             }
         }
 
+        public ActionResult RegApprove()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult RegApprove(FilterModel m)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            ds = SP_Model.SP_RegApproved(m);
+            try
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    dt = ds.Tables[0];
+                    var html = ConvertViewToString("_RegApproveData", dt);
+                    //var dtjson = JsonConvert.SerializeObject(dt);
+                    var res = Json(new { IsSuccess = true, Datahtml = html }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+        [HttpPost]
+        public ActionResult PostAppoved(int RegId, int RegMapId, string IsApproved)
+        {
+            NCD_DBEntities db_ = new NCD_DBEntities();
+            var tbl = db_.tbl_Register.Find(RegId);
+            tbl.IsApproved = Convert.ToBoolean(IsApproved) == true ? false : true;
+            var strApproved = tbl.IsApproved == true ? "Active" : "IsActive";
+            db_.SaveChanges();
+            var res = Json(new { IsSuccess = true, Message = strApproved + " Successfully.." }, JsonRequestBehavior.AllowGet);
+            res.MaxJsonLength = int.MaxValue;
+            return res;
+        }
+
+        #region Master Bind
+        public ActionResult GetBlockList(int SelectAll = 1)
+        {
+            try
+            {
+                var items = CommonModel.GetBlock(SelectAll);
+                if (items != null)
+                {
+                    var data = JsonConvert.SerializeObject(items);
+                    return Json(new { IsSuccess = true, res = data }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { IsSuccess = false, res = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetCHCList(int BlockId, int SelectAll = 1)
+        {
+            try
+            {
+                var items = CommonModel.GetCHC(BlockId, SelectAll);
+                if (items != null)
+                {
+                    var data = JsonConvert.SerializeObject(items);
+                    return Json(new { IsSuccess = true, res = data }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { IsSuccess = false, res = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetPHCList(int BlockId, int CHCId, int SelectAll = 1)
+        {
+            try
+            {
+                var items = CommonModel.GetPHC(BlockId, CHCId, SelectAll);
+                if (items != null)
+                {
+                    var data = JsonConvert.SerializeObject(items);
+                    return Json(new { IsSuccess = true, res = data }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { IsSuccess = false, res = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        #endregion
         private string ConvertViewToString(string viewName, object model)
         {
             ViewData.Model = model;

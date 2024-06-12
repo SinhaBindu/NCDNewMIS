@@ -198,15 +198,108 @@ namespace NCDNewMIS.Models
 
         #endregion
 
-        //#region Master 
-        //public static List<SelectListItem> GetYesNo()
-        //{
-        //    List<SelectListItem> list = new List<SelectListItem>();
-        //    //list.Add(new SelectListItem { Value = "", Text = "Select" });
-        //    list.Add(new SelectListItem { Value = "Yes", Text = "Yes" });
-        //    list.Add(new SelectListItem { Value = "No", Text = "No" });
-        //    return list.OrderByDescending(x => x.Text).ToList();
-        //}
+        #region Master 
+        public static List<SelectListItem> GetActive()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Value = "-1", Text = "All" });
+            list.Add(new SelectListItem { Value = "1", Text = "Active" });
+            list.Add(new SelectListItem { Value = "0", Text = "InActive" });
+            return list.OrderBy(x => Convert.ToInt16(x.Value)).ToList();
+        }
+        public static List<SelectListItem> GetDistrict(int IsSelectAll = 0)
+        {
+            NCD_DBEntities _db = new NCD_DBEntities();
+            try
+            {
+                DataTable dt = new DataTable();
+                var listitem = new SelectList(_db.District_Master.Where(x => x.IsActive == true), "DistrictId", "District").OrderBy(x => x.Text).ToList();
+                listitem = new SelectList(listitem, "Value", "Text").OrderBy(x => x.Text).ToList();
+                if (IsSelectAll == 0)
+                {
+                    listitem.Insert(0, new SelectListItem { Value = "0", Text = "All" });
+                }
+                if (IsSelectAll == 1)
+                {
+                    listitem.Insert(0, new SelectListItem { Value = "0", Text = "Select" });
+                }
+                return listitem;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static List<SelectListItem> GetBlock(int IsSelectAll = 0)
+        {
+            NCD_DBEntities _db = new NCD_DBEntities();
+            try
+            {
+                DataTable dt = new DataTable();
+                var listitem = new SelectList(_db.Block_Master.Where(x => x.IsActive == true && x.DistrictId == 1), "BlockId", "Block").OrderBy(x => x.Text).ToList();
+                listitem = new SelectList(listitem, "Value", "Text").OrderBy(x => x.Text).ToList();
+                if (IsSelectAll == 0)
+                {
+                    listitem.Insert(0, new SelectListItem { Value = "0", Text = "All" });
+                }
+                if (IsSelectAll == 1)
+                {
+                    listitem.Insert(0, new SelectListItem { Value = "0", Text = "Select" });
+                }
+                return listitem;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static List<SelectListItem> GetCHC(int BlockId, int IsSelectAll = 0)
+        {
+            NCD_DBEntities _db = new NCD_DBEntities();
+            try
+            {
+                DataTable dt = new DataTable();
+                var listitem = new SelectList(_db.CHC_Master.Where(x => x.IsActive == true && x.DistrictId == 1 && x.BlockId == BlockId), "CHCId", "CHCN").OrderBy(x => x.Text).ToList();
+                listitem = new SelectList(listitem, "Value", "Text").OrderBy(x => x.Text).ToList();
+                if (IsSelectAll == 0)
+                {
+                    listitem.Insert(0, new SelectListItem { Value = "0", Text = "All" });
+                }
+                if (IsSelectAll == 1)
+                {
+                    listitem.Insert(0, new SelectListItem { Value = "0", Text = "Select" });
+                }
+                return listitem;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static List<SelectListItem> GetPHC(int BlockId, int CHCId, int IsSelectAll = 0)
+        {
+            NCD_DBEntities _db = new NCD_DBEntities();
+            try
+            {
+                DataTable dt = new DataTable();
+                var listitem = new SelectList(_db.PHC_Master.Where(x => x.IsActive == true && x.DistrictId == 1 && x.BlockId == BlockId && x.CHCId == CHCId), "PHCId", "PHC").OrderBy(x => x.Text).ToList();
+                listitem = new SelectList(listitem, "Value", "Text").OrderBy(x => x.Text).ToList();
+                if (IsSelectAll == 0)
+                {
+                    listitem.Insert(0, new SelectListItem { Value = "0", Text = "All" });
+                }
+                if (IsSelectAll == 1)
+                {
+                    listitem.Insert(0, new SelectListItem { Value = "0", Text = "Select" });
+                }
+                return listitem;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         //public static List<SelectListItem> GetBoolYesNo()
         //{
         //    List<SelectListItem> list = new List<SelectListItem>();
@@ -276,32 +369,7 @@ namespace NCDNewMIS.Models
         //        throw;
         //    }
         //}
-        //public static List<SelectListItem> GetDistrict(string IsSelectAll = "0", int StateId = 1)
-        //{
-        //    Hunar_DBEntities _db = new Hunar_DBEntities();
 
-        //    try
-        //    {
-        //        DataTable dt = new DataTable();
-        //        //dt = SP_Model.SPDistrict();
-        //        //var listitem = ConvertDataTable<SelectListItem>(dt);
-        //        var listitem = new SelectList(_db.District_Master.Where(x => x.IsActive == true && x.StateId == StateId), "ID", "DistrictName").OrderBy(x => x.Text).ToList();
-        //        listitem = new SelectList(listitem, "Value", "Text").OrderBy(x => x.Text).ToList();
-        //        if (IsSelectAll == "0")
-        //        {
-        //            listitem.Insert(0, new SelectListItem { Value = "0", Text = "All" });
-        //        }
-        //        if (IsSelectAll == "1")
-        //        {
-        //            listitem.Insert(0, new SelectListItem { Value = "", Text = "Select" });
-        //        }
-        //        return listitem;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
         //public static List<SelectListItem> GetCourses(bool IsAll = false, int DistrictId = 0)
         //{
         //    Hunar_DBEntities _db = new Hunar_DBEntities();
@@ -581,7 +649,7 @@ namespace NCDNewMIS.Models
 
         ////}
 
-        //#endregion
+        #endregion
 
         #region Document Upload
         public static string GetFilePath(HttpPostedFileBase file, string Module, string RegNo, string Ques_fk, string Folder)
@@ -897,7 +965,7 @@ namespace NCDNewMIS.Models
             }
             return list.ToList();
         }
-        
+
         public static List<SelectListItem> GetScreeningType(bool IsAll = false)
         {
             List<SelectListItem> list = new List<SelectListItem>();

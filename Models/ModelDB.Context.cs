@@ -27,5 +27,15 @@ namespace NCDNewMIS.Models
     
         public virtual DbSet<tbl_Register> tbl_Register { get; set; }
         public virtual DbSet<tbl_Login> tbl_Login { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Block_Master> Block_Master { get; set; }
+        public virtual DbSet<CHC_Master> CHC_Master { get; set; }
+        public virtual DbSet<District_Master> District_Master { get; set; }
+        public virtual DbSet<DistrictBlock_Master> DistrictBlock_Master { get; set; }
+        public virtual DbSet<GP_Master> GP_Master { get; set; }
+        public virtual DbSet<PHC_Master> PHC_Master { get; set; }
+        public virtual DbSet<TBL_Emp> TBL_Emp { get; set; }
+        public virtual DbSet<tbl_RegMappping> tbl_RegMappping { get; set; }
     }
 }

@@ -298,7 +298,31 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Models\AspNetRole.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Block_Master.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CHC_Master.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DistrictBlock_Master.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\District_Master.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FilterModel.cs" />
+    <Compile Include="Models\GP_Master.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PHC_Master.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PostDataModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -326,10 +350,16 @@
     </Compile>
     <Compile Include="Models\RegLocationModel.cs" />
     <Compile Include="Models\SP_Model.cs" />
+    <Compile Include="Models\TBL_Emp.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_Login.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_Register.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_RegMappping.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -637,6 +667,7 @@
     <Content Include="Scripts\JS\Export.js" />
     <Content Include="Scripts\JS\MapDistrict.js" />
     <Content Include="Scripts\JS\Mapbundle.js" />
+    <Content Include="Scripts\JS\Master.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -688,6 +719,8 @@
     <Content Include="Views\Home\Districtmap.cshtml" />
     <Content Include="Views\Home\_DistBlockSubData.cshtml" />
     <Content Include="Views\Home\SubmissionData.cshtml" />
+    <Content Include="Views\Home\RegApprove.cshtml" />
+    <Content Include="Views\Home\_RegApproveData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

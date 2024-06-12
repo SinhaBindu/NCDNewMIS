@@ -5,6 +5,147 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="NCD_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Block_Master">
+          <Key>
+            <PropertyRef Name="BlockId" />
+          </Key>
+          <Property Name="BlockId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="Block" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CHC_Master">
+          <Key>
+            <PropertyRef Name="CHCId" />
+          </Key>
+          <Property Name="CHCId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="BlockId" Type="int" />
+          <Property Name="CHCN" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="District_Master">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="District" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DistrictBlock_Master">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="volunteer_name" Type="nvarchar" MaxLength="500" />
+          <Property Name="volunteer_mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="block_name" Type="nvarchar" MaxLength="500" />
+          <Property Name="block_id" Type="nvarchar" MaxLength="500" />
+          <Property Name="chc_name" Type="nvarchar" MaxLength="500" />
+          <Property Name="chc_id" Type="nvarchar" MaxLength="500" />
+          <Property Name="phc_name" Type="nvarchar" MaxLength="500" />
+          <Property Name="phc_id" Type="nvarchar" MaxLength="500" />
+          <Property Name="sc_name" Type="nvarchar" MaxLength="500" />
+          <Property Name="sc_id" Type="nvarchar" MaxLength="500" />
+          <Property Name="panchayat_name" Type="nvarchar" MaxLength="500" />
+          <Property Name="panchayat_id" Type="nvarchar" MaxLength="500" />
+          <Property Name="village_name" Type="nvarchar" MaxLength="500" />
+          <Property Name="village_id" Type="nvarchar" MaxLength="500" />
+          <Property Name="screening_type" Type="nvarchar" MaxLength="50" />
+          <Property Name="household_id" Type="nvarchar" MaxLength="500" />
+          <Property Name="household_name" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="createdAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="GP_Master">
+          <Key>
+            <PropertyRef Name="GPId" />
+          </Key>
+          <Property Name="GPId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="BlockId" Type="int" />
+          <Property Name="CHCId" Type="int" />
+          <Property Name="PHCId" Type="int" />
+          <Property Name="SubCenterId" Type="int" />
+          <Property Name="GP" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PHC_Master">
+          <Key>
+            <PropertyRef Name="PHCId" />
+          </Key>
+          <Property Name="PHCId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="BlockId" Type="int" />
+          <Property Name="CHCId" Type="int" />
+          <Property Name="PHC" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TBL_Emp">
+          <Key>
+            <PropertyRef Name="EmpID_pk" />
+          </Key>
+          <Property Name="EmpID_pk" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserID_fk" Type="nvarchar" MaxLength="300" />
+          <Property Name="RoleID_fk" Type="nvarchar(max)" />
+          <Property Name="DistrictID" Type="int" />
+          <Property Name="BlockID" Type="int" />
+          <Property Name="Village" Type="int" />
+          <Property Name="Other_Vo" Type="nvarchar" MaxLength="500" />
+          <Property Name="Panchayat" Type="int" />
+          <Property Name="Panchayat_Other" Type="nvarchar" MaxLength="500" />
+          <Property Name="EmpName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="200" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="tbl_Login">
           <Key>
             <PropertyRef Name="LoginId_pk" />
@@ -33,10 +174,79 @@
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="100" />
           <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="IsApproved" Type="bit" />
         </EntityType>
+        <EntityType Name="tbl_RegMappping">
+          <Key>
+            <PropertyRef Name="RegMapId_pk" />
+          </Key>
+          <Property Name="RegMapId_pk" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MapDate" Type="date" />
+          <Property Name="RegId_fk" Type="int" />
+          <Property Name="DistrictId_fk" Type="int" />
+          <Property Name="BlockId_fk" Type="int" />
+          <Property Name="CHCId_fk" Type="int" />
+          <Property Name="PHCId_fk" Type="int" />
+          <Property Name="SubCenterId_fk" Type="int" />
+          <Property Name="GPId_fk" Type="int" />
+          <Property Name="VillageId_fk" Type="int" />
+          <Property Name="Version" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="NCD_DBModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Block_Master" EntityType="Self.Block_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHC_Master" EntityType="Self.CHC_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="District_Master" EntityType="Self.District_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DistrictBlock_Master" EntityType="Self.DistrictBlock_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GP_Master" EntityType="Self.GP_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PHC_Master" EntityType="Self.PHC_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_Emp" EntityType="Self.TBL_Emp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Login" EntityType="Self.tbl_Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Register" EntityType="Self.tbl_Register" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RegMappping" EntityType="Self.tbl_RegMappping" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -56,10 +266,25 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsApproved" Type="Boolean" />
         </EntityType>
         <EntityContainer Name="NCD_DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_Register" EntityType="Self.tbl_Register" />
           <EntitySet Name="tbl_Login" EntityType="NCD_DBModel.tbl_Login" />
+          <EntitySet Name="AspNetRoles" EntityType="NCD_DBModel.AspNetRole" />
+          <EntitySet Name="AspNetUsers" EntityType="NCD_DBModel.AspNetUser" />
+          <EntitySet Name="Block_Master" EntityType="NCD_DBModel.Block_Master" />
+          <EntitySet Name="CHC_Master" EntityType="NCD_DBModel.CHC_Master" />
+          <EntitySet Name="District_Master" EntityType="NCD_DBModel.District_Master" />
+          <EntitySet Name="DistrictBlock_Master" EntityType="NCD_DBModel.DistrictBlock_Master" />
+          <EntitySet Name="GP_Master" EntityType="NCD_DBModel.GP_Master" />
+          <EntitySet Name="PHC_Master" EntityType="NCD_DBModel.PHC_Master" />
+          <EntitySet Name="TBL_Emp" EntityType="NCD_DBModel.TBL_Emp" />
+          <EntitySet Name="tbl_RegMappping" EntityType="NCD_DBModel.tbl_RegMappping" />
+          <AssociationSet Name="AspNetUserRoles" Association="NCD_DBModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_Login">
           <Key>
@@ -75,6 +300,166 @@
           <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="NCD_DBModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetRoles" Relationship="NCD_DBModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+        </EntityType>
+        <EntityType Name="Block_Master">
+          <Key>
+            <PropertyRef Name="BlockId" />
+          </Key>
+          <Property Name="BlockId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="Block" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CHC_Master">
+          <Key>
+            <PropertyRef Name="CHCId" />
+          </Key>
+          <Property Name="CHCId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="BlockId" Type="Int32" />
+          <Property Name="CHCN" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="District_Master">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="District" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DistrictBlock_Master">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="volunteer_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="volunteer_mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="block_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="block_id" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="chc_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="chc_id" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="phc_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="phc_id" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="sc_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="sc_id" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="panchayat_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="panchayat_id" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="village_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="village_id" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="screening_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="household_id" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="household_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="GP_Master">
+          <Key>
+            <PropertyRef Name="GPId" />
+          </Key>
+          <Property Name="GPId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="BlockId" Type="Int32" />
+          <Property Name="CHCId" Type="Int32" />
+          <Property Name="PHCId" Type="Int32" />
+          <Property Name="SubCenterId" Type="Int32" />
+          <Property Name="GP" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PHC_Master">
+          <Key>
+            <PropertyRef Name="PHCId" />
+          </Key>
+          <Property Name="PHCId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="BlockId" Type="Int32" />
+          <Property Name="CHCId" Type="Int32" />
+          <Property Name="PHC" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TBL_Emp">
+          <Key>
+            <PropertyRef Name="EmpID_pk" />
+          </Key>
+          <Property Name="EmpID_pk" Type="Guid" Nullable="false" />
+          <Property Name="UserID_fk" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID_fk" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictID" Type="Int32" />
+          <Property Name="BlockID" Type="Int32" />
+          <Property Name="Village" Type="Int32" />
+          <Property Name="Other_Vo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Panchayat" Type="Int32" />
+          <Property Name="Panchayat_Other" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EmpName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_RegMappping">
+          <Key>
+            <PropertyRef Name="RegMapId_pk" />
+          </Key>
+          <Property Name="RegMapId_pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MapDate" Type="DateTime" Precision="0" />
+          <Property Name="RegId_fk" Type="Int32" />
+          <Property Name="DistrictId_fk" Type="Int32" />
+          <Property Name="BlockId_fk" Type="Int32" />
+          <Property Name="CHCId_fk" Type="Int32" />
+          <Property Name="PHCId_fk" Type="Int32" />
+          <Property Name="SubCenterId_fk" Type="Int32" />
+          <Property Name="GPId_fk" Type="Int32" />
+          <Property Name="VillageId_fk" Type="Int32" />
+          <Property Name="Version" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="AspNetUserRoles">
+          <End Type="NCD_DBModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="NCD_DBModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -84,6 +469,7 @@
           <EntitySetMapping Name="tbl_Register">
             <EntityTypeMapping TypeName="NCD_DBModel.tbl_Register">
               <MappingFragment StoreEntitySet="tbl_Register">
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
                 <ScalarProperty Name="RegId_pk" ColumnName="RegId_pk" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -112,6 +498,178 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="NCD_DBModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="NCD_DBModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Block_Master">
+            <EntityTypeMapping TypeName="NCD_DBModel.Block_Master">
+              <MappingFragment StoreEntitySet="Block_Master">
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHC_Master">
+            <EntityTypeMapping TypeName="NCD_DBModel.CHC_Master">
+              <MappingFragment StoreEntitySet="CHC_Master">
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CHCN" ColumnName="CHCN" />
+                <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="CHCId" ColumnName="CHCId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="District_Master">
+            <EntityTypeMapping TypeName="NCD_DBModel.District_Master">
+              <MappingFragment StoreEntitySet="District_Master">
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistrictBlock_Master">
+            <EntityTypeMapping TypeName="NCD_DBModel.DistrictBlock_Master">
+              <MappingFragment StoreEntitySet="DistrictBlock_Master">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="household_name" ColumnName="household_name" />
+                <ScalarProperty Name="household_id" ColumnName="household_id" />
+                <ScalarProperty Name="screening_type" ColumnName="screening_type" />
+                <ScalarProperty Name="village_id" ColumnName="village_id" />
+                <ScalarProperty Name="village_name" ColumnName="village_name" />
+                <ScalarProperty Name="panchayat_id" ColumnName="panchayat_id" />
+                <ScalarProperty Name="panchayat_name" ColumnName="panchayat_name" />
+                <ScalarProperty Name="sc_id" ColumnName="sc_id" />
+                <ScalarProperty Name="sc_name" ColumnName="sc_name" />
+                <ScalarProperty Name="phc_id" ColumnName="phc_id" />
+                <ScalarProperty Name="phc_name" ColumnName="phc_name" />
+                <ScalarProperty Name="chc_id" ColumnName="chc_id" />
+                <ScalarProperty Name="chc_name" ColumnName="chc_name" />
+                <ScalarProperty Name="block_id" ColumnName="block_id" />
+                <ScalarProperty Name="block_name" ColumnName="block_name" />
+                <ScalarProperty Name="volunteer_mobile" ColumnName="volunteer_mobile" />
+                <ScalarProperty Name="volunteer_name" ColumnName="volunteer_name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GP_Master">
+            <EntityTypeMapping TypeName="NCD_DBModel.GP_Master">
+              <MappingFragment StoreEntitySet="GP_Master">
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="GP" ColumnName="GP" />
+                <ScalarProperty Name="SubCenterId" ColumnName="SubCenterId" />
+                <ScalarProperty Name="PHCId" ColumnName="PHCId" />
+                <ScalarProperty Name="CHCId" ColumnName="CHCId" />
+                <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="GPId" ColumnName="GPId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PHC_Master">
+            <EntityTypeMapping TypeName="NCD_DBModel.PHC_Master">
+              <MappingFragment StoreEntitySet="PHC_Master">
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PHC" ColumnName="PHC" />
+                <ScalarProperty Name="CHCId" ColumnName="CHCId" />
+                <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="PHCId" ColumnName="PHCId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_Emp">
+            <EntityTypeMapping TypeName="NCD_DBModel.TBL_Emp">
+              <MappingFragment StoreEntitySet="TBL_Emp">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Panchayat_Other" ColumnName="Panchayat_Other" />
+                <ScalarProperty Name="Panchayat" ColumnName="Panchayat" />
+                <ScalarProperty Name="Other_Vo" ColumnName="Other_Vo" />
+                <ScalarProperty Name="Village" ColumnName="Village" />
+                <ScalarProperty Name="BlockID" ColumnName="BlockID" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="RoleID_fk" ColumnName="RoleID_fk" />
+                <ScalarProperty Name="UserID_fk" ColumnName="UserID_fk" />
+                <ScalarProperty Name="EmpID_pk" ColumnName="EmpID_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_RegMappping">
+            <EntityTypeMapping TypeName="NCD_DBModel.tbl_RegMappping">
+              <MappingFragment StoreEntitySet="tbl_RegMappping">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="VillageId_fk" ColumnName="VillageId_fk" />
+                <ScalarProperty Name="GPId_fk" ColumnName="GPId_fk" />
+                <ScalarProperty Name="SubCenterId_fk" ColumnName="SubCenterId_fk" />
+                <ScalarProperty Name="PHCId_fk" ColumnName="PHCId_fk" />
+                <ScalarProperty Name="CHCId_fk" ColumnName="CHCId_fk" />
+                <ScalarProperty Name="BlockId_fk" ColumnName="BlockId_fk" />
+                <ScalarProperty Name="DistrictId_fk" ColumnName="DistrictId_fk" />
+                <ScalarProperty Name="RegId_fk" ColumnName="RegId_fk" />
+                <ScalarProperty Name="MapDate" ColumnName="MapDate" />
+                <ScalarProperty Name="RegMapId_pk" ColumnName="RegMapId_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="NCD_DBModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

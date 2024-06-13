@@ -22,7 +22,7 @@ namespace NCDNewMIS.Models
         public static DataSet SPLoginCheck1(LoginModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_LoginCheck1");
-            sp.Command.AddParameter("@MobileNo", model.UserName, DbType.String);
+            sp.Command.AddParameter("@MobileNo", model.MobileNo, DbType.String);
             sp.Command.AddParameter("@Password", model.Password, DbType.String);
             sp.Command.AddParameter("@Version", model.Version, DbType.String);
             DataSet dt = sp.ExecuteDataSet();

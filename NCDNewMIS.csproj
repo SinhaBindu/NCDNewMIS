@@ -663,6 +663,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JS\HighChart.js" />
     <Content Include="Scripts\JS\Chart.js" />
     <Content Include="Scripts\JS\Export.js" />
     <Content Include="Scripts\JS\MapDistrict.js" />
@@ -721,6 +722,9 @@
     <Content Include="Views\Home\SubmissionData.cshtml" />
     <Content Include="Views\Home\RegApprove.cshtml" />
     <Content Include="Views\Home\_RegApproveData.cshtml" />
+    <Content Include="Views\Home\_RBSData.cshtml" />
+    <Content Include="Views\Home\HighData.cshtml" />
+    <Content Include="Views\Home\_HYTData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,198 @@
+﻿@model NCDNewMIS.Models.FilterModel
+@{
+    ViewBag.Title = "Hypertension & Blood sugar level (high or very high)";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "Hypertension & Blood sugar";
+    ViewBag.SemiTitleLink = "/";
+    DateTime now = DateTime.Now;
+    var startDate = new DateTime(now.Year, now.Month, 1);
+    var endDate = startDate.AddMonths(1).AddDays(-1);
+}
+<style>
+    #report-map {
+        width: 480px !important
+    }
+
+    ul.b {
+        list-style-type: square;
+        font-size: 16px;
+        margin-left: 5px;
+    }
+</style>
+<!-- Content body start -->
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-lg flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4>@ViewBag.Title</h4>
+            <button type="button" id="div-download1" 
+                    @*onclick="return ExcelReportData('tbl1');"*@
+                    class="btn btn-secondary py-[0.579rem] px-4 text-[13px]
+                    font-medium rounded-lg bg-secondary leading-5 inline-block
+                    border border-secondary duration-500 hover:bg-[#ff798a]
+                    hover:text-white hover:border-secondary-light text-white
+                    sm:ml-auto mb-2 sm:mb-0">
+                Export To Excel (Hypertension)
+            </button>
+            <button type="button" id="div-download2" 
+                    @*onclick="return ExcelReportData('tbl2');"*@
+                    class="btn btn-secondary py-[0.579rem] px-4 text-[13px]
+        font-medium rounded-lg bg-secondary leading-5 inline-block
+        border border-secondary duration-500 hover:bg-[#ff798a]
+        hover:text-white hover:border-secondary-light text-white
+        sm:ml-auto mb-2 sm:mb-0">
+                Export To Excel (Blood Sugar)
+            </button>
+
+            <div class="col-md-12">
+                <br />
+                <ul class="b">
+                    <li class="text-red">. Elevated blood pressure (Systolic ?140 mm of Hg and/or Diastolic ?90 mm of Hg) or taking medicine to control blood pressure (%)<i class="fa-solid fa-heart-pulse text-danger text-3xl"></i></li>
+                    <li class="text-warning">. Blood sugar level - high or very high (>140 mg/dl) or taking medicine to control blood sugar level (%) <i class="fa-solid fa-syringe text-danger text-3xl"></i></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <strong id="msg"></strong>
+            </div>
+            <div class="lg:w-1/2">
+                <div class="card">
+
+                    @using (Html.BeginForm("GetHighData", "Home", FormMethod.Post, new { @id = "tblList-frm", @class = "panel-body form-horizontal form-padding loader" }))
+                    {
+                        <div class="filter cm-content-box box-primary relative rounded-lg mb-0 bg-white dark:bg-[#1b1b1b]" style="display:none">
+                            <div class="content form excerpt border-b-color dark:border-[#ffffff1a]">
+                                <div>
+                                    <div class="border-all">
+                                        <div class="xl:w-1/4 sm:w-1/2 w-full mb-4 xl:mb-0" style="display:none;">
+                                            <label class="form-label">Screening Type</label>
+                                            <select class="form-control" name="SType" id="SType">
+                                                @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div id="subHYTchart" style="width:500px;height:400px;">
+                    </div>
+                    <br />
+                    <div id="subRBSchart" style="width: 500px; height: 400px;">
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-1/2">
+                <div class="card dz-card dz-tab-area">
+                    <br />
+                    <div class="card-body p-[1.875rem]">
+                        @*style="border:1px solid #0094ff;margin:auto;"*@
+                        <div id="HYTdata" class="">
+                        </div>
+                        <hr style="border: 3px solid #038df1; margin-top: 7%; margin-bottom: 4%; font-weight: bold;" />
+                        <div id="RBSdata" class="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/dumbbell.js"></script>
+    <script src="https://code.highcharts.com/modules/lollipop.js"></script>
+
+    <script src="~/Scripts/JS/HighChart.js"></script>
+    <script src="~/Scripts/JS/Export.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            LoadReport();
+            $('#SType').change(function () {
+                LoadReport();
+            })
+        });
+        function LoadReport() {
+            $('#msg').html("");
+            $('#HYTdata').html(""); $("#subHYTchart").html("");
+            $('#RBSdata').html(""); $("#subRBSchart").html("");
+            var id = '#tblList-frm'
+            var url = $(id).attr("action");
+            var SType = $("#SType").val();
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: { SType: SType },
+                success: function (resp) {
+                    if (resp.IsSuccess) {
+                        //debugger;
+                        var resDH = JSON.parse(resp.HYData);
+                        var resDB = JSON.parse(resp.BSData);
+                        ChartHSub(resDH); ChartBsub(resDB);
+                        $('#HYTdata').html(resp.HYreshtml);
+                        $('#RBSdata').html(resp.BSreshtml);
+                        if ($.fn.dataTable.isDataTable('#tbl1')) {
+                            $("#tbl1").dataTable().fnDestroy();
+                        }
+                        table = $('#tbl1').DataTable({
+                            paging: false,
+                            pageLength: 100,
+                            buttons: [{
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i>Export To Excel (Hypertension)</span> ', title: 'Hypertension Level',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                className: 'text-white',
+                                filename: 'Data List (Hypertension)',
+                                exportOptions: { modifier: { page: 'all' } }
+                            }],
+                        });
+                        $('#div-download1').empty();
+                        table.buttons().container().appendTo($('#div-download1'));
+
+                        if ($.fn.dataTable.isDataTable('#tbl2')) {
+                            $("#tbl2").dataTable().fnDestroy();
+                        }
+                        table2 = $('#tbl2').DataTable({
+                            paging: false,
+                            pageLength: 100,
+                            buttons: [{
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i>Export To Excel (Blood Sugar)</span> ', title: 'Blood Sugar Level',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                className: 'text-white',
+                                filename: 'Data List (Blood Sugar)',
+                                exportOptions: { modifier: { page: 'all' } }
+                            }],
+                        });
+                        $('#div-download2').empty();
+                        table2.buttons().container().appendTo($('#div-download2'));
+                    }
+                    else {
+                        $('#msg').html('<h4 class="text-danger">Record Not Found !!</h4>');
+                    }
+                },
+                error: function (req, error) {
+                    if (error === 'error') { error = req.statusText; }
+                    var errormsg = 'There was a communication error: ' + error;
+                    $('#msg').html(errormsg);
+                }
+            });
+        }
+
+    </script>
+}

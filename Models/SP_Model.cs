@@ -22,7 +22,7 @@ namespace NCDNewMIS.Models
         public static DataSet SPLoginCheck1(LoginModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_LoginCheck1");
-            sp.Command.AddParameter("@MobileNo", model.MobileNo, DbType.String);
+            sp.Command.AddParameter("@UserName", model.UserName, DbType.String);
             sp.Command.AddParameter("@Password", model.Password, DbType.String);
             sp.Command.AddParameter("@Version", model.Version, DbType.String);
             DataSet dt = sp.ExecuteDataSet();
@@ -97,6 +97,13 @@ namespace NCDNewMIS.Models
             StoredProcedure sp = new StoredProcedure("Usp_DistBlockWiseData");
             sp.Command.AddParameter("@flg", model.DistrictBlockType, DbType.Int16);
             sp.Command.AddParameter("@RoundType", model.RoundType, DbType.String);
+            sp.Command.AddParameter("@SType", model.SType, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
+        public static DataSet SP_ACT2High(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_ACT2High");
             sp.Command.AddParameter("@SType", model.SType, DbType.String);
             DataSet ds = sp.ExecuteDataSet();
             return ds;

@@ -255,20 +255,6 @@ namespace NCDNewMIS.Controllers
                 return writer.ToString();
             }
         }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         public ActionResult SubmissionData()
         {
             return View();
@@ -321,5 +307,60 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
             }
         }
+        public ActionResult HighData()
+        {
+            return View();
+        }
+        public ActionResult GetHighData(string SType)
+        {
+            DataSet ds = new DataSet();
+            FilterModel filterModel = new FilterModel();
+            filterModel.SType = SType;
+            try
+            {
+                ds = SP_Model.SP_ACT2High(filterModel);
+                if (ds.Tables.Count > 0)
+                {
+                    DataTable dt = ds.Tables[0];
+                    DataTable dt1 = ds.Tables[1];
+                    var resdtHY = JsonConvert.SerializeObject(dt);
+                    var resdtBS = JsonConvert.SerializeObject(dt1);
+                    var HYThtml = ConvertViewToString("_HYTData", dt);
+                    var RBShtml = ConvertViewToString("_RBSData", dt1);
+                    if (dt.Rows.Count > 0)
+                    {
+                        var res = Json(new
+                        {
+                            IsSuccess = true,
+                            HYData = resdtHY,
+                            BSData = resdtBS,
+                            HYreshtml = HYThtml,
+                            BSreshtml = RBShtml
+                        }, JsonRequestBehavior.AllowGet);
+                        res.MaxJsonLength = int.MaxValue;
+                        return res;
+
+                    }
+                    else
+                    {
+                        var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                        res.MaxJsonLength = int.MaxValue;
+                        return res;
+                    }
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+
     }
 }

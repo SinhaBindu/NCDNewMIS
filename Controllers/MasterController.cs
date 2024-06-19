@@ -41,62 +41,62 @@ namespace NCDNewMIS.Controllers
             {
                 //if (!string.IsNullOrWhiteSpace(strtoken))
                 //{
-                    if ((accessToken).ToLower() == (strtoken).ToLower())
+                if ((accessToken).ToLower() == (strtoken).ToLower())
+                {
+                    DataSet ds = new DataSet();
+                    ds = SP_Model.SPLoginCheck1(model);
+                    string RetVal = string.Empty;
+                    string jsval = string.Empty;
+                    string jsval2 = string.Empty;
+                    for (int i = 0; i < ds.Tables.Count; i++)
                     {
-                        DataSet ds = new DataSet();
-                        ds = SP_Model.SPLoginCheck1(model);
-                        string RetVal = string.Empty;
-                        string jsval = string.Empty;
-                        string jsval2 = string.Empty;
-                        for (int i = 0; i < ds.Tables.Count; i++)
+                        for (int j = 0; j < ds.Tables[i].Rows.Count; j++)
                         {
-                            for (int j = 0; j < ds.Tables[i].Rows.Count; j++)
-                            {
-                                jsval = jsval + ds.Tables[i].Rows[j].ItemArray[0].ToString();
-                            }
-                            jsval = jsval.Remove(0, 1).Split(']')[0];
-                            jsval = jsval + "],";
-                            jsval2 = jsval2 + jsval;
-                            jsval = string.Empty;
+                            jsval = jsval + ds.Tables[i].Rows[j].ItemArray[0].ToString();
                         }
-                        jsval = "{" + jsval2.Remove(jsval2.Length - 1, 1) + "}";
-
-                        //if (dt.Rows.Count > 0)
-                        //{
-                        //    tbl_Login tbl = new tbl_Login();
-                        //    tbl.RegMapId_fk = Convert.ToInt32(dt.Rows[0]["RegMapId_pk"].ToString());
-                        //    tbl.RegId_fk =Convert.ToInt32(dt.Rows[0]["RegId_pk"].ToString());
-                        //    tbl.UserName = model.UserName;
-                        //    tbl.Password = model.Password;
-                        //    tbl.Version = model.Version;
-                        //    tbl.IsActive = true;
-                        //    tbl.CreatedBy = dt.Rows[0]["RegMapId_pk"].ToString();  
-                        //    tbl.CreatedOn= DateTime.Now;
-                        //    db_.tbl_Login.Add(tbl);
-                        //    int res = await db_.SaveChangesAsync();
-                        //    if (res > 0)
-                        //    {
-                        //        strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginsuccess);
-                        //        return Json(strMsg, JsonRequestBehavior.AllowGet);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginfailed);
-                        //    return Json(strMsg, JsonRequestBehavior.AllowGet);
-                        //}
-
-                       // strMsg = jsval;
-
-                        // strMsg = jsval;
-
-                        return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
+                        jsval = jsval.Remove(0, 1).Split(']')[0];
+                        jsval = jsval + "],";
+                        jsval2 = jsval2 + jsval;
+                        jsval = string.Empty;
                     }
-                    else
-                    {
-                        strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityToken);
-                        return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
-                    }
+                    jsval = "{" + jsval2.Remove(jsval2.Length - 1, 1) + "}";
+
+                    //if (dt.Rows.Count > 0)
+                    //{
+                    //    tbl_Login tbl = new tbl_Login();
+                    //    tbl.RegMapId_fk = Convert.ToInt32(dt.Rows[0]["RegMapId_pk"].ToString());
+                    //    tbl.RegId_fk =Convert.ToInt32(dt.Rows[0]["RegId_pk"].ToString());
+                    //    tbl.UserName = model.UserName;
+                    //    tbl.Password = model.Password;
+                    //    tbl.Version = model.Version;
+                    //    tbl.IsActive = true;
+                    //    tbl.CreatedBy = dt.Rows[0]["RegMapId_pk"].ToString();  
+                    //    tbl.CreatedOn= DateTime.Now;
+                    //    db_.tbl_Login.Add(tbl);
+                    //    int res = await db_.SaveChangesAsync();
+                    //    if (res > 0)
+                    //    {
+                    //        strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginsuccess);
+                    //        return Json(strMsg, JsonRequestBehavior.AllowGet);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.Loginfailed);
+                    //    return Json(strMsg, JsonRequestBehavior.AllowGet);
+                    //}
+
+                    // strMsg = jsval;
+
+                    // strMsg = jsval;
+
+                    return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    strMsg = CommonModel.GetEnumDisplayName(Enums.AlterMsg.SecurityToken);
+                    return strMsg;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
+                }
                 //}
                 //else
                 //{
@@ -134,24 +134,24 @@ namespace NCDNewMIS.Controllers
             }
             try
             {
-                    DataTable dt = new DataTable();
-                    dt = SP_Model.SP_RegLocation(model);
-                    string RetVal = string.Empty;
-                    string jsval = string.Empty;
-                    string jsval2 = string.Empty;
-               
-                    for (int j = 0; j < dt.Rows.Count; j++)
-                    {
-                        jsval = jsval + dt.Rows[j].ItemArray[0].ToString();
-                    }
-                    jsval = jsval.Remove(0, 1).Split(']')[0];
-                    jsval = jsval + "],";
-                    jsval2 = jsval2 + jsval;
-                    jsval = string.Empty;
-                
+                DataTable dt = new DataTable();
+                dt = SP_Model.SP_RegLocation(model);
+                string RetVal = string.Empty;
+                string jsval = string.Empty;
+                string jsval2 = string.Empty;
+
+                for (int j = 0; j < dt.Rows.Count; j++)
+                {
+                    jsval = jsval + dt.Rows[j].ItemArray[0].ToString();
+                }
+                jsval = jsval.Remove(0, 1).Split(']')[0];
+                jsval = jsval + "],";
+                jsval2 = jsval2 + jsval;
+                jsval = string.Empty;
+
                 jsval = "{" + jsval2.Remove(jsval2.Length - 1, 1) + "}";
                 return jsval;
-               
+
             }
             catch (Exception ex)
             {
@@ -163,7 +163,7 @@ namespace NCDNewMIS.Controllers
         [AllowAnonymous]
         [HttpPost]
         [EnableCors("*")]
-        public async Task<string> JsonPostData(string UserName,string Password,string Version, string JsonData)
+        public async Task<string> JsonPostData(string UserName, string Password, string Version, string JsonData)
         {
             var accessToken = "";// HttpContext.Request.Headers["Authorization"];
             NCD_DBEntities db_ = new NCD_DBEntities();
@@ -188,7 +188,7 @@ namespace NCDNewMIS.Controllers
                 if ((accessToken).ToLower() == (strtoken).ToLower())
                 {
                     DataTable dt = new DataTable();
-                     dt = SP_Model.SP_JsonPostData(model);
+                    dt = SP_Model.SP_JsonPostData(model);
                     string RetVal = string.Empty;
                     string jsval = string.Empty;
                     string jsval2 = string.Empty;
@@ -254,34 +254,38 @@ namespace NCDNewMIS.Controllers
             }
             try
             {
-                    DataTable dt = new DataTable();
-                    dt = SP_Model.uspRegistration(model);
-                    string RetVal = string.Empty;
-                    string jsval = string.Empty;
-                    string jsval2 = string.Empty;
-                    int i = 0;
-                    i = Convert.ToInt32(dt.Rows[0][0]);
-                    if (i > 0)
+                DataTable dt = new DataTable();
+                dt = SP_Model.uspRegistration(model);
+                string RetVal = string.Empty;
+                string jsval = string.Empty;
+                string jsval2 = string.Empty;
+                int i = 0;
+                i = Convert.ToInt32(dt.Rows[0][0]);
+                if (i > 0)
+                {
+                    jsval = "{\"Table\":[{\"RetValue\":\"Success\"}]}";
+                }
+                else
+                {
+                    if (i == -2)
                     {
-                        jsval = "{\"Table\":[{\"RetValue\":\"Success\"}]}";
+                        jsval = "{\"Table\":[{\"RetValue\":\"Already Mobile No\"}]}";
+                    }
+                    else if (i == -1)
+                    {
+                        jsval = "{\"Table\":[{\"RetValue\":\"Already Mobile No\"}]}";
+                    }
+                    else if (i == -3)
+                    {
+                        jsval = "{\"Table\":[{\"RetValue\":\"Invalid User\"}]}";
                     }
                     else
                     {
-                        if (i == -2)
-                        {
-                            jsval = "{\"Table\":[{\"RetValue\":\"Already Mobile No\"}]}";
-                        }
-                        else if (i == -3)
-                        {
-                            jsval = "{\"Table\":[{\"RetValue\":\"Invalid User\"}]}";
-                        }
-                        else
-                        {
-                            jsval = "{\"Table\":[{\"RetValue\":\"Failed\"}]}";
-                        }
+                        jsval = "{\"Table\":[{\"RetValue\":\"Failed\"}]}";
                     }
-                    return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
-               
+                }
+                return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
+
             }
             catch (Exception ex)
             {

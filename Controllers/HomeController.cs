@@ -18,6 +18,10 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
+        public ActionResult Gallery()
+        {
+            return View();
+        }
         public ActionResult GetDataRowList()
         {
             DataSet ds = new DataSet();

@@ -593,6 +593,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\smartphoto.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -670,6 +671,7 @@
     <Content Include="Scripts\JS\Mapbundle.js" />
     <Content Include="Scripts\JS\Master.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\smartphoto.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -725,6 +727,7 @@
     <Content Include="Views\Home\_RBSData.cshtml" />
     <Content Include="Views\Home\HighData.cshtml" />
     <Content Include="Views\Home\_HYTData.cshtml" />
+    <Content Include="Views\Home\Gallery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -22,6 +22,10 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
+        public ActionResult Financial()
+        {
+            return View();
+        }
         public ActionResult GetDataRowList(string SType)
         {
             DataSet ds = new DataSet();

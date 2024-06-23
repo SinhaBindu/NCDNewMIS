@@ -728,6 +728,7 @@
     <Content Include="Views\Home\HighData.cshtml" />
     <Content Include="Views\Home\_HYTData.cshtml" />
     <Content Include="Views\Home\Gallery.cshtml" />
+    <Content Include="Views\Home\Financial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

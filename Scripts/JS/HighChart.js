@@ -41,12 +41,12 @@ function ChartHSub(Data) {
             // colors: ['#C79D6D', '#B5927B', '#CE9B84', '#B7A58C', '#C7A58C'],
             colors: ['#2caffe'],
             xAxis: {
-                crosshair: true,
-                labels: {
-                    style: {
-                        fontSize: '14px'
-                    }
-                },
+                //crosshair: true,
+                //labels: {
+                //    style: {
+                //        fontSize: '14px'
+                //    }
+                //},
                 type: 'category'
             },
             yAxis: {
@@ -55,9 +55,9 @@ function ChartHSub(Data) {
                     text: 'No.of Members'
                 }
             },
-            tooltip: {
-                valueSuffix: ' m'
-            },
+            //tooltip: {
+            //    valueSuffix: ' m'
+            //},
             series: [{
                 name: 'Members',
                 //colorByPoint: true,
@@ -66,11 +66,11 @@ function ChartHSub(Data) {
                 dataLabels: {
                     enabled: true,
                     //rotation: -50,
-                    color: '#FFFFFF',
+                    color: '#000000',
                     align: 'right',
                     y: 10, // 10 pixels down from the top
                     style: {
-                        fontSize: '10px',
+                        fontSize: '14px',
                         fontFamily: 'helvetica, arial, sans-serif',
                         textShadow: false,
                         fontWeight: 'normal'
@@ -123,9 +123,12 @@ function ChartBsub(Data) {
             credits: {
                 enabled: false
             },
-            tooltip: {
-                shared: true
-            },
+            //tooltip: {
+            //    shared: true
+            //},
+              //tooltip: {
+            //    valueSuffix: ' m'
+            //},
 
             xAxis: {
                 type: 'category'
@@ -185,13 +188,13 @@ function ChartBsub(Data) {
                 dataLabels: {
                     enabled: true,
                     //rotation: -50,
-                    color: '#FFFFFF',
+                    color: '#000000',
                     align: 'right',
                     y: 10, // 10 pixels down from the top
                     style: {
-                        fontSize: '10px',
+                        fontSize: '14px',
                         fontFamily: 'helvetica, arial, sans-serif',
-                        textShadow: false,
+                        //textShadow: false,
                         fontWeight: 'normal'
 
                     }

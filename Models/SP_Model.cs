@@ -57,9 +57,10 @@ namespace NCDNewMIS.Models
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
-        public static DataSet SP_RowDataShow()
+        public static DataSet SP_RowDataShow(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_RowDataShow");
+            sp.Command.AddParameter("@SType", model.SType, DbType.String);
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }

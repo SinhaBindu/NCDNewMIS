@@ -1,8 +1,8 @@
 ﻿@model NCDNewMIS.Models.FilterModel
 @{
-    ViewBag.Title = "Block Wise Submissions";
+    ViewBag.Title = "Submission Data";
     ViewBag.TitleIcon = "fa fa-user";
-    ViewBag.SemiTitle = "Block Wise Submissions";
+    ViewBag.SemiTitle = "Submission Data";
     ViewBag.SemiTitleLink = "/";
     DateTime now = DateTime.Now;
     var startDate = new DateTime(now.Year, now.Month, 1);
@@ -10,7 +10,7 @@
 }
 <style>
     #report-map {
-       width: 480px !important
+        width: 480px !important
     }
 </style>
 <!-- Content body start -->
@@ -19,160 +19,159 @@
         <!-- Row -->
         <div class="page-titles dark:bg-[#1b1b1b] rounded-lg flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
             <h4>@ViewBag.Title</h4>
-            <button type="button" id="div-download" onclick="ExcelReport();" 
-                    class="btn btn-secondary py-[0.579rem] px-4 text-[13px] 
-                    font-medium rounded-lg bg-secondary leading-5 inline-block 
-                    border border-secondary duration-500 hover:bg-[#ff798a] 
-                    hover:text-white hover:border-secondary-light text-white 
-                    sm:ml-auto mb-2 sm:mb-0">Export To Excel</button>
+            <button type="button" id="div-download" title="Click here to Download To Excel">Export To Excel</button>
         </div>
         <div class="row">
-            <div class="lg:w-1/2">
-                <div class="card">
-                    @using (Html.BeginForm("GetSubmissionData", "Home", FormMethod.Post, new { @id = "tblList-frm", @class = "panel-body form-horizontal form-padding loader" }))
-                    {
-                        <div class="filter cm-content-box box-primary relative rounded-lg mb-0 bg-white dark:bg-[#1b1b1b]">
-                            <div class="content form excerpt border-b-color dark:border-[#ffffff1a]">
-                                <div>
-                                    <div class="border-all">
-                                        <div class="xl:w-1/4 sm:w-1/2 w-full mb-4 xl:mb-0" style="display:none;">
-                                            <label class="form-label">Type</label>
-                                            <select class="form-control" name="DistrictBlockType" id="DistrictBlockType">
-                                                @foreach (var item in NCDNewMIS.Models.CommonModel.GetDistrictBlockType().ToList())
-                                                {
-                                                    <option value="@item.Value">@item.Text</option>
-                                                }
-                                            </select>
-                                        </div>
-                                        <div class="xl:w-1/4 sm:w-1/2 w-full mb-4 xl:mb-0" style="display:none">
-                                            <label class="form-label">Round Type</label>
-                                            <select class="form-control" name="RoundType" id="RoundType">
-                                                @foreach (var item in NCDNewMIS.Models.CommonModel.GetRoundType(true).ToList())
-                                                {
-                                                    <option value="@item.Value">@item.Text</option>
-                                                }
-                                            </select>
-                                        </div>
-                                        <div class="xl:w-1/4 sm:w-1/2 w-full mb-4 xl:mb-0">
-                                            <label class="form-label">Screening Type</label>
-                                            <select class="form-control" name="SType" id="SType">
-                                                @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
-                                                {
-                                                    <option value="@item.Value">@item.Text</option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div id="subchart" style="width:400px;height:400px;">
-                                    </div>
-                                    @*<div id="resultmap"></div>*@
-                                </div>
-                            </div>
-                        </div>
-                    }
+            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
+                <div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
+                    <div class="cpa text-dark dark:text-white text-base font-semibold">
+                        <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+                    </div>
                 </div>
-            </div>
-            <div class="lg:w-1/2">
-                <div class="card dz-card dz-tab-area">
-                    <br />
-                    <div class="card-body p-[1.875rem]">
-                        <div id="result">
+                <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
+                    <div class="p-[1.875rem] max-sm:p-4">
+                        <div class="row">
+
+                            <div class="xl:w-1/5 sm:w-1/3 w-full" style="display:none;">
+                                <label class="">Type of submission</label>
+                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="DistrictBlockType" id="DistrictBlockType">
+                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetDistrictBlockType().ToList())
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="xl:w-1/5 sm:w-1/3 w-full" style="display:none;">
+                                <label class="form-label">Type of round</label>
+                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="RoundType" id="RoundType">
+                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetRoundType(true).ToList())
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="xl:w-1/4 sm:w-1/2 w-full">
+                                <label class="form-label">Screening Type</label>
+                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="SType" id="SType">
+                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="w-full">
+                <div class="row">
+                    <div class="xl:w-1/3">
+                        <div id="subchart" style="width:300px;height:400px;">
+                        </div>
+                    </div>
+                    <div class="xl:w-2/3 bg-white">
+                        <div id="result"></div>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
 
-@section Scripts
+    @section Scripts
 {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
-    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
-    <script src="~/Scripts/JS/Chart.js"></script>
-    <script src="~/Scripts/JS/Export.js"></script>
+        @Scripts.Render("~/bundles/jqueryval")
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
+        <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+        <script src="~/Scripts/JS/Chart.js"></script>
+        <script src="~/Scripts/JS/Export.js"></script>
 
+        <script>
 
-    <script>
+            $(document).ready(function () {
 
-        $(document).ready(function () {
-
-            LoadReport();
-
-            $('#SType').change(function () {
                 LoadReport();
-            })
-            $('#RoundType').change(function () {
-                LoadReport();
-            })
-            $('#DistrictBlockType').change(function () {
-                LoadReport();
-            })
 
-        });
-        function LoadReport() {
-            $('#result').html(""); $("#subchart").html("");
-            var id = '#tblList-frm'
-            var url = $(id).attr("action");
-            var SType = $("#SType").val();
-            var RoundType = $("#RoundType").val();
-            var DistrictBlockType = $("#DistrictBlockType").val();
-            $.ajax({
-                url: url,
-                type: "POST",
-                data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType },
-                success: function (resp) {
-                    if (resp.IsSuccess) {
-                        debugger;
-                        // $('#resultmap').html(resp.Datahtml);
-                        var resD = JSON.parse(resp.resData);
-                        ChartDistBlockSub(resD);
-                        $('#result').html(resp.reshtml);
-                        //if ($.fn.dataTable.isDataTable('#tbl')) {
-                        //    $("#tbl").dataTable().fnDestroy();
-                        //}
-                        //table = $('#tbl').DataTable({
-                        //    //scrollY: "500px",
-                        //    //scrollX: true,
-                        //    //fixedHeader: true,
-                        //    //scrollCollapse: true,
-                        //    paging: false,
-                        //    pageLength: 100,
-                        //    //fixedColumns: {
-                        //    //    leftColumns: 1,
-                        //    //    rightColumns: 1
-                        //    //},
-                        //    buttons: [{
-                        //        extend: 'excel', text: '<span><i class="fa fa-download"></i>Export To Excel</span> ', title: 'Data Lists',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
-                        //        className: 'text-white',
-                        //        filename: 'Data List',
-                        //        exportOptions: { modifier: { page: 'all' } }
-                        //    }],
-                        //});
-                        ////$('.dataTables_filter input[type="search"]').css(
-                        ////    { 'width': '500px', 'display': 'inline-block' }
-                        ////);
-                        //$('#div-download').empty();
-                        //table.buttons().container().appendTo($('#div-download'));
-                    }
-                    else {
-                        $('#result').html('<h4 class="text-danger">Record Not Found !!</h4>');
-                    }
-                },
-                error: function (req, error) {
-                    if (error === 'error') { error = req.statusText; }
-                    var errormsg = 'There was a communication error: ' + error;
-                    $('#result').html(errormsg);
-                }
+                $('#SType').change(function () {
+                    LoadReport();
+                })
+                $('#RoundType').change(function () {
+                    LoadReport();
+                })
+                $('#DistrictBlockType').change(function () {
+                    LoadReport();
+                })
+
             });
-        }
-        
+            function LoadReport() {
+                $('#result').html(""); $("#subchart").html("");
+                var id = '#tblList-frm'
+                var url = $(id).attr("action");
+                var SType = $("#SType").val();
+                var RoundType = $("#RoundType").val();
+                var DistrictBlockType = $("#DistrictBlockType").val();
+                $.ajax({
+                    url: document.baseURI + '/Home/GetSubmissionData',
+                    //url: url,
+                    type: "POST",
+                    data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType },
+                    success: function (resp) {
+                        if (resp.IsSuccess) {
+                            debugger;
+                            // $('#resultmap').html(resp.Datahtml);
+                            var resD = JSON.parse(resp.resData);
+                            ChartDistBlockSub(resD);
+                            $('#result').html(resp.reshtml);
+                            if ($.fn.dataTable.isDataTable('#tbl')) {
+                                $("#tbl").dataTable().fnDestroy();
+                            }
+                            table = $('#tbl').DataTable({
+                                //scrollY: "500px",
+                                //scrollX: true,
+                                //fixedHeader: true,
+                                //scrollCollapse: true,
+                                paging: false,
+                                "bFilter": false,
+                                pageLength: 100,
+                                //fixedColumns: {
+                                //    leftColumns: 1,
+                                //    rightColumns: 1
+                                //},
+                                buttons: [{
+                                    extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Data Lists',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                    className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
+                                    filename: 'Data List',
+                                    exportOptions: { modifier: { page: 'all' } }
+                                }],
+                            });
+                            //$('.dataTables_filter input[type="search"]').css(
+                            //    { 'width': '500px', 'display': 'inline-block' }
+                            //);
+                            $('#div-download').empty();
+                            table.buttons().container().appendTo($('#div-download'));
+                        }
+                        else {
+                            $('#result').html('<h4 class="text-danger">Record Not Found !!</h4>');
+                        }
+                    },
+                    error: function (req, error) {
+                        if (error === 'error') { error = req.statusText; }
+                        var errormsg = 'There was a communication error: ' + error;
+                        $('#result').html(errormsg);
+                    }
+                });
+            }
 
-    </script>
-}
+
+        </script>
+    }

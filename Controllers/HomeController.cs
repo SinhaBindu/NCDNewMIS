@@ -22,14 +22,16 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult GetDataRowList()
+        public ActionResult GetDataRowList(string SType)
         {
             DataSet ds = new DataSet();
             DataTable tbllist = new DataTable();
             var html = "";
+            FilterModel filterModel = new FilterModel();
+            filterModel.SType = SType;
             try
             {
-                ds = SP_Model.SP_RowDataShow();
+                ds = SP_Model.SP_RowDataShow(filterModel);
                 bool IsCheck = false;
                 if (ds.Tables.Count > 0)
                 {
@@ -122,6 +124,7 @@ namespace NCDNewMIS.Controllers
             filterModel.DistrictBlockType = DistrictBlockType; filterModel.RoundType = RoundType; filterModel.SType = SType;
             ds = SP_Model.SP_IndicatorData(filterModel);
             ViewBag.DistrictBlockType = DistrictBlockType;
+            ViewBag.RoundType = RoundType;
             try
             {
                 if (ds.Tables.Count > 0)

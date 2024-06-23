@@ -25,29 +25,17 @@
         <!-- Row -->
         <div class="page-titles dark:bg-[#1b1b1b] rounded-lg flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
             <h4>@ViewBag.Title</h4>
-            <button type="button" id="div-download1" 
-                    @*onclick="return ExcelReportData('tbl1');"*@
-                    class="btn btn-secondary py-[0.579rem] px-4 text-[13px]
-                    font-medium rounded-lg bg-secondary leading-5 inline-block
-                    border border-secondary duration-500 hover:bg-[#ff798a]
-                    hover:text-white hover:border-secondary-light text-white
-                    sm:ml-auto mb-2 sm:mb-0">
-                Export To Excel (Hypertension)
+            <button type="button" style="font-size:12px;" id="div-download1" title="Click here to Download To Excel (Hypertension)">
+                Download (Hypertension)
             </button>
-            <button type="button" id="div-download2" 
-                    @*onclick="return ExcelReportData('tbl2');"*@
-                    class="btn btn-secondary py-[0.579rem] px-4 text-[13px]
-        font-medium rounded-lg bg-secondary leading-5 inline-block
-        border border-secondary duration-500 hover:bg-[#ff798a]
-        hover:text-white hover:border-secondary-light text-white
-        sm:ml-auto mb-2 sm:mb-0">
-                Export To Excel (Blood Sugar)
+            <button type="button" id="div-download2" title="Click here to Download To Excel (Blood Sugar)">
+                Download (Blood Sugar)
             </button>
 
             <div class="col-md-12">
                 <br />
                 <ul class="b">
-                    <li class="text-red">. Elevated blood pressure (Systolic ?140 mm of Hg and/or Diastolic ?90 mm of Hg) or taking medicine to control blood pressure (%)<i class="fa-solid fa-heart-pulse text-danger text-3xl"></i></li>
+                    <li class="text-primary">. Elevated blood pressure (Systolic ?140 mm of Hg and/or Diastolic ?90 mm of Hg) or taking medicine to control blood pressure (%)<i class="fa-solid fa-heart-pulse text-danger text-3xl"></i></li>
                     <li class="text-warning">. Blood sugar level - high or very high (>140 mg/dl) or taking medicine to control blood sugar level (%) <i class="fa-solid fa-syringe text-danger text-3xl"></i></li>
                 </ul>
             </div>
@@ -58,50 +46,68 @@
                 <br />
                 <strong id="msg"></strong>
             </div>
-            <div class="lg:w-1/2">
-                <div class="card">
-
-                    @using (Html.BeginForm("GetHighData", "Home", FormMethod.Post, new { @id = "tblList-frm", @class = "panel-body form-horizontal form-padding loader" }))
-                    {
-                        <div class="filter cm-content-box box-primary relative rounded-lg mb-0 bg-white dark:bg-[#1b1b1b]" style="display:none">
-                            <div class="content form excerpt border-b-color dark:border-[#ffffff1a]">
-                                <div>
-                                    <div class="border-all">
-                                        <div class="xl:w-1/4 sm:w-1/2 w-full mb-4 xl:mb-0" style="display:none;">
-                                            <label class="form-label">Screening Type</label>
-                                            <select class="form-control" name="SType" id="SType">
-                                                @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
-                                                {
-                                                    <option value="@item.Value">@item.Text</option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    <div id="subHYTchart" style="width:500px;height:400px;">
+            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]" style="display:none">
+                <div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
+                    <div class="cpa text-dark dark:text-white text-base font-semibold">
+                        <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
                     </div>
-                    <br />
-                    <div id="subRBSchart" style="width: 500px; height: 400px;">
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+                    </div>
+                </div>
+                <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
+                    <div class="p-[1.875rem] max-sm:p-4">
+                        <div class="row">
+                            <div class="xl:w-1/4 sm:w-1/2 w-full" style="display:none;">
+                                <label class="form-label">Screening Type</label>
+                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="SType" id="SType">
+                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="lg:w-1/2">
-                <div class="card dz-card dz-tab-area">
-                    <br />
-                    <div class="card-body p-[1.875rem]">
-                        @*style="border:1px solid #0094ff;margin:auto;"*@
-                        <div id="HYTdata" class="">
+
+
+            <!--<div class="lg:w-1/2">
+            <div class="card dz-card dz-tab-area">
+                <br />
+                <div class="card-body p-[1.875rem]">-->
+            @*style="border:1px solid #0094ff;margin:auto;"*@
+            <!--<div id="HYTdata" class="">
                         </div>
                         <hr style="border: 3px solid #038df1; margin-top: 7%; margin-bottom: 4%; font-weight: bold;" />
                         <div id="RBSdata" class="">
                         </div>
                     </div>
                 </div>
+            </div>-->
+            <div class="w-full">
+                <div class="row">
+                    <div class="lg:w-1/2 w-full">
+                        <div id="subHYTchart" style="width:100%;height:400px;">
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 w-full">
+                        <div id="subRBSchart" style="width: 100%; height: 400px;">
+                        </div>
+                    </div>
+                    <div class="xl\:w-full bg-white mt-5">
+                        <div id="HYTdata" class="">
+                        </div>
+                    </div>
+                    <div class="xl\:w-full bg-white mt-5">
+                        <div id="RBSdata" class="">
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
         </div>
     </div>
@@ -122,7 +128,7 @@
     <script src="https://code.highcharts.com/modules/lollipop.js"></script>
 
     <script src="~/Scripts/JS/HighChart.js"></script>
-    <script src="~/Scripts/JS/Export.js"></script>
+    @*<script src="~/Scripts/JS/Export.js"></script>*@
 
     <script>
         $(document).ready(function () {
@@ -131,6 +137,7 @@
                 LoadReport();
             })
         });
+
         function LoadReport() {
             $('#msg').html("");
             $('#HYTdata').html(""); $("#subHYTchart").html("");
@@ -139,26 +146,31 @@
             var url = $(id).attr("action");
             var SType = $("#SType").val();
             $.ajax({
-                url: url,
+                //url: url,
+                url: document.baseURI + '/Home/GetHighData',
                 type: "POST",
                 data: { SType: SType },
                 success: function (resp) {
                     if (resp.IsSuccess) {
-                        //debugger;
+                        debugger;
                         var resDH = JSON.parse(resp.HYData);
                         var resDB = JSON.parse(resp.BSData);
-                        ChartHSub(resDH); ChartBsub(resDB);
+                        ChartHSub(resDH);
+                        ChartBsub(resDB);
                         $('#HYTdata').html(resp.HYreshtml);
                         $('#RBSdata').html(resp.BSreshtml);
                         if ($.fn.dataTable.isDataTable('#tbl1')) {
                             $("#tbl1").dataTable().fnDestroy();
                         }
                         table = $('#tbl1').DataTable({
+                            //paging: false,
+                            //pageLength: 100,
                             paging: false,
+                            "bFilter": false,
                             pageLength: 100,
                             buttons: [{
-                                extend: 'excel', text: '<span><i class="fa fa-download"></i>Export To Excel (Hypertension)</span> ', title: 'Hypertension Level',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
-                                className: 'text-white',
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i> (Hypertension)</span> ', title: 'Hypertension Level',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                className: 'mr-1 mb-2 inline-block rounded-lg  font-semibold text-[15px] leading-5 py-[0.438rem] px-4 text-xs border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300 btn-xs',
                                 filename: 'Data List (Hypertension)',
                                 exportOptions: { modifier: { page: 'all' } }
                             }],
@@ -170,11 +182,14 @@
                             $("#tbl2").dataTable().fnDestroy();
                         }
                         table2 = $('#tbl2').DataTable({
+                            //paging: false,
+                            //pageLength: 100,
                             paging: false,
+                            "bFilter": false,
                             pageLength: 100,
                             buttons: [{
-                                extend: 'excel', text: '<span><i class="fa fa-download"></i>Export To Excel (Blood Sugar)</span> ', title: 'Blood Sugar Level',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
-                                className: 'text-white',
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i> (Blood Sugar)</span> ', title: 'Blood Sugar Level',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                className: 'mr-1 mb-2 inline-block rounded-lg  font-semibold text-[15px] leading-5 py-[0.438rem] px-4 text-xs border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300 btn-xs',
                                 filename: 'Data List (Blood Sugar)',
                                 exportOptions: { modifier: { page: 'all' } }
                             }],

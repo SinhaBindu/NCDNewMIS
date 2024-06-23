@@ -19,17 +19,21 @@
     }
 </style>
 <h5 class="text-center">
-    <strong class="text-bg-primary">Hypertension Level (high or very high)</strong>
+    <strong class="text-primary">Hypertension Level (high or very high)</strong>
 </h5>
 <br />
 <div class="overflow-x-auto table-scroll">
-    <table class="table table-bordered table-striped cell-border small" id="tbl1">
+    <table class="table table-bordered table-striped cell-border small tblfont" id="tbl1">
         <thead class="text-center">
             <tr>
                 <th class="text-center">Srno.</th>
                 <th class="text-center">District</th>
                 <th class="text-center">Block</th>
-                <th class="text-center">No of Members</th>
+                <th class="text-center">Total households</th>
+                <th class="text-center">Total members</th>
+                <th class="text-center">In Hypertension</th>
+                <th class="text-center">No.of male</th>
+                <th class="text-center">No.of female</th>
             </tr>
         </thead>
         <tbody>
@@ -43,7 +47,11 @@
                             <td class="text-center">@(sno++)</td>
                             <td class="text-center">@dr["District"]</td>
                             <td class="text-center">@dr["Block"]</td>
-                            <td class="text-center"><strong class="text-warning">@dr["NoofData"]</strong></td>
+                            <td class="text-center"><strong class="">@dr["TotalHouseHold"]</strong></td>
+                            <td class="text-center"><strong class="">@dr["TotalMember"]</strong></td>
+                            <td class="text-center"><strong class="">@dr["Total"]</strong></td>
+                            <td class="text-center"><strong class="">@dr["Male"]</strong></td>
+                            <td class="text-center"><strong class="">@dr["FeMale"]</strong></td>
                         </tr>
                     }
                 }
@@ -60,7 +68,11 @@
             {
                 <tr>
                     <td class="text-right" colspan="3"><strong>Grand Total :</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(NoofData)", string.Empty)</strong></td>
+                    <td class="text-center"><strong>@dt.Compute("sum(TotalHouseHold)", string.Empty)</strong></td>
+                    <td class="text-center"><strong>@dt.Compute("sum(TotalMember)", string.Empty)</strong></td>
+                    <td class="text-center"><strong>@dt.Compute("sum(Total)", string.Empty)</strong></td>
+                    <td class="text-center"><strong>@dt.Compute("sum(Male)", string.Empty)</strong></td>
+                    <td class="text-center"><strong>@dt.Compute("sum(FeMale)", string.Empty)</strong></td>
                 </tr>
             }
         </tfoot>

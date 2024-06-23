@@ -1,65 +1,51 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Row Submission Data";
 }
 
-@*<main>
-        <section class="row" aria-labelledby="aspnetTitle">
-            <h4 id="title">Submission Data</h4>
-            <div id="div-download"></div>
-        </section>
-
-        <div class="row">
-            <section class="col-md-12" id="subdata">
-            </section>
-        </div>
-    </main>*@
-
-<div class="content-body rightside-event" style="margin-right:0px !important;">
+<div class="content-body rightside-event">
     <div class="container-fluid">
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4>@ViewBag.Title</h4>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel"></button>
+        </div>
+
         <div class="row">
+
+            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
+                <div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
+                    <div class="cpa text-dark dark:text-white text-base font-semibold">
+                        <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+                    </div>
+                </div>
+                <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
+                    <div class="p-[1.875rem] max-sm:p-4">
+                        <div class="row">
+                            <div class="xl:w-1/5 sm:w-1/3 w-full">
+                                <label class="form-label">Screening Type</label>
+                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="SType" id="SType">
+                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="w-full">
                 <div class="card dz-card dz-tab-area" id="Tailwind-table1">
-                    <div class="card-header flex flex-wrap justify-between items-center py-5 px-[1.875rem] max-sm:pb-5 relative z-[2]">
-                        <h4 class="card-title">Submission Data</h4>
-                    </div>
+
                     <div class="pt-0 p-[1.875rem]">
                         <div class="overflow-x-auto table-scroll">
                             <div class="col-md-12" id="subdata">
                             </div>
-                            @*<table class="text-left mb-4 min-w-[36rem] w-full">
-                                    <thead>
-                                        <tr>
-                                            <th class="dark:bg-transparent py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-base text-sm font-normal text-black" style="width:80px;"><strong class="font-semibold text-[15px]">#</strong></th>
-                                            <th class="dark:bg-transparent py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-base text-sm font-normal text-black"><strong class="font-semibold text-[15px]">PATIENT</strong></th>
-                                            <th class="dark:bg-transparent py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-base text-sm font-normal text-black"><strong class="font-semibold text-[15px]">DR NAME</strong></th>
-                                            <th class="dark:bg-transparent py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-base text-sm font-normal text-black"><strong class="font-semibold text-[15px]">DATE</strong></th>
-                                            <th class="dark:bg-transparent py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-base text-sm font-normal text-black"><strong class="font-semibold text-[15px]">STATUS</strong></th>
-                                            <th class="dark:bg-transparent py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-base text-sm font-normal text-black"><strong class="font-semibold text-[15px]">PRICE</strong></th>
-                                            <th class="dark:bg-transparent py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-base text-sm font-normal text-black">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-sm text-xs font-normal border-t border-[#E6E6E6] dark:border-[#ffffff1a] text-body-color"><strong>01</strong></td>
-                                            <td class="py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-sm text-xs font-normal border-t border-[#E6E6E6] dark:border-[#ffffff1a] text-body-color">Mr. Bobby</td>
-                                            <td class="py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-sm text-xs font-normal border-t border-[#E6E6E6] dark:border-[#ffffff1a] text-body-color">Dr. Jackson</td>
-                                            <td class="py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-sm text-xs font-normal border-t border-[#E6E6E6] dark:border-[#ffffff1a] text-body-color">01 August 2020</td>
-                                            <td class="py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-sm text-xs font-normal border-t border-[#E6E6E6] dark:border-[#ffffff1a] text-body-color"><span class="text-xs py-[5px] px-3 rounded-lg leading-[1.5] inline-block text-success bg-success-light dark:bg-[#21b7311a]">Successful</span></td>
-                                            <td class="py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-sm text-xs font-normal border-t border-[#E6E6E6] dark:border-[#ffffff1a] text-body-color">$21.56</td>
-                                            <td class="py-[0.9375rem] px-2.5 capitalize whitespace-nowrap sm:text-sm text-xs font-normal border-t border-[#E6E6E6] dark:border-[#ffffff1a] text-body-color">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn min-w-[2.4rem] p-[0.4375rem] h-[2.4rem] leading-[1.7] min-h-[2.5rem] btn-success rounded-md dz-dropdown bg-success-light hover:bg-success duration-300 light sharp" data-dz-dropdown="dropdown-1">
-                                                        <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
-                                                    </button>
-                                                    <div class="dz-dropdown-menu dropdown-menu-end border py-2 rounded-md min-w-[10rem] z-[9] translate-x-[-64px] translate-y-1 shadow-[0_0_3.125rem_0_rgba(82,63,105,0.15)] overflow-hidden border-b-color absolute bg-white dark:bg-[#1b1b1b] dark:shadow-[0rem_0rem_0rem_0.0625rem_rgba(255,255,255,0.1)] hidden" id="dropdown-1">
-                                                        <a class="dropdown-item py-2 px-5 text-body-color text-[13px] block w-full whitespace-nowrap hover:bg-[#f8f9fa] hover:text-primary dark:hover:bg-[#151C2C]" href="javascript:void(0);">Edit</a>
-                                                        <a class="dropdown-item py-2 px-5 text-body-color text-[13px] block w-full whitespace-nowrap hover:bg-[#f8f9fa] hover:text-primary dark:hover:bg-[#151C2C]" href="javascript:void(0);">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>*@
                         </div>
                     </div>
                 </div>
@@ -77,6 +63,8 @@
     @*<link href="https://cdn.datatables.net/2.0.6/css/dataTables.dataTables.css" />*@
     <link href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css" />
+    <!--------------------------------------Data Table---------------------------------------->
+    @*<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>*@
 
     <script src="https://cdn.datatables.net/2.0.6/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
@@ -90,16 +78,20 @@
     <script>
         $(document).ready(function () {
             BindData();
+
+            $('#SType').change(function () {
+                BindData();
+            })
         });//End Load Method
 
         function BindData() {
             $("#subdata").html('');
             var formData = $('#formid').serialize();
-
+            var SType = $("#SType").val();
             $.ajax({
                 type: "Get",
                 url: document.baseURI + "/Home/GetDataRowList",
-                data: '',//JSON.stringify({ 'Roles': '' }),
+                data: { SType: SType },
                 //cache: false,
                 success: function (res) {
                     if (res.IsSuccess) {
@@ -109,13 +101,13 @@
                             $("#tbl").dataTable().fnDestroy();
                         }
                         table = $('#tbl').DataTable({
+                            responsive: true,
                             //"sDom": '<"bottom"i>rt<"top"flp><"clear">',
                             "searching": true,
                             //"dom": 'rtip',
-                            "lengthChange": false,
+                            //"lengthChange": false,
                             scrollY: "400px",
                             scrollX: true,
-                            fixedHeader: true,
                             //scrollCollapse: true,
                             //paging: false,
                             pageLength: 100,
@@ -124,6 +116,9 @@
                             //    leftColumns: 1,
                             //    rightColumns: 1
                             //},
+                            "dom": '<"pull-left"f><"pull-right"l>tip',
+                            //"pageLength": 100,
+                            //"lengthChange": false,
                             columnDefs: [
                                 {
                                     target: 1,
@@ -132,8 +127,8 @@
                             ],
                             order: [[0, 'asc']],
                             buttons: [{
-                                extend: 'excel', text: '<span><i class="fa fa-download"></i>Export</span>', title: 'NCD Data Lists',//$('#IDDistrict option:selected').text() +
-                                className: 'btn btn-primary button-icon mr-3 mt-1 mb-1',
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span>', title: 'NCD Data Lists',//$('#IDDistrict option:selected').text() +
+                                className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
                                 filename: 'NCD Data List',
                                 exportOptions: { modifier: { page: 'all' } }
                             }],

@@ -3,6 +3,16 @@
     /*.fa-indian-rupee-sign{
         font-size:xx-large !important;
     }*/
+    /*.rangeinput {
+        background: linear-gradient(to right, #4f58b2 0%, #4f58b2 50%, #fff 100%, #fff 100%);
+        border: solid 1px #82CFD0;
+        border-radius: 8px;*/
+        /*height: 7px;
+        width: 356px;*/
+        /*outline: none;
+        transition: background 450ms ease-in;
+        -webkit-appearance: none;
+    }*/
 </style>
 <div class="content-body">
     <div class="container-fluid">
@@ -10,13 +20,14 @@
             <h4>Financial Utillization</h4>
         </div>
         <div class="row">
-            <div class="xl:w-1/4">
+            <div class="xl:w-1/3">
                 <div class="card dz-card dz-tab-area" id="card-title-1" style="/* text-align: center; */align-items: center;">
                     <div class="card-header flex flex-wrap justify-between items-center sm:p-5 sm:pt-6 p-4 pt-[1.875rem] max-sm:pb-5 relative z-[2] border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
                         <h5 class="card-title capitalize">F.Y. 2021-22</h5>
                     </div>
                     <div class="p-[1.875rem]">
-                        <i class="fa-solid fa-indian-rupee-sign" style="font-size:xx-large !important;"></i>
+                        @*<i class="fa-solid fa-indian-rupee-sign" style="font-size:xx-large !important;"></i>*@
+                        <img src="~/Content/assets/images/indian-rupee-sign.png" />
                     </div>
                     <div class="card-footer px-5 pb-5">
                         <p class="card-text"><strong>Budget Allocation</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;24,46,858</p>
@@ -27,19 +38,20 @@
             </div>
             <!-- /Column  -->
             <!-- Column  -->
-            <div class="xl:w-1/4">
+            <div class="xl:w-1/3">
                 <div class="card dz-card dz-tab-area" id="card-title-2" style="/* text-align: center; */align-items: center;">
                     <div class="card-header flex flex-wrap justify-between items-center sm:p-5 sm:pt-6 p-4 pt-[1.875rem] max-sm:pb-5 relative z-[2] border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
                         <h5 class="card-title capitalize">F.Y. 2022-23</h5>
                     </div>
                     <div class="p-[1.875rem]">
-                        <i class="fa-solid fa-indian-rupee-sign" style="font-size:xx-large !important;"></i>
+                        @*<i class="fa-solid fa-indian-rupee-sign" style="font-size:xx-large !important;"></i>*@
+                        <img src="~/Content/assets/images/indian-rupee-sign.png" />
                     </div>
                     <div class="card-footer py-4 px-6 border-t border-[#E6E6E6] dark:border-[#ffffff1a] sm:text-sm text-xs sm:flex justify-between items-center">
                         <div class="card-footer-link mb-4 mb-sm-0">
                             <p class="card-text"><strong>Budget Allocation</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;58,17,921</p>
                             <p class="card-text"><strong>Utillize</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;58,17,921</p>
-                            <p><input type="range" id="points2" name="points" min="0" max="5817921"></p>
+                            <p><input type="range" class="rangeinput" id="points2" name="points" min="0" max="5817921"></p>
                         </div>
 
                     </div>
@@ -47,14 +59,14 @@
             </div>
             <!-- /Column  -->
             <!-- Column  -->
-            <div class="xl:w-1/4">
+            <div class="xl:w-1/3">
                 <div class="card dz-card dz-tab-area text-center" id="card-title-3" style="/* text-align: center; */align-items: center;">
                     <div class="card-header flex flex-wrap justify-between items-center sm:p-5 sm:pt-6 p-4 pt-[1.875rem] max-sm:pb-5 relative z-[2] border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
                         <h5 class="card-title capitalize">F.Y. 2023-24</h5>
                     </div>
                     <div class="p-[1.875rem]">
-                        <i class="fa-solid fa-indian-rupee-sign" style="font-size:xx-large !important;"></i>
-                       
+                        @*<i class="fa-solid fa-indian-rupee-sign" style="font-size:xx-large !important; background-color:orange"></i>*@
+                       <img  src="~/Content/assets/images/indian-rupee-sign.png" />
                     </div>
                     <div class="card-footer">
                         <p class="card-text"><strong>Budget Allocation</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;14,29,032</p>
@@ -78,5 +90,12 @@
         $("#points1").val("2446858");
         $("#points2").val("5817921");
         $("#points3").val("0");
+
+        document.getElementsByClassName("myinput").oninput = function () {
+            var value = (this.value - this.min) / (this.max - this.min) * 100
+            this.style.background = 'linear-gradient(to right, #82CFD0 0%, #82CFD0 ' + value + '%, #fff ' + value + '%, white 100%)'
+        };
     </script>
+
+
 }

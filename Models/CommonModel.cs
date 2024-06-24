@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
@@ -206,6 +207,64 @@ namespace NCDNewMIS.Models
             list.Add(new SelectListItem { Value = "1", Text = "Active" });
             list.Add(new SelectListItem { Value = "0", Text = "InActive" });
             return list.OrderBy(x => Convert.ToInt16(x.Value)).ToList();
+        }
+        public static List<SelectListItem> GetACT1IndicatorSome(int IsSelectAll = 0, FilterModel model = null)
+        {
+            NCD_DBEntities _db = new NCD_DBEntities();
+            try
+            {
+                DataTable dt = SP_Model.GetGroupACT1Indicator(model);
+                var lists = new List<SelectListItem>();
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        lists.Add(new SelectListItem { Value = dr["indicatorId"].ToString(), Text = dr["indicatorText"].ToString(), Selected = true });
+                    }
+                }
+                if (IsSelectAll == 0)
+                {
+                    lists.Insert(0, new SelectListItem { Value = "0", Text = "All" });
+                }
+                if (IsSelectAll == 1)
+                {
+                    lists.Insert(0, new SelectListItem { Value = "0", Text = "Select" });
+                }
+                return lists.OrderBy(x => x.Text).ToList(); ;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static List<SelectListItem> GetACT1PageTypeSome(int IsSelectAll = 0)
+        {
+            NCD_DBEntities _db = new NCD_DBEntities();
+            try
+            {
+                DataTable dt = SP_Model.GetGroupACT1PageType();
+                var lists = new List<SelectListItem>();
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        lists.Add(new SelectListItem { Value = dr["page"].ToString(), Text = dr["page"].ToString(), Selected = true });
+                    }
+                }
+                if (IsSelectAll == 0)
+                {
+                    lists.Insert(0, new SelectListItem { Value = "0", Text = "All" });
+                }
+                if (IsSelectAll == 1)
+                {
+                    lists.Insert(0, new SelectListItem { Value = "0", Text = "Select" });
+                }
+                return lists.OrderBy(x => x.Text).ToList(); ;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public static List<SelectListItem> GetDistrict(int IsSelectAll = 0)
         {

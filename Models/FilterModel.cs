@@ -35,5 +35,9 @@ namespace NCDNewMIS.Models
         [DisplayName("Round Type")]
         public string RoundType { get; set; }
         public string DistrictBlockType { get; set; }
+        [DisplayName("Type")]
+        public string PageType { get; set; }
+        [DisplayName("Type Of Indicator")]
+        public string IndicatorId { get; set; }
     }
 }

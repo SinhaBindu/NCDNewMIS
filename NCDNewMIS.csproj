@@ -664,6 +664,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JS\ChartIndicatorAct1.js" />
     <Content Include="Scripts\JS\HighChart.js" />
     <Content Include="Scripts\JS\Chart.js" />
     <Content Include="Scripts\JS\Export.js" />
@@ -729,6 +730,8 @@
     <Content Include="Views\Home\_HYTData.cshtml" />
     <Content Include="Views\Home\Gallery.cshtml" />
     <Content Include="Views\Home\Financial.cshtml" />
+    <Content Include="Views\Home\ACTOneIndicator.cshtml" />
+    <Content Include="Views\Home\_ACTOneIndicationData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

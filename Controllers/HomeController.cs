@@ -203,6 +203,42 @@ namespace NCDNewMIS.Controllers
         }
 
         #region Master Bind
+        public ActionResult GetPageTypeList(int SelectAll = 1)
+        {
+            try
+            {
+                var items = CommonModel.GetACT1PageTypeSome(SelectAll);
+                if (items != null)
+                {
+                    var data = JsonConvert.SerializeObject(items);
+                    return Json(new { IsSuccess = true, res = data }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { IsSuccess = false, res = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetIndicatorTypeList(int SelectAll = 1, string PageType = "")
+        {
+            try
+            {
+                FilterModel filterModel = new FilterModel();
+                filterModel.PageType = PageType;
+                var items = CommonModel.GetACT1IndicatorSome(SelectAll, filterModel);
+                if (items != null)
+                {
+                    var data = JsonConvert.SerializeObject(items);
+                    return Json(new { IsSuccess = true, res = data }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { IsSuccess = false, res = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult GetBlockList(int SelectAll = 1)
         {
             try
@@ -347,6 +383,56 @@ namespace NCDNewMIS.Controllers
                             BSData = resdtBS,
                             HYreshtml = HYThtml,
                             BSreshtml = RBShtml
+                        }, JsonRequestBehavior.AllowGet);
+                        res.MaxJsonLength = int.MaxValue;
+                        return res;
+
+                    }
+                    else
+                    {
+                        var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                        res.MaxJsonLength = int.MaxValue;
+                        return res;
+                    }
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+
+        public ActionResult ACTOneIndicator()
+        {
+            return View();
+        }
+        public ActionResult GetSomeACT1IndicatorData(string PageType, string IndicatorId)
+        {
+            DataSet ds = new DataSet();
+            FilterModel filterModel = new FilterModel();
+             filterModel.PageType = PageType; filterModel.IndicatorId = IndicatorId;
+            try
+            {
+                ds = SP_Model.SP_ACT1Indicator(filterModel);
+                if (ds.Tables.Count > 0)
+                {
+                    DataTable dt = ds.Tables[0];
+                    var resdt = JsonConvert.SerializeObject(dt);
+                    var Dthtml = ConvertViewToString("_ACTOneIndicationData", dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        var res = Json(new
+                        {
+                            IsSuccess = true,
+                            resData = resdt,
+                            reshtml = Dthtml
                         }, JsonRequestBehavior.AllowGet);
                         res.MaxJsonLength = int.MaxValue;
                         return res;

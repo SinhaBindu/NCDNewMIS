@@ -109,5 +109,26 @@ namespace NCDNewMIS.Models
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
+        public static DataSet SP_ACT1Indicator(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_ACT1Indicator");
+            sp.Command.AddParameter("@PageType", model.PageType, DbType.String);
+            sp.Command.AddParameter("@IndicatorId", model.IndicatorId, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
+        public static DataTable GetGroupACT1Indicator(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("GetGroupACT1Indicator");
+            sp.Command.AddParameter("@PageType", model.PageType, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
+        public static DataTable GetGroupACT1PageType()
+        {
+            StoredProcedure sp = new StoredProcedure("GetGroupACT1Page");
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
     }
 }

@@ -1,8 +1,8 @@
 ﻿@model NCDNewMIS.Models.FilterModel
 @{
-    ViewBag.Title = "Submission Data";
+    ViewBag.Title = "ACT-I Indicator Submission Data";
     ViewBag.TitleIcon = "fa fa-user";
-    ViewBag.SemiTitle = "Submission Data";
+    ViewBag.SemiTitle = "ACT-I Indicator Submission Data";
     ViewBag.SemiTitleLink = "/";
     DateTime now = DateTime.Now;
     var startDate = new DateTime(now.Year, now.Month, 1);
@@ -35,31 +35,20 @@
                     <div class="p-[1.875rem] max-sm:p-4">
                         <div class="row">
 
-                            <div class="xl:w-1/5 sm:w-1/3 w-full" style="display:none;">
-                                <label class="">Type of submission</label>
-                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="DistrictBlockType" id="DistrictBlockType">
-                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetDistrictBlockType().ToList())
+                            <div class="xl:w-1/4 w-full" style="">
+                                <label class="">Type</label>
+                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]"
+                                        name="PageType" id="PageType">
+                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetACT1PageTypeSome(2).ToList())
                                     {
                                         <option value="@item.Value">@item.Text</option>
                                     }
                                 </select>
                             </div>
-                            <div class="xl:w-1/5 sm:w-1/3 w-full" style="display:none;">
-                                <label class="form-label">Type of round</label>
-                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="RoundType" id="RoundType">
-                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetRoundType(true).ToList())
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="xl:w-1/4 sm:w-1/2 w-full">
-                                <label class="form-label">Screening Type</label>
-                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="SType" id="SType">
-                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
+                            <div class="xl:w-1/2 w-full">
+                                <label class="form-label">Type of Indicator</label>
+                                <select class="" style="width:100%"
+                                        name="IndicatorId" id="IndicatorId">
                                 </select>
                             </div>
 
@@ -70,12 +59,12 @@
 
             <div class="w-full">
                 <div class="row">
-                    <div class="xl:w-1/3">
-                        <div id="subchart" style="width:300px;height:400px;">
+                    <div class="xl:w-1/1">
+                        <div id="subchart">
                         </div>
                     </div>
-                   
-                    <div class="xl:w-2/3 bg-white">
+                    <hr />
+                    <div class="xl:w-1/1 bg-white mt=2">
                         <div id="result"></div>
                     </div>
 
@@ -91,26 +80,32 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    @*<script src="https://code.highcharts.com/modules/series-label.js"></script>*@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
     <script src="https://code.highcharts.com/maps/modules/map.js"></script>
-    <script src="~/Scripts/JS/Chart.js"></script>
+    <script src="~/Scripts/JS/ChartIndicatorAct1.js"></script>
     <script src="~/Scripts/JS/Export.js"></script>
+    <script src="~/Scripts/JS/Master.js"></script>
 
     <script>
 
         $(document).ready(function () {
 
-            LoadReport();
+            //BindPageTypeList("PageType", 0, 2);
+            BindIndicator("IndicatorId", 0, 2, $('#PageType').val());
+            setTimeout(function () {
+                LoadReport();
+            }, 500)
 
-            $('#SType').change(function () {
-                LoadReport();
+            $('#PageType').change(function () {
+                BindIndicator("IndicatorId", 0, 2, $('#PageType').val());
+                setTimeout(function () {
+                    LoadReport();
+                }, 500)
             })
-            $('#RoundType').change(function () {
-                LoadReport();
-            })
-            $('#DistrictBlockType').change(function () {
+            $('#IndicatorId').change(function () {
                 LoadReport();
             })
 
@@ -119,20 +114,18 @@
             $('#result').html(""); $("#subchart").html("");
             var id = '#tblList-frm'
             var url = $(id).attr("action");
-            var SType = $("#SType").val();
-            var RoundType = $("#RoundType").val();
-            var DistrictBlockType = $("#DistrictBlockType").val();
+            var PageType = $("#PageType").val();
+            var IndicatorId = $("#IndicatorId").val();
             $.ajax({
-                url: document.baseURI + '/Home/GetSubmissionData',
+                url: document.baseURI + '/Home/GetSomeACT1IndicatorData',
                 //url: url,
                 type: "POST",
-                data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType },
+                data: { 'PageType': PageType, IndicatorId: IndicatorId },
                 success: function (resp) {
                     if (resp.IsSuccess) {
-                        debugger;
                         // $('#resultmap').html(resp.Datahtml);
                         var resD = JSON.parse(resp.resData);
-                        ChartDistBlockSub(resD);
+                        Act1IndicatorChart(resD);
                         $('#result').html(resp.reshtml);
                         if ($.fn.dataTable.isDataTable('#tbl')) {
                             $("#tbl").dataTable().fnDestroy();

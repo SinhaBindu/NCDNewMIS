@@ -33,7 +33,7 @@ function ChartHSub(Data) {
                 align: 'center'
             },
             subtitle: {
-                text: 'Elevated blood pressure (Systolic ?140 mm of Hg and/or Diastolic ?90 mm of Hg) or taking medicine to control blood pressure (%)',
+                text: 'Elevated blood pressure (Systolic > 140 mm of Hg and/or Diastolic > 90 mm of Hg) or taking medicine to control blood pressure (%)',
             },
             credits: {
                 enabled: false

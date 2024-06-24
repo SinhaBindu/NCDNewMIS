@@ -30,11 +30,11 @@ function ChartDistBlockSub(Data) {
                 type: 'column'
             },
             title: {
-                text: 'Block Wises',
+                text: 'Block Wise',
                 align: 'center'
             },
             subtitle: {
-                text: subtitle + ' Submissions Data'
+                text: subtitle + ' Submission Data'
             },
             xAxis: {
                 categories: cate
@@ -82,11 +82,11 @@ function ChartDistBlockSub(Data) {
                 //    color: "#4743BA",
                 //}, 
                 {
-                    name: 'Entry Member',
+                    name: 'Entry Done',
                     data: EM,
                     color: "#8BC873",
                 }, {
-                    name: 'Pending Member',
+                    name: 'Pending',
                     data: PM,
                     color: "#CC5C5D",
                 }]

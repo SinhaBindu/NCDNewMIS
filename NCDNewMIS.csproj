@@ -451,6 +451,7 @@
     <Content Include="Content\assets\images\profile\small\pic8.jpg" />
     <Content Include="Content\assets\images\profile\small\pic9.jpg" />
     <Content Include="Content\assets\images\qr.png" />
+    <Content Include="Content\assets\images\simens-logo.svg" />
     <Content Include="Content\assets\images\svg\welcom-card.svg" />
     <Content Include="Content\assets\images\tab\1.jpg" />
     <Content Include="Content\assets\images\tab\2.jpg" />

@@ -45,13 +45,16 @@
         <img src="~/Content/assets/images/simens-logo.svg" width="170" alt="Siemens Logo" />
         <img src="~/Content/assets/images/pci-logo.png" alt="PCI logo" style="width: 60px" />
     </div>
-    <div class="fix-wrapper min-h-screen flex py-[30px] items-center justify-center">
+    <div class="fix-wrapper flex py-[30px] items-center justify-center" style="margin-top:-12px;">
         <div class="container p-5">
             <div class="row justify-center">
                 <div class="lg:w-[41.66%] md:w-1/2">
                     <div class="card mb-0 h-auto">
                         <div class="card-body p-[1.875rem]">
-                            <h2 class="text-center mb-4 text-primary font-bold ">ACT-II</h2>
+                            <h2 class="text-center mb-4 text-primary font-bold ">
+                                ACT
+                                @*-II*@
+                            </h2>
                             <h2 class="text-center mb-4">Login</h2>
                             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
                             {

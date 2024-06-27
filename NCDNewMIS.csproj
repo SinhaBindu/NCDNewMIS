@@ -655,6 +655,7 @@
     <Content Include="Content\assets\vendor\lightgallery\dist\fonts\lgb687.ttf" />
     <Content Include="Content\assets\vendor\lightgallery\dist\fonts\lgb687.woff" />
     <Content Include="Content\assets\vendor\lightgallery\dist\fonts\lgb687.woff2" />
+    <Content Include="Content\APK\LiveAPK_V1.6.apk" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

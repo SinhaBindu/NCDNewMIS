@@ -734,6 +734,7 @@
     <Content Include="Views\Home\Financial.cshtml" />
     <Content Include="Views\Home\ACTOneIndicator.cshtml" />
     <Content Include="Views\Home\_ACTOneIndicationData.cshtml" />
+    <Content Include="Views\Home\_HYTToRBSData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

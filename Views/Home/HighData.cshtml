@@ -31,6 +31,9 @@
             <button type="button" id="div-download2" title="Click here to Download To Excel (Blood Sugar)">
                 Download (Blood Sugar)
             </button>
+            <button type="button" id="div-download3" title="Click here to Download To Excel (Blood Sugar)">
+                Download (Hypertension & Blood Sugar)
+            </button>
 
             <div class="col-md-12">
                 <br />
@@ -89,12 +92,16 @@
             </div>-->
             <div class="w-full">
                 <div class="row">
-                    <div class="lg:w-1/2 w-full">
+                    <div class="lg:w-1/3 w-full">
                         <div id="subHYTchart" style="width:100%;height:400px;">
                         </div>
                     </div>
-                    <div class="lg:w-1/2 w-full">
+                    <div class="lg:w-1/3 w-full">
                         <div id="subRBSchart" style="width: 100%; height: 400px;">
+                        </div>
+                    </div>
+                    <div class="lg:w-1/3 w-full">
+                        <div id="subHYTToRBSchart" style="width: 100%; height: 400px;">
                         </div>
                     </div>
                     <div class="xl\:w-full bg-white mt-5">
@@ -103,6 +110,10 @@
                     </div>
                     <div class="xl\:w-full bg-white mt-5">
                         <div id="RBSdata" class="">
+                        </div>
+                    </div>
+                    <div class="xl\:w-full bg-white mt-5">
+                        <div id="HYTToRBSdata" class="">
                         </div>
                     </div>
                 </div>
@@ -142,6 +153,7 @@
             $('#msg').html("");
             $('#HYTdata').html(""); $("#subHYTchart").html("");
             $('#RBSdata').html(""); $("#subRBSchart").html("");
+            $('#HYTToRBSdata').html(""); $("#subHYTToRBSchart").html("");
             var id = '#tblList-frm'
             var url = $(id).attr("action");
             var SType = $("#SType").val();
@@ -155,10 +167,13 @@
                         debugger;
                         var resDH = JSON.parse(resp.HYData);
                         var resDB = JSON.parse(resp.BSData);
+                        var resDHB = JSON.parse(resp.HYToBSData);
                         ChartHSub(resDH);
                         ChartBsub(resDB);
+                        ChartHYTToBsub(resDHB);
                         $('#HYTdata').html(resp.HYreshtml);
                         $('#RBSdata').html(resp.BSreshtml);
+                        $('#HYTToRBSdata').html(resp.HYToBSreshtml);
                         if ($.fn.dataTable.isDataTable('#tbl1')) {
                             $("#tbl1").dataTable().fnDestroy();
                         }
@@ -196,6 +211,25 @@
                         });
                         $('#div-download2').empty();
                         table2.buttons().container().appendTo($('#div-download2'));
+
+                        if ($.fn.dataTable.isDataTable('#tbl3')) {
+                            $("#tbl3").dataTable().fnDestroy();
+                        }
+                        table2 = $('#tbl3').DataTable({
+                            //paging: false,
+                            //pageLength: 100,
+                            paging: false,
+                            "bFilter": false,
+                            pageLength: 100,
+                            buttons: [{
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i> (Hypertension & Blood Sugar)</span> ', title: 'Hypertension & Blood Sugar Level',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                className: 'mr-1 mb-2 inline-block rounded-lg  font-semibold text-[15px] leading-5 py-[0.438rem] px-4 text-xs border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300 btn-xs',
+                                filename: ' (Hypertension & Blood Sugar) Data List',
+                                exportOptions: { modifier: { page: 'all' } }
+                            }],
+                        });
+                        $('#div-download3').empty();
+                        table2.buttons().container().appendTo($('#div-download3'));
                     }
                     else {
                         $('#msg').html('<h4 class="text-danger">Record Not Found !!</h4>');

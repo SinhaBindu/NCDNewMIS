@@ -207,3 +207,127 @@ function ChartBsub(Data) {
     }
 }
 
+function ChartHYTToBsub(Data) {
+    // Data retrieved from https://worldpopulationreview.com/countries
+    // debugger;
+    if (Data.length > 0) {
+        //var objd = new Object();
+        var DataList = [], cate = [];
+        var subtitle = "";
+        for (var i = 0; i < Data.length; i++) {
+            cate.push(Data[i].Block);
+            var obj = [Data[i].ColumnName, Data[i].NoofData];
+            DataList.push(obj);
+            //DataList.push({ name: Data[i].ColumnName, y: Data[i].NoofData });
+            //subtitle = $("#SType").val() != "" ? $("#SType option:selected").text() : "Home and Camp";
+        }
+        Highcharts.chart('subHYTToRBSchart', {
+
+            chart: {
+                //type: 'lollipop',
+                type: 'columnpyramid',
+                borderWidth: 1,
+            },
+
+            //accessibility: {
+            //    point: {
+            //        valueDescriptionFormat: '{index}. {xDescription}, {point.y}.'
+            //    }
+            //},
+
+            legend: {
+                enabled: false
+            },
+            title: {
+                text: 'Hypertension & Blood sugar level - high or very high '
+            },
+            subtitle: {
+                text: 'Hypertension & Blood sugar level - high or very high (>140 mg/dl) or taking medicine to control blood sugar level (%)'
+            },
+            credits: {
+                enabled: false
+            },
+            //tooltip: {
+            //    shared: true
+            //},
+            //tooltip: {
+            //    valueSuffix: ' m'
+            //},
+
+            xAxis: {
+                type: 'category'
+            },
+
+            yAxis: {
+                title: {
+                    text: 'No.of Members'
+                }
+            },
+            //plotOptions: {
+            //    series: {
+            //        dataLabels: {
+            //            allowOverlap: true,
+            //            crop: false,
+            //            enabled: true,
+            //            //inside: true,
+            //            borderRadius: 5,
+            //            backgroundColor: 'rgba(252, 255, 197, 0.7)',
+            //            borderWidth: 1,
+            //            borderColor: '#AAA',
+            //           // marginLeft: -90,
+            //           // paddingRight: '40px',
+            //            y: -10,
+            //            shape: 'callout',
+            //            pointPadding: 0
+            //            //formatter: function () {
+            //            //    return this.y;
+            //            //}
+            //        }
+            //    }
+            //},
+            //plotOptions: {
+            //    connectorWidth: 2,
+            //    series: {
+            //        dataLabels: {
+            //        enabled: true,
+            //        //rotation: -90,
+            //        color: '#FFFFFF',
+            //        align: 'center',
+            //       // y: 10, // 10 pixels down from the top
+            //        style: {
+            //            fontSize: '10px',
+            //            fontFamily: 'helvetica, arial, sans-serif',
+            //            textShadow: false,
+            //            fontWeight: 'normal'
+
+            //        }
+            //    },
+            //    }
+            //},
+
+            series: [{
+                name: 'Members',
+                data: DataList,
+                color: '#274CC1',
+                dataLabels: {
+                    enabled: true,
+                    //rotation: -50,
+                    color: '#000000',
+                    align: 'right',
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '14px',
+                        fontFamily: 'helvetica, arial, sans-serif',
+                        //textShadow: false,
+                        fontWeight: 'normal'
+
+                    }
+                },
+                showInLegend: false
+
+            }]
+
+        });
+    }
+}
+

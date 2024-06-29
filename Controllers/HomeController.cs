@@ -370,10 +370,13 @@ namespace NCDNewMIS.Controllers
                 {
                     DataTable dt = ds.Tables[0];
                     DataTable dt1 = ds.Tables[1];
+                    DataTable dt2 = ds.Tables[2];
                     var resdtHY = JsonConvert.SerializeObject(dt);
                     var resdtBS = JsonConvert.SerializeObject(dt1);
+                    var resdtHYBS = JsonConvert.SerializeObject(dt2);
                     var HYThtml = ConvertViewToString("_HYTData", dt);
                     var RBShtml = ConvertViewToString("_RBSData", dt1);
+                    var HYTToRBShtml = ConvertViewToString("_HYTToRBSData", dt2);
                     if (dt.Rows.Count > 0)
                     {
                         var res = Json(new
@@ -381,8 +384,10 @@ namespace NCDNewMIS.Controllers
                             IsSuccess = true,
                             HYData = resdtHY,
                             BSData = resdtBS,
+                            HYToBSData = resdtHYBS,
                             HYreshtml = HYThtml,
-                            BSreshtml = RBShtml
+                            BSreshtml = RBShtml,
+                            HYToBSreshtml = HYTToRBShtml
                         }, JsonRequestBehavior.AllowGet);
                         res.MaxJsonLength = int.MaxValue;
                         return res;

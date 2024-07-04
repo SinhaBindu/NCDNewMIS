@@ -98,6 +98,54 @@ namespace NCDNewMIS.Models
             else
                 return string.Empty;
         }
+
+        public static List<SelectListItem> GetSP_GetSubCenterCenterLists(int IsAll = 2, int BlockId = 0, int CHCId = 0, int PHCId = 0)
+        {
+            NCD_DBEntities _db = new NCD_DBEntities();
+            List<SelectListItem> list = new List<SelectListItem>();
+            try
+            {
+                if (BlockId > 0)
+                {
+                    if (HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        if (HttpContext.Current.User.IsInRole(RoleNameCont.Admin))
+                        {
+                            FilterModel model = new FilterModel();
+                            model.BlockId = Convert.ToString(BlockId);
+                            model.CHCId = Convert.ToString(CHCId);
+                            model.PHCId = Convert.ToString(PHCId);
+                            DataTable dt = SP_Model.SP_GetCHCPHCSubCenter(model);
+                            var itemid = Convert.ToInt32(BlockId);//.Where(x => x.Field<int>("TrainerId") == itemid)
+                            //list = new SelectList(dt.AsEnumerable(), "SubCenterId", "CHCPHCSubCenter").OrderBy(x => x.Text).ToList();
+                            if (dt.Rows.Count > 0)
+                            {
+                                foreach (DataRow dr in dt.Rows)
+                                {
+                                    list.Add(new SelectListItem { Value = dr["SubCenterId"].ToString(), Text = dr["CHCPHCSubCenter"].ToString(), Selected = true });
+                                }
+                                //return list.OrderBy(x => x.Text).ToList();
+                            }
+                            if (IsAll == 0)
+                            {
+                                list.Insert(0, new SelectListItem { Value = "0", Text = "Select" });
+                            }
+                            else if (IsAll == 1)
+                            {
+                                list.Insert(0, new SelectListItem { Value = "0", Text = "All" });
+                            }
+                            return list;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return list;
+        }
         #endregion
         #region Get User Role 
         public static string GetUserRole()

@@ -366,6 +366,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\css\bootstrap-multiselect.css" />
     <Content Include="Content\assets\css\style.css" />
     <Content Include="Content\assets\icons\flaticon\flaticon.css" />
     <Content Include="Content\assets\icons\flaticon\Flaticon.svg" />
@@ -657,6 +658,7 @@
     <Content Include="Content\assets\vendor\lightgallery\dist\fonts\lgb687.woff2" />
     <Content Include="Content\APK\LiveAPK_V1.6.apk" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -666,6 +668,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JS\bootstrap-multiselect.js" />
     <Content Include="Scripts\JS\ChartIndicatorAct1.js" />
     <Content Include="Scripts\JS\HighChart.js" />
     <Content Include="Scripts\JS\Chart.js" />
@@ -735,6 +738,8 @@
     <Content Include="Views\Home\ACTOneIndicator.cshtml" />
     <Content Include="Views\Home\_ACTOneIndicationData.cshtml" />
     <Content Include="Views\Home\_HYTToRBSData.cshtml" />
+    <Content Include="Views\Home\RegMapped.cshtml" />
+    <Content Include="Views\Home\_RegMappedData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -85,10 +85,10 @@ namespace NCDNewMIS.Models
         public static DataSet SP_RegApproved(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_RegApproved");
-            sp.Command.AddParameter("@DistrictId", 0, DbType.Int16);
-            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.Int16);
-            sp.Command.AddParameter("@CHCId", model.CHCId, DbType.Int16);
-            sp.Command.AddParameter("@PHCId", model.PHCId, DbType.Int16);
+            sp.Command.AddParameter("@DistrictId", 0, DbType.Int32);
+            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.Int32);
+            sp.Command.AddParameter("@CHCId", model.CHCId, DbType.Int32);
+            sp.Command.AddParameter("@PHCId", model.PHCId, DbType.Int32);
             sp.Command.AddParameter("@Approved", model.IsActive, DbType.String);
             DataSet ds = sp.ExecuteDataSet();
             return ds;
@@ -129,6 +129,36 @@ namespace NCDNewMIS.Models
             StoredProcedure sp = new StoredProcedure("GetGroupACT1Page");
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
+        }
+        public static DataTable SP_GetCHCPHCSubCenter(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_GetCHCPHCSubCenter");
+            sp.Command.AddParameter("@DistrictId", 1, DbType.Int32);
+            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.Int32);
+            sp.Command.AddParameter("@CHCId", model.CHCId, DbType.Int32);
+            sp.Command.AddParameter("@PHCId", model.PHCId, DbType.Int32);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
+        public static DataSet SP_RegMapped(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_RegMapped");
+            sp.Command.AddParameter("@DistrictId", 1, DbType.Int32);
+            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.Int32);
+            sp.Command.AddParameter("@CHCId", model.CHCId, DbType.Int32);
+            sp.Command.AddParameter("@PHCId", model.PHCId, DbType.Int32);
+            sp.Command.AddParameter("@Approved", model.IsActive, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
+        public static DataSet SP_GetPHCCHC_SubCenterWise(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_GetPHCCHC_SubCenterWise");
+            sp.Command.AddParameter("@DistrictId", 1, DbType.Int32);
+            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.Int32);
+            sp.Command.AddParameter("@SubCenterId", model.SCId, DbType.Int32);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
         }
     }
 }

@@ -15,7 +15,7 @@
 </style>
 <div class="bg-light rounded h-100 p-4">
     <div class="table-responsive">
-        <table class="table table-bordered table-striped cell-border small" id="tbl" >
+        <table class="table table-bordered table-striped cell-border small" id="tbl">
             <thead class="text-center">
                 <tr>
                     <th class="text-center">Srno.</th>
@@ -37,20 +37,20 @@
                         var sno = 1;
                         foreach (DataRow dr in dt.Rows)
                         {
-                                <tr>
-                                    <td class="text-center">@(sno++)</td>
-                                    <td class="text-center">@dr["District"]</td>
-                                    <td class="text-center">@dr["Block"]</td>
-                                    <td class="text-center">@dr["CHCN"]</td>
-                                    <td class="text-center">@dr["PHC"]</td>
-                                    <td class="text-center">@dr["FullName"]</td>
-                                    <td class="text-center">@dr["MobileNo"]</td>
-                                    <td class="text-center">@dr["Version"]</td>
-                                    <td class="text-center">
-                                        <a href="javascript:void(0);" onclick="return PostAppoved('@dr["RegId_pk"]','@dr["RegMapId_pk"]','@dr["IsApproved"].ToString()');"> <strong class="@dr["ApprovedColor"]">@dr["ApprovedStatus"]</strong></a>
-                                    </td>
-                                    <td class="text-center">@CommonModel.FormateDtDMY(dr["ReportedOn"].ToString())</td>
-                                </tr>
+                            <tr>
+                                <td class="text-center">@(sno++)</td>
+                                <td class="text-center">@dr["District"]</td>
+                                <td class="text-center">@dr["Block"]</td>
+                                <td class="text-center">@dr["CHCN"]</td>
+                                <td class="text-center">@dr["PHC"]</td>
+                                <td class="text-center">@dr["FullName"]</td>
+                                <td class="text-center">@dr["MobileNo"]</td>
+                                <td class="text-center">@dr["Version"]</td>
+                                <td class="text-center">
+                                    <a href="javascript:void(0);" onclick="return PostAppoved('@dr["RegId_pk"]','@dr["RegMapId_pk"]','@dr["IsApproved"].ToString()');"> <strong class="@dr["ApprovedColor"]">@dr["ApprovedStatus"]</strong></a>
+                                </td>
+                                <td class="text-center">@CommonModel.FormateDtDMY(dr["ReportedOn"].ToString())</td>
+                            </tr>
                         }
                     }
                 }

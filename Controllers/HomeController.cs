@@ -2,10 +2,12 @@
 using NCDNewMIS.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 
@@ -196,10 +198,135 @@ namespace NCDNewMIS.Controllers
             var tbl = db_.tbl_Register.Find(RegId);
             tbl.IsApproved = Convert.ToBoolean(IsApproved) == true ? false : true;
             var strApproved = tbl.IsApproved == true ? "Active" : "IsActive";
+            tbl.UpdatedBy = User.Identity.Name;
+            tbl.UpdatedOn = DateTime.Now;
             db_.SaveChanges();
             var res = Json(new { IsSuccess = true, Message = strApproved + " Successfully.." }, JsonRequestBehavior.AllowGet);
             res.MaxJsonLength = int.MaxValue;
             return res;
+        }
+        public ActionResult RegMapped()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult RegMapped(FilterModel m)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            ds = SP_Model.SP_RegMapped(m);
+            try
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    dt = ds.Tables[0];
+                    var html = ConvertViewToString("_RegMappedData", dt);
+                    //var dtjson = JsonConvert.SerializeObject(dt);
+                    var res = Json(new { IsSuccess = true, Datahtml = html }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+        [HttpPost]
+        public ActionResult PostRegMapped(int RegId, string RegMapIds, string MobileNo, int DistrictId, int BlockId, string SubCenterIds)
+        {
+            try
+            {
+                NCD_DBEntities db_ = new NCD_DBEntities();
+
+                int res = 0;
+                //tbl.IsApproved = Convert.ToBoolean(IsApproved) == true ? false : true;
+                //var strApproved = tbl.IsApproved == true ? "Active" : "IsActive";
+                var tblmap = new tbl_RegMappping();
+                if (!string.IsNullOrWhiteSpace(SubCenterIds))
+                {
+                   
+                    var splt = SubCenterIds.Split(',');
+                    var spltmapp = RegMapIds.Split(',');
+                    IEnumerable<int> spltsubcenterids = splt.Select(int.Parse);
+                    IEnumerable<int> spltmappids = spltmapp.Select(int.Parse);
+                    //List<int> listOfIds = new List<int>(Convert.ToInt32(spltmappids));
+                    //List<int> listOfsubpkIds = new List<int>(spltsubcenterids);
+                    var tblmaplist = db_.tbl_RegMappping.Where(r => spltmappids.Contains(r.RegMapId_pk) && spltsubcenterids.Contains(r.SubCenterId_fk.Value)).ToList();
+                    foreach (var s in splt.ToList())
+                    {
+                        //foreach (var item in tblmaplist.ToList())
+                        //{
+                        var scid = Convert.ToInt32((s).ToString());
+                        tblmap = new tbl_RegMappping();
+                        tblmap = tblmaplist.Any(x => x.SubCenterId_fk == scid)==false?new tbl_RegMappping():null;
+
+                        FilterModel model = new FilterModel();
+                        model.DistrictId = Convert.ToString(DistrictId);
+                        model.BlockId = Convert.ToString(BlockId);
+                        model.SCId = s;
+                        DataSet ds = SP_Model.SP_GetPHCCHC_SubCenterWise(model);
+                        DataTable dtchcphc = ds.Tables[0];
+
+
+                        var itemmapid = 0;//item.RegMapId_pk!string.IsNullOrWhiteSpace(item.RegMapId_pk) ? Convert.ToInt32(item) : 0;
+
+                        //tblmap = itemmapid != 0 && spltmapp != null ? db_.tbl_RegMappping
+                        //    .Where(x => x.RegId_fk == RegId && x.RegMapId_pk == itemmapid && x.SubCenterId_fk == scid)?.FirstOrDefault()
+                        //    : new tbl_RegMappping();
+                        //tblmap = tblmap == null ? new tbl_RegMappping() : tblmap;
+                        if (tblmap != null)
+                        {
+                            if (tblmap.RegMapId_pk == 0 && !db_.tbl_RegMappping
+                            .Any(x => x.RegId_fk == RegId && x.SubCenterId_fk == scid))
+                            {
+                                tblmap.RegId_fk = RegId;
+                                tblmap.MapDate = DateTime.Now.Date;
+                                tblmap.DistrictId_fk = DistrictId;
+                                tblmap.BlockId_fk = BlockId;
+                                tblmap.CHCId_fk = Convert.ToInt32(dtchcphc.Rows[0]["CHCId"]);
+                                tblmap.PHCId_fk = Convert.ToInt32(dtchcphc.Rows[0]["PHCId"]);
+                                tblmap.SubCenterId_fk = Convert.ToInt32(s);
+                                tblmap.Version = "Portal Mapped";
+                                tblmap.IsActive = 1;
+                                tblmap.CreatedBy = User.Identity.Name;
+                                tblmap.CreatedOn = DateTime.Now;
+                                db_.tbl_RegMappping.Add(tblmap);
+                            }
+                            else if (itemmapid != 0)
+                            {
+                                //tblmap.SubCenterId_fk = Convert.ToInt32(s);
+                                //tblmap.UpdatedBy = User.Identity.Name;
+                                //tblmap.UpdatedOn = DateTime.Now;
+                            }
+                        }
+                    }
+                    res = db_.SaveChanges();
+                    //}
+                }
+                if (res > 0)
+                {
+                    var resjsont = Json(new { IsSuccess = true, Message = "SubCenter Mapped Successfully.." }, JsonRequestBehavior.AllowGet);
+                    resjsont.MaxJsonLength = int.MaxValue;
+                }
+                var resjsonf = Json(new { IsSuccess = false, Message = "SubCenter Not Mapped" }, JsonRequestBehavior.AllowGet);
+                return resjsonf;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                var resjson = Json(new { IsSuccess = false, Message = "No Mapped SubCenter.." }, JsonRequestBehavior.AllowGet);
+                resjson.MaxJsonLength = int.MaxValue;
+                return resjson;
+            }
+
         }
 
         #region Master Bind
@@ -422,7 +549,7 @@ namespace NCDNewMIS.Controllers
         {
             DataSet ds = new DataSet();
             FilterModel filterModel = new FilterModel();
-             filterModel.PageType = PageType; filterModel.IndicatorId = IndicatorId;
+            filterModel.PageType = PageType; filterModel.IndicatorId = IndicatorId;
             try
             {
                 ds = SP_Model.SP_ACT1Indicator(filterModel);

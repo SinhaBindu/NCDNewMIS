@@ -3282,6 +3282,9 @@ video {
 .p-\[1\.875rem\]{
   padding: 1.875rem !important;
 }
+.p-\[1\.0rem\]{
+  padding: 1.0rem !important;
+}
 
 .p-\[2\.125rem\]{
   padding: 2.125rem !important;
@@ -5647,9 +5650,9 @@ small, .small {
 }
 
 .content-body .container-fluid {
-  padding-top: 1.875rem;
-  padding-right: 1.875rem;
-  padding-left: 1.875rem;
+    padding-top: 0.875rem;
+    padding-right: 1.875rem;
+    padding-left: 1.875rem;
 }
 
 @media (min-width: 1449px) {

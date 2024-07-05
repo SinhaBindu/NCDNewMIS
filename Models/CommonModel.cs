@@ -296,7 +296,7 @@ namespace NCDNewMIS.Models
                 {
                     foreach (DataRow dr in dt.Rows)
                     {
-                        lists.Add(new SelectListItem { Value = dr["page"].ToString(), Text = dr["page"].ToString(), Selected = true });
+                        lists.Add(new SelectListItem { Value = dr["Value"].ToString(), Text = dr["Text"].ToString(), Selected = true });
                     }
                 }
                 if (IsSelectAll == 0)

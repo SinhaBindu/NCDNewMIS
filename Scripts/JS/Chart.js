@@ -84,11 +84,11 @@ function ChartDistBlockSub(Data) {
                 {
                     name: 'Entry Done',
                     data: EM,
-                    color: "#8BC873",
+                    color: "#bc6ac9",
                 }, {
                     name: 'Pending',
                     data: PM,
-                    color: "#CC5C5D",
+                    color: "#e4b62c",
                 }]
         });
     }

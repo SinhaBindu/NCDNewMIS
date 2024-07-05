@@ -146,6 +146,24 @@
           <Property Name="UpdatedBy" Type="varchar" MaxLength="200" />
           <Property Name="UpdatedOn" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbl_GalleryUpload">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="BlockId" Type="int" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" />
+          <Property Name="FilePath" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="tbl_Login">
           <Key>
             <PropertyRef Name="LoginId_pk" />
@@ -169,6 +187,8 @@
           <Property Name="Password" Type="nvarchar" MaxLength="20" />
           <Property Name="MobileNo" Type="nvarchar" MaxLength="20" />
           <Property Name="Version" Type="nvarchar" MaxLength="50" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="BlockId" Type="int" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedOn" Type="datetime" />
@@ -236,6 +256,7 @@
           <EntitySet Name="GP_Master" EntityType="Self.GP_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHC_Master" EntityType="Self.PHC_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TBL_Emp" EntityType="Self.TBL_Emp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GalleryUpload" EntityType="Self.tbl_GalleryUpload" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Login" EntityType="Self.tbl_Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Register" EntityType="Self.tbl_Register" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_RegMappping" EntityType="Self.tbl_RegMappping" Schema="dbo" store:Type="Tables" />
@@ -267,6 +288,8 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
           <Property Name="IsApproved" Type="Boolean" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="BlockId" Type="Int32" />
         </EntityType>
         <EntityContainer Name="NCD_DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_Register" EntityType="Self.tbl_Register" />
@@ -285,6 +308,7 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="tbl_GalleryUpload" EntityType="NCD_DBModel.tbl_GalleryUpload" />
         </EntityContainer>
         <EntityType Name="tbl_Login">
           <Key>
@@ -460,6 +484,24 @@
           <End Type="NCD_DBModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="NCD_DBModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
+        <EntityType Name="tbl_GalleryUpload">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="BlockId" Type="Int32" />
+          <Property Name="FileName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -469,6 +511,8 @@
           <EntitySetMapping Name="tbl_Register">
             <EntityTypeMapping TypeName="NCD_DBModel.tbl_Register">
               <MappingFragment StoreEntitySet="tbl_Register">
+                <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
                 <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
                 <ScalarProperty Name="RegId_pk" ColumnName="RegId_pk" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
@@ -670,6 +714,25 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="tbl_GalleryUpload">
+            <EntityTypeMapping TypeName="NCD_DBModel.tbl_GalleryUpload">
+              <MappingFragment StoreEntitySet="tbl_GalleryUpload">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

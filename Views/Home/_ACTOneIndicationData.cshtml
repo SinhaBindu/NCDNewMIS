@@ -1,7 +1,10 @@
 ﻿@using System.Data
 @{
     DataTable dt = new DataTable();
+    DataTable dttargetzero = new DataTable();
+    DataTable dtachvtzero = new DataTable();
     var columns = new List<string>();
+    int trgzero = 0;  var achvtzero = 0;
     if (Model != null)
     {
         dt = Model;
@@ -11,6 +14,12 @@
         }
         var ex = new List<string>() { "", "", "", "", "", "" };
         columns = columns.Where(x => !ex.Any(y => y == x)).ToList();
+        foreach (DataRow dr in dt.Rows)
+        {
+            trgzero += Convert.ToInt32(dr["target"]);
+            achvtzero += Convert.ToInt32(dr["achieved"]);
+
+        }
     }
 }
 <style>
@@ -21,34 +30,49 @@
 <h5 class="text-center">
     @if (dt.Rows.Count > 0)
     {
-    <strong class="text-primary">@dt.Rows[0]["page"].ToString().ToUpper().Replace('_', ' ') <br /> @dt.Rows[0]["indicatorText"] </strong>
+        <strong class="text-primary">@dt.Rows[0]["page"].ToString().ToUpper().Replace('_', ' ') <br /> @dt.Rows[0]["indicatorText"] </strong>
     }
 </h5>
 <br />
 <div class="overflow-x-auto table-scroll">
-    <table class="table table-bordered table-striped cell-border small tblfont" id="tbl1">
+    <table class="table table-bordered table-striped cell-border small tblfont" id="tbl">
         <thead class="text-center">
             <tr>
                 <th class="text-center">Srno.</th>
                 <th class="text-center">District</th>
                 <th class="text-center">Block</th>
-                <th class="text-center">Total Target</th>
-                <th class="text-center">Total Achieved</th>
+                @if (trgzero != 0)
+                {
+                    <th class="text-center">Target</th>
+                }
+                @if (achvtzero != 0)
+                {
+                    <th class="text-center">Achieved</th>
+                }
             </tr>
         </thead>
         <tbody>
             @{
                 if (dt.Rows.Count > 0)
                 {
-                    var sno = 1;
+                    //DataTable dt2 = dt.AsEnumerable().OrderByDescending(x => x.Field<int>("RowNo")).CopyToDataTable();
+                    var sno = 0;
                     foreach (DataRow dr in dt.Rows)
                     {
+                        sno++;
+                        var bl = sno == 1 ? "font-weight:bold" : "";
                         <tr>
-                            <td class="text-center">@(sno++)</td>
+                            <td class="text-center">@(sno)</td>
                             <td class="text-center">@dr["District"]</td>
-                            <td class="text-center">@dr["Block"]</td>
-                            <td class="text-center"><strong class="">@dr["target"]</strong></td>
-                            <td class="text-center"><strong class="">@dr["achieved"]</strong></td>
+                            <td class="text-center " style="@bl">@dr["Block"]</td>
+                            @if (trgzero != 0)
+                            {
+                                <td class="text-center"><strong class="">@dr["target"]</strong></td>
+                            }
+                            @if (achvtzero != 0)
+                            {
+                                <td class="text-center"><strong class="">@dr["achieved"]</strong></td>
+                            }
                         </tr>
                     }
                 }
@@ -60,16 +84,23 @@
                 }
             }
         </tbody>
-        <tfoot>
+        @*<tfoot>
             @if (dt.Rows.Count > 0)
             {
                 <tr>
-                    <td class="text-right" colspan="3"><strong>Grand Total :</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(target)", string.Empty)</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(achieved)", string.Empty)</strong></td>
-                </tr>
+                    <td class="text-right"></td>
+                    <td class="text-right" colspan="2"><strong>Grand Total :</strong></td>
+                    @if (trgzero != 0)
+                    {
+                        <td class="text-center"><strong>@dt.Compute("sum(target)", string.Empty)</strong></td>
+                    }
+                    @if (achvtzero != 0)
+                    {
+                        <td class="text-center"><strong>@dt.Compute("sum(achieved)", string.Empty)</strong></td>
+                    }
+                    </tr>
             }
-        </tfoot>
+        </tfoot>*@
 
     </table>
 </div>

@@ -320,6 +320,7 @@
     <Compile Include="Models\GP_Master.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ImageUploadModel.cs" />
     <Compile Include="Models\PHC_Master.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
@@ -351,6 +352,9 @@
     <Compile Include="Models\RegLocationModel.cs" />
     <Compile Include="Models\SP_Model.cs" />
     <Compile Include="Models\TBL_Emp.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_GalleryUpload.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_Login.cs">
@@ -740,6 +744,7 @@
     <Content Include="Views\Home\_HYTToRBSData.cshtml" />
     <Content Include="Views\Home\RegMapped.cshtml" />
     <Content Include="Views\Home\_RegMappedData.cshtml" />
+    <Content Include="Views\Home\ImageUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

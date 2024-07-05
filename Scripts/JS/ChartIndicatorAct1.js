@@ -10,37 +10,59 @@ let groupBy = (keys) => (array) =>
     }, {});
 
 function Act1IndicatorChart(Data) {
-    debugger;
+   // debugger;
     $('#subchart').html('');
 
     if (Data.length > 0) {
         //var objd = new Object();
-        var TD = [], AD = [], cate = [], AGVA=[];
+        var TD = [], AD = [], cate = [], AGVA = [];
         var subtitle = ""; var title = "";
-        var TotalTarget = 0, TotalAchieved = 0, TAPercent = 0; Apavg=0;
+        var TotalTarget = 0, TotalAchieved = 0, TAPercent = 0; Apavg = 0;
+        var targetzero = Data.filter(x => x.target == 0);
+        var achievedzero = Data.filter(x => x.achieved == 0);
+        var dataser = [];
+        Data = Data.sort();
         for (var i = 0; i < Data.length; i++) {
             cate.push(Data[i].block);
             //var obj = [Data[i].ColumnName, Data[i].NoofData];
             TD.push(Data[i].target);
             AD.push(Data[i].achieved);
-            TotalTarget += Data[i].target;
-            TotalAchieved += Data[i].achieved;
+            if (Data[i].block.toUpperCase() != "TOTAL") {
+                TotalTarget += Data[i].target;
+                TotalAchieved += Data[i].achieved;
+            }
+
             Apavg = parseFloat((Data[i].achieved / Data.length).toFixed(0));
             AGVA.push(Apavg);
             subtitle = $("#IndicatorId").val() != "" ? $("#IndicatorId option:selected").text() : "";
-            title = $("#PageType").val() != "" ? $("#PageType option:selected").text().toUpperCase().replace('_',' ') : "";
+            title = $("#PageType").val() != "" ? $("#PageType option:selected").text().toUpperCase().replace('_', ' ') : "";
+
+        }
+        if (targetzero.length <= 0) {
+            dataser.push({ type: 'column', name: 'Target', data: TD, 'color': '#bc6ac9' });
+        }
+        if (achievedzero <= 0) {
+            dataser.push({ type: 'column', name: 'Achieved', data: AD, 'color': '#e4b62c' });//fbc21d//f2c02c
         }
 
         TAPercent = TotalTarget == TotalAchieved ? (TotalAchieved / TotalTarget * 100) : (TotalAchieved / TotalTarget * 100);
         TAPercent = parseFloat(TAPercent.toFixed(0))
 
+        var tittotal = TotalTarget != 0 ? "Target - " + TotalTarget + " To Achieved - " + TotalAchieved : TotalAchieved != 0 ? TotalAchieved : '';
         Highcharts.chart('subchart', {
+
+            chart: {
+                //type: 'lollipop',
+                //type: 'columnpyramid',
+                borderWidth: 1,
+                height: 300,
+            },
             title: {
-                text: title ,
+                text: title,
                 align: 'center'
             },
             subtitle: {
-                text: subtitle,
+                text: subtitle + " : " + "<b style='color:#000;font-size:12px;'>" + tittotal + "<b/>",
                 align: 'center'
             },
             xAxis: {
@@ -65,58 +87,48 @@ function Act1IndicatorChart(Data) {
             plotOptions: {
                 series: {
                     borderRadius: '25%',
-                  //  stacking: 'normal',
+                    //  stacking: 'normal',
                     dataLabels: {
                         enabled: true
                     }
                 }
             },
-            series: [
-                {
-                    type: 'column',
-                    name: 'Target',
-                    data: TD
-                }, {
-                    type: 'column',
-                    name: 'Achieved',
-                    data: AD
-                }
-                , {
-                type: 'line',
-                step: 'center',
-                    name: 'Average',
-                    data: AGVA,
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[3],
-                    fillColor: 'white'
-                }
-                }
-                ,
-                {
-                    type: 'pie',
-                    name: 'Total Achieved',
-                    data: [{
-                        name: subtitle,
-                        y: TAPercent,
-                        color: Highcharts.getOptions().colors[0], // 2020 color
-                        dataLabels: {
-                            enabled: true,
-                            distance: -50,
-                            format: '{point.total} %',
-                            style: {
-                                fontSize: '15px'
-                            }
-                        }
-                    }],
-                    center: [75, 65],
-                    size: 100,
-                    innerSize: '70%',
-                    showInLegend: false,
-                    dataLabels: {
-                        enabled: false
-                    }
-                }]
+            series: dataser
+
+            //[
+            //{
+            //    type: 'column',
+            //    name: 'Target',
+            //    data: TD
+            //}, {
+            //    type: 'column',
+            //    name: 'Achieved',
+            //    data: AD
+            //},
+            //{
+            //    type: 'pie',
+            //    name: 'Total Achieved',
+            //    data: [{
+            //        name: subtitle,
+            //        y: TAPercent,
+            //        color: Highcharts.getOptions().colors[0], // 2020 color
+            //        dataLabels: {
+            //            enabled: true,
+            //            distance: -50,
+            //            format: '{point.total} %',
+            //            style: {
+            //                fontSize: '15px'
+            //            }
+            //        }
+            //    }],
+            //    center: [75, 65],
+            //    size: 100,
+            //    innerSize: '70%',
+            //    showInLegend: false,
+            //    dataLabels: {
+            //        enabled: false
+            //    }
+            //}]
         });
 
     }

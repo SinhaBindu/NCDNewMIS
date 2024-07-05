@@ -1,0 +1,265 @@
+﻿@model NCDNewMIS.Models.ImageUploadModel
+@{
+
+}
+
+<div class="container-fluid">
+    <div class="page-titles dark:bg-[#1b1b1b] rounded-lg flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+        <ol class="text-[0.875rem] flex items-center flex-wrap bg-transparent">
+            <li>
+                <a href="javascript:void(0)" class="text-[#828690] dark:text-white text-[0.875rem]">
+                    Forms
+                </a>
+            </li>
+            <li class="pl-2 before:content-['/'] before:font-[simple-line-icons] before:font-black before:text-xl before:leading-4 before:pr-2 before:float-left before:text-primary font-semibold"><a href="javascript:void(0)" class="text-primary "></a>Form Element</li>
+        </ol>
+    </div>
+    <!-- row -->
+    <div class="row">
+        <div class="lg:w-1/2 w-full">
+            <div class="card z-auto">
+                <div class="card-header flex flex-wrap justify-between items-center sm:p-5 sm:pt-6 p-4 pt-5 max-sm:pb-5 relative border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
+                    <h4 class="card-title capitalize">Input Style</h4>
+                </div>
+                <div class="sm:p-[1.875rem ] p-4">
+                    <div class="basic-form">
+                        <form>
+                            <div class="mb-4">
+                                <input type="text" class="form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full input-default " placeholder="input-default">
+                            </div>
+                            <div class="mb-4">
+                                <input type="text" class="form-control relative text-[13px] h-[2.813rem] border border-b-color block py-1.5 px-3 duration-500  outline-none w-full rounded-[6.25rem]" placeholder="input-rounded">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="xl:w-1/2 w-full">
+            <div class="card z-auto">
+                <div class="card-header flex flex-wrap justify-between items-center sm:p-5 sm:pt-6 p-4 pt-5 max-sm:pb-5 relative border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
+                    <h4 class="card-title capitalize">Image Upload</h4>
+                </div>
+                <div class="sm:p-[1.875rem ] p-4">
+                    <div class="basic-form">
+                        @using (Html.BeginForm("ImageUpload", "Home", FormMethod.Post, new { @class = "panel-body form-horizontal form-padding loader", enctype = "multipart/form-data", @id = "formid" }))
+                        {
+                            <div class="col-md-12">@Html.Partial("_Alerts")</div>
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="mb-4 row">
+                                <label class="sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm">Date</label>
+                                <div class="sm:w-5/6">
+                                    <input type="date" class="relative text-[0.76563rem] placeholder:text-[0.76563rem] py-1 px-2 min-h-[2.5rem] border border-b-color block rounded-lg duration-500  outline-none w-full form-control-sm" placeholder="col-form-label-sm">
+                                </div>
+                            </div>
+                            <div class="mb-4 row">
+                                <label class="sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm">District</label>
+                                <div class="sm:w-5/6">
+                                    @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="mb-4 row">
+                                <label class="sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm">Date</label>
+                                <div class="sm:w-5/6">
+                                    <input type="date" class="relative text-[0.76563rem] placeholder:text-[0.76563rem] py-1 px-2 min-h-[2.5rem] border border-b-color block rounded-lg duration-500  outline-none w-full form-control-sm" placeholder="col-form-label-sm">
+                                </div>
+                            </div>
+                            <div class="mb-4 row">
+                                <label class="sm:w-1/6 py-[7px] text-[13px] font-medium text-body-color">Title</label>
+                                <div class="sm:w-5/6">
+                                    <input type="text" id="Title" class="form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full" placeholder="col-form-label">
+                                </div>
+                            </div>
+                            <div class="mb-4 row">
+                                <label class="sm:w-1/6 py-[7px] text-body-color text-[1.09375rem] font-medium col-form-label-lg">Upload Image</label>
+                                <div class="sm:w-5/6">
+                                    <input class="relative text-[13px] h-[2.813rem] file:h-[2.813rem] file:outline-none file:text-body-color
+                                           file:py-[0.175rem] file:pl-2.5 file:pr-3 file:bg-[#f8f9fa] dark:file:bg-[#1b1b1b]
+                                           border border-b-color file:border-b-color block rounded-lg text-body-color duration-500
+                                           outline-none w-full" type="file" id="FileUpload">
+                                </div>
+                            </div>
+                            <div class="mb-4 row">
+                                <label class="sm:w-1/6 py-[7px] text-body-color text-[1.09375rem] font-medium col-form-label-lg">Title</label>
+                                <div class="sm:w-5/6">
+                                    <span class="input-group-text flex items-center justify-center py-1.5 px-3 text-sm font-normal border border-danger text-center whitespace-nowrap min-w-[3.125rem] bg-danger text-white rounded-s-lg">Comments</span>
+                                    <textarea class="relative text-[13px] h-auto min-h-auto border border-danger dark:border-danger block p-3 duration-500 focus:border-danger outline-none resize-y flex-1 w-[1%] rounded-e-lg"></textarea>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JS/Master.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            BindBlock("BlockId", '', "0");
+            $("#UploadDate").datepicker({
+                dateFormat: 'dd-M-yy',
+                // changeMonth: true,
+                //changeYear: true,
+                maxDate: '0',
+            });
+
+            $("#FileUpload").change(function () {
+                var fileExtension = ['xlsx', 'xls', 'csv'];
+                if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    alert("Invalid file type");
+                    $(this).val('');
+                    return false;
+                }
+
+            });
+
+            BindData();
+
+            $("#formid").on("submit", function (event) {
+                event.preventDefault();
+                if ($('#Date').val() == '') {
+                    toastr.error("Error", 'Enter the date.');
+                    return false;
+                }
+                if ($('#Title').val() == '') {
+                    toastr.error("Error", 'Enter the File Name.');
+                    return false;
+                }
+                if ($('#FileUpload').val() == '') {
+                    toastr.error("Error", 'Please file upload.');
+                    return false;
+                }
+                else {
+                    // var formData = $(this).serialize();
+                    var formData = new FormData();
+                    if (confirm("Are you sure you want to submit data this?")) {
+                        debugger;
+                        if ($('#Date').val() != '') {
+                            formData.append('Date', $('#Date').val());
+                        }
+                        if ($('#Title').val() != '') {
+                            formData.append('Title', $('#Title').val());
+                        }
+                        //jQuery.event.trigger("ajaxStart");
+                        if ($('#FileUpload').get(0).files.length != 0) {
+                            formData.append('FileUpload', $('#FileUpload')[0].files[0]);
+                        }
+                        var isvalid = $("#formid").valid(); //$('#formid').validate();
+                        if (isvalid) {
+                            $.ajax({
+                                type: "POST",
+                                url: document.baseURI + "/Home/ImageUpload/",
+                                data: formData,
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                // dataType: 'json',
+                                //contentType: "application/json; charset=utf-8",
+                                success: function (resp) {
+                                    if (resp.IsSuccess) {
+                                        toastr.success("Success", resp.Message);
+                                        //jQuery.event.trigger("ajaxStop");
+                                        BindData();
+                                    }
+                                    else {
+                                        toastr.error("Error", resp.Message);
+                                        return false;
+                                    }
+                                },
+                                error: function (req, error) {
+                                    if (error === 'error') { error = req.statusText; }
+                                    var errormsg = 'There was a communication error: ' + error;
+                                    toastr.error("Error", errormsg);
+                                    //jQuery.event.trigger("ajaxStop");
+                                    return false;
+                                }
+                            });
+                        }
+                        else {
+                            toastr.error("Error", "All Record Validate !!");
+                            // jQuery.event.trigger("ajaxStop");
+                            return false;
+                        }
+                    }
+                    else {
+                        return true;
+                    }
+                }
+
+            });//end final submit
+
+        });//End Load Method
+
+
+        function InputClear() {
+            $("input[name=Id]").val('0');
+            $("input[name=UploadDate]").val('');
+            $("input[name=FileName]").val('');
+            $("input[name=FileUpload]").val('');
+        }
+
+        function BindData() {
+            $("#subdata").html('');
+            var formData = $('#formid').serialize();
+
+            $.ajax({
+                type: "Get",
+                url: document.baseURI + "/Home/GetFileUploadList",
+                data: '',//JSON.stringify({ 'Roles': '' }),
+                //cache: false,
+                success: function (res) {
+                    if (res.IsSuccess) {
+                        $("#subdata").html(res.Data);
+
+                        if ($.fn.dataTable.isDataTable('#tbl')) {
+                            $("#tbl").dataTable().fnDestroy();
+                        }
+                        table = $('#tbl').DataTable({
+                            //scrollY: "400px",
+                            //scrollX: true,
+                            //scrollCollapse: true,
+                            //paging: false,
+                            pageLength: 100,
+                            fixedColumns: {
+                                leftColumns: 1,
+                                rightColumns: 1
+                            },
+                            order: [[0, 'asc']],
+                            buttons: [{
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i>Export</span>', title: 'Beneficiary Lists',//$('#IDDistrict option:selected').text() +
+                                className: 'btn btn-primary button-icon mr-3 mt-1 mb-1',
+                                filename: 'Beneficiary List',
+                                exportOptions: { modifier: { page: 'all' } }
+                            }],
+                        });
+                        $('.dataTables_filter input[type="search"]').css(
+                            { 'width': '200px', 'display': 'inline-block' }
+                        );
+                        $('#div-download').empty();
+                        table.buttons().container().appendTo($('#div-download'));
+                    }
+                    else {
+                        $("#subdata").html(res.Data);
+                    }
+                },
+                error: function (req, error) {
+                    if (error === 'error') { error = req.statusText; }
+                    var errormsg = 'There was a communication error: ' + error;
+                    //Do To Message display
+                }
+            });
+        }
+
+    </script>
+}

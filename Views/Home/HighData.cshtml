@@ -91,33 +91,48 @@
                 </div>
             </div>-->
             <div class="w-full">
-                <div class="row">
+                <div class="row" style="margin-bottom: 10px;">
                     <div class="lg:w-1/3 w-full">
-                        <div id="subHYTchart" style="width:100%;height:400px;">
-                        </div>
-                    </div>
-                    <div class="lg:w-1/3 w-full">
-                        <div id="subRBSchart" style="width: 100%; height: 400px;">
+                        <div id="StatesubHYTchart" style="width: 100%; height: 250px;">
                         </div>
                     </div>
                     <div class="lg:w-1/3 w-full">
-                        <div id="subHYTToRBSchart" style="width: 100%; height: 400px;">
+                        <div id="StatesubRBSchart" style="width: 100%; height: 250px;">
                         </div>
                     </div>
-                    <div class="xl\:w-full bg-white mt-5">
-                        <div id="HYTdata" class="">
+                    <div class="lg:w-1/3 w-full">
+                        <div id="StateHYTToRBSchart" style="width:100%;height:250px;">
                         </div>
                     </div>
-                    <div class="xl\:w-full bg-white mt-5">
-                        <div id="RBSdata" class="">
-                        </div>
                     </div>
-                    <div class="xl\:w-full bg-white mt-5">
-                        <div id="HYTToRBSdata" class="">
+                    <div class="row">
+
+                        <div class="lg:w-1/3 w-full">
+                            <div id="subHYTchart" style="width:100%;height:300px;">
+                            </div>
+                        </div>
+                        <div class="lg:w-1/3 w-full">
+                            <div id="subRBSchart" style="width: 100%; height: 300px;">
+                            </div>
+                        </div>
+                        <div class="lg:w-1/3 w-full">
+                            <div id="subHYTToRBSchart" style="width: 100%; height: 300px;">
+                            </div>
+                        </div>
+                        <div class="xl\:w-full bg-white mt-5">
+                            <div id="HYTdata" class="">
+                            </div>
+                        </div>
+                        <div class="xl\:w-full bg-white mt-5">
+                            <div id="RBSdata" class="">
+                            </div>
+                        </div>
+                        <div class="xl\:w-full bg-white mt-5">
+                            <div id="HYTToRBSdata" class="">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
         </div>
@@ -151,7 +166,7 @@
 
         function LoadReport() {
             $('#msg').html("");
-            $('#HYTdata').html(""); $("#subHYTchart").html("");
+            $('#HYTdata').html(""); $("#subHYTchart").html(""); $("#StatesubHYTchart").html("");
             $('#RBSdata').html(""); $("#subRBSchart").html("");
             $('#HYTToRBSdata').html(""); $("#subHYTToRBSchart").html("");
             var id = '#tblList-frm'
@@ -171,6 +186,9 @@
                         ChartHSub(resDH);
                         ChartBsub(resDB);
                         ChartHYTToBsub(resDHB);
+                        ChartStateHypertension(resDH);
+                        ChartStateBsub(resDB);
+                        ChartStateHYTToBsub(resDHB);
                         $('#HYTdata').html(resp.HYreshtml);
                         $('#RBSdata').html(resp.BSreshtml);
                         $('#HYTToRBSdata').html(resp.HYToBSreshtml);

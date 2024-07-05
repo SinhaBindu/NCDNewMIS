@@ -252,7 +252,7 @@ namespace NCDNewMIS.Controllers
                 var tblmap = new tbl_RegMappping();
                 if (!string.IsNullOrWhiteSpace(SubCenterIds))
                 {
-                   
+
                     var splt = SubCenterIds.Split(',');
                     var spltmapp = RegMapIds.Split(',');
                     IEnumerable<int> spltsubcenterids = splt.Select(int.Parse);
@@ -266,7 +266,7 @@ namespace NCDNewMIS.Controllers
                         //{
                         var scid = Convert.ToInt32((s).ToString());
                         tblmap = new tbl_RegMappping();
-                        tblmap = tblmaplist.Any(x => x.SubCenterId_fk == scid)==false?new tbl_RegMappping():null;
+                        tblmap = tblmaplist.Any(x => x.SubCenterId_fk == scid) == false ? new tbl_RegMappping() : null;
 
                         FilterModel model = new FilterModel();
                         model.DistrictId = Convert.ToString(DistrictId);
@@ -588,6 +588,58 @@ namespace NCDNewMIS.Controllers
             {
                 string er = ex.Message;
                 return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+        public ActionResult ImageUpload()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ImageUpload(ImageUploadModel model)
+        {
+            NCD_DBEntities db_ = new NCD_DBEntities();
+            int result = 0;
+            try
+            {
+                if (model != null)
+                {
+                    if (ModelState.IsValid && model.FileUpload != null)
+                    {
+                        //if (db_.tbl_GalleryUpload.Any(x => x.FileName == model.FileName.Trim()))
+                        //{
+                        //    var res1 = Json(new { IsSuccess = false, Message = "File Name Already Exists !!", JsonRequestBehavior.AllowGet);
+                        //    res1.MaxJsonLength = int.MaxValue;
+                        //    return res1;
+                        //}
+                        var maxid = db_.tbl_GalleryUpload.Count() != 0 ? db_.tbl_GalleryUpload?.Max(x => x.Id) : 0;
+                        var lastaddmaxid = maxid == 0 ? 1 : maxid + 1;
+                        var filePath = CommonModel.SaveSingleExcelFile(model.FileUpload, lastaddmaxid.ToString(), "ParticipantFile");
+                        var physicalFilePath = Server.MapPath(filePath);
+
+                        tbl_GalleryUpload tbl = new tbl_GalleryUpload();
+                        tbl.Date = model.Date;
+                        tbl.FileName = model.FileName.Trim();
+                        tbl.FilePath = filePath;
+                        tbl.Title = model.Title;
+                        tbl.FilePath = filePath;
+                        tbl.CreatedBy = User.Identity.Name;
+                        tbl.CreatedOn = DateTime.Now;
+                        tbl.IsActive = true;
+                        db_.tbl_GalleryUpload.Add(tbl);
+                        result = db_.SaveChanges();
+                    }
+                }
+                var res = result > 0 ? Json(new { IsSuccess = true, Message = "Record Submitted Successfully.." }, JsonRequestBehavior.AllowGet)
+                       : Json(new { IsSuccess = false, Message = "Record Not Submitted.." }, JsonRequestBehavior.AllowGet);
+                res.MaxJsonLength = int.MaxValue;
+                return res;
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                var res = Json(new { IsSuccess = false, Message = "Record Not Submitted.." }, JsonRequestBehavior.AllowGet);
+                res.MaxJsonLength = int.MaxValue;
+                return res;
             }
         }
 

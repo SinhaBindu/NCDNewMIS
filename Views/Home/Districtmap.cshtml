@@ -25,35 +25,37 @@
 
         <div class="row">
             <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
-                <div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
-                    <div class="cpa text-dark dark:text-white text-base font-semibold">
-                        <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
-                    </div>
-                    <div class="tools">
-                        <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
-                    </div>
-                </div>
+                @*<div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
+                        <div class="cpa text-dark dark:text-white text-base font-semibold">
+                            <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+                        </div>
+                    </div>*@
                 <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
-                    <div class="p-[1.875rem] max-sm:p-4">
+                    <div class="p-[1.0rem] max-sm:p-4">
                         <div class="row">
                             @*@using (Html.BeginForm("Districtmap", "Home", FormMethod.Post, new { @id = "tblList-frm", @class = "loader" }))
                                 {*@
                             @*<div class="xl:w-1/5">
-                                <div class="mb-4 row">
-                                    <label class="lg:w-1/4 py-[7px] text-dark dark:text-white text-sm" for="validationCustom01">
-                                        Username
-                                        <span class="text-danger"></span>
-                                    </label>
-                                    <div class="lg:w-1/3">
-                                        <input type="text" class="form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full" id="validationCustom01" placeholder="Enter a username.." required="">
-                                        <div class="invalid-feedback hidden w-full mt-1 text-xs text-danger">
-                                            Please enter a username.
+                                    <div class="mb-4 row">
+                                        <label class="lg:w-1/4 py-[7px] text-dark dark:text-white text-sm" for="validationCustom01">
+                                            Username
+                                            <span class="text-danger"></span>
+                                        </label>
+                                        <div class="lg:w-1/3">
+                                            <input type="text" class="form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full" id="validationCustom01" placeholder="Enter a username.." required="">
+                                            <div class="invalid-feedback hidden w-full mt-1 text-xs text-danger">
+                                                Please enter a username.
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>*@
-                            <div class="xl:w-1/5 sm:w-1/3 w-full">
+                                </div>*@
+                            <div class="xl:w-1/6 sm:w-1/6 w-full">
                                 <label class="">Type of submission</label>
+                            </div>
+                            <div class="xl:w-1/6 sm:w-1/6 w-full">
                                 <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="DistrictBlockType" id="DistrictBlockType">
                                     @foreach (var item in NCDNewMIS.Models.CommonModel.GetDistrictBlockType().ToList())
                                     {
@@ -61,8 +63,10 @@
                                     }
                                 </select>
                             </div>
-                            <div class="xl:w-1/5 sm:w-1/3 w-full">
+                            <div class="xl:w-1/6 sm:w-1/6 w-full">
                                 <label class="form-label">Type of round</label>
+                            </div>
+                            <div class="xl:w-1/6 sm:w-1/6 w-full">
                                 <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="RoundType" id="RoundType">
                                     @foreach (var item in NCDNewMIS.Models.CommonModel.GetRoundType(true).ToList())
                                     {
@@ -142,56 +146,56 @@
             var SType = $("#SType").val();
             var RoundType = $("#RoundType").val();
             var DistrictBlockType = $("#DistrictBlockType").val();
-           /* setTimeout(function () {*/
-                $.ajax({
-                    url: document.baseURI + '/Home/Districtmap',
-                    type: "POST",
-                    data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType },
-                    success: function (resp) {
-                        if (resp.IsSuccess) {
-                            $('#resultmap').html(resp.Datahtml);
+            /* setTimeout(function () {*/
+            $.ajax({
+                url: document.baseURI + '/Home/Districtmap',
+                type: "POST",
+                data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType },
+                success: function (resp) {
+                    if (resp.IsSuccess) {
+                        $('#resultmap').html(resp.Datahtml);
 
-                            $('#result').html(resp.DataT);
-                           
-                            if ($.fn.dataTable.isDataTable('#tbl')) {
-                                $("#tbl").dataTable().fnDestroy();
-                            }
-                            table = $('#tbl').DataTable({
-                                // scrollY: "500px",
-                                //scrollX: true,
-                                //fixedHeader: true,
-                                //scrollCollapse: true,
-                                paging: false,
-                                "bFilter": false,
-                                pageLength: 100,
-                                //fixedColumns: {
-                                //    leftColumns: 1,
-                                //    rightColumns: 1
-                                //},
-                                buttons: [{
-                                    extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Data Lists',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
-                                    className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
-                                    filename: 'Data List',
-                                    exportOptions: { modifier: { page: 'all' } }
-                                }],
-                            });
-                            //$('.dataTables_filter input[type="search"]').css(
-                            //    { 'width': '500px', 'display': 'inline-block' }
-                            //);
-                            $('#div-download').empty();
-                            table.buttons().container().appendTo($('#div-download'));
+                        $('#result').html(resp.DataT);
 
+                        if ($.fn.dataTable.isDataTable('#tbl')) {
+                            $("#tbl").dataTable().fnDestroy();
                         }
-                    },
-                    error: function (req, error) {
-                        if (error === 'error') { error = req.statusText; }
-                        var errormsg = 'There was a communication error: ' + error;
-                        $('#result').html(errormsg);
-                    }
-                });
-           /* },5000)*/
+                        table = $('#tbl').DataTable({
+                            // scrollY: "500px",
+                            //scrollX: true,
+                            //fixedHeader: true,
+                            //scrollCollapse: true,
+                            paging: false,
+                            "bFilter": false,
+                            pageLength: 100,
+                            //fixedColumns: {
+                            //    leftColumns: 1,
+                            //    rightColumns: 1
+                            //},
+                            buttons: [{
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Data Lists',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
+                                filename: 'Data List',
+                                exportOptions: { modifier: { page: 'all' } }
+                            }],
+                        });
+                        //$('.dataTables_filter input[type="search"]').css(
+                        //    { 'width': '500px', 'display': 'inline-block' }
+                        //);
+                        $('#div-download').empty();
+                        table.buttons().container().appendTo($('#div-download'));
 
-           
+                    }
+                },
+                error: function (req, error) {
+                    if (error === 'error') { error = req.statusText; }
+                    var errormsg = 'There was a communication error: ' + error;
+                    $('#result').html(errormsg);
+                }
+            });
+            /* },5000)*/
+
+
 
         }
 

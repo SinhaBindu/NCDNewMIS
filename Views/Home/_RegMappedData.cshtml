@@ -56,78 +56,78 @@
        
     }*/
 </style>
-<div class="bg-light rounded h-100 p-4">
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped cell-border small" id="tbl">
-            <thead class="text-center">
-                <tr>
-                    <th class="text-center">Srno.</th>
-                    <th class="text-center">District</th>
-                    <th class="text-center">Block</th>
-                    @*<th class="text-center">CHC</th>
-                        <th class="text-center">PHC</th>*@
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Mobile No</th>
-                    <th class="text-center">Mapped SubCenters</th>
-                    <th class="text-center">Mapped</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    if (dt.Rows.Count > 0)
+<div class="overflow-x-auto table-scroll">
+    <table class="table table-bordered table-striped cell-border small" id="tbl">
+        <thead class="text-center">
+            <tr>
+                <th class="text-center">Srno.</th>
+                <th class="text-center">District</th>
+                <th class="text-center">Block</th>
+                @*<th class="text-center">CHC</th>
+                    <th class="text-center">PHC</th>*@
+                <th class="text-center">Name</th>
+                <th class="text-center">Mobile No</th>
+                <th class="text-center">Mapped SubCenters
+                <br />(CHC/PHC/SubCenter)
+                </th>
+                <th class="text-center">Mapped</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (dt.Rows.Count > 0)
+                {
+                    var sno = 1; var prvblock = ""; var index = 0;
+                    List<SelectListItem> lists = new List<SelectListItem>();
+                    foreach (DataRow dr in dt.Rows)
                     {
-                        var sno = 1; var prvblock = ""; var index = 0;
-                        List<SelectListItem> lists = new List<SelectListItem>();
-                        foreach (DataRow dr in dt.Rows)
+                        if (!string.IsNullOrWhiteSpace(dr["BlockId"].ToString()))
                         {
-                            if (!string.IsNullOrWhiteSpace(dr["BlockId"].ToString()))
+                            var blockid = Convert.ToInt32(dr["BlockId"].ToString());
+                            var chcid = 0;// Convert.ToInt32(dr["CHCId_fk"].ToString());
+                            var phcid = 0;// Convert.ToInt32(dr["PHCId_fk"].ToString());
+                            if (sno == 1)
                             {
-                                var blockid = Convert.ToInt32(dr["BlockId"].ToString());
-                                var chcid = 0;// Convert.ToInt32(dr["CHCId_fk"].ToString());
-                                var phcid = 0;// Convert.ToInt32(dr["PHCId_fk"].ToString());
-                                if (sno == 1)
-                                {
-                                    prvblock = dr["BlockId"].ToString();
-                                    lists = CommonModel.GetSP_GetSubCenterCenterLists(2, blockid, chcid, phcid);
-                                }
-                                if (dr["BlockId"].ToString() != prvblock)
-                                {
-                                    lists = CommonModel.GetSP_GetSubCenterCenterLists(2, blockid, chcid, phcid);
-                                }
+                                prvblock = dr["BlockId"].ToString();
+                                lists = CommonModel.GetSP_GetSubCenterCenterLists(2, blockid, chcid, phcid);
                             }
-                            <tr>
-                                <td class="text-center">@(sno++)</td>
-                                <td class="text-center">@dr["District"]</td>
-                                <td class="text-center">@dr["Block"]</td>
-                                @*<td class="text-center">@dr["CHCN"]</td>
-                                    <td class="text-center">@dr["PHC"]</td>*@
-                                <td class="text-center">@dr["FullName"]</td>
-                                <td class="text-center">@dr["MobileNo"]</td>
-                                <td data-id="td@(index)" class="tdselval">
-                                    <input type="hidden" id="hd@(index)" name="hd@(index)" class="hd@(index)" value="@dr["SubCenterIds"].ToString()" />
-                                    @Html.DropDownList("ddl" + index, new SelectList(lists, "value", "text"), new { @class = "tdselval  multiple ddl selectpicker", multiple = "multiple" })
-                                </td>
-                                @*<td class="text-center">
-                                        <a href="javascript:void(0);" onclick="return PostAppoved('@dr["RegId_pk"]','@dr["RegMapId_pk"]','@dr["IsApproved"].ToString()');"> <strong class="@dr["ApprovedColor"]">@dr["ApprovedStatus"]</strong></a>
-                                    </td>*@
-                                <td>
-                                    <a href="javascript:void(0);" onclick="CUData('@dr["RegId_pk"]','@dr["RegMapIds"]','@dr["MobileNo"]','@dr["DistrictId"]','@dr["BlockId"]','@dr["SubCenterIds"]', 'ddl' + @index);"
-                                       class="btn btn-primary py-[0.579rem] px-4 text-[13px]
+                            if (dr["BlockId"].ToString() != prvblock)
+                            {
+                                lists = CommonModel.GetSP_GetSubCenterCenterLists(2, blockid, chcid, phcid);
+                            }
+                        }
+                        <tr>
+                            <td class="text-center">@(sno++)</td>
+                            <td class="text-center">@dr["District"]</td>
+                            <td class="text-center">@dr["Block"]</td>
+                            @*<td class="text-center">@dr["CHCN"]</td>
+                                <td class="text-center">@dr["PHC"]</td>*@
+                            <td class="text-center">@dr["FullName"]</td>
+                            <td class="text-center">@dr["MobileNo"]</td>
+                            <td data-id="td@(index)" class="tdselval">
+                                <input type="hidden" id="hd@(index)" name="hd@(index)" class="hd@(index)" value="@dr["SubCenterIds"].ToString()" />
+                                @Html.DropDownList("ddl" + index, new SelectList(lists, "value", "text"), new { @class = "tdselval  multiple ddl selectpicker", multiple = "multiple" })
+                            </td>
+                            @*<td class="text-center">
+                                    <a href="javascript:void(0);" onclick="return PostAppoved('@dr["RegId_pk"]','@dr["RegMapId_pk"]','@dr["IsApproved"].ToString()');"> <strong class="@dr["ApprovedColor"]">@dr["ApprovedStatus"]</strong></a>
+                                </td>*@
+                            <td>
+                                <a href="javascript:void(0);" onclick="CUData('@dr["RegId_pk"]','@dr["RegMapIds"]','@dr["MobileNo"]','@dr["DistrictId"]','@dr["BlockId"]','@dr["SubCenterIds"]', 'ddl' + @index);"
+                                   class="btn btn-primary py-[0.579rem] px-4 text-[13px]
                                         font-medium rounded-lg bg-primary leading-5 inline-block
                                         border border-primary duration-500 hover:bg-[#ff798a]
                                         hover:text-white hover:border-primary-light text-white
                                         sm:ml-auto mb-2 sm:mb-0">Mapping SubCenter</a>
-                                </td>
-                            </tr>
-                            prvblock = dr["BlockId"].ToString();
-                            index++;
-                        }
+                            </td>
+                        </tr>
+                        prvblock = dr["BlockId"].ToString();
+                        index++;
                     }
                 }
-            </tbody>
+            }
+        </tbody>
 
-        </table>
-    </div>
+    </table>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -135,7 +135,6 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <link href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
 <script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
-
 
 <script>
     $(function () {

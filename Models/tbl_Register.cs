@@ -25,5 +25,7 @@ namespace NCDNewMIS.Models
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public Nullable<bool> IsApproved { get; set; }
+        public Nullable<int> DistrictId { get; set; }
+        public Nullable<int> BlockId { get; set; }
     }
 }

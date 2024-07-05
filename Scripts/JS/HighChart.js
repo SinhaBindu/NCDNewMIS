@@ -14,12 +14,14 @@ function ChartHSub(Data) {
     if (Data.length > 0) {
         //var objd = new Object();
         var DataList = [], cate = [];
-        var subtitle = "";
+        var subtitle = ""; var TH = 0; var TM = 0; var ATM = 0;
         for (var i = 0; i < Data.length; i++) {
             cate.push(Data[i].Block);
             var obj = [Data[i].ColumnName, Data[i].NoofData];
             DataList.push(obj);
-           // subtitle = $("#SType").val() != "" ? $("#SType option:selected").text() : "Home and Camp";
+            ATM += Data[i].NoofData;
+            TH += Data[i].TotalHouseHold; TM += Data[i].TotalMember;
+            // subtitle = $("#SType").val() != "" ? $("#SType option:selected").text() : "Home and Camp";
         }
 
         // Set up the chart
@@ -33,10 +35,18 @@ function ChartHSub(Data) {
                 align: 'center'
             },
             subtitle: {
-                text: 'Elevated blood pressure (Systolic > 140 mm of Hg and/or Diastolic > 90 mm of Hg) or taking medicine to control blood pressure (%)',
+                text: 'Total Rural Households / No.of Members : ' + TH + " / " + TM,
             },
             credits: {
-                enabled: false
+                enabled: false,
+                //text: 'Elevated blood pressure (Systolic > 140 mm of Hg and/or Diastolic > 90 mm of Hg)<br/ > or taking medicine to control blood pressure (%)',
+                position: {
+                    align: 'center',
+                    y: -5 // position of credits
+                },
+                style: {
+                    textwrap: 'wrap',
+                },
             },
             // colors: ['#C79D6D', '#B5927B', '#CE9B84', '#B7A58C', '#C7A58C'],
             colors: ['#2caffe'],
@@ -52,7 +62,7 @@ function ChartHSub(Data) {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'No.of Members'
+                    text: 'No.of Members :  <b>' + ATM + '</ b>',
                 }
             },
             //tooltip: {
@@ -62,7 +72,7 @@ function ChartHSub(Data) {
                 name: 'Members',
                 //colorByPoint: true,
                 data: DataList,
-                color: '#2caffe',
+                color: '#bc6ac9',
                 dataLabels: {
                     enabled: true,
                     //rotation: -50,
@@ -85,15 +95,17 @@ function ChartHSub(Data) {
 
 function ChartBsub(Data) {
     // Data retrieved from https://worldpopulationreview.com/countries
-   // debugger;
+    // debugger;
     if (Data.length > 0) {
         //var objd = new Object();
         var DataList = [], cate = [];
-        var subtitle = "";
+        var subtitle = ""; var TH = 0; var TM = 0; var ATM = 0;
         for (var i = 0; i < Data.length; i++) {
             cate.push(Data[i].Block);
             var obj = [Data[i].ColumnName, Data[i].NoofData];
             DataList.push(obj);
+            ATM += Data[i].NoofData;
+            TH += Data[i].TotalHouseHold; TM += Data[i].TotalMember;
             //DataList.push({ name: Data[i].ColumnName, y: Data[i].NoofData });
             //subtitle = $("#SType").val() != "" ? $("#SType option:selected").text() : "Home and Camp";
         }
@@ -118,7 +130,8 @@ function ChartBsub(Data) {
                 text: 'Blood sugar level - high or very high '
             },
             subtitle: {
-                text: 'Blood sugar level - high or very high (>140 mg/dl) or taking medicine to control blood sugar level (%)'
+                text: 'Total Rural Households / No.of Members : ' + TH + " / " + TM,
+                // text: 'Blood sugar level - high or very high (>140 mg/dl) or taking medicine to control blood sugar level (%)'
             },
             credits: {
                 enabled: false
@@ -126,7 +139,7 @@ function ChartBsub(Data) {
             //tooltip: {
             //    shared: true
             //},
-              //tooltip: {
+            //tooltip: {
             //    valueSuffix: ' m'
             //},
 
@@ -136,7 +149,7 @@ function ChartBsub(Data) {
 
             yAxis: {
                 title: {
-                    text: 'No.of Members'
+                    text: 'No.of Members <b>' + ATM + '</ b>',
                 }
             },
             //plotOptions: {
@@ -184,7 +197,7 @@ function ChartBsub(Data) {
             series: [{
                 name: 'Members',
                 data: DataList,
-                color: '#F0673C',
+                color: '#FE9900',
                 dataLabels: {
                     enabled: true,
                     //rotation: -50,
@@ -200,7 +213,7 @@ function ChartBsub(Data) {
                     }
                 },
                 showInLegend: false
-               
+
             }]
 
         });
@@ -213,11 +226,13 @@ function ChartHYTToBsub(Data) {
     if (Data.length > 0) {
         //var objd = new Object();
         var DataList = [], cate = [];
-        var subtitle = "";
+        var subtitle = ""; var TH = 0; var TM = 0; var ATM = 0;
         for (var i = 0; i < Data.length; i++) {
             cate.push(Data[i].Block);
             var obj = [Data[i].ColumnName, Data[i].NoofData];
             DataList.push(obj);
+            ATM += Data[i].NoofData;
+            TH += Data[i].TotalHouseHold; TM += Data[i].TotalMember;
             //DataList.push({ name: Data[i].ColumnName, y: Data[i].NoofData });
             //subtitle = $("#SType").val() != "" ? $("#SType option:selected").text() : "Home and Camp";
         }
@@ -242,7 +257,9 @@ function ChartHYTToBsub(Data) {
                 text: 'Hypertension & Blood sugar level - high or very high '
             },
             subtitle: {
-                text: 'Hypertension & Blood sugar level - high or very high (>140 mg/dl) or taking medicine to control blood sugar level (%)'
+                text: 'Total Rural Households / No.of Members : ' + TH + " / " + TM,
+                //text: 'Hypertension & Blood sugar level - high or very high (>140 mg/dl) or taking medicine to control blood sugar level (%)'
+                //text: 'Hypertension & Blood sugar level - high or very high (>140 mg/dl) or taking medicine to control blood sugar level (%)'
             },
             credits: {
                 enabled: false
@@ -260,7 +277,7 @@ function ChartHYTToBsub(Data) {
 
             yAxis: {
                 title: {
-                    text: 'No.of Members'
+                    text: 'No.of Members : <b>' + ATM +'</ b>',
                 }
             },
             //plotOptions: {
@@ -308,7 +325,7 @@ function ChartHYTToBsub(Data) {
             series: [{
                 name: 'Members',
                 data: DataList,
-                color: '#274CC1',
+                color: '#E94748',
                 dataLabels: {
                     enabled: true,
                     //rotation: -50,
@@ -331,3 +348,248 @@ function ChartHYTToBsub(Data) {
     }
 }
 
+function ChartStateHypertension(Data) {
+    if (Data.length > 0) {
+        //var objd = new Object();
+        var DataList = [], cate = [];
+        var subtitle = ""; var TH = 0; var TM = 0; var PHYT = 0; var dataser = [];
+        for (var i = 0; i < Data.length; i++) {
+            cate.push(Data[i].Block);
+            var obj = [Data[i].ColumnName, Data[i].NoofData];
+            DataList.push(obj);
+            TH += Data[i].TotalHouseHold; TM += Data[i].TotalMember;
+            PHYT += Data[i].NoofData;
+            // subtitle = $("#SType").val() != "" ? $("#SType option:selected").text() : "Home and Camp";
+        }
+        var pmemHYT = (TM / PHYT);
+        dataser.push({ name: 'No.of Members ' + PHYT, y: pmemHYT, color: '#bc6ac9' });
+        // Create the chart
+        Highcharts.chart('StatesubHYTchart', {
+            chart: {
+                type: 'pie',
+                borderWidth: 1,
+            },
+            title: {
+                text: 'Hypertension',
+                align: 'center'
+            },
+            subtitle: {
+                text: 'Total No.of Members / No.of Members in (Hypertension) : ' + TM + " / " + PHYT,
+                align: 'center'
+            },
+
+            accessibility: {
+                announceNewData: {
+                    enabled: true
+                },
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+
+            plotOptions: {
+                series: {
+                    borderRadius: 5,
+                    dataLabels: [{
+                        enabled: true,
+                        distance: 15,
+                        format: '{point.name}'
+                    }, {
+                        enabled: true,
+                        distance: '-30%',
+                        filter: {
+                            property: 'percentage',
+                            operator: '>',
+                            value: 5
+                        },
+                        format: '{point.y:.1f}%',
+                        style: {
+                            fontSize: '0.9em',
+                            textOutline: 'none'
+                        }
+                    }]
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
+                    '<b>{point.y:.2f}%</b><br/>'
+            },
+
+            series: [
+                {
+                    name: 'Hypertension',
+                    colorByPoint: true,
+                    data: dataser
+                }]
+        });
+
+    }
+}
+
+function ChartStateBsub(Data) {
+    if (Data.length > 0) {
+        //var objd = new Object();
+        var DataList = [], cate = [];
+        var subtitle = ""; var TH = 0; var TM = 0; var PHYT = 0; var dataser = [];
+        for (var i = 0; i < Data.length; i++) {
+            cate.push(Data[i].Block);
+            var obj = [Data[i].ColumnName, Data[i].NoofData];
+            DataList.push(obj);
+            TH += Data[i].TotalHouseHold; TM += Data[i].TotalMember;
+            PHYT += Data[i].NoofData;
+            // subtitle = $("#SType").val() != "" ? $("#SType option:selected").text() : "Home and Camp";
+        }
+        var pmemHYT = (TM / PHYT);
+        dataser.push({ name: 'No.of Members ' + PHYT, y: pmemHYT, color: '#FE9900' });
+        // Create the chart
+        Highcharts.chart('StatesubRBSchart', {
+            chart: {
+                type: 'pie',
+                borderWidth: 1,
+            },
+            title: {
+                text: 'Blood sugar level',
+                align: 'center'
+            },
+            subtitle: {
+                text: 'Total No.of Members / No.of Members in (Blood sugar level) : ' + TM + " / " + PHYT,
+                align: 'center'
+            },
+
+            accessibility: {
+                announceNewData: {
+                    enabled: true
+                },
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+
+            plotOptions: {
+                series: {
+                    borderRadius: 5,
+                    dataLabels: [{
+                        enabled: true,
+                        distance: 15,
+                        format: '{point.name}'
+                    }, {
+                        enabled: true,
+                        distance: '-30%',
+                        filter: {
+                            property: 'percentage',
+                            operator: '>',
+                            value: 5
+                        },
+                        format: '{point.y:.1f}%',
+                        style: {
+                            fontSize: '0.9em',
+                            textOutline: 'none'
+                        }
+                    }]
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
+                    '<b>{point.y:.2f}%</b><br/>'
+            },
+
+            series: [
+                {
+                    name: 'Blood sugar level',
+                    colorByPoint: true,
+                    data: dataser
+                }]
+        });
+
+    }
+}
+
+function ChartStateHYTToBsub(Data) {
+    if (Data.length > 0) {
+        //var objd = new Object();
+        var DataList = [], cate = [];
+        var subtitle = ""; var TH = 0; var TM = 0; var PHYT = 0; var dataser = [];
+        for (var i = 0; i < Data.length; i++) {
+            cate.push(Data[i].Block);
+            var obj = [Data[i].ColumnName, Data[i].NoofData];
+            DataList.push(obj);
+            TH += Data[i].TotalHouseHold; TM += Data[i].TotalMember;
+            PHYT += Data[i].NoofData;
+            // subtitle = $("#SType").val() != "" ? $("#SType option:selected").text() : "Home and Camp";
+        }
+        var pmemHYT = (TM / PHYT);
+        dataser.push({ name: 'No.of Members ' + PHYT, y: pmemHYT, color: '#E94748' });
+        // Create the chart
+        Highcharts.chart('StateHYTToRBSchart', {
+            chart: {
+                type: 'pie',
+                borderWidth: 1,
+            },
+            title: {
+                text: 'Hypertension & Blood sugar level - high or very high ',
+                align: 'center'
+            },
+            subtitle: {
+                text: 'Total No.of Members / No.of Members in (Hypertension & Blood sugar level) : ' + TM + " / " + PHYT,
+                align: 'center'
+            },
+
+            accessibility: {
+                announceNewData: {
+                    enabled: true
+                },
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+
+            plotOptions: {
+                series: {
+                    borderRadius: 5,
+                    dataLabels: [{
+                        enabled: true,
+                        distance: 15,
+                        format: '{point.name}'
+                    }, {
+                        enabled: true,
+                        distance: '-30%',
+                        filter: {
+                            property: 'percentage',
+                            operator: '>',
+                            value: 5
+                        },
+                        format: '{point.y:.1f}%',
+                        style: {
+                            fontSize: '0.9em',
+                            textOutline: 'none'
+                        }
+                    }]
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
+                    '<b>{point.y:.2f}%</b><br/>'
+            },
+
+            series: [
+                {
+                    name: 'Hypertension & Blood sugar level',
+                    colorByPoint: true,
+                    data: dataser
+                }]
+        });
+
+    }
+}

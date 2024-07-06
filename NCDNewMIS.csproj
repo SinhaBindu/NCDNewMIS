@@ -745,6 +745,8 @@
     <Content Include="Views\Home\RegMapped.cshtml" />
     <Content Include="Views\Home\_RegMappedData.cshtml" />
     <Content Include="Views\Home\ImageUpload.cshtml" />
+    <Content Include="Scripts\JS\IndiaState.js" />
+    <Content Include="Views\Home\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

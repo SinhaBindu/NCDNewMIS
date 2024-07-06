@@ -42,13 +42,23 @@ function Act1IndicatorChart(Data) {
             dataser.push({ type: 'column', name: 'Target', data: TD, 'color': '#bc6ac9' });
         }
         if (achievedzero <= 0) {
-            dataser.push({ type: 'column', name: 'Achieved', data: AD, 'color': '#e4b62c' });//fbc21d//f2c02c
+            dataser.push({ type: 'column', name: 'Achieved', data: AD, 'color': '#ff7a01' });//fbc21d//f2c02c
         }
 
         TAPercent = TotalTarget == TotalAchieved ? (TotalAchieved / TotalTarget * 100) : (TotalAchieved / TotalTarget * 100);
         TAPercent = parseFloat(TAPercent.toFixed(0))
 
         var tittotal = TotalTarget != 0 ? "Target - " + TotalTarget + " To Achieved - " + TotalAchieved : TotalAchieved != 0 ? TotalAchieved : '';
+        debugger;
+        if (TAPercent == 0 || TAPercent == Infinity || TAPercent == undefined || TAPercent == "" || TAPercent == "NaN" || isNaN(TAPercent)) {
+            $('#div-bar').removeClass("xl:w-2/3");
+            $('#div-pie').hide();
+            $('#div-bar').addClass('xl:w-1/1');
+        }
+        else {
+            $('#div-pie').show();
+            $('#div-bar').addClass('xl:w-2/3');
+        }
         Highcharts.chart('subchart', {
 
             chart: {
@@ -129,6 +139,116 @@ function Act1IndicatorChart(Data) {
             //        enabled: false
             //    }
             //}]
+        });
+
+    }
+}
+
+function ChartAchivepie(Data) {
+    if (Data.length > 0) {
+        //var objd = new Object();
+        var TD = [], AD = [], cate = [], AGVA = [], dataserpie=[];
+        var subtitle = ""; var title = "";
+        var TotalTarget = 0, TotalAchieved = 0, TAPercent = 0; Apavg = 0;
+        var targetzero = Data.filter(x => x.target == 0);
+        var achievedzero = Data.filter(x => x.achieved == 0);
+        var dataser = [];
+        Data = Data.sort();
+        for (var i = 0; i < Data.length; i++) {
+            cate.push(Data[i].block);
+            //var obj = [Data[i].ColumnName, Data[i].NoofData];
+            TD.push(Data[i].target);
+            AD.push(Data[i].achieved);
+            if (Data[i].block.toUpperCase() != "TOTAL") {
+                TotalTarget += Data[i].target;
+                TotalAchieved += Data[i].achieved;
+            }
+
+            Apavg = parseFloat((Data[i].achieved / Data.length).toFixed(0));
+            AGVA.push(Apavg);
+            subtitle = $("#IndicatorId").val() != "" ? $("#IndicatorId option:selected").text() : "";
+            title = $("#PageType").val() != "" ? $("#PageType option:selected").text().toUpperCase().replace('_', ' ') : "";
+
+        }
+        if (targetzero.length <= 0) {
+            dataser.push({ type: 'column', name: 'Target', data: TD, 'color': '#bc6ac9' });
+        }
+        if (achievedzero <= 0) {
+            dataser.push({ type: 'column', name: 'Achieved', data: AD, 'color': '#ff7a01' });//fbc21d//f2c02c
+        }
+
+        TAPercent = TotalTarget == TotalAchieved ? (TotalAchieved / TotalTarget * 100) : (TotalAchieved / TotalTarget * 100);
+        TAPercent = parseFloat(TAPercent.toFixed(0))
+
+        var tittotal = TotalTarget != 0 ? "Target - " + TotalTarget + " To Achieved - " + TotalAchieved : TotalAchieved != 0 ? TotalAchieved : '';
+
+        var achprcent = (TotalAchieved / Data.length);
+        var achprcentcolor = TAPercent == 100.00 ? '#21b731' :'#ff7a00';
+        dataserpie.push({ name: 'Achieved ' + TotalAchieved, y: TAPercent, color: achprcentcolor });
+        
+        // Create the chart
+        Highcharts.chart('subchartpie', {
+            chart: {
+                type: 'pie',
+                borderWidth: 1,
+                height: 300,
+            },
+            title: {
+                text: title,
+                align: 'center'
+            },
+            subtitle: {
+                text: "Achieved", //: " + "<b style='color:#000;font-size:12px;'>" +  + "<b/>",
+                align: 'center'
+            },
+
+            accessibility: {
+                announceNewData: {
+                    enabled: true
+                },
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+
+            plotOptions: {
+                series: {
+                    borderRadius: 5,
+                    dataLabels: [{
+                        enabled: true,
+                        distance: 15,
+                        format: '{point.name}'
+                    }, {
+                        enabled: true,
+                        distance: '-30%',
+                        filter: {
+                            property: 'percentage',
+                            operator: '>',
+                            value: 5
+                        },
+                        format: '{point.y:.1f}%',
+                        style: {
+                            fontSize: '0.9em',
+                            textOutline: 'none'
+                        }
+                    }]
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
+                    '<b>{point.y:.2f}%</b><br/>'
+            },
+
+            series: [
+                {
+                    name: 'Hypertension',
+                    colorByPoint: true,
+                    data: dataserpie
+                }]
         });
 
     }

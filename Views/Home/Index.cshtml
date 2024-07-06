@@ -1,6 +1,7 @@
 ﻿@{
-    ViewBag.Title = "Raw Submission Data";
+    ViewBag.Title = "Raw Data - ACT II";
 }
+
 
 <div class="content-body rightside-event">
     <div class="container-fluid">
@@ -14,27 +15,44 @@
 
             <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
                 @*<div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
-                    <div class="cpa text-dark dark:text-white text-base font-semibold">
-                        <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
-                    </div>
-                    <div class="tools">
-                        <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
-                    </div>
-                </div>*@
+                        <div class="cpa text-dark dark:text-white text-base font-semibold">
+                            <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+                        </div>
+                    </div>*@
                 <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
                     <div class="p-[1.0rem] max-sm:p-4">
-                        <div class="row">
-                            <div class="xl:w-1/6 sm:w-1/6 w-full">
-                                <label class="form-label">Screening Type</label>
-                            </div>
-                            <div class="xl:w-1/6 sm:w-1/6 w-full">
+                        <div class="border-all">
 
+                            <div class="mb-4 md:w-1/2">
+                                <label class="form-label">Screening Type</label>
                                 <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="SType" id="SType">
                                     @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
                                     {
                                         <option value="@item.Value">@item.Text</option>
                                     }
                                 </select>
+                            </div>
+                            <div class="mb-4 md:w-1/2">
+                                <label class="form-label">From Date</label>
+                                <input type="text" name="FD" id="FD" class="datepicker
+                                       form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full
+                                       date-picker-input" value="" autocomplete="off" />
+                            </div>
+                            <div class="mb-4 md:w-1/2">
+                                <label class="form-label">To Date</label>
+                                <input type="text" name="TD" id="TD" class="datepicker
+                                       form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full
+                                       date-picker-input" value="" autocomplete="off" />
+                            </div>
+                            <div class="sm:w-1/2 mt-6">
+                                <button name="btnsubmit" id="btnsubmit"
+                                        class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">
+                                    Search
+                                </button>
+                                <a href="~/Home/Index" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-warning bg-warning text-white hover:bg-[#ffa91a] duration-300"><i class="fa fa-refresh"></i></a>
                             </div>
 
                         </div>
@@ -63,6 +81,8 @@
 {
     @Scripts.Render("~/bundles/jqueryval")
 
+
+
     @*<link href="https://cdn.datatables.net/2.0.6/css/dataTables.dataTables.css" />*@
     <link href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css" />
@@ -79,22 +99,66 @@
     <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
 
     <script>
+        $(function () {
+            var dateFormat = "dd-M-yy",
+                from = $("#FD")
+                    .datepicker({
+                        defaultDate: "+1w",
+                        changeMonth: true,
+                        numberOfMonths: 1,
+                        dateFormat: 'dd-M-yy'
+                    })
+                    .on("change", function () {
+                        to.datepicker("option", "minDate", getDate(this));
+                    }),
+                to = $("#TD").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    numberOfMonths: 1,
+                    dateFormat: 'dd-M-yy'
+
+                })
+                    .on("change", function () {
+                        from.datepicker("option", "maxDate", getDate(this));
+                    });
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    date = null;
+                }
+
+                return date;
+            }
+        });
+            
         $(document).ready(function () {
             BindData();
 
-            $('#SType').change(function () {
+            //$('#SType').change(function () {
+            //    BindData();
+            //})
+
+            $("#btnsubmit").click(function (e) {
+                e.preventDefault();
                 BindData();
-            })
+            });
+
+
         });//End Load Method
 
         function BindData() {
             $("#subdata").html('');
             var formData = $('#formid').serialize();
             var SType = $("#SType").val();
+            var FD = $("#FD").val();
+            var TD = $("#TD").val();
             $.ajax({
                 type: "Get",
                 url: document.baseURI + "/Home/GetDataRowList",
-                data: { SType: SType },
+                data: { SType: SType, FD: FD, TD: TD },
                 //cache: false,
                 success: function (res) {
                     if (res.IsSuccess) {
@@ -104,13 +168,13 @@
                             $("#tbl").dataTable().fnDestroy();
                         }
                         table = $('#tbl').DataTable({
-                            responsive: true,
+                            //responsive: true,
                             //"sDom": '<"bottom"i>rt<"top"flp><"clear">',
-                            "searching": true,
+                            // "searching": true,
                             //"dom": 'rtip',
                             //"lengthChange": false,
-                            scrollY: "400px",
-                            scrollX: true,
+                            // scrollY: "400px",
+                            // scrollX: true,
                             //scrollCollapse: true,
                             //paging: false,
                             pageLength: 100,
@@ -143,7 +207,7 @@
                         table.buttons().container().appendTo($('#div-download'));
                     }
                     else {
-                        $("#subdata").html(res.Data);
+                        $("#subdata").html("<h4 class='text-danger text-center'>" + res.Data +"</h5>");
                     }
                 },
                 error: function (req, error) {
@@ -153,6 +217,8 @@
                 }
             });
         }
+
+      
 
     </script>
 }

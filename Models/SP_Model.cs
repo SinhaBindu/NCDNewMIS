@@ -61,6 +61,8 @@ namespace NCDNewMIS.Models
         {
             StoredProcedure sp = new StoredProcedure("SP_RowDataShow");
             sp.Command.AddParameter("@SType", model.SType, DbType.String);
+            sp.Command.AddParameter("@FD", model.FormDt, DbType.String);
+            sp.Command.AddParameter("@TD", model.ToDt, DbType.String);
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }

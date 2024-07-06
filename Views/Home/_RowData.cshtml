@@ -24,9 +24,127 @@
     .table > :not(caption) > * > * {
         padding:0px !important;
     }
+    .tdtextwrp {
+        /*word-wrap: break-word !important;*/
+        text-wrap: wrap !important;
+    }
+    .tdhide{
+        display:none;
+    }
 </style>
-<div class="bg-light rounded h-100 p-4">
-    <div class="table-responsive">
+<div class="overflow-x-auto table-scroll">
+        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl">
+            <thead class="text-center">
+                <tr>
+                    <th class="text-center tblth">Srno.</th>
+                    <th class="text-center tblth">Screening<br /> Types</th>
+                    <th class="text-center tblth">Survey Date</th>
+                    <th class="text-center tblth tdhide">Household ID</th>
+                    <th class="text-center tblth">Household <br />head name</th>
+                    <th class="text-center tblth">No of Member</th>
+                    <th class="text-center tblth tdhide">Member Id</th>
+                    <th class="text-center tblth">Member Name</th>
+                    <th class="text-center tblth">HHHead<br /> Mobile No</th>
+
+                    <th class="text-center tblth tdhide">Age</th>
+                    <th class="text-center tblth tdhide">Sex</th>
+                    <th class="text-center tblth tdhide">Whether the NCD mitra has ASHA+ device?  </th>
+
+                    <th class="text-center tblth tdhide">Whether the member is already a patient of hypertension?</th>
+                    <th class="text-center tblth tdhide">If yes, whether the person is continuing with medication?</th>
+                    <th class="text-center tblth tdhide">If yes, whom does he/she consults for medication?</th>
+                    <th class="text-center tblth tdhide">If Other, whether the person is continuing with medication?</th>
+
+                    <th class="text-center tblth tdhide">Whether the member is already a patient of diabetes?</th>
+                    <th class="text-center tblth tdhide">If yes, whether the person is continuing with medication?</th>
+                    <th class="text-center tblth tdhide">If Other, whether the person is continuing with medication?</th>
+                    <th class="text-center tblth tdhide">If yes, whom does he/she consults for medication?</th>
+
+                    <th class="text-center tblth tdhide">Hypertension reading</th>
+                    <th class="text-center tblth tdhide">Systolic: 140 mm Hg or higher</th>
+                    <th class="text-center tblth tdhide">Diastolic: 90 mm Hg or higher</th>
+                    <th class="text-center tblth tdhide">BP reading <br />(systolic: 140 mm Hg or higher and<br />/or diastolic: 90 mm Hg or higher)</th>
+                    <th class="text-center tblth tdhide">Has this person been recommended to visit the PHC  (to consult the doctor)?</th>
+                    <th class="text-center tblth tdhide">Random blood sugar reading</th>
+                    <th class="text-center tblth tdhide">Does his/her RBS reading (more than 140mg/dl) fall under diabetic range?</th>
+                    <th class="text-center tblth tdhide">Has this person been recommended to visit the PHC (to consult the doctor)?</th>
+
+                    <th class="text-center tblth">volunteer<br /> name</th>
+                    <th class="text-center tblth">volunteer<br /> No</th>
+                    <th class="text-center tblth">District</th>
+                    <th class="text-center tblth">Block</th>
+                    <th class="text-center tblth">CHC</th>
+                    <th class="text-center tblth">PHC</th>
+                    <th class="text-center tblth">Subcenter</th>
+                    <th class="text-center tblth">Panchayat</th>
+                    <th class="text-center tblth">Village</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (dt.Rows.Count > 0)
+                    {
+                        int srno = 1;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                                <tr>
+                                    <td class="text-center tbltd">@(srno++)</td>
+                                    <td class="text-center tbltd fw-bold"><strong>@dr["ScreeningTypes"]</strong></td>
+                                    <td class="text-center tbltd fw-bold"><strong>@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["SurveyDt"].ToString())</strong></td>
+                                    <td class="text-left tbltd tdhide"> @dr["HId"] </td>
+                                    <td class="text-left tbltd tdtextwrp"> @dr["HHHeadName"] </td>
+                                    <td class="text-center tbltd tdtextwrp"> @dr["NoofMember"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["MemberId"] </td>
+                                    <td class="text-left tbltd tdtextwrp"> @dr["MemberName"] </td>
+                                    <td class="text-center tbltd tdtextwrp"> @dr["HHHeadMobile"] </td>
+
+                                    <td class="text-center tbltd tdhide"> @dr["Age"] </td>
+                                    <td class="text-center tbltd tdhide"> @dr["Gender"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["Aashaplusdevicevalue"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["Hypertensionvalue"] </td>
+
+                                    <td class="text-left tbltd tdhide"> @dr["HypertensionMeditationValue"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["HypertensionMeditationValueStrng"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["OtherValueHyper"] </td>
+
+                                    <td class="text-left tbltd tdhide"> @dr["Diabitisevalue"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["DiabitiseMeditationValue"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["DiabitiseMeditationValueStrng"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["OtherValueDiabtise"] </td>
+
+                                    <td class="text-left tbltd tdhide"> @dr["HypertensionReading"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["Systolic"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["Diastolic"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["BpReading"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["ReferPHCHypertension"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["RandomBloodSugar"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["RBSreading"] </td>
+                                    <td class="text-left tbltd tdhide"> @dr["VisitPHCSugar"] </td>
+                                    <td class="text-left tbltd tdtextwrp"> @dr["ReportedBy"] </td>
+                                    <td class="text-center tbltd tdtextwrp"> @dr["ReportedNo"] </td>
+                                    <td class="text-left tbltd small tdtextwrp"> @dr["District"] </td>
+                                    <td class="text-left tbltd small tdtextwrp"> @dr["Block"] </td>
+                                    <td class="text-left tbltd small tdtextwrp"> @dr["CHCN"] </td>
+                                    <td class="text-left tbltd small tdtextwrp"> @dr["PHC"] </td>
+                                    <td class="text-left tbltd small tdtextwrp"> @dr["SubCenter"] </td>
+                                    <td class="text-left tbltd small tdtextwrp"> @dr["GP"] </td>
+                                    <td class="text-left tbltd small tdtextwrp" style="text-wrap: wrap;"> @dr["Village"] </td>
+                                </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="16" class="text-center"><strong class="text-danger">Record Not Found !!</strong></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+
+
+    @*<div style="display:none">
         <table class="table table-bordered table-striped small tblfont" id="tbl">
             <thead class="text-center">
                 <tr>
@@ -79,48 +197,48 @@
                         int srno = 1;
                         foreach (DataRow dr in dt.Rows)
                         {
-                                <tr>
-                                    <td class="text-center tbltd">@(srno++)</td>
-                                    <td class="text-center tbltd fw-bold"><strong>@dr["ScreeningTypes"]</strong></td>
-                                    <td class="text-center tbltd fw-bold"><strong>@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["SurveyDt"].ToString())</strong></td>
-                                    <td class="text-left tbltd"> @dr["HId"] </td>
-                                    <td class="text-left tbltd"> @dr["HHHeadName"] </td>
-                                    <td class="text-center tbltd"> @dr["NoofMember"] </td>
-                                    <td class="text-left tbltd"> @dr["MemberId"] </td>
-                                    <td class="text-left tbltd"> @dr["MemberName"] </td>
-                                    <td class="text-center tbltd"> @dr["HHHeadMobile"] </td>
-                                    <td class="text-center tbltd"> @dr["Age"] </td>
-                                    <td class="text-center tbltd"> @dr["Gender"] </td>
-                                    <td class="text-left tbltd"> @dr["Aashaplusdevicevalue"] </td>
-                                    <td class="text-left tbltd"> @dr["Hypertensionvalue"] </td>
+                            <tr>
+                                <td class="text-center tbltd">@(srno++)</td>
+                                <td class="text-center tbltd fw-bold"><strong>@dr["ScreeningTypes"]</strong></td>
+                                <td class="text-center tbltd fw-bold"><strong>@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["SurveyDt"].ToString())</strong></td>
+                                <td class="text-left tbltd"> @dr["HId"] </td>
+                                <td class="text-left tbltd"> @dr["HHHeadName"] </td>
+                                <td class="text-center tbltd"> @dr["NoofMember"] </td>
+                                <td class="text-left tbltd"> @dr["MemberId"] </td>
+                                <td class="text-left tbltd"> @dr["MemberName"] </td>
+                                <td class="text-center tbltd"> @dr["HHHeadMobile"] </td>
+                                <td class="text-center tbltd"> @dr["Age"] </td>
+                                <td class="text-center tbltd"> @dr["Gender"] </td>
+                                <td class="text-left tbltd"> @dr["Aashaplusdevicevalue"] </td>
+                                <td class="text-left tbltd"> @dr["Hypertensionvalue"] </td>
 
-                                    <td class="text-left tbltd"> @dr["HypertensionMeditationValue"] </td>
-                                    <td class="text-left tbltd"> @dr["HypertensionMeditationValueStrng"] </td>
-                                    <td class="text-left tbltd"> @dr["OtherValueHyper"] </td>
+                                <td class="text-left tbltd"> @dr["HypertensionMeditationValue"] </td>
+                                <td class="text-left tbltd"> @dr["HypertensionMeditationValueStrng"] </td>
+                                <td class="text-left tbltd"> @dr["OtherValueHyper"] </td>
 
-                                    <td class="text-left tbltd"> @dr["Diabitisevalue"] </td>
-                                    <td class="text-left tbltd"> @dr["DiabitiseMeditationValue"] </td>
-                                    <td class="text-left tbltd"> @dr["DiabitiseMeditationValueStrng"] </td>
-                                    <td class="text-left tbltd"> @dr["OtherValueDiabtise"] </td>
+                                <td class="text-left tbltd"> @dr["Diabitisevalue"] </td>
+                                <td class="text-left tbltd"> @dr["DiabitiseMeditationValue"] </td>
+                                <td class="text-left tbltd"> @dr["DiabitiseMeditationValueStrng"] </td>
+                                <td class="text-left tbltd"> @dr["OtherValueDiabtise"] </td>
 
-                                    <td class="text-left tbltd"> @dr["HypertensionReading"] </td>
-                                    <td class="text-left tbltd"> @dr["Systolic"] </td>
-                                    <td class="text-left tbltd"> @dr["Diastolic"] </td>
-                                    <td class="text-left tbltd"> @dr["BpReading"] </td>
-                                    <td class="text-left tbltd"> @dr["ReferPHCHypertension"] </td>
-                                    <td class="text-left tbltd"> @dr["RandomBloodSugar"] </td>
-                                    <td class="text-left tbltd"> @dr["RBSreading"] </td>
-                                    <td class="text-left tbltd"> @dr["VisitPHCSugar"] </td>
-                                    <td class="text-left tbltd"> @dr["ReportedBy"] </td>
-                                    <td class="text-center tbltd "> @dr["ReportedNo"] </td>
-                                    <td class="text-left tbltd small"> @dr["District"] </td>
-                                    <td class="text-left tbltd small"> @dr["Block"] </td>
-                                    <td class="text-left tbltd small"> @dr["CHCN"] </td>
-                                    <td class="text-left tbltd small"> @dr["PHC"] </td>
-                                    <td class="text-left tbltd small"> @dr["SubCenter"] </td>
-                                    <td class="text-left tbltd small"> @dr["GP"] </td>
-                                    <td class="text-left tbltd small"> @dr["Village"] </td>
-                                </tr>
+                                <td class="text-left tbltd"> @dr["HypertensionReading"] </td>
+                                <td class="text-left tbltd"> @dr["Systolic"] </td>
+                                <td class="text-left tbltd"> @dr["Diastolic"] </td>
+                                <td class="text-left tbltd"> @dr["BpReading"] </td>
+                                <td class="text-left tbltd"> @dr["ReferPHCHypertension"] </td>
+                                <td class="text-left tbltd"> @dr["RandomBloodSugar"] </td>
+                                <td class="text-left tbltd"> @dr["RBSreading"] </td>
+                                <td class="text-left tbltd"> @dr["VisitPHCSugar"] </td>
+                                <td class="text-left tbltd"> @dr["ReportedBy"] </td>
+                                <td class="text-center tbltd "> @dr["ReportedNo"] </td>
+                                <td class="text-left tbltd small"> @dr["District"] </td>
+                                <td class="text-left tbltd small"> @dr["Block"] </td>
+                                <td class="text-left tbltd small"> @dr["CHCN"] </td>
+                                <td class="text-left tbltd small"> @dr["PHC"] </td>
+                                <td class="text-left tbltd small"> @dr["SubCenter"] </td>
+                                <td class="text-left tbltd small"> @dr["GP"] </td>
+                                <td class="text-left tbltd small"> @dr["Village"] </td>
+                            </tr>
                         }
                     }
                     else
@@ -133,6 +251,6 @@
             </tbody>
 
         </table>
-    </div>
+    </div>*@
 
 </div>

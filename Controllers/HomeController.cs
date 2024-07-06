@@ -16,6 +16,11 @@ namespace NCDNewMIS.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        [AllowAnonymous]
+        public ActionResult Home()
+        {
+            return View();  
+        }
         public ActionResult Index()
         {
             return View();
@@ -28,13 +33,15 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult GetDataRowList(string SType)
+        public ActionResult GetDataRowList(string SType, string FD, string TD)
         {
             DataSet ds = new DataSet();
             DataTable tbllist = new DataTable();
             var html = "";
             FilterModel filterModel = new FilterModel();
             filterModel.SType = SType;
+            filterModel.FormDt = FD;
+            filterModel.ToDt = TD;
             try
             {
                 ds = SP_Model.SP_RowDataShow(filterModel);
@@ -42,9 +49,16 @@ namespace NCDNewMIS.Controllers
                 if (ds.Tables.Count > 0)
                 {
                     tbllist = ds.Tables[0];
-                    IsCheck = true;
-                    html = ConvertViewToString("_RowData", tbllist);
-                    var res = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);
+                    if (tbllist.Rows.Count > 0)
+                    {
+                        IsCheck = true;
+                        html = ConvertViewToString("_RowData", tbllist);
+                        var res1 = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);
+                        res1.MaxJsonLength = int.MaxValue;
+                        return res1;
+                    }
+                    IsCheck = false;
+                    var res = Json(new { IsSuccess = IsCheck, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
                     res.MaxJsonLength = int.MaxValue;
                     return res;
                 }

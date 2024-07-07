@@ -5353,7 +5353,8 @@ video {
 }
 
 [data-sidebarbg="color_3"][data-theme-version="dark"], [data-sidebarbg="color_3"] {
-  --sidebar-bg: #222fb9;
+    /*--sidebar-bg: #222fb9;*/
+    --sidebar-bg: #15161e   ;
 }
 
 [data-sidebarbg="color_4"][data-theme-version="dark"], [data-sidebarbg="color_4"] {

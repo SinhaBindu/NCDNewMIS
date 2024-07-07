@@ -1,0 +1,134 @@
+﻿@using System.Data
+@{
+    DataTable dt = new DataTable();
+    var columns = new List<string>();
+    if (Model != null)
+    {
+        dt = Model;
+        foreach (DataColumn dc in dt.Columns)
+        {
+            columns.Add(dc.ColumnName);
+        }
+        var ex = new List<string>() { "", "", "", "", "", "" };
+        columns = columns.Where(x => !ex.Any(y => y == x)).ToList();
+    }
+}
+<style>
+    /*table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled {*/
+    /*padding-right: 0px !important;*/
+    /*}*/
+</style>
+<h5 class="text-center"><strong class="text-bg-primary">@dt.Rows[0]["district"] </strong></h5>
+
+@*<div class="table-responsive">*@
+<div class="overflow-x-auto table-scroll">
+    <table class="table table-bordered table-striped cell-border small tblfont" id="tbl" style="font-size: 10px !important">
+        <thead class="text-center">
+            <tr>
+                <th class="text-center">Srno.</th>
+                @*<th class="text-center">District</th>*@
+                @if (ViewBag.DistrictBlockType == "2")
+                {
+                    <th class="text-center">Block</th>
+                }
+                <th class="text-center">Indicator</th>
+                @*@if (ViewBag.RoundType == "1")
+                    {
+                        <th class="text-center">Total</th>
+                    }
+                    @if (ViewBag.RoundType == "2")
+                    {
+                        <th class="text-center">Total Households</th>
+                        <th class="text-center">Total Members</th>
+                    }*@
+                <th class="text-center"></th>
+                <th class="text-center">Male</th>
+                <th class="text-center">Female</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (dt.Rows.Count > 0)
+                {
+                    var sno = 1; var index = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        //var spstar = dr["indicatorText"].ToString().Split('*');
+                        //var Isstart = dr["indicatorText"].ToString().Replace("*","")==""?"color:red":"";
+                        var start = dr["indicatorText"].ToString().Replace("*", dr["indicatorText"].ToString());
+                        <tr>
+                            <td class="text-center">@(sno++)</td>
+                            @*<td class="text-center">@dr["district"]</td>*@
+                            @if (ViewBag.DistrictBlockType == "2")
+                            {
+                                <td class="text-center">@dr["block"]</td>
+                            }
+                            <td class="text-left">@dr["indicatorText"].ToString() 
+                            @*<span style="color:red">@(spstar.Length-1).ToString()
+                                  </span>*@
+                            </td>
+                            @*@if (ViewBag.RoundType == "1")
+                            {
+                                <td class="text-center">@dr["Total"]</td>
+                            }
+                            @if (ViewBag.RoundType == "2")
+                            {
+                                <td class="text-center">@dr["Total"]</td>
+                                <td class="text-center">@dr["TotalMember"]</td>
+                            }*@
+                            <td class="text-center">@dr["Total"]</td>
+                            <td class="text-center">@dr["male"]</td>
+                            <td class="text-center">@dr["female"]</td>
+                        </tr>
+                        index++;
+                    }
+
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="@columns.Count"><strong class="text-danger">Record Not Found !!</strong></td>
+                    </tr>
+                }
+            }
+        </tbody>
+        @*<tfoot style="display:none">
+
+            @if (dt.Rows.Count > 0 && ViewBag.RoundType == "2")
+            {
+                <tr>
+                    @if (ViewBag.RoundType == "2")
+                    {
+
+                        if (ViewBag.DistrictBlockType == "1")
+                        {
+                            <td class="text-right"><strong></strong></td>
+                            <td class="text-right"><strong></strong></td>
+                            <td class="text-right"><strong>Grand Total :</strong></td>
+                        }
+                        if (ViewBag.DistrictBlockType == "2")
+                        {
+                            <td class="text-right"><strong></strong></td>
+                            <td class="text-right"><strong></strong></td>
+                            <td class="text-right"><strong></strong></td>
+                            <td class="text-right"><strong>Grand Total :</strong></td>
+                        }
+                        <td class="text-center"><strong>@dt.Compute("sum(Total)", string.Empty)</strong></td>
+                        <td class="text-center"><strong>@dt.Compute("sum(Male)", string.Empty)</strong></td>
+                        <td class="text-center"><strong>@dt.Compute("sum(FeMale)", string.Empty)</strong></td>
+
+                    }
+                </tr>
+            }
+
+        </tfoot>*@
+
+    </table>
+</div>
+
+
+<script>
+    //$(function () {
+    //    $("#tbl").DataTable();
+    //});
+</script>

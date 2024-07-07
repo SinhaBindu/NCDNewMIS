@@ -107,6 +107,18 @@
         //        }
         //    }
         //},
+        plotOptions: {
+            series: {
+                point: {
+                    events: {
+                        click: function () {
+                           // alert('jhghn');
+                            window.location.href = document.baseURI + "/Home/Blockmap?B=2&&R=1";
+                        }
+                    }
+                }
+            }
+        },
 
         series: [{
             animation: {

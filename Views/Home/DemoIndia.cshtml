@@ -1,0 +1,99 @@
+﻿
+@{
+    Layout = null;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/mapdata/countries/de/de-all-all.js"></script>
+<script src="~/Scripts/JS/DemoStateIndia.js"></script>
+
+<div id="container"></div>
+
+
+<script>
+    $(document).ready(function () {
+
+        // Create the chart
+        Highcharts.mapChart('container', {
+            chart: {
+                map: 'customMap'
+            },
+
+            //colorAxis: {
+            //    min: 0,
+            //    max: 15,
+            //    minColor: 'rgba(0, 34, 255, 0.1)',
+            //    maxColor: 'rgba(0, 34, 255, 1)'
+            //},
+            series: [{
+                joinBy: 'NAME_1',
+                keys: ['NAME_1', 'value'],
+                borderColor: 'rgba(0, 0, 0, 0.4)',
+                //states: {
+                //    inactive: {
+                //        enabled: false
+                //    }
+                //},
+                accessibility: {
+                    exposeAsGroupOnly: true
+                },
+                //},{
+            //   // type: 'customMap',
+            //   // name: 'Train Stations Near Airports',
+            //    opacity: 0.7,
+            //    colsize: 5,
+            //    rowsize: 5,
+            //    borderWidth: 1,
+            //    interpolation: {
+            //        enabled: true,
+            //        blur: 2
+            //    },
+                data: [["Odisha", 26]]
+                //data: data,
+            }]
+
+            //series: [{
+            //    name: 'India',
+            //    joinBy: 'ISO3CD',
+            //    keys: ['ISO3CD', 'value'],
+            //    borderColor: 'rgba(0, 0, 0, 0.4)',
+            //    states: {
+            //        inactive: {
+            //            enabled: false
+            //        }
+            //    },
+            //    accessibility: {
+            //        exposeAsGroupOnly: true
+            //    }
+            //}, {
+            //    type: 'geoheatmap',
+            //    name: 'Train Stations Near Airports',
+            //    opacity: 0.7,
+            //    colsize: 5,
+            //    rowsize: 5,
+            //    borderWidth: 1,
+            //    interpolation: {
+            //        enabled: true,
+            //        blur: 2
+            //    },
+            //    data: [{
+            //        lon: 86,
+            //        lat: 22,
+            //        //value: 13,
+            //        NAME_1:'Odisha',
+            //        ID_1:26
+            //    }]
+            //}]
+
+        });
+
+    })
+</script>
+
+<script>
+
+</script>
+
+

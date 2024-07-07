@@ -1,0 +1,106 @@
+﻿@using System.Data
+@{
+    DataTable dt = new DataTable();
+    var columns = new List<string>();
+    if (Model != null)
+    {
+        dt = Model;
+        foreach (DataColumn dc in dt.Columns)
+        {
+            columns.Add(dc.ColumnName);
+        }
+        var ex = new List<string>() { "", "", "", "", "", "" };
+        columns = columns.Where(x => !ex.Any(y => y == x)).ToList();
+    }
+}
+<style>
+    /*table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled {*/
+    /*padding-right: 0px !important;*/
+    /*}*/
+    .dataTables_info {
+        display: none;
+    }
+</style>
+<h5 class="text-center"><strong class="text-bg-primary"> District : @dt.Rows[0]["district"] </strong></h5>
+
+@*<div class="table-responsive">*@
+
+@if (dt.Rows.Count > 0)
+{
+    var dt1 = dt.AsEnumerable().GroupBy(x => x.Field<string>("block"));
+    var index = 0;
+    foreach (var item in dt1.ToList())
+    {
+        index++;
+        @*<div class="xl:w-1/2 bg-white">*@
+        <div class="overflow-x-auto table-scroll">
+            <h5 class="text-left"><strong class="text-bg-primary">Block : <strong class="text-capitalize">@item.Key</strong></strong> </h5>
+            <table class="table table-bordered table-striped cell-border small tblfont tblBlock" id="tbl_@index" style="font-size: 10px !important">
+                <thead class="text-center">
+                    <tr>
+                        <th class="text-center">Indicator</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Male</th>
+                        <th class="text-center">Female</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var dt2 = dt.AsEnumerable().Where(x => x.Field<string>("block") == item.Key.ToString()).CopyToDataTable();
+                        foreach (DataRow dr in dt2.Rows)
+                        {
+                           
+                            <tr>
+                                <td class="text-left">@dr["indicatorText"]</td>
+                                <td class="text-center">@dr["Total"]</td>
+                                <td class="text-center">@dr["male"]</td>
+                                <td class="text-center">@dr["female"]</td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+
+            </table>
+        </div>
+        @*</div>*@
+    }
+
+    <table class="table table-bordered table-striped cell-border small tblfont tblBlock" id="tbl1" style="font-size: 10px !important; display:none !important" >
+        <thead class="text-center">
+            <tr>
+                <th class="text-center">District</th>
+                <th class="text-center">Block</th>
+                <th class="text-center">Indicator</th>
+                <th class="text-center"></th>
+                <th class="text-center">Male</th>
+                <th class="text-center">Female</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (DataRow dr in dt.Rows)
+                {
+                    <tr>
+                        <td class="text-left">@dr["district"]</td>
+                        <td class="text-left">@dr["block"]</td>
+                        <td class="text-left">@dr["indicatorText"]</td>
+                        <td class="text-center">@dr["Total"]</td>
+                        <td class="text-center">@dr["male"]</td>
+                        <td class="text-center">@dr["female"]</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+
+    </table>
+
+}
+
+
+
+
+
+
+

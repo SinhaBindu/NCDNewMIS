@@ -16,10 +16,15 @@ namespace NCDNewMIS.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        [AllowAnonymous]
+       // [AllowAnonymous]
         public ActionResult Home()
         {
             return View();  
+        }
+        //[AllowAnonymous]
+        public ActionResult Home2()
+        {
+            return View();
         }
         public ActionResult Districtmap(string D, string R)
         {

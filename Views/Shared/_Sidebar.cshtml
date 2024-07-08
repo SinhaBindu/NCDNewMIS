@@ -3,71 +3,103 @@
     <div class="deznav-scroll">
         <ul class="metismenu" id="menu">
             <li><strong class="text-white">Menu</strong></li>
-            <li>
-                <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                    <i class="flaticon-381-home"></i>
-                    <span class="nav-text">ACT - I</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="~/Home/Home">Home</a></li>
-                    <li><a href="~/Home/DistrictMap?D=1&&R=1">Profile</a></li>
-                    <li><a href="~/Home/BlockMap?B=2&&R=1">Profile (Block)</a></li>
-                </ul>
-            </li>
+            @if (User.IsInRole("Admin") || User.IsInRole("State") || User.IsInRole("User"))
+            {
+                <li>
+                    <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+                        <i class="flaticon-381-home"></i>
+                        <span class="nav-text">ACT - I</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="~/Home/Home">Home</a></li>
+                        <li><a href="~/Home/DistrictMap?D=1&&R=1">Profile</a></li>
+                        <li><a href="~/Home/BlockMap?B=2&&R=1">Profile (Block)</a></li>
+                        <li><a href="~/Home/Financial">Financial</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+                        <i class="flaticon-381-home-3"></i>
+                        <span class="nav-text">ACT - II</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="~/Home/Home">Home</a></li>
+                        <li><a href="~/Home/DistrictMap?D=1&&R=2">Profile</a></li>
+                        <li><a href="~/Home/BlockMap?B=2&&R=2">Profile (Block)</a></li>
+                        <li><a href="~/Home/HighData">Hypertension and Blood sugar case list</a></li>
+                        <li><a href="~/Home/SubmissionData">Submission Status</a></li>
+                        <li><a href="~/Home/Index">Raw Data</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+                        <i class="flaticon-381-networking"></i>
+                        <span class="nav-text">User Details | Accounts</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="~/Home/RegMapped">Mapped SubCenter (User)</a></li>
+                        <li><a href="~/Home/RegApprove">User Lists</a></li>
+                    </ul>
+                </li>
+            }
+            else if (User.IsInRole("Viewer"))
+            {
+                <li>
+                    <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+                        <i class="flaticon-381-home"></i>
+                        <span class="nav-text">ACT - I</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="~/Home/Home2">Home</a></li>
+                        <li><a href="~/Home/DistrictMap?D=1&&R=1">Profile</a></li>
+                        <li><a href="~/Home/BlockMap?B=2&&R=1">Profile (Block)</a></li>
+                        <li><a href="~/Home/Financial">Financial</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+                        <i class="flaticon-381-home-3"></i>
+                        <span class="nav-text">ACT - II</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="~/Home/Home">Home</a></li>
+                        <li><a href="~/Home/DistrictMap?D=1&&R=2">Profile</a></li>
+                        <li><a href="~/Home/BlockMap?B=2&&R=2">Profile (Block)</a></li>
+                        <li><a href="~/Home/HighData">Hypertension and Blood sugar case list</a></li>
+                        <li><a href="~/Home/SubmissionData">Submission Status</a></li>
+                        <li><a href="~/Home/Index">Raw Data</a></li>
+                    </ul>
+                </li>
+            }
 
 
-            <li>
-                <a href="~/Home/Districtmap" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-home-2"></i>
-                    <span class="nav-text">Dashboard</span>
+
+
+
+
+
+
+            <li style="background:#0094ff !important;">
+                <a href="~/Account/LogOff?id=0" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-lock"></i>
+                    <span class="nav-text">Log Out</span>
                 </a>
             </li>
+
             @*<li style="display:none;">
             <a href="~/Home/Blockmap" class="ai-icon" aria-expanded="false">
                 <i class="flaticon-381-map-1"></i>
                 <span class="nav-text">Block Wise</span>
             </a>
         </li>*@
-            <li>
-                <a href="~/Home/HighData" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-calendar-5"></i>
-                    <span class="nav-text">Hypertension and Blood sugar case list</span>
-                </a>
-            </li>
-            <li>
-                <a href="~/Home/SubmissionData" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-database"></i>
-                    <span class="nav-text">Submission Status</span>
-                </a>
-            </li>
-            <li>
-                <a href="~/Home/ACTOneIndicator" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-app"></i>
-                    <span class="nav-text">ACT I Indicator</span>
-                </a>
-            </li>
-            <li>
-                <a href="~/Home/Index" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-list"></i>
-                    <span class="nav-text">Raw Data - ACT II</span>
-                </a>
-            </li>
-            <li>
-                <a href="~/Home/Financial" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-star"></i>
-                    <span class="nav-text">Financial</span>
-                </a>
-            </li>
-            <li>
-                <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                    <i class="flaticon-381-networking"></i>
-                    <span class="nav-text">User Details | Accounts</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="~/Home/RegMapped">Mapped SubCenter (User)</a></li>
-                    <li><a href="~/Home/RegApprove">User Lists</a></li>
-                </ul>
-            </li>
+            @*<li>
+            <a href="~/Home/ACTOneIndicator" class="ai-icon" aria-expanded="false">
+                <i class="flaticon-381-app"></i>
+                <span class="nav-text">ACT I Indicator</span>
+            </a>
+        </li>*@
             @*<li>
             <a href="~/Home/RegMapped" class="ai-icon" aria-expanded="false">
                 <i class="flaticon-381-user-7"></i>
@@ -86,12 +118,7 @@
                 <span class="nav-text">Gallery</span>
             </a>
         </li>*@
-            <li>
-                <a href="~/Account/LogOff?id=0" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-lock"></i>
-                    <span class="nav-text">Log Out</span>
-                </a>
-            </li>
+
             @*@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
         {
             @Html.AntiForgeryToken()

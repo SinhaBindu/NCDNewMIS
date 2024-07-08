@@ -79,7 +79,7 @@ namespace NCDNewMIS.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Districtmap", "Home");
+                    return RedirectToAction("Home", "Home");
                 //RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

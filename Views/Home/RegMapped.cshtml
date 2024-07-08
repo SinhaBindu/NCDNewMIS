@@ -19,12 +19,6 @@
     }
 </style>
 
-@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <link href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>*@
-
 <!-- Content body start -->
 <div class="content-body">
     <div class="container-fluid">
@@ -89,9 +83,9 @@
                 <div class="row">
                     <br />
                     <div class="card">
-                    <div class="xl:w-1/1">
-                        <div id="result">
-                        </div>
+                        <div class="xl:w-1/1">
+                            <div id="result">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -109,17 +103,8 @@
 
     <script src="~/Scripts/JS/Export.js"></script>
     <script src="~/Scripts/JS/Master.js"></script>
-    @*<link rel="stylesheet" href="~/Content/assets/css/bootstrap-multiselect.css" />*@
-    @*<script src="~/Scripts/jquery-2.2.0.min.js"></script>*@
-    @*<script src="~/Scripts/JS/bootstrap-multiselect.js"></script>*@
-
-    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
-        <link href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>*@
-
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
 
     <script>
@@ -128,8 +113,8 @@
 
             BindBlock("BlockId", '', "0");
             $('#BlockId').change(function (e) {
-               // e.preventDefault();
-              // setTimeout(function)
+                // e.preventDefault();
+                // setTimeout(function)
                 LoadReport();
                 // BindCHC("CHCId", '', "0", $(this).val());
             });
@@ -271,6 +256,7 @@
             }
             else {
                 toastr.error("Error", 'Please choose one SubCenter');
+                return false;
             }
             if (RegId_pk != '' && RegId_pk != null && RegId_pk != undefined) {
                 IsCheck = true;
@@ -303,6 +289,7 @@
                 });
             }
             else {
+                toastr.error("Error", 'Please choose one SubCenter');
                 return false;
             }
 

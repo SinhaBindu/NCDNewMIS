@@ -678,6 +678,7 @@
     <Content Include="Scripts\JS\HighChart.js" />
     <Content Include="Scripts\JS\Chart.js" />
     <Content Include="Scripts\JS\Export.js" />
+    <Content Include="Scripts\JS\INDBoundaryTest.js" />
     <Content Include="Scripts\JS\MapDistrict.js" />
     <Content Include="Scripts\JS\Mapbundle.js" />
     <Content Include="Scripts\JS\Master.js" />
@@ -753,6 +754,7 @@
     <Content Include="Scripts\JS\INDBoundary.js" />
     <Content Include="Views\Home\Blockmap.cshtml" />
     <Content Include="Views\Home\_BlockIndicatorData.cshtml" />
+    <Content Include="Views\Home\Home2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

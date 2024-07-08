@@ -1,0 +1,195 @@
+﻿
+@{
+    ViewBag.Title = "Intervention Geo-Location";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "";
+    ViewBag.SemiTitleLink = "/";
+}
+
+
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4><i class="fa fa-list"></i> @ViewBag.Title</h4>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel"></button>
+        </div>
+
+        <div class="row">
+            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
+                @*<div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
+                        <div class="cpa text-dark dark:text-white text-base font-semibold">
+                            <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+                        </div>
+                    </div>*@
+                <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
+                    <div class="p-[1.0rem] max-sm:p-4">
+                        <div class="row">
+
+                            <div id="report-map" style=""></div>
+                            <div class="breaker"></div>
+                            <div id="reporttooltip"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    @*<script src="https://code.highcharts.com/modules/series-label.js"></script>*@
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    @*<script src="~/Scripts/JS/indiastates.js"></script>*@
+    <script src="~/Scripts/JS/INDBoundary.js"></script>
+    @*<script src="~/Scripts/JS/INDBoundaryTest.js"></script>*@
+
+    <script>
+
+        $(document).ready(function () {
+
+            Load_DistrictMap();
+            //$('path[NAME_1^="Odisha"]').attr('fill', '#2ad00b');
+           //var spdata= $("path").attr("d", "M");
+        })
+        function Load_DistrictMap() {
+            const report = document.getElementById('reporttooltip');
+            //var jsonObject = JSON.parse('[{"state":"Odisha","color":"#EC7063"}]'); //JSON.parse(json_data);
+            var jsonObject = JSON.parse('[{"district":"Dhenkanal","color":"#EC7063","state":"Odisha","color1":"#000000"}]'); //JSON.parse(json_data);
+            var reportMapDivWidth = $("#report-map").width();
+            var tooltipX = (reportMapDivWidth / 2) + 25;
+            // var MapHeight = reportMapDivWidth > 650 ? 500 : null;
+            var MapHeight = reportMapDivWidth > 400 ? 400 : null;
+            debugger;
+            Highcharts.mapChart('report-map', {
+
+                chart: {
+                    borderWidth: 1,
+                    borderColor: '#00000',
+                    height: MapHeight,
+                   //  map: topology
+                },
+
+                title: {
+                    text: '<span style="font-size:13px;font-weight:bold;">India/District - Dhenkanal</span>'
+                },
+                subtitle: {
+                    // text: '<span style="font-size:13px;"> <span  style="color: red; font-weight:bold; font-size:12px;"> ' + jsonObject[0].district + ' </span></span>'
+                },
+                //subtitle: {
+                //    text: '<span style="font-size:13px;">(State Level Estimate :' + ' <span  style="color: red; font-weight:bold; font-size:12px;"> ' + Pc + ValType + ' ( Den = ' + Den + ')  </span>)</span>'
+                //},
+                credits: {
+                    enabled: false
+                },
+                legend: {
+                    enabled: true,
+                    align: 'center',
+                    //y: 60
+                },
+                //mapNavigation: {
+                //    enabled: false
+                //},
+                mapNavigation: {
+                    enabled: true,
+                    buttonOptions: {
+                        verticalAlign: 'bottom'
+                    }
+                },
+
+                tooltip: {
+                    shared: true
+                },
+
+                plotOptions: {
+                    series: {
+                        point: {
+                            events: {
+                                click: function () {
+                                    window.location.href = document.baseURI +"/Home/Districtmap?D=1&&R=2";
+                                }
+                            }
+                        }
+                    }
+                },
+
+                series: [{
+                    //animation: {
+                    //    duration: 1000
+                    //}
+                //    ,
+                //     data: jsonObject,
+                //    //data: [["Odisha", 26]],
+                //    //mapData: Highcharts.maps['custom/India'],
+                //    mapData: Highcharts.maps['custom/StatesIndia'],
+                //    joinBy: ['NAME_2', 'district','fill','color'],
+                //    //joinBy: ['NAME_1', 'state','fill','color'],
+                //  //  joinBy: 'NAME_1',
+                //   // keys: ['NAME_1', 'value'],
+                //    dataLabels: {
+                //        enabled: true,
+                //        color: '#000000',
+                //        format: '{point.district}',
+                //        style: {
+                //            fontSize: 9,
+                //            fontWeight: 600
+                //        },
+                //    },
+
+                //    name: 'India', //jsonObject[0].Section,
+                //    //color: '#fff',
+                //    enableMouseTracking: false,
+                //    borderColor: 'black',
+                //    borderWidth: 0.5,
+                //    tooltip: {
+                //        pointFormat: '{point.NAME_2}'
+                //    }
+                //}
+
+                       // type: 'mapbubble',
+
+                    mapData: Highcharts.maps['custom/StatesIndia'],
+                    color: Highcharts.getOptions().colors[5],
+                    // joinBy: ['iso-a2', 'code'],
+                    //joinBy: ['NAME_1', 'state', 'fill', 'color1'],
+                    joinBy: ['NAME_2', 'district', 'fill', 'color', 'NAME_1', 'State', 'fill','color1'],
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        format: '{point.district}',
+                        style: {
+                            fontSize: 9,
+                            fontWeight: 600
+                        },
+                    },
+                    data: jsonObject,
+                    name: 'India',
+                    marker: {
+                        symbol: 'mapmarker'
+                    },
+                    minSize: 4,
+                    maxSize: '12%',
+                    tooltip: {
+                        pointFormat: 'District : {point.NAME_2}'
+                    }
+                }
+
+                ]
+            });
+        }
+    </script>
+
+}

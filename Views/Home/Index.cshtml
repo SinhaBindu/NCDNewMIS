@@ -64,8 +64,12 @@
                 <div class="card dz-card dz-tab-area" id="Tailwind-table1">
 
                     <div class="pt-0 p-[1.875rem]">
-                        <div class="overflow-x-auto table-scroll">
-                            <div class="col-md-12" id="subdata">
+                        <div class="row">
+                            <div class="overflow-x-auto table-scroll">
+                                <div class="xl:w-2/3 bg-white">
+                                    <div class="" id="subdata">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -133,7 +137,7 @@
                 return date;
             }
         });
-            
+
         $(document).ready(function () {
             BindData();
 
@@ -207,7 +211,7 @@
                         table.buttons().container().appendTo($('#div-download'));
                     }
                     else {
-                        $("#subdata").html("<h4 class='text-danger text-center'>" + res.Data +"</h5>");
+                        $("#subdata").html("<h4 class='text-danger text-center'>" + res.Data + "</h5>");
                     }
                 },
                 error: function (req, error) {
@@ -218,7 +222,7 @@
             });
         }
 
-      
+
 
     </script>
 }

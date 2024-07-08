@@ -165,7 +165,8 @@
                     color: Highcharts.getOptions().colors[5],
                     // joinBy: ['iso-a2', 'code'],
                     //joinBy: ['NAME_1', 'state', 'fill', 'color1'],
-                    joinBy: ['NAME_2', 'district', 'fill', 'color', 'NAME_1', 'State', 'fill','color1'],
+                    //joinBy: ['NAME_2', 'district', 'fill', 'color', 'NAME_1', 'State', 'fill','color1'],
+                    joinBy: ['DISTRICT', 'district', 'fill', 'color', 'NAME_1', 'State', 'fill','color1'],
                     dataLabels: {
                         enabled: true,
                         color: '#000000',
@@ -183,7 +184,7 @@
                     minSize: 4,
                     maxSize: '12%',
                     tooltip: {
-                        pointFormat: 'District : {point.NAME_2}'
+                        pointFormat: 'District : {point.DISTRICT}'
                     }
                 }
 

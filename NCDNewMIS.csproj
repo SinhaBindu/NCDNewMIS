@@ -751,10 +751,11 @@
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Scripts\JS\indiastates.js" />
     <Content Include="Views\Home\DemoIndia.cshtml" />
-    <Content Include="Scripts\JS\INDBoundary.js" />
+    <Content Include="Scripts\JS\INDBoundary_old8.js" />
     <Content Include="Views\Home\Blockmap.cshtml" />
     <Content Include="Views\Home\_BlockIndicatorData.cshtml" />
     <Content Include="Views\Home\Home2.cshtml" />
+    <Content Include="Scripts\JS\INDBoundary.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,398 @@
+﻿@using System.Data
+@{
+    ViewBag.Title = "Health Education";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "Health Education";
+    ViewBag.SemiTitleLink = "/";
+    DateTime now = DateTime.Now;
+    var startDate = new DateTime(now.Year, now.Month, 1);
+    var endDate = startDate.AddMonths(1).AddDays(-1);
+    DataTable dt = new DataTable();
+    var columns = new List<string>();
+    if (Model != null)
+    {
+        dt = Model;
+        foreach (DataColumn dc in dt.Columns)
+        {
+            columns.Add(dc.ColumnName);
+        }
+        var ex = new List<string>() { "", "", "", "", "", "" };
+        columns = columns.Where(x => !ex.Any(y => y == x)).ToList();
+    }
+}
+
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4>@ViewBag.Title</h4>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel"></button>
+        </div>
+        <div class="w-full">
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Number of households visited for health education on diabetes and hypertension</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (dt.Rows.Count > 0)
+                                            {
+                                                var sno = 1;
+                                                DataRow[] dr = dt.Select("indicatorId = " + 4);
+                                                if (dr.Length > 0)
+                                                {
+                                                    foreach (DataRow dr1 in dr)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">@dr1["block"]</td>
+                                                            <td class="text-center">@dr1["target"]</td>
+                                                            <td class="text-center">@dr1["achieved"]</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Number of members age 30+ yrs educated on the symptoms and prevention of diabetes and hypertension</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl5">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (dt.Rows.Count > 0)
+                                            {
+                                                var sno = 1;
+                                                DataRow[] dr = dt.Select("indicatorId = " + 5);
+                                                if (dr.Length > 0)
+                                                {
+                                                    foreach (DataRow dr1 in dr)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">@dr1["block"]</td>
+                                                            <td class="text-center">@dr1["target"]</td>
+                                                            <td class="text-center">@dr1["achieved"]</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">NDiscussion on healthy lifestyle</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl6">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (dt.Rows.Count > 0)
+                                            {
+                                                var sno = 1;
+                                                DataRow[] dr = dt.Select("indicatorId = " + 6);
+                                                if (dr.Length > 0)
+                                                {
+                                                    foreach (DataRow dr1 in dr)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">@dr1["block"]</td>
+                                                            <td class="text-center">@dr1["target"]</td>
+                                                            <td class="text-center">@dr1["achieved"]</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Discussion on Yoga</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl7">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (dt.Rows.Count > 0)
+                                            {
+                                                var sno = 1;
+                                                DataRow[] dr = dt.Select("indicatorId = " + 7);
+                                                if (dr.Length > 0)
+                                                {
+                                                    foreach (DataRow dr1 in dr)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">@dr1["block"]</td>
+                                                            <td class="text-center">@dr1["target"]</td>
+                                                            <td class="text-center">@dr1["achieved"]</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Discussion on Healthy Diet</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl8">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (dt.Rows.Count > 0)
+                                            {
+                                                var sno = 1;
+                                                DataRow[] dr = dt.Select("indicatorId = " + 8);
+                                                if (dr.Length > 0)
+                                                {
+                                                    foreach (DataRow dr1 in dr)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">@dr1["block"]</td>
+                                                            <td class="text-center">@dr1["target"]</td>
+                                                            <td class="text-center">@dr1["achieved"]</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Discussion on symptoms & prevention of BP and Sugar</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl9">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (dt.Rows.Count > 0)
+                                            {
+                                                var sno = 1;
+                                                DataRow[] dr = dt.Select("indicatorId = " + 9);
+                                                if (dr.Length > 0)
+                                                {
+                                                    foreach (DataRow dr1 in dr)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">@dr1["block"]</td>
+                                                            <td class="text-center">@dr1["target"]</td>
+                                                            <td class="text-center">@dr1["achieved"]</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Total sessions</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl10">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (dt.Rows.Count > 0)
+                                            {
+                                                var sno = 1;
+                                                DataRow[] dr = dt.Select("indicatorId = " + 10);
+                                                if (dr.Length > 0)
+                                                {
+                                                    foreach (DataRow dr1 in dr)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">@dr1["block"]</td>
+                                                            <td class="text-center">@dr1["target"]</td>
+                                                            <td class="text-center">@dr1["achieved"]</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $("#tbl4").DataTable();
+            $("#tbl5").DataTable();
+            $("#tbl6").DataTable();
+            $("#tbl7").DataTable();
+            $("#tbl8").DataTable();
+            $("#tbl9").DataTable();
+            $("#tbl9").DataTable();
+        });
+    </script>
+    }

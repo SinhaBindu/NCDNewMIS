@@ -711,6 +711,21 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
+        public ActionResult HealthEducation()
+        {
+            FilterModel filterModel = new FilterModel();
+            filterModel.PageType = "health_education";
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = SP_Model.GetHealthEducation(filterModel);
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            return View(dt);
+        }
 
     }
 }

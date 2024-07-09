@@ -56,6 +56,8 @@
     @*<script src="~/Scripts/JS/indiastates.js"></script>*@
     <script src="~/Scripts/JS/INDBoundary.js"></script>
     @*<script src="~/Scripts/JS/INDBoundaryTest.js"></script>*@
+    <script src="~/Scripts/JS/india_st.js"></script>
+    <script src="~/Scripts/JS/polbnda_ind.js"></script>
 
     <script>
 
@@ -63,12 +65,12 @@
 
             Load_DistrictMap();
             //$('path[NAME_1^="Odisha"]').attr('fill', '#2ad00b');
-           //var spdata= $("path").attr("d", "M");
+            //var spdata= $("path").attr("d", "M");
         })
         function Load_DistrictMap() {
             const report = document.getElementById('reporttooltip');
             //var jsonObject = JSON.parse('[{"state":"Odisha","color":"#EC7063"}]'); //JSON.parse(json_data);
-            var jsonObject = JSON.parse('[{"district":"Dhenkanal","color":"#EC7063","state":"Odisha","color1":"#000000"}]'); //JSON.parse(json_data);
+            var jsonObject = JSON.parse('[{"district":"DHENKANAL","color":"#EC7063"}]'); //JSON.parse(json_data);
             var reportMapDivWidth = $("#report-map").width();
             var tooltipX = (reportMapDivWidth / 2) + 25;
             // var MapHeight = reportMapDivWidth > 650 ? 500 : null;
@@ -80,7 +82,7 @@
                     borderWidth: 1,
                     borderColor: '#00000',
                     height: MapHeight,
-                   //  map: topology
+                    //  map: topology
                 },
 
                 title: {
@@ -119,7 +121,7 @@
                         point: {
                             events: {
                                 click: function () {
-                                    window.location.href = document.baseURI +"/Home/Districtmap?D=1&&R=2";
+                                    window.location.href = document.baseURI + "/Home/Districtmap?D=1&&R=2";
                                 }
                             }
                         }
@@ -127,46 +129,24 @@
                 },
 
                 series: [{
-                    //animation: {
-                    //    duration: 1000
-                    //}
-                //    ,
-                //     data: jsonObject,
-                //    //data: [["Odisha", 26]],
-                //    //mapData: Highcharts.maps['custom/India'],
-                //    mapData: Highcharts.maps['custom/StatesIndia'],
-                //    joinBy: ['NAME_2', 'district','fill','color'],
-                //    //joinBy: ['NAME_1', 'state','fill','color'],
-                //  //  joinBy: 'NAME_1',
-                //   // keys: ['NAME_1', 'value'],
-                //    dataLabels: {
-                //        enabled: true,
-                //        color: '#000000',
-                //        format: '{point.district}',
-                //        style: {
-                //            fontSize: 9,
-                //            fontWeight: 600
-                //        },
-                //    },
 
-                //    name: 'India', //jsonObject[0].Section,
-                //    //color: '#fff',
-                //    enableMouseTracking: false,
-                //    borderColor: 'black',
-                //    borderWidth: 0.5,
-                //    tooltip: {
-                //        pointFormat: '{point.NAME_2}'
-                //    }
-                //}
-
-                       // type: 'mapbubble',
-
+                    name: 'India',
                     mapData: Highcharts.maps['custom/StatesIndia'],
+                    //mapData: Highcharts.maps['custom/StatesDistrictOdisha'],
+                }
+                    ,
+                {
+                    //name: 'DHENKANAL',
+                    // data: ['DHENKANAL'].map(code => ({ code })),
+                    mapData: Highcharts.maps['custom/StatesDistrictOdisha'],
+                    //joinBy: ['laa', 'code'],
+                    //tooltip: {
+                    //    pointFormat: 'District : {point.laa}'
+                    //}
                     color: Highcharts.getOptions().colors[5],
                     // joinBy: ['iso-a2', 'code'],
-                    //joinBy: ['NAME_1', 'state', 'fill', 'color1'],
-                    //joinBy: ['NAME_2', 'district', 'fill', 'color', 'NAME_1', 'State', 'fill','color1'],
-                    joinBy: ['DISTRICT', 'district', 'fill', 'color', 'NAME_1', 'State', 'fill','color1'],
+                    //joinBy: ['NAME_2', 'district', 'fill', 'color'],
+                    joinBy: ['laa', 'district', 'fill', 'color', 'NAME_1', 'State', 'fill', 'color1'],
                     dataLabels: {
                         enabled: true,
                         color: '#000000',
@@ -177,18 +157,18 @@
                         },
                     },
                     data: jsonObject,
-                    name: 'India',
+                    name: 'District',
                     marker: {
                         symbol: 'mapmarker'
                     },
                     minSize: 4,
                     maxSize: '12%',
                     tooltip: {
-                        pointFormat: 'District : {point.DISTRICT}'
+                        pointFormat: 'District : {point.laa}'
                     }
                 }
-
                 ]
+
             });
         }
     </script>

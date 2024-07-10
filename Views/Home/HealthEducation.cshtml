@@ -64,12 +64,12 @@
                                                         </tr>
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    <tr>
-                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                    </tr>
-                                                }
+                                                @*else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                        </tr>
+                                                    }*@
                                             }
                                         }
                                     </tbody>
@@ -79,7 +79,6 @@
 
                     </div>
                 </div>
-
                 <div class="xl:w-1/2 w-full">
                     <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                         <h5 class="text-center">
@@ -113,12 +112,12 @@
                                                         </tr>
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    <tr>
-                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                    </tr>
-                                                }
+                                                @*else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                        </tr>
+                                                    }*@
                                             }
                                         }
                                     </tbody>
@@ -164,12 +163,12 @@
                                                         </tr>
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    <tr>
-                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                    </tr>
-                                                }
+                                                @*else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                        </tr>
+                                                    }*@
                                             }
                                         }
                                     </tbody>
@@ -213,12 +212,12 @@
                                                         </tr>
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    <tr>
-                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                    </tr>
-                                                }
+                                                @*else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                        </tr>
+                                                    }*@
                                             }
                                         }
                                     </tbody>
@@ -264,12 +263,12 @@
                                                         </tr>
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    <tr>
-                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                    </tr>
-                                                }
+                                                @*else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                        </tr>
+                                                    }*@
                                             }
                                         }
                                     </tbody>
@@ -313,12 +312,12 @@
                                                         </tr>
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    <tr>
-                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                    </tr>
-                                                }
+                                                @*else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                        </tr>
+                                                    }*@
                                             }
                                         }
                                     </tbody>
@@ -364,12 +363,12 @@
                                                         </tr>
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    <tr>
-                                                        <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                    </tr>
-                                                }
+                                                @*else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                        </tr>
+                                                    }*@
                                             }
                                         }
                                     </tbody>
@@ -381,18 +380,44 @@
                 </div>
             </div>
         </div>
+
+    </div>
+</div>
+
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(function () {
-            $("#tbl4").DataTable();
-            $("#tbl5").DataTable();
-            $("#tbl6").DataTable();
-            $("#tbl7").DataTable();
-            $("#tbl8").DataTable();
-            $("#tbl9").DataTable();
-            $("#tbl9").DataTable();
+            $(".cell-border").DataTable({
+                paging: false,
+                "bFilter": false,
+                "info": false
+            });
+            //            $("#tbl5").DataTable({
+            //                paging: false,
+            //                "bFilter": false,
+            //});
+            //            $("#tbl6").DataTable({
+            //                paging: false,
+            //                "bFilter": false,
+            //});
+            //            $("#tbl7").DataTable({
+            //                paging: false,
+            //                "bFilter": false,
+            //});
+            //            $("#tbl8").DataTable({
+            //                paging: false,
+            //                "bFilter": false,
+            //});
+            //            $("#tbl9").DataTable({
+            //                paging: false,
+            //                "bFilter": false,
+            //});
+            //            $("#tbl9").DataTable({
+            //                paging: false,
+            //                "bFilter": false,
+            //});
         });
     </script>
-    }
+}

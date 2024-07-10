@@ -20,55 +20,107 @@
     .dataTables_info {
         display: none;
     }
+
+    .collapse {
+        /*visibility: collapse !important;*/
+        
+        visibility: visible !important;
+    }
 </style>
-<h5 class="text-center"><strong class="text-bg-primary"> District : @dt.Rows[0]["district"] </strong></h5>
+<h5 class="text-center">District :<strong class="text-center">  @dt.Rows[0]["district"] </strong></h5>
 
 @*<div class="table-responsive">*@
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 
 @if (dt.Rows.Count > 0)
 {
     var dt1 = dt.AsEnumerable().GroupBy(x => x.Field<string>("block"));
     var index = 0;
-    foreach (var item in dt1.ToList())
-    {
-        index++;
-        @*<div class="xl:w-1/2 bg-white">*@
-        <div class="overflow-x-auto table-scroll">
-            <h5 class="text-left"><strong class="text-bg-primary">Block : <strong class="text-capitalize">@item.Key</strong></strong> </h5>
-            <table class="table table-bordered table-striped cell-border small tblfont tblBlock" id="tbl_@index" style="font-size: 10px !important">
-                <thead class="text-center">
-                    <tr>
-                        <th class="text-center">Indicator</th>
-                        <th class="text-center"></th>
-                        <th class="text-center">Male</th>
-                        <th class="text-center">Female</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        var dt2 = dt.AsEnumerable().Where(x => x.Field<string>("block") == item.Key.ToString()).CopyToDataTable();
-                        foreach (DataRow dr in dt2.Rows)
-                        {
-                           
-                            <tr>
-                                <td class="text-left">@dr["indicatorText"]</td>
-                                <td class="text-center">@dr["Total"]</td>
-                                <td class="text-center">@dr["male"]</td>
-                                <td class="text-center">@dr["female"]</td>
-                            </tr>
-                        }
-                    }
+    @*<div class="accordion accordion-rounded-stylish accordion-gradient accordion-wrapper">*@
+    <div class="accordion" id="accordionExample">
+        @foreach (var item in dt1.ToList())
+        {
+            index++;
+            var exp = index == 1 ? "show" : "";
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne_@index">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@index" aria-expanded="true" aria-controls="collapseOne_@index">
+                        <strong>  Block : @item.Key</strong>
+                    </button>
+                </h2>
+                <div id="collapseOne_@index" class="accordion-collapse collapse @exp" aria-labelledby="headingOne_@index" data-bs-parent="#accordionExample">
+                    @*<div class="accordion-body">
+                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        </div>*@
+                    <div class="accordion-body">
+                        <div class="overflow-x-auto table-scroll">
+                            @*<h5 class="text-left"><strong class="text-bg-primary">Block : <strong class="text-capitalize">@item.Key</strong></strong> </h5>*@
+                            <table class="table table-bordered table-striped cell-border small tblfont tblBlock" id="tbl_@index" style="font-size: 10px !important">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th class="text-center">Srno.</th>
+                                        <th class="text-center">Indicator</th>
+                                        <th class="text-center"></th>
+                                        <th class="text-center">Male</th>
+                                        <th class="text-center">Female</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var sno1 = 1;
+                                        var dt2 = dt.AsEnumerable().Where(x => x.Field<string>("block") == item.Key.ToString()).CopyToDataTable();
+                                        foreach (DataRow dr in dt2.Rows)
+                                        {
+                                            <tr>
+                                                <td class="text-center">@(sno1++)</td>
+                                                <td class="text-left">@dr["indicatorText"]</td>
+                                                <td class="text-center">@dr["Total"]</td>
+                                                <td class="text-center">@dr["male"]</td>
+                                                <td class="text-center">@dr["female"]</td>
+                                            </tr>
+                                        }
+                                    }
 
-                </tbody>
+                                </tbody>
 
-            </table>
-        </div>
-        @*</div>*@
-    }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="accordion-item mb-5">
+                    <div class="accordion-header dark:text-white py-4  px-7 border border-transparent rounded-lg relative cursor-pointer text-sm duration-500 accordion-btn"
+                         data-dz-item="collapseOne_@index">
+                        <span class="accordion-header-icon"></span>
+                        <span class="accordion-header-text">
+                            Accordion Header
+                            One
+                        </span>
+                        <span class="accordion-header-indicator"></span>
+                    </div>
+                    <div id="collapseOne_@index" class="accordion-content rounded-es-md rounded-ee-md">
+                        <div class="accordion-body-text py-3.5 px-3 sm:text-sm text-xs text-white">
+                            Anim pariatur cliche reprehenderit, enim eiusmod
+                            high life accusamus terry richardson ad squid. 3
+                            wolf moon officia aute, non cupidatat skateboard
+                            dolor brunch. Food truck quinoa nesciunt laborum
+                            eiusmod.
+                        </div>
+                    </div>
+                </div>*@
 
-    <table class="table table-bordered table-striped cell-border small tblfont tblBlock" id="tbl1" style="font-size: 10px !important; display:none !important" >
+            @*<div class="xl:w-1/2 bg-white">*@
+
+
+            @*</div>*@
+        }
+    </div>
+
+    <table class="table table-bordered table-striped cell-border small tblfont tblBlock" id="tbl1" style="font-size: 10px !important; display:none !important">
         <thead class="text-center">
             <tr>
+                <th class="text-center">Srno.</th>
                 <th class="text-center">District</th>
                 <th class="text-center">Block</th>
                 <th class="text-center">Indicator</th>
@@ -79,9 +131,11 @@
         </thead>
         <tbody>
             @{
+                var sno = 1;
                 foreach (DataRow dr in dt.Rows)
                 {
                     <tr>
+                        <td class="text-center">@(sno++)</td>
                         <td class="text-left">@dr["district"]</td>
                         <td class="text-left">@dr["block"]</td>
                         <td class="text-left">@dr["indicatorText"]</td>
@@ -98,6 +152,8 @@
 
 }
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
 
 
 

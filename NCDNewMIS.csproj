@@ -758,6 +758,7 @@
     <Content Include="Scripts\JS\INDBoundary.js" />
     <Content Include="Scripts\JS\india_st.js" />
     <Content Include="Scripts\JS\polbnda_ind.js" />
+    <Content Include="Views\Home\HealthEducation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

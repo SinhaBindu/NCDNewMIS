@@ -169,5 +169,13 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable SP_SummaryUserSubmission(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_SummaryUserSubmission");
+            sp.Command.AddParameter("@FD", model.FormDt, DbType.String);
+            sp.Command.AddParameter("@TD", model.ToDt, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
     }
 }

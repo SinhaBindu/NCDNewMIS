@@ -1,0 +1,256 @@
+﻿@model NCDNewMIS.Models.FilterModel
+@using NCDNewMIS.Models
+@{
+    ViewBag.Title = "User Wise Submission Data";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "User Wise Submission Data";
+    ViewBag.SemiTitleLink = "/";
+    DateTime now = DateTime.Now;
+    var startDate = new DateTime(now.Year, now.Month, 1);
+    var endDate = startDate.AddMonths(1).AddDays(-1);
+}
+<style>
+    #report-map {
+        width: 480px !important
+    }
+
+    .border-all {
+        display: flex;
+        gap: 20px;
+        padding: 1px;
+        background: #F5F5F5;
+        margin: 0px;
+    }
+
+    ul.b {
+        list-style-type: square;
+    }
+</style>
+<!-- Content body start -->
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4>@ViewBag.Title</h4>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel"></button>
+        </div>
+
+        <div class="row">
+            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
+                @*<div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
+                        <div class="cpa text-dark dark:text-white text-base font-semibold">
+                            <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+                        </div>
+                    </div>*@
+                <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
+                    <div class="row">
+
+                        <div class="card">
+                            @using (Html.BeginForm("SubmissionSummary", "Home", FormMethod.Post, new { @id = "tblList-frm", @class = "panel-body form-horizontal form-padding loader" }))
+                            {
+                                <div class="filter cm-content-box box-primary relative rounded-lg mb-0 bg-white dark:bg-[#1b1b1b]">
+                                    <div class="content form excerpt border-b-color dark:border-[#ffffff1a]">
+                                        <div>
+                                            <div class="border-all">
+                                                <div class="mb-4 md:w-1/2">
+                                                    <label class="form-label">From Date</label>
+                                                    <input type="text" name="FD" id="FD" class="datepicker
+form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full
+date-picker-input" value="" autocomplete="off" />
+                                                </div>
+                                                <div class="mb-4 md:w-1/2">
+                                                    <label class="form-label">To Date</label>
+                                                    <input type="text" name="TD" id="TD" class="datepicker
+         form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full
+         date-picker-input" value="" autocomplete="off" />
+                                                </div>
+
+                                                <div class="sm:w-1/2 mt-6">
+                                                    <button name="btnsubmit" id="btnsubmit"
+                                                            class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">
+                                                        Search
+                                                    </button>
+                                                    <a href="~/Home/SubmissionSummary" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-warning bg-warning text-white hover:bg-[#ffa91a] duration-300"><i class="fa fa-refresh"></i></a>
+                                                </div>
+                                                <div class="mb-4 md:w-1/2">
+                                                    <ul class="b">
+                                                        <li style="background: #55AE17 !important;">Today</li>
+                                                        <li style="background: #E6B921 !important;">Yesterday </li>
+                                                        <li style="background: #EC7063 !important;">Pre-entry & No Entry</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="w-full">
+                    <div class="row">
+                        <div class="card">
+                            <div class="col-sm-11">
+                                <div id="result">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+            var dateFormat = "dd-M-yy",
+                from = $("#FD")
+                    .datepicker({
+                        defaultDate: "+1w",
+                        changeMonth: true,
+                        numberOfMonths: 1,
+                        dateFormat: 'dd-M-yy'
+                    })
+                    .on("change", function () {
+                        to.datepicker("option", "minDate", getDate(this));
+                    }),
+                to = $("#TD").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    numberOfMonths: 1,
+                    dateFormat: 'dd-M-yy'
+
+                })
+                    .on("change", function () {
+                        from.datepicker("option", "maxDate", getDate(this));
+                    });
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    date = null;
+                }
+
+                return date;
+            }
+        });
+        $(document).ready(function () {
+            LoadReport();
+            $("#btnsubmit").click(function (e) {
+                e.preventDefault();
+                LoadReport();
+            });
+
+        });
+        function LoadReport() {
+            $('#result').html("");
+            var id = '#tblList-frm'
+            var url = $(id).attr("action");
+            var filtermodel = new Object();
+            var FD = $("#FD").val();
+            var TD = $("#TD").val();
+            $.ajax({
+                url: document.baseURI + "/Home/SubmissionSummary",
+                type: "POST",
+                data: { 'FD': FD, 'TD': TD },
+                success: function (resp) {
+                    if (resp.IsSuccess) {
+                        debugger;
+                        // $('#resultmap').html(resp.Datahtml);
+                        $('#result').html(resp.Datahtml);
+                        if ($.fn.dataTable.isDataTable('#tbl')) {
+                            $("#tbl").dataTable().fnDestroy();
+                        }
+                        table = $('#tbl').DataTable({
+                            //scrollY: "500px",
+                            //scrollX: true,
+                            //fixedHeader: true,
+                            //scrollCollapse: true,
+                            //paging: false,
+                            pageLength: 100,
+                            //fixedColumns: {
+                            //    leftColumns: 1,
+                            //    rightColumns: 1
+                            //},
+                            buttons: [{
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Data Lists',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
+                                filename: 'Data List',
+                                exportOptions: { modifier: { page: 'all' } }
+                            }],
+                        });
+                        //$('.dataTables_filter input[type="search"]').css(
+                        //    { 'width': '500px', 'display': 'inline-block' }
+                        //);
+                        $('#div-download').empty();
+                        table.buttons().container().appendTo($('#div-download'));
+                    }
+                    else {
+                        $('#result').html('<h4 class="text-danger">Record Not Found !!</h4>');
+                    }
+                },
+                error: function (req, error) {
+                    if (error === 'error') { error = req.statusText; }
+                    var errormsg = 'There was a communication error: ' + error;
+                    $('#result').html(errormsg);
+                }
+            });
+        }
+
+        function PostAppoved(regid, regmapid, isactive) {
+            debugger;
+            if (regid && regmapid) {
+                $.ajax({
+                    url: document.baseURI + "/Home/PostAppoved",
+                    type: "Post",
+                    data: { 'RegId': regid, 'RegMapId': regmapid, 'IsApproved': isactive },
+                    //cache: false,
+                    //contentType: false,
+                    //processData: false,
+                    //contentType: "application/json; charset=utf-8",
+                    // data: JSON.stringify(model),
+                    //global: false,
+                    // async: false,
+                    // dataType: "json",
+                    success: function (resp) {
+                        if (resp.IsSuccess) {
+                            toastr.success("Success", resp.Message);
+                            LoadReport();
+                        }
+                        else {
+                            toastr.error("Error", resp.Message);
+                        }
+                    },
+                    error: function (req, error) {
+                        if (error === 'error') { error = req.statusText; }
+                        var errormsg = 'There was a communication error: ' + error;
+                        toastr.error("Error", errormsg);
+                        //jQuery.event.trigger("ajaxStop");
+                        return false;
+                    }
+                });
+            }
+            else {
+                return false;
+            }
+
+        }
+
+
+    </script>
+}

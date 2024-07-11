@@ -16,10 +16,10 @@ namespace NCDNewMIS.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-       // [AllowAnonymous]
+        // [AllowAnonymous]
         public ActionResult Home()
         {
-            return View();  
+            return View();
         }
         //[AllowAnonymous]
         public ActionResult Home2()
@@ -722,10 +722,43 @@ namespace NCDNewMIS.Controllers
             }
             catch (Exception ex)
             {
-                
+
             }
             return View(dt);
         }
-
+        public ActionResult SubmissionSummary()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SubmissionSummary(string FD, string TD)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            FilterModel filterModel = new FilterModel();
+            filterModel.FormDt = FD; filterModel.ToDt = FD;
+            dt = SP_Model.SP_SummaryUserSubmission(filterModel);
+            try
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    var html = ConvertViewToString("_SubmissionSummaryData", dt);
+                    var res = Json(new { IsSuccess = true, Datahtml = html }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
     }
 }

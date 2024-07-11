@@ -1,0 +1,349 @@
+﻿@using System.Data
+@{
+    ViewBag.Title = "Screening";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "Screening";
+    ViewBag.SemiTitleLink = "/";
+    DateTime now = DateTime.Now;
+    var startDate = new DateTime(now.Year, now.Month, 1);
+    var endDate = startDate.AddMonths(1).AddDays(-1);
+    DataTable dt = new DataTable();
+    var columns = new List<string>();
+    if (Model != null)
+    {
+        dt = Model;
+        foreach (DataColumn dc in dt.Columns)
+        {
+            columns.Add(dc.ColumnName);
+        }
+        var ex = new List<string>() { "", "", "", "", "", "" };
+        columns = columns.Where(x => !ex.Any(y => y == x)).ToList();
+    }
+}
+<style>
+    .row {
+        margin: 1%;
+    }
+</style>
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4>@ViewBag.Title</h4>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel"></button>
+        </div>
+        <div class="w-full">
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Total population screened for hypertension</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl11">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="xl:w-1/2 w-full">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Total population screened for diabetes (Random blood sugar test)</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl12">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Status of blood pressure screenings</strong>
+                        </h5>
+                        <div class="overflow-x-auto table-scroll" id="g15" style="height:300px"></div>
+                        <p style="
+    padding: 1%;
+    font-size: smaller;
+">
+                            No risk: systolic less than 120 mm Hg, diastolic less than
+                            80 mm Hg <br />
+                            Pre-Hypertensive (pre-hyper): systolic 120–139 mm Hg,
+                            and/or diastolic 80–89 mm Hg
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-center">
+                            <strong class="text-primary">
+                                Status of random blood sugar
+                                screenings
+                            </strong>
+                        </h5>
+                        <div class="overflow-x-auto table-scroll" id="g19" style="height:300px">
+                        </div>
+                        <p style="
+    padding: 1%;
+    font-size: smaller;
+">RBS: Random blood sugar level</p>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Total hypertensive suspects referred to the PHC for clinical diagnosis</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl17">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                        <h5 class="text-center">
+                            <strong class="text-primary">Total diabetic suspects referred to the PHC for clinical diagnosis</strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl18">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    @*<script src="https://code.highcharts.com/modules/series-label.js"></script>*@
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="~/Scripts/JS/Export.js"></script>
+    <script src="~/Scripts/JS/Master.js"></script>
+    <script>
+        $(function () {
+            $(".cell-border").DataTable({
+                paging: false,
+                "bFilter": false,
+                "info": false
+            });
+        });
+        $(document).ready(function () {
+            var param = { 'ptype': 'screening' };
+            $.ajax({
+                method: 'POST',
+                url: document.baseURI + '/Home/Screening',
+                data: JSON.stringify(param),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: onsucess,
+                error: onerror
+            });
+        });
+        function onsucess(response) {
+            var d11 = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 11;
+            });
+            var d12 = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 12;
+            });
+            var d17 = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 17;
+            });
+            var d18 = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 18;
+            });
+            var d15 = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 15;
+            });
+            var d19 = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 19;
+            });
+            var html = '';
+            for (var i = 0; i < d11.length; i++) {
+                html = html + '<tr><td>' + d11[i].block + '</td><td>' + d11[i].target + '</td><td>' + d11[i].achieved + '</td></tr>'
+            }
+            $("#tbl11 tbody").empty().append(html);
+            html = '';
+            for (var i = 0; i < d12.length; i++) {
+                html = html + '<tr><td>' + d12[i].block + '</td><td>' + d12[i].target + '</td><td>' + d12[i].achieved + '</td></tr>'
+            }
+            $("#tbl12 tbody").empty().append(html);
+            html = '';
+            for (var i = 0; i < d17.length; i++) {
+                html = html + '<tr><td>' + d17[i].block + '</td><td></td><td>' + d17[i].achieved + '</td></tr>'
+            }
+            $("#tbl17 tbody").empty().append(html);
+            html = '';
+            for (var i = 0; i < d18.length; i++) {
+                html = html + '<tr><td>' + d18[i].block + '</td><td></td><td>' + d18[i].achieved + '</td></tr>'
+            }
+            $("#tbl18 tbody").empty().append(html);
+
+            bindgraph("g15", "<strong>Hyper</strong><br/>" + d15[0].achieved, "", "Total individuals screened : " + ((d15[0].target * d15[0].achieved) / 100).toFixed(0), [{ name: 'Target', y: d15[0].target }, { name: 'Achieved', y: (d15[0].target * d15[0].achieved) / 100 }]);
+            bindgraph("g19", "<strong>RBS >140mg/dl</strong><br/>" + d19[0].achieved, "", "Total individuals screened : " + ((d19[0].target * d19[0].achieved) / 100).toFixed(0), [{ name: 'Target', y: d19[0].target }, { name: 'Achieved', y: (d19[0].target * d19[0].achieved) / 100 }])
+        }
+        function onerror(response) {
+            alert("Oops!! Something went Wrong..Please Try Again");
+        }
+
+        function bindgraph(id, label, head, subhead, data) {
+            Highcharts.chart(id, {
+                chart: {
+                    type: 'pie',
+                    custom: {},
+                    plotAreaWidth: 300,
+                    plotAreaHeight: 200,
+                    events: {
+                        render() {
+                            const chart = this,
+                                series = chart.series[0];
+                            let customLabel = chart.options.chart.custom.label;
+
+                            if (!customLabel) {
+                                customLabel = chart.options.chart.custom.label =
+                                    chart.renderer.label(
+                                        label
+                                    )
+                                        .css({
+                                            color: '#000',
+                                            textAnchor: 'middle'
+                                        })
+                                        .add();
+                            }
+
+                            const x = series.center[0] + chart.plotLeft,
+                                y = series.center[1] + chart.plotTop -
+                                    (customLabel.attr('height') / 2);
+
+                            customLabel.attr({
+                                x,
+                                y
+                            });
+                            // Set font size based on chart diameter
+                            customLabel.css({
+                                fontSize: `${series.center[2] / 12}px`
+                            });
+                        }
+                    }
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                title: {
+                    text: head
+                },
+                credits: {
+                    enabled: false
+                },
+                subtitle: {
+                    text: subhead
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        borderRadius: 8,
+                        dataLabels: [{
+                            enabled: false,
+                           // distance: 20,
+                            format: '{point.name}'
+                        }, {
+                            enabled: false,
+                           // distance: -15,
+                            format: '{point.percentage:.0f}%',
+                            style: {
+                                fontSize: '0.9em'
+                            }
+                        }],
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Registrations',
+                    colorByPoint: true,
+                    innerSize: '75%',
+                    data: data
+                }]
+            });
+        }
+
+    </script>
+}

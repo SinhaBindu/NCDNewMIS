@@ -90,14 +90,12 @@
                             <strong class="text-primary">Status of blood pressure screenings</strong>
                         </h5>
                         <div class="overflow-x-auto table-scroll" id="g15" style="height:300px"></div>
-                        <p style="
-    padding: 1%;
-    font-size: smaller;
-">
+                        <p style="padding: 1%; font-size: smaller;">
                             No risk: systolic less than 120 mm Hg, diastolic less than
                             80 mm Hg <br />
                             Pre-Hypertensive (pre-hyper): systolic 120–139 mm Hg,
                             and/or diastolic 80–89 mm Hg
+                            Hypertensive (hyper) : systolic 140 mm Hg or higher and/or diastolic 90 mm Hg or higher
                         </p>
 
                     </div>
@@ -117,6 +115,9 @@
     padding: 1%;
     font-size: smaller;
 ">RBS: Random blood sugar level</p>
+                        <br />
+                        <br />
+                        <br />
                     </div>
 
                 </div>
@@ -165,6 +166,7 @@
                                     </thead>
                                     <tbody></tbody>
                                 </table>
+                                <br />
                             </div>
                         </div>
                     </div>
@@ -230,27 +232,27 @@
             });
             var html = '';
             for (var i = 0; i < d11.length; i++) {
-                html = html + '<tr><td>' + d11[i].block + '</td><td>' + d11[i].target + '</td><td>' + d11[i].achieved + '</td></tr>'
+                html = html + '<tr><td>' + d11[i].block + '</td><td class="text-center">' + d11[i].target + '</td><td class="text-center">' + d11[i].achieved + '</td></tr>'
             }
             $("#tbl11 tbody").empty().append(html);
             html = '';
             for (var i = 0; i < d12.length; i++) {
-                html = html + '<tr><td>' + d12[i].block + '</td><td>' + d12[i].target + '</td><td>' + d12[i].achieved + '</td></tr>'
+                html = html + '<tr><td>' + d12[i].block + '</td><td class="text-center">' + d12[i].target + '</td><td class="text-center">' + d12[i].achieved + '</td></tr>'
             }
             $("#tbl12 tbody").empty().append(html);
             html = '';
             for (var i = 0; i < d17.length; i++) {
-                html = html + '<tr><td>' + d17[i].block + '</td><td></td><td>' + d17[i].achieved + '</td></tr>'
+                html = html + '<tr><td>' + d17[i].block + '</td><td class="text-center"></td><td class="text-center">' + d17[i].achieved + '</td></tr>'
             }
             $("#tbl17 tbody").empty().append(html);
             html = '';
             for (var i = 0; i < d18.length; i++) {
-                html = html + '<tr><td>' + d18[i].block + '</td><td></td><td>' + d18[i].achieved + '</td></tr>'
+                html = html + '<tr><td class="text-center">' + d18[i].block + '</td><td></td><td>' + d18[i].achieved + '</td></tr>'
             }
             $("#tbl18 tbody").empty().append(html);
 
-            bindgraph("g15", "<strong>Hyper</strong><br/>" + d15[0].achieved, "", "Total individuals screened : " + ((d15[0].target * d15[0].achieved) / 100).toFixed(0), [{ name: 'Target', y: d15[0].target }, { name: 'Achieved', y: (d15[0].target * d15[0].achieved) / 100 }]);
-            bindgraph("g19", "<strong>RBS >140mg/dl</strong><br/>" + d19[0].achieved, "", "Total individuals screened : " + ((d19[0].target * d19[0].achieved) / 100).toFixed(0), [{ name: 'Target', y: d19[0].target }, { name: 'Achieved', y: (d19[0].target * d19[0].achieved) / 100 }])
+            bindgraph("g15", "<strong>Hyper</strong><br/>" + d15[0].achieved, "", "Total individuals screened : " + ((d15[0].target * d15[0].achieved) / 100).toFixed(0), [{ name: 'Target', y: d15[0].target, color: '#DDDF0D' }, { name: 'Achieved', y: (d15[0].target * d15[0].achieved) / 100, color: '#DF5353' }]);
+            bindgraph("g19", "<strong>RBS >140mg/dl</strong><br/>" + d19[0].achieved, "", "Total individuals screened : " + ((d19[0].target * d19[0].achieved) / 100).toFixed(0), [{ name: 'Target', y: d19[0].target, color: '#DDDF0D' }, { name: 'Achieved', y: (d19[0].target * d19[0].achieved) / 100, color: '#DF5353' }])
         }
         function onerror(response) {
             alert("Oops!! Something went Wrong..Please Try Again");
@@ -308,7 +310,8 @@
                     enabled: false
                 },
                 subtitle: {
-                    text: subhead
+                    text: '<b>' + subhead +'</b>',
+                    verticalAlign: 'bottom',
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'

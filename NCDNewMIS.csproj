@@ -761,6 +761,7 @@
     <Content Include="Views\Home\HealthEducation.cshtml" />
     <Content Include="Views\Home\SubmissionSummary.cshtml" />
     <Content Include="Views\Home\_SubmissionSummaryData.cshtml" />
+    <Content Include="Views\Home\Screening.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

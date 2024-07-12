@@ -1,0 +1,383 @@
+﻿@using System.Data
+@{
+    ViewBag.Title = "Training";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "Training";
+    ViewBag.SemiTitleLink = "/";
+    DataTable dt = new DataTable();
+    var columns = new List<string>();
+}
+<style>
+    .row {
+        margin: 1%;
+    }
+</style>
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4>@ViewBag.Title</h4>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel"></button>
+        </div>
+        <div class="w-full">
+
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-left">
+                            <strong class="text-primary"></strong>
+                        </h5>
+                        <div class="overflow-x-auto table-scroll" id="g1" style="height:300px"></div>
+                        <p style="padding: 1%; font-size: smaller;">
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-left">
+                            <strong class="text-primary">
+                            </strong>
+                        </h5>
+                        <div class="overflow-x-auto table-scroll" id="gbar1" style="height:300px">
+                        </div>
+                        <p style="padding: 1%; font-size: smaller;"></p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-left">
+                            <strong class="text-primary"></strong>
+                        </h5>
+                        <div class="overflow-x-auto table-scroll" id="g2" style="height:300px"></div>
+                        <p style="padding: 1%; font-size: smaller;">
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-left">
+                            <strong class="text-primary">
+                            </strong>
+                        </h5>
+                        <div class="overflow-x-auto table-scroll" id="gbar2" style="height:300px">
+                        </div>
+                        <p style="padding: 1%; font-size: smaller;"></p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-left">
+                            <strong class="text-primary"></strong>
+                        </h5>
+                        <div class="overflow-x-auto table-scroll" id="g3" style="height:300px"></div>
+                        <p style="padding: 1%; font-size: smaller;">
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-left">
+                            <strong class="text-primary">
+                            </strong>
+                        </h5>
+                        <div class="overflow-x-auto table-scroll" id="gbar3" style="height:300px">
+                        </div>
+                        <p style="padding: 1%; font-size: smaller;"></p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    @*<script src="https://code.highcharts.com/modules/series-label.js"></script>*@
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="~/Scripts/JS/Export.js"></script>
+    <script>
+        $(function () {
+            $(".cell-border").DataTable({
+                paging: false,
+                "bFilter": false,
+                "info": false
+            });
+        });
+        $(document).ready(function () {
+            var param = { 'ptype': 'training' };
+            $.ajax({
+                method: 'POST',
+                url: document.baseURI + '/Home/Training',
+                data: JSON.stringify(param),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: onsucess,
+                error: onerror
+            });
+        });
+        function onsucess(response) {
+            debugger;
+            var d1 = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 1 && entry.block === 'Total';
+            });
+            var d1bar = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 1;
+            });
+            var d2 = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 2 && entry.block === 'Total';
+            });
+            var d2bar = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 2;
+            });
+            var d3 = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 3 && entry.block === 'Total';
+            });
+            var d3bar = JSON.parse(response.Data).filter(function (entry) {
+                return entry.indicatorId === 3;
+            });
+            bindgraph("g1", "<strong>Achieved</strong><br/>" + d1[0].achieved, d1[0].indicatorText + " : " + ((d1[0].achieved)), "", [{ name: 'Achieved', y: d1[0].achieved, color: '#ffc107' }]);
+            bindgraph("g2", "<strong>Achieved</strong><br/>" + d2[0].achieved, d2[0].indicatorText + " : " + ((d2[0].achieved)), "", [{ name: 'Achieved', y: d2[0].achieved, color: '#ffc107' }]);
+            bindgraph("g3", "<strong>Achieved</strong><br/>" + d3[0].achieved, d3[0].indicatorText + " : " + ((d3[0].achieved)), "", [{ name: 'Achieved', y: d3[0].achieved, color: '#ffc107' }]);
+            Act1IndicatorChart("gbar1", "<strong>Achieved</strong><br/>", d1bar,"Block wise number of "+ d1[0].indicatorText + " : " + ((d1[0].achieved)), "","");
+            Act1IndicatorChart("gbar2", "<strong>Achieved</strong><br/>", d2bar,"Block wise number of "+ d2[0].indicatorText + " : " + ((d2[0].achieved)), "","");
+            Act1IndicatorChart("gbar3", "<strong>Achieved</strong><br/>", d3bar,"Block wise number of "+ d3[0].indicatorText + " : " + ((d3[0].achieved)), "","");
+        }
+        function onerror(response) {
+            alert("Oops!! Something went Wrong..Please Try Again.");
+        }
+
+        function bindgraph(id, label, head, subhead, data) {
+
+            Highcharts.chart(id, {
+                chart: {
+                    type: 'pie',
+                    borderWidth: 1,
+                    custom: {},
+                    plotAreaWidth: 300,
+                    plotAreaHeight: 200,
+                    events: {
+                        render() {
+                            const chart = this,
+                                series = chart.series[0];
+                            let customLabel = chart.options.chart.custom.label;
+
+                            if (!customLabel) {
+                                customLabel = chart.options.chart.custom.label =
+                                    chart.renderer.label(
+                                        label
+                                    )
+                                        .css({
+                                            color: '#000',
+                                            textAnchor: 'middle'
+                                        })
+                                        .add();
+                            }
+
+                            const x = series.center[0] + chart.plotLeft,
+                                y = series.center[1] + chart.plotTop -
+                                    (customLabel.attr('height') / 2);
+
+                            customLabel.attr({
+                                x,
+                                y
+                            });
+                            // Set font size based on chart diameter
+                            customLabel.css({
+                                fontSize: `${series.center[2] / 12}px`
+                            });
+                        }
+                    }
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                title: {
+                    text:"<span style='color:#222fb9'>" +head+"</span>",
+                    align: 'left'
+                },
+                credits: {
+                    enabled: false
+                },
+                subtitle: {
+                    text: '<b>' + subhead + '</b>',
+                    verticalAlign: 'bottom',
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        borderRadius: 8,
+                        dataLabels: [{
+                            enabled: false,
+                            // distance: 20,
+                            format: '{point.name}'
+                        }, {
+                            enabled: false,
+                            // distance: -15,
+                            format: '{point.percentage:.0f}%',
+                            style: {
+                                fontSize: '0.9em'
+                            }
+                        }],
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: head,
+                    colorByPoint: true,
+                    innerSize: '75%',
+                    data: data
+                }]
+            });
+        }
+        function Act1IndicatorChart(id, label, Data, title, subtitle, tittotal) {
+             debugger;
+            //$('#' + id).html('');
+            if (Data.length > 0) {
+                //var objd = new Object();
+                var TD = [], AD = [], cate = [], AGVA = [];
+                var subtitle = "";
+                var TotalTarget = 0, TotalAchieved = 0, TAPercent = 0; Apavg = 0;
+                var targetzero = Data.filter(x => x.target == 0);
+                var achievedzero = Data.filter(x => x.achieved == 0);
+                var dataser = [];
+                Data = Data.sort();
+                for (var i = 0; i < Data.length; i++) {
+                    cate.push(Data[i].block);
+                    //var obj = [Data[i].ColumnName, Data[i].NoofData];
+                    TD.push(Data[i].target);
+                    AD.push(Data[i].achieved);
+                    if (Data[i].block.toUpperCase() != "TOTAL") {
+                        TotalTarget += Data[i].target;
+                        TotalAchieved += Data[i].achieved;
+                    }
+                }
+                if (targetzero.length <= 0) {
+                    //dataser.push({ type: 'column', name: 'Target', data: TotalTarget, 'color': '#bc6ac9' });//bc6ac9
+                    dataser.push({ type: 'column', name: 'Target', data: TD, 'color': '#bc6ac9' });//bc6ac9
+                }
+                if (achievedzero <= 0) {
+                   // dataser.push({ type: 'column', name: 'Achieved', data: TotalAchieved, 'color': '#ffc107' });//fbc21d//f2c02c//008000
+                    dataser.push({ type: 'column', name: 'Achieved', data: AD, 'color': '#ffc107' });//fbc21d//f2c02c//008000
+                }
+                Highcharts.chart(id, {
+
+                    chart: {
+                        //type: 'lollipop',
+                        //type: 'columnpyramid',
+                        borderWidth: 1,
+                        height: 300,
+                        custom: {},
+                        // plotAreaWidth: 300,
+                        // plotAreaHeight: 200,
+                        //events: {
+                        //    render() {
+                        //        const chart = this,
+                        //            series = chart.series[0];
+                        //        let customLabel = chart.options.chart.custom.label;
+
+                        //        if (!customLabel) {
+                        //            customLabel = chart.options.chart.custom.label =
+                        //                chart.renderer.label(
+                        //                    label
+                        //                )
+                        //                    .css({
+                        //                        color: '#000',
+                        //                        textAnchor: 'middle'
+                        //                    })
+                        //                    .add();
+                        //        }
+
+                        //        const x = series.center[0] + chart.plotLeft,
+                        //            y = series.center[1] + chart.plotTop -
+                        //                (customLabel.attr('height') / 2);
+
+                        //        customLabel.attr({
+                        //            x,
+                        //            y
+                        //        });
+                        //        // Set font size based on chart diameter
+                        //        customLabel.css({
+                        //            fontSize: `${series.center[2] / 12}px`
+                        //        });
+                        //    }
+                        //}
+                    },
+                    title: {
+                        text: "<span style='color:#222fb9'>" + title + "</span>",
+                        align: 'left'
+                    },
+                    //subtitle: {
+                    //    text: subtitle + " : " + "<b style='color:#000;font-size:12px;'>" + tittotal + "<b/>",
+                    //    align: 'center'
+                    //},
+                    xAxis: {
+                        categories: cate
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'No.of data'
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    //tooltip: {
+                    //    valueSuffix: ' million liters'
+                    //},
+                    //plotOptions: {
+                    //    series: {
+                    //        borderRadius: '25%'
+                    //    }
+                    //},
+                    plotOptions: {
+                        series: {
+                            borderRadius: '25%',
+                            //  stacking: 'normal',
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    },
+                    series: dataser
+                });
+
+            }
+        }
+    </script>
+}

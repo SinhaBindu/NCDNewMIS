@@ -711,21 +711,7 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult HealthEducation()
-        {
-            FilterModel filterModel = new FilterModel();
-            filterModel.PageType = "health_education";
-            DataTable dt = new DataTable();
-            try
-            {
-                dt = SP_Model.GetHealthEducation(filterModel);
-            }
-            catch (Exception ex)
-            {
-
-            }
-            return View(dt);
-        }
+       
         public ActionResult SubmissionSummary()
         {
             return View();
@@ -761,6 +747,55 @@ namespace NCDNewMIS.Controllers
             }
         }
 
+        #region Act-I Indicator Method
+        public ActionResult Training()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Training(string ptype)
+        {
+            FilterModel filterModel = new FilterModel();
+            filterModel.PageType = ptype;
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = SP_Model.GetHealthEducation(filterModel);
+                if (dt.Rows.Count > 0)
+                {
+                    var dtjson = JsonConvert.SerializeObject(dt);
+                    var res = Json(new { IsSuccess = true, Data = dtjson }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+        public ActionResult HealthEducation()
+        {
+            FilterModel filterModel = new FilterModel();
+            filterModel.PageType = "health_education";
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = SP_Model.GetHealthEducation(filterModel);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return View(dt);
+        }
         public ActionResult Screening()
         {
             return View();
@@ -794,5 +829,7 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
             }
         }
+        #endregion
+
     }
 }

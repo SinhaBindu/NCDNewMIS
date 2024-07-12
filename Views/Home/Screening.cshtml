@@ -251,8 +251,8 @@
             }
             $("#tbl18 tbody").empty().append(html);
 
-            bindgraph("g15", "<strong>Hyper</strong><br/>" + d15[0].achieved, "", "Total individuals screened : " + ((d15[0].target * d15[0].achieved) / 100).toFixed(0), [{ name: 'Target', y: d15[0].target, color: '#DDDF0D' }, { name: 'Achieved', y: (d15[0].target * d15[0].achieved) / 100, color: '#DF5353' }]);
-            bindgraph("g19", "<strong>RBS >140mg/dl</strong><br/>" + d19[0].achieved, "", "Total individuals screened : " + ((d19[0].target * d19[0].achieved) / 100).toFixed(0), [{ name: 'Target', y: d19[0].target, color: '#DDDF0D' }, { name: 'Achieved', y: (d19[0].target * d19[0].achieved) / 100, color: '#DF5353' }])
+            bindgraph("g15", "<strong>Hyper</strong><br/>" + d15[0].achieved, "", "Total individuals screened : " + ((d15[0].target * d15[0].achieved) / 100).toFixed(0), [{ name: 'Target', y: d15[0].target, color: '#FF5733' }, { name: 'Achieved', y: (d15[0].target * d15[0].achieved) / 100, color: '#008000' }]);
+            bindgraph("g19", "<strong>RBS >140mg/dl</strong><br/>" + d19[0].achieved, "", "Total individuals screened : " + ((d19[0].target * d19[0].achieved) / 100).toFixed(0), [{ name: 'Target', y: d19[0].target, color: '#FF5733' }, { name: 'Achieved', y: (d19[0].target * d19[0].achieved) / 100, color: '#008000' }])
         }
         function onerror(response) {
             alert("Oops!! Something went Wrong..Please Try Again");
@@ -340,7 +340,7 @@
                     }
                 },
                 series: [{
-                    name: 'Registrations',
+                    name: head,
                     colorByPoint: true,
                     innerSize: '75%',
                     data: data

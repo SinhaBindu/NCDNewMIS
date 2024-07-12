@@ -23,6 +23,7 @@
                     <th class="text-center">Block</th>
                     <th class="text-center">CHC</th>
                     <th class="text-center">PHC</th>
+                    @*<th class="text-center">Subcenter</th>*@
                     <th class="text-center">Name</th>
                     <th class="text-center">Mobile No</th>
                     <th class="text-center">Version</th>
@@ -39,11 +40,12 @@
                         {
                             <tr>
                                 <td class="text-center">@(sno++)</td>
-                                <td class="text-center">@dr["District"]</td>
-                                <td class="text-center">@dr["Block"]</td>
-                                <td class="text-center">@dr["CHCN"]</td>
-                                <td class="text-center">@dr["PHC"]</td>
-                                <td class="text-center">@dr["FullName"]</td>
+                                <td class="text-left">@dr["District"]</td>
+                                <td class="text-left">@dr["Block"]</td>
+                                <td class="text-left">@dr["CHCN"]</td>
+                                <td class="text-left">@dr["PHC"]</td>
+                                @*<td class="text-left">@dr["SubCenter"]</td>*@
+                                <td class="text-left">@dr["FullName"]</td>
                                 <td class="text-center">@dr["MobileNo"]</td>
                                 <td class="text-center">@dr["Version"]</td>
                                 <td class="text-center">

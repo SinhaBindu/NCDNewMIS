@@ -165,6 +165,7 @@ namespace NCDNewMIS.Controllers
         [EnableCors("*")]
         public async Task<string> JsonPostData(string UserName, string Password, string Version, string JsonData)
         {
+            string filepath = "/NCDRequestData/";
             var accessToken = "";// HttpContext.Request.Headers["Authorization"];
             NCD_DBEntities db_ = new NCD_DBEntities();
             //var passwordHasher = new Microsoft.AspNet.Identity.PasswordHasher();
@@ -197,6 +198,7 @@ namespace NCDNewMIS.Controllers
                     if (i > 0)
                     {
                         jsval = "{\"Table\":[{\"RetValue\":\"Success\"}]}";
+                        filepath = filepath + "/Archive/";
                     }
                     else
                     {
@@ -212,7 +214,12 @@ namespace NCDNewMIS.Controllers
                         {
                             jsval = "{\"Table\":[{\"RetValue\":\"Failed\"}]}";
                         }
+                        filepath = filepath + "/Error/";
                     }
+                    filepath = filepath + UserName + "^" + Version + "^" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ".txt";
+                    System.IO.StreamWriter sw = new System.IO.StreamWriter(System.Web.Hosting.HostingEnvironment.MapPath(filepath), false, System.Text.Encoding.UTF8);
+                    sw.WriteLine(JsonData);
+                    sw.Close();
                     return jsval;// Json(JsonConvert.DeserializeObject(strMsg), JsonRequestBehavior.AllowGet);
                 }
                 else

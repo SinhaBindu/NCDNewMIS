@@ -332,7 +332,7 @@ namespace NCDNewMIS.Controllers
                         //{
                         var scid = Convert.ToInt32((s).ToString());
                         tblmap = new tbl_RegMappping();
-                        tblmap = tblmaplist.Any(x => x.SubCenterId_fk == scid) == false ? new tbl_RegMappping() : tblmaplist.FirstOrDefault();
+                        tblmap = tblmaplist.Any(x => x.SubCenterId_fk == scid) == false ? new tbl_RegMappping() : tblmaplist.FirstOrDefault(x => x.SubCenterId_fk == scid);
 
                         FilterModel model = new FilterModel();
                         model.DistrictId = Convert.ToString(DistrictId);
@@ -364,6 +364,7 @@ namespace NCDNewMIS.Controllers
                                 tblmap.CreatedBy = User.Identity.Name;
                                 tblmap.CreatedOn = DateTime.Now;
                                 db_.tbl_RegMappping.Add(tblmap);
+                                res += db_.SaveChanges();
                             }
                             else if (tblmap.RegMapId_pk != 0)
                             {
@@ -371,17 +372,18 @@ namespace NCDNewMIS.Controllers
                                 tblmap.IsActive = 1;
                                 tblmap.UpdatedBy = User.Identity.Name;
                                 tblmap.UpdatedOn = DateTime.Now;
-                                db_.SaveChanges();
+                                res += db_.SaveChanges();
                             }
                         }
                     }
-                    res = db_.SaveChanges();
+                    //res = db_.SaveChanges();
                     //}
                 }
                 if (res > 0)
                 {
-                    var resjsont = Json(new { IsSuccess = true, Message = "SubCenter Mapped Successfully.." }, JsonRequestBehavior.AllowGet);
-                    resjsont.MaxJsonLength = int.MaxValue;
+                    var resjsont1 = Json(new { IsSuccess = true, Message = "SubCenter Mapped Successfully.." }, JsonRequestBehavior.AllowGet);
+                    resjsont1.MaxJsonLength = int.MaxValue;
+                    return resjsont1;
                 }
                 var resjsonf = Json(new { IsSuccess = false, Message = "SubCenter Not Mapped" }, JsonRequestBehavior.AllowGet);
                 return resjsonf;

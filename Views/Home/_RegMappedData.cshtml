@@ -108,16 +108,8 @@
                             <td class="text-center">@dr["FullName"]</td>
                             <td class="text-center">@dr["MobileNo"]</td>
                             <td data-id="td@(index)" class="tdselval">
-                                @if (dr["IsCheckUnCheck"].ToString() == "1")
-                                {
-                                    <input type="hidden" id="hd@(index)" name="hd@(index)" class="hd@(index)" value="@dr["SubCenterIds"].ToString()" />
-                                    @Html.DropDownList("ddl" + index, new SelectList(lists, "value", "text"), new { @class = "tdselval  multiple ddl selectpicker", multiple = "multiple" })
-                                }
-                                else
-                                {
-                                    <input type="hidden" id="hd@(index)" name="hd@(index)" class="hd@(index)" value="" />
-                                    @Html.DropDownList("ddl" + index, new SelectList(lists, "value", "text"), new { @class = "tdselval  multiple ddl selectpicker", multiple = "multiple" })
-                                }
+                                <input type="hidden" id="hd@(index)" name="hd@(index)" class="hd@(index)" value="@dr["SubCenterIds"].ToString()" />
+                                @Html.DropDownList("ddl" + index, new SelectList(lists, "value", "text"), new { @class = "tdselval  multiple ddl selectpicker", multiple = "multiple" })
                             </td>
                             @*<td class="text-center">
                                     <a href="javascript:void(0);" onclick="return PostAppoved('@dr["RegId_pk"]','@dr["RegMapId_pk"]','@dr["IsApproved"].ToString()');"> <strong class="@dr["ApprovedColor"]">@dr["ApprovedStatus"]</strong></a>

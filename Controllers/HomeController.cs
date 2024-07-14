@@ -315,7 +315,6 @@ namespace NCDNewMIS.Controllers
                 var tblmap = new tbl_RegMappping();
                 if (!string.IsNullOrWhiteSpace(SubCenterIds))
                 {
-
                     var splt = SubCenterIds.Split(',');
                     var spltmapp = RegMapIds.Split(',');
                     IEnumerable<int> spltsubcenterids = splt.Select(int.Parse);
@@ -323,13 +322,18 @@ namespace NCDNewMIS.Controllers
                     //List<int> listOfIds = new List<int>(Convert.ToInt32(spltmappids));
                     //List<int> listOfsubpkIds = new List<int>(spltsubcenterids);
                     var tblmaplist = db_.tbl_RegMappping.Where(r => spltmappids.Contains(r.RegMapId_pk) && spltsubcenterids.Contains(r.SubCenterId_fk.Value)).ToList();
+                    var spltmappsubids = tblmaplist.Where(x => spltsubcenterids.Contains(x.SubCenterId_fk.Value));
+                    //var areEqual = spltmappsubids.Equals(tblmaplist);
+                    var tblmapUPStatus = tblmaplist.ToList();
+                    tblmapUPStatus.ForEach(a => a.IsActive = 0);
+                    db_.SaveChanges();
                     foreach (var s in splt.ToList())
                     {
                         //foreach (var item in tblmaplist.ToList())
                         //{
                         var scid = Convert.ToInt32((s).ToString());
                         tblmap = new tbl_RegMappping();
-                        tblmap = tblmaplist.Any(x => x.SubCenterId_fk == scid) == false ? new tbl_RegMappping() : null;
+                        tblmap = tblmaplist.Any(x => x.SubCenterId_fk == scid) == false ? new tbl_RegMappping() : tblmaplist.FirstOrDefault();
 
                         FilterModel model = new FilterModel();
                         model.DistrictId = Convert.ToString(DistrictId);
@@ -337,7 +341,6 @@ namespace NCDNewMIS.Controllers
                         model.SCId = s;
                         DataSet ds = SP_Model.SP_GetPHCCHC_SubCenterWise(model);
                         DataTable dtchcphc = ds.Tables[0];
-
 
                         var itemmapid = 0;//item.RegMapId_pk!string.IsNullOrWhiteSpace(item.RegMapId_pk) ? Convert.ToInt32(item) : 0;
 
@@ -363,11 +366,12 @@ namespace NCDNewMIS.Controllers
                                 tblmap.CreatedOn = DateTime.Now;
                                 db_.tbl_RegMappping.Add(tblmap);
                             }
-                            else if (itemmapid != 0)
+                            else if (tblmap.RegMapId_pk != 0)
                             {
                                 //tblmap.SubCenterId_fk = Convert.ToInt32(s);
-                                //tblmap.UpdatedBy = User.Identity.Name;
-                                //tblmap.UpdatedOn = DateTime.Now;
+                                tblmap.IsActive = 1;
+                                tblmap.UpdatedBy = User.Identity.Name;
+                                tblmap.UpdatedOn = DateTime.Now;
                             }
                         }
                     }
@@ -389,7 +393,6 @@ namespace NCDNewMIS.Controllers
                 resjson.MaxJsonLength = int.MaxValue;
                 return resjson;
             }
-
         }
 
         #region Master Bind
@@ -711,7 +714,7 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-       
+
         public ActionResult SubmissionSummary()
         {
             return View();

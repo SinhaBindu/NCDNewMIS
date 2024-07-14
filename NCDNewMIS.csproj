@@ -766,6 +766,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="NCDRequestData\Archive\" />
+    <Folder Include="NCDRequestData\Error\" />
     <Folder Include="Views\Master\" />
   </ItemGroup>
   <ItemGroup>

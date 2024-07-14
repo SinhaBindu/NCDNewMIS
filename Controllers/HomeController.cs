@@ -322,9 +322,8 @@ namespace NCDNewMIS.Controllers
                     //List<int> listOfIds = new List<int>(Convert.ToInt32(spltmappids));
                     //List<int> listOfsubpkIds = new List<int>(spltsubcenterids);
                     var tblmaplist = db_.tbl_RegMappping.Where(r => spltmappids.Contains(r.RegMapId_pk) && spltsubcenterids.Contains(r.SubCenterId_fk.Value)).ToList();
-                    var spltmappsubids = tblmaplist.Where(x => spltsubcenterids.Contains(x.SubCenterId_fk.Value));
-                    //var areEqual = spltmappsubids.Equals(tblmaplist);
-                    var tblmapUPStatus = tblmaplist.ToList();
+                    var spltmappsubids = db_.tbl_RegMappping.Where(x => x.RegId_fk == RegId).ToList();
+                    var tblmapUPStatus = spltmappsubids.ToList();
                     tblmapUPStatus.ForEach(a => a.IsActive = 0);
                     db_.SaveChanges();
                     foreach (var s in splt.ToList())
@@ -372,6 +371,7 @@ namespace NCDNewMIS.Controllers
                                 tblmap.IsActive = 1;
                                 tblmap.UpdatedBy = User.Identity.Name;
                                 tblmap.UpdatedOn = DateTime.Now;
+                                db_.SaveChanges();
                             }
                         }
                     }

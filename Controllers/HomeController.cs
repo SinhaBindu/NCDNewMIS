@@ -669,27 +669,27 @@ namespace NCDNewMIS.Controllers
             int result = 0;
             try
             {
-                if (model != null)
+                if (model != null && Request.Files.Count > 0 && model.FileUpload.Count > 0)
                 {
-                    if (ModelState.IsValid && model.FileUpload != null)
+                    if (ModelState.IsValid)
                     {
-                        //if (db_.tbl_GalleryUpload.Any(x => x.FileName == model.FileName.Trim()))
+                        //if (db_.tbl_GalleryUpload.Any(x => x.Date == model.Date && x.BlockId == model.BlockId))
                         //{
-                        //    var res1 = Json(new { IsSuccess = false, Message = "File Name Already Exists !!", JsonRequestBehavior.AllowGet);
+                        //    var res1 = Json(new { IsSuccess = false, Message = "Date and Block Already Exists !!", JsonRequestBehavior.AllowGet });
                         //    res1.MaxJsonLength = int.MaxValue;
                         //    return res1;
                         //}
                         var maxid = db_.tbl_GalleryUpload.Count() != 0 ? db_.tbl_GalleryUpload?.Max(x => x.Id) : 0;
                         var lastaddmaxid = maxid == 0 ? 1 : maxid + 1;
-                        var filePath = CommonModel.SaveSingleExcelFile(model.FileUpload, lastaddmaxid.ToString(), "ParticipantFile");
-                        var physicalFilePath = Server.MapPath(filePath);
-
+                        var getblock = db_.Block_Master.Find(model.BlockId);
+                        var filePath = CommonModel.SaveFileImage(model.FileUpload.ToArray(), lastaddmaxid.ToString(), getblock.Block + model.BlockId.ToString());
                         tbl_GalleryUpload tbl = new tbl_GalleryUpload();
                         tbl.Date = model.Date;
-                        tbl.FileName = model.FileName.Trim();
-                        tbl.FilePath = filePath;
+                        tbl.DistrictId = getblock.DistrictId;
+                        tbl.BlockId = model.BlockId;
                         tbl.Title = model.Title;
                         tbl.FilePath = filePath;
+                        tbl.Description = model.Description;
                         tbl.CreatedBy = User.Identity.Name;
                         tbl.CreatedOn = DateTime.Now;
                         tbl.IsActive = true;
@@ -708,6 +708,34 @@ namespace NCDNewMIS.Controllers
                 var res = Json(new { IsSuccess = false, Message = "Record Not Submitted.." }, JsonRequestBehavior.AllowGet);
                 res.MaxJsonLength = int.MaxValue;
                 return res;
+            }
+        }
+        [HttpGet]
+        public ActionResult GetImageUpload(FilterModel m)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            dt = SP_Model.SP_GetImageUploadList(m);
+            try
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    var html = ConvertViewToString("_ImageData", dt);
+                    var res = Json(new { IsSuccess = true, Data = html }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
             }
         }
 

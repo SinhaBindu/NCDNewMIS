@@ -177,5 +177,13 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable SP_GetImageUploadList(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_GalleryUploadList");
+            sp.Command.AddParameter("@DistrictId", model.DistrictId, DbType.String);
+            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
     }
 }

@@ -940,7 +940,50 @@ namespace NCDNewMIS.Models
 
             return filepath;
         }
+        public static string SaveFileImage(HttpPostedFileBase[] files, string ID, string Folder)
+        {
+            string URL = "";
+            string st = "";
+            try
+            {
+                foreach (var file in files)
+                {
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        string file_extension = Path.GetExtension(file.FileName).ToLower();
+                        Stream strmStream = file.InputStream;
+                        if (IsValidImage(strmStream) == true || file_extension == ".png" || file_extension == ".jpg" || file_extension == ".jpeg")
+                        {
+                            //URL = "~/Uploads/" + Module + "/" + RegNo + "/" + Folder + "/";
 
+                            URL = "~/ImageUploads/" + Folder+"_" + ID + "/";
+                            string extension = Path.GetExtension(file.FileName);
+
+                            if (!Directory.Exists(HttpContext.Current.Server.MapPath(URL)))
+                            {
+                                Directory.CreateDirectory(HttpContext.Current.Server.MapPath(URL));
+                            }
+                            int index = 1;
+                            string filenamewithoutext = Path.GetFileNameWithoutExtension(file.FileName);
+                            string fname = filenamewithoutext + ID + extension;
+                            while (System.IO.File.Exists(HttpContext.Current.Server.MapPath(Path.Combine(URL, fname))))
+                            {
+                                index++;
+                                fname = filenamewithoutext + ID + "(" + index.ToString() + ")" + extension;
+                            }
+                            file.SaveAs(HttpContext.Current.Server.MapPath(URL + fname));
+                            st +=!string.IsNullOrWhiteSpace(st)? "," + URL + fname: URL + fname;
+                        }
+                        URL = st;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
+            return URL;
+        }
         public static string DeleteSingleFile(HttpPostedFileBase files, string Module, string RegNo)
         {
             //ToDo: Add code to delete single file from directory

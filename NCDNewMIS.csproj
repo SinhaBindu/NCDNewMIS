@@ -763,9 +763,11 @@
     <Content Include="Views\Home\_SubmissionSummaryData.cshtml" />
     <Content Include="Views\Home\Screening.cshtml" />
     <Content Include="Views\Home\Training.cshtml" />
+    <Content Include="Views\Home\_ImageData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ImageUploads\" />
     <Folder Include="NCDRequestData\Archive\" />
     <Folder Include="NCDRequestData\Error\" />
     <Folder Include="Views\Master\" />

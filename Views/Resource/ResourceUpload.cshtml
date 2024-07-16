@@ -1,0 +1,178 @@
+﻿@model NCDNewMIS.Models.FileResourceModel
+@{
+    ViewBag.Title = "Resource Upload";
+}
+
+<style>
+    .card-manage {
+        padding: 30px 15px
+    }
+
+    .input_container {
+        border: 1px solid #e5e5e5;
+    }
+
+    input[type=file]::file-selector-button {
+        background-color: #fff;
+        color: #000;
+        border: 0px;
+        border-right: 1px solid #e5e5e5;
+        padding: 10px 15px;
+        margin-right: 20px;
+        transition: .5s;
+    }
+
+        input[type=file]::file-selector-button:hover {
+            background-color: #eee;
+            border: 0px;
+            border-right: 1px solid #e5e5e5;
+        }
+</style>
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4><a href="~/Home/Index">Resource File</a> / File Information</h4>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel"></button>
+        </div>
+
+        <div class="row">
+            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
+                @*<div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
+                        <div class="cpa text-dark dark:text-white text-base font-semibold">
+                            <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+                        </div>
+                    </div>*@
+                <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
+                    <div class="row">
+
+                        <div class="card">
+                            @using (Html.BeginForm("ResourceUpload", "Resource", FormMethod.Post, new { @class = "panel-body form-horizontal form-padding loader", enctype = "multipart/form-data", @id = "empform" }))
+                            {
+                                <div class="filter cm-content-box box-primary relative rounded-lg mb-0 bg-white dark:bg-[#1b1b1b]">
+                                    <div class="content form excerpt border-b-color dark:border-[#ffffff1a]">
+                                        <div>
+                                            <div class="border-all">
+                                               
+                                                <div class="panel-bodys">
+                                                    @Html.AntiForgeryToken()
+
+                                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                    @*<p class="bord-btm pad-ver text-main text-bold"><i class="fa fa-users spacerright2"></i>File Information</p>*@
+                                                    <div class="mb-4 row">
+                                                        @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
+                                                        <div class="sm:w-5/6">
+                                                            @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "required form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full ", @required = "required", @maxlength = "120" } })
+                                                            @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                                                        </div>
+                                                        <div class="mark-devide"></div>
+                                                    </div>
+                                                    <div class="mb-4 row">
+                                                        @Html.LabelFor(model => model.RoundType, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
+                                                        <div class="sm:w-5/6">
+                                                            @Html.DropDownListFor(model => model.RoundType, NCDNewMIS.Models.CommonModel.GetRoundType(false), null, htmlAttributes: new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full select2", @required = "required" })
+                                                            @Html.ValidationMessageFor(model => model.RoundType, "", new { @class = "text-danger" })
+                                                        </div>
+                                                        <div class="mark-devide"></div>
+                                                    </div>
+                                                    <div class="mb-4 row">
+                                                        @Html.LabelFor(model => model.DateofIssue, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
+                                                        <div class="sm:w-5/6">
+                                                            @Html.EditorFor(model => model.DateofIssue, new { htmlAttributes = new { @class = "required form-control datepicker relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full  ", @required = "required", @type = "date" } })
+                                                            @Html.ValidationMessageFor(model => model.DateofIssue, "", new { @class = "text-danger" })
+                                                        </div>
+                                                        <div class="mark-devide"></div>
+                                                        @*<div class="col-lg-1 text-lg-right">
+                <span class="spacer-left2">@Html.LabelFor(model => model.LetterNo, htmlAttributes: new { @class = "control-label" })</span>
+            </div>
+            <div class="col-lg-3">
+                @Html.EditorFor(model => model.LetterNo, new { htmlAttributes = new { @class = "required form-control ", @required = "required", @maxlength = "120" } })
+                @Html.ValidationMessageFor(model => model.LetterNo, "", new { @class = "text-danger" })
+            </div>*@
+                                                    </div>
+                                                    <div class="mb-4 row">
+                                                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
+                                                        <div class="sm:w-5/6">
+                                                            @Html.TextAreaFor(model => model.Description, new { @class = "required form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full ", @required = "required", @maxlength = "220" })
+                                                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    @*<p class="bord-btm pad-ver text-main text-bold"><i class="fa fa-key spacerright2"></i>Select File</p>*@
+                                                    @*<div class="form-group">
+        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
+            <div class="input_container">
+                @Html.TextBoxFor(m => m.Image, new { @class = "form-control-file", @title = "Upload Image", @type = "file", accept = "image/png, image/jpg, image/jpeg" })
+            </div>
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                <em>*</em> <small class="text-danger">Maximum file size allowed for upload <b> 50 mb</b></small>
+            </div>
+        </div>*@
+                                                    <div class="mb-4 row">
+                                                        @Html.LabelFor(model => model.file, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="sm:w-5/6">
+                                                            <div class="input_container">
+                                                                @Html.TextBoxFor(m => m.file, new { @class = "relative text-[13px] h-[2.813rem] file:h-[2.813rem] file:outline-none file:text-body-color file:py-[0.175rem] file:pl-2.5 file:pr-3 file:bg-[#f8f9fa] dark:file:bg-[#1b1b1b]  border border-b-color file:border-b-color block rounded-lg text-body-color duration-500 outline-none w-full", @title = "Upload Document", @type = "file", accept = "application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" })
+                                                            </div>
+                                                            @Html.ValidationMessageFor(model => model.file, "", new { @class = "text-danger" })
+                                                            <em>*</em> <small class="text-danger">Maximum file size allowed for upload <b> 50 mb</b></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row">
+                                                        <div class="col-md-10">
+                                                            <span class="webshow">
+                                                                <button type="submit" class="btn btn-primary mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">Submit</button>
+                                                                <a href="~/Resource/ResourceUpload" class="btn btn-warning mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-warning text-white bg-warning hover:bg-hover-warning hover:border-hover-warning duration-300"><i class="fa fa-refresh"></i></a>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">@Html.Partial("_Alerts")</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JS/Master.js"></script>
+
+    <script>
+            $(function () {
+
+               // EnableOtherProgram();
+
+               // @*$("#StartDate").datepicker({
+                   // dateFormat: 'dd-M-yy',
+                   // changeMonth: true,
+                  //  changeYear: true,
+                    //minDate: new Date(@today.Year,@today.Month -1, @today.Day-70),
+                   // onSelect: function () {
+                  //      $('#TargetDate').datepicker('option', 'minDate', $("#StartDate").datepicker("getDate"));
+                  //  }
+                //});*@
+                //$("#DateofIssue").datepicker({
+                //    dateFormat: 'dd-M-yy',
+                //    changeMonth: true,
+                //    changeYear: true
+                //});
+
+            })
+
+    </script>
+}
+

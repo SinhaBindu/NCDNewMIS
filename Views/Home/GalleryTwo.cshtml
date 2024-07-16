@@ -1,0 +1,65 @@
+﻿@using System.Data
+@using NCDNewMIS.Models
+@{
+    DataTable dt = new DataTable();
+    if (Model != null)
+    {
+        dt = Model;
+    }
+}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-lg flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4>Gallery Act-II</h4>
+        </div>
+        <div class="row">
+            <div class="w-full">
+                <div class="card">
+                    <div class="gallery">
+                        @{
+                            if (dt.Rows.Count > 0)
+                            {
+                                foreach (DataRow dr in dt.Rows)
+                                {
+                                    var img = !string.IsNullOrWhiteSpace(dr["FilePath"].ToString()) ? dr["FilePath"].ToString().Split(',') : null;
+                                    if (img != null)
+                                    {
+                                        foreach (var item in img)
+                                        {
+                                            var splitem = item.Split('~')[1];
+
+                                                <div class="brick">
+                                                    <label>@dr["District"]/@dr["Block"]</label>
+                                                    <a href="@(CommonModel.GetBaseUrl()+splitem)" class="js-img-viwer" data-caption="" data-id="">
+                                                        <img src="@(CommonModel.GetBaseUrl()+splitem)" alt="" />
+                                                    </a>
+                                                    <strong>@dr["Title"]</strong>
+                                                    <p>@dr["Description"]</p>
+                                                </div>
+                                            @*<div class="brick">
+                                                    <a href="~/Content/assets/images/big/img2.jpg" class="js-img-viwer" data-caption="" data-id="">
+                                                        <img src="~/Content/assets/images/big/img2.jpg" alt="" />
+                                                    </a>
+                                                </div>*@
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="~/Content/smartphoto.min.css">
+@section Scripts {
+    <!-- Gallery -->
+    <script src="~/Scripts/smartphoto.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new smartPhoto(".js-img-viwer");
+        });
+    </script>
+}

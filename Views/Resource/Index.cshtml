@@ -1,0 +1,97 @@
+﻿@model IEnumerable<NCDNewMIS.Models.Tbl_FileResource>
+
+@{
+    ViewBag.Title = "Index";
+    int i = 1;
+}
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4><a href="~/Home/Index">Resource File</a> / File Information</h4>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel"></button>
+        </div>
+
+        <div class="row">
+            <div class="row">
+                <div class="col-sm-12" id="result">
+                    <div class="table-data">
+                        <div class="table-responsive">
+                            <div id="demo-dt-basic_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <table id="ListDataTable" class="table table-bordered table-striped cell-border small tblfont" width="100%">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>Sl.No.</th>
+                                            <th>Date of Issue</th>
+                                            @*<th>Document Type</th>*@
+                                            <th>Subject</th>
+                                            @*<th>Image Download </th>*@
+                                            <th>File Download </th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (Model.Count() > 0)
+                                            {
+                                                foreach (var obj in Model)
+                                                {
+                                                    <tr>
+                                                        <td data-title="Sl.No." class="text-center">@(i++)</td>
+                                                        <td data-title="Request Date" class="text-center">@Convert.ToDateTime(obj.DateofIssue).ToString("dd/MMM/yyyy")</td>
+                                                        @*<td data-title="Document Type" class="text-center">@(UmangMicro.Manager.CommonModel.GetDocumentType(false).Where(x=>x.Value==obj.DocumentType)?.FirstOrDefault().Text)</td>*@
+                                                        <td data-title="Subject">@obj.Subject</td>
+                                                        @*<td data-title="File Download" class="text-center">
+                                                                @if (obj.AttachmentImage != null)
+                                                                {
+                                                                    <a href="..@obj.AttachmentImage" target="_blank" onclick="setSelectedTestPlan(@obj.FileId_pk);"> <span class="badge bg-red"><i class="fa fa-download"></i></span></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <code>No File</code>
+                                                                }
+                                                            </td>*@
+                                                        <td data-title="File Download" class="text-center">
+                                                            @if (obj.AttachmentFile != null)
+                                                            {
+                                                                <a href="..@obj.AttachmentFile" target="_blank" class="inline-block rounded-lg font-medium text-[8px] max-xl:text-xs leading-5 py-[0.719rem] max-xl:px-4 px-[0.719rem] max-xl:py-0.5 border border-primary bg-primary text-white hover:bg-hover-primary hover:border-hover-primary duration-300 btn sweet-text" onclick="setSelectedTestPlan(@obj.FileId_pk);"> <span><i class="fa fa-download"></i></span></a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <code>No File</code>
+                                                            }
+                                                        </td>
+                                                        <td data-title="Description" style="word-wrap:break-word;">@obj.Description</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="6" class="text-danger"><strong> Record Not Found !!</strong></td></tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $("#ListDataTable").DataTable({
+               // paging: false,
+                //"bFilter": false,
+                //"info": false
+            });
+        });
+    </script>
+}

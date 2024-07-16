@@ -18,7 +18,8 @@
         <EntityTypeShape EntityType="NCD_DBModel.TBL_Emp" Width="1.5" PointX="4.75" PointY="9.75" />
         <EntityTypeShape EntityType="NCD_DBModel.tbl_RegMappping" Width="1.5" PointX="10.75" PointY="0.75" />
         <AssociationConnector Association="NCD_DBModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="NCD_DBModel.tbl_GalleryUpload" Width="1.5" PointX="11.375" PointY="5.75" />
+        <EntityTypeShape EntityType="NCD_DBModel.Tbl_FileResource" Width="1.5" PointX="11.375" PointY="5.75" />
+        <EntityTypeShape EntityType="NCD_DBModel.tbl_GalleryUpload" Width="1.5" PointX="11.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

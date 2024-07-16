@@ -114,9 +114,21 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult Gallery()
+        public ActionResult GalleryOne()
         {
-            return View();
+            FilterModel model = new FilterModel();
+            model.RoundType = "1";
+            DataTable dt = new DataTable();
+            dt = SP_Model.SP_GetImageUploadList(model);
+            return View(dt);
+        }
+        public ActionResult GalleryTwo()
+        {
+            FilterModel model = new FilterModel();
+            model.RoundType = "2";
+            DataTable dt = new DataTable();
+            dt = SP_Model.SP_GetImageUploadList(model);
+            return View(dt);
         }
         public ActionResult Financial()
         {
@@ -710,11 +722,19 @@ namespace NCDNewMIS.Controllers
                 return res;
             }
         }
+        public ActionResult ImageUploadList()
+        {
+            FilterModel m = new FilterModel();
+            return View(m);
+        }
         [HttpGet]
-        public ActionResult GetImageUpload(FilterModel m)
+        public ActionResult GetImageUpload(string BlockId = "0", string RoundType = "0")
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
+            FilterModel m = new FilterModel();
+            m.BlockId = BlockId == "" ? "0" : BlockId;
+            m.RoundType = RoundType == "" ? "0" : RoundType;
             dt = SP_Model.SP_GetImageUploadList(m);
             try
             {

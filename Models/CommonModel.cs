@@ -24,6 +24,12 @@ namespace NCDNewMIS.Models
               .GetCustomAttribute<DisplayAttribute>()
               ?.GetName();
         }
+        public static int GetRandomNumber()
+        {
+            Random rnd = new Random();
+            int rnd_num = rnd.Next(10000, 99999);
+            return rnd_num;
+        }
         #region BaseUrl
         public static string GetBaseUrl()
         {

@@ -180,8 +180,9 @@ namespace NCDNewMIS.Models
         public static DataTable SP_GetImageUploadList(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_GalleryUploadList");
-            sp.Command.AddParameter("@DistrictId", model.DistrictId, DbType.String);
-            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.String);
+            sp.Command.AddParameter("@DistrictId", model.DistrictId, DbType.Int32);
+            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.Int32);
+            sp.Command.AddParameter("@RoundType", model.RoundType, DbType.Int32);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }

@@ -295,9 +295,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\ResourceController.cs" />
+    <Compile Include="Helper\Alert.cs" />
+    <Compile Include="Helper\Healpers.cs" />
+    <Compile Include="Helper\ImageUpload.cs" />
+    <Compile Include="Helper\MyHelper.cs" />
+    <Compile Include="Models\Alert.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
@@ -316,6 +323,7 @@
     <Compile Include="Models\District_Master.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FileResourceModel.cs" />
     <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\GP_Master.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
@@ -350,8 +358,12 @@
       <DependentUpon>ModelDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\RegLocationModel.cs" />
+    <Compile Include="Models\ResourceModel.cs" />
     <Compile Include="Models\SP_Model.cs" />
     <Compile Include="Models\TBL_Emp.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_FileResource.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_GalleryUpload.cs">
@@ -739,7 +751,7 @@
     <Content Include="Views\Home\_RBSData.cshtml" />
     <Content Include="Views\Home\HighData.cshtml" />
     <Content Include="Views\Home\_HYTData.cshtml" />
-    <Content Include="Views\Home\Gallery.cshtml" />
+    <Content Include="Views\Home\GalleryTwo.cshtml" />
     <Content Include="Views\Home\Financial.cshtml" />
     <Content Include="Views\Home\ACTOneIndicator.cshtml" />
     <Content Include="Views\Home\_ACTOneIndicationData.cshtml" />
@@ -764,12 +776,18 @@
     <Content Include="Views\Home\Screening.cshtml" />
     <Content Include="Views\Home\Training.cshtml" />
     <Content Include="Views\Home\_ImageData.cshtml" />
+    <Content Include="Views\Home\ImageUploadList.cshtml" />
+    <Content Include="Views\Home\GalleryOne.cshtml" />
+    <Content Include="Views\Resource\Index.cshtml" />
+    <Content Include="Views\Resource\ResourceUpload.cshtml" />
+    <Content Include="Views\Shared\_Alerts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ImageUploads\" />
     <Folder Include="NCDRequestData\Archive\" />
     <Folder Include="NCDRequestData\Error\" />
+    <Folder Include="Uploads\" />
     <Folder Include="Views\Master\" />
   </ItemGroup>
   <ItemGroup>

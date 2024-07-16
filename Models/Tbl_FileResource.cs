@@ -12,21 +12,21 @@ namespace NCDNewMIS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_GalleryUpload
+    public partial class Tbl_FileResource
     {
-        public int Id { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<int> RoundType { get; set; }
-        public Nullable<int> DistrictId { get; set; }
-        public Nullable<int> BlockId { get; set; }
+        public int FileId_pk { get; set; }
+        public string FileGuid { get; set; }
+        public string DocumentType { get; set; }
+        public string LetterNo { get; set; }
         public string FileName { get; set; }
-        public string Title { get; set; }
-        public string FilePath { get; set; }
+        public string FileImage { get; set; }
+        public string AttachmentFile { get; set; }
+        public string AttachmentImage { get; set; }
+        public Nullable<System.DateTime> DateofIssue { get; set; }
+        public string Subject { get; set; }
         public string Description { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public Nullable<System.DateTime> Upload_date { get; set; }
+        public string UplaodBy { get; set; }
     }
 }

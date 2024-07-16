@@ -1,0 +1,34 @@
+﻿@using NCDNewMIS.Helper;
+@{
+    var alerts = TempData.ContainsKey(Alert.TempDataKey) ? (List<Alert>)TempData[Alert.TempDataKey] : new List<Alert>();
+    foreach (var alert in alerts)
+    {
+        var dismissableClass = alert.Dismissable ? "alert-dismissable" : null;
+        <br />
+
+        <div class="alert alert-@alert.AlertStyle @dismissableClass" id="dv-alter">
+            @if (alert.Dismissable)
+            {
+                <button type="button" class="close btn_close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            }
+            @Html.Raw(alert.Message)
+        </div>
+
+    }
+}
+
+<style>
+    .alert.alert-dismissable {
+        font-size: 14px !important;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        foo();
+    });
+    function foo() {
+        setTimeout(function () {
+            $('#dv-alter').css('display','none');
+        }, 500);
+    }​
+</script>

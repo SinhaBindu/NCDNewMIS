@@ -37,6 +37,7 @@ namespace NCDNewMIS.Models
         public virtual DbSet<PHC_Master> PHC_Master { get; set; }
         public virtual DbSet<TBL_Emp> TBL_Emp { get; set; }
         public virtual DbSet<tbl_RegMappping> tbl_RegMappping { get; set; }
+        public virtual DbSet<Tbl_FileResource> Tbl_FileResource { get; set; }
         public virtual DbSet<tbl_GalleryUpload> tbl_GalleryUpload { get; set; }
     }
 }

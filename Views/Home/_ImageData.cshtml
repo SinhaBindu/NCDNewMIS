@@ -19,6 +19,7 @@
             <thead class="text-center">
                 <tr>
                     <th class="text-center">Srno.</th>
+                    <th class="text-center">Round</th>
                     <th class="text-center">Date</th>
                     <th class="text-center">Title</th>
                     <th class="text-center">District</th>
@@ -37,6 +38,7 @@
                             var img = !string.IsNullOrWhiteSpace(dr["FilePath"].ToString()) ? dr["FilePath"].ToString().Split(',') : null;
                                 <tr>
                                     <td class="text-center">@(sno++)</td>
+                                    <td class="text-center">@dr["RoundTypeText"]</td>
                                     <td class="text-center">@CommonModel.FormateDtDMY(dr["Date"].ToString())</td>
                                     <td class="text-left">@dr["Title"]</td>
                                     <td class="text-left">@dr["District"]</td>
@@ -48,7 +50,7 @@
                                             foreach (var item in img.ToList())
                                             {
                                                 var splitem = item.Split('~')[1];
-                                                <a href="@(CommonModel.GetBaseUrl()+splitem)" target="_blank" class="bg-primary" ><i class="fa fa-file-download"></i></a>
+                                                <a href="@(CommonModel.GetBaseUrl()+splitem)" target="_blank" class="bg-primary py-[0.3125rem] px-2 text-[0.6875rem] rounded text-white bg-success leading-[0.6875rem] inline-block border border-success duration-500 badge-success badge-sm" ><strong><i class="fa fa-file-download" style="font-size:12px;"></i></strong></a>
                                             }
                                         }
 

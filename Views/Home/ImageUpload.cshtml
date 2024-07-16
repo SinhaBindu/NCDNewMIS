@@ -34,9 +34,15 @@
                                 @Html.HiddenFor(model => model.Id)
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="mb-4 row">
+                                    <label class="sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm">Round Type <em class="text-danger">*</em></label>
+                                    <div class="sm:w-5/6">
+                                        @Html.DropDownListFor(m => m.RoundType,NCDNewMIS.Models.CommonModel.GetRoundType(), "Select", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                    </div>
+                                </div>
+                                <div class="mb-4 row">
                                     <label class="sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm">Block <em class="text-danger">*</em></label>
                                     <div class="sm:w-5/6">
-                                        @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                        @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "Select", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                                     </div>
                                 </div>
                                 <div class="mb-4 row">
@@ -48,7 +54,7 @@
                                 <div class="mb-4 row">
                                     <label class="sm:w-1/6 py-[7px] text-[13px] font-medium text-body-color">Title <em class="text-danger">*</em></label>
                                     <div class="sm:w-5/6">
-                                        <input type="text" id="Title" name="Title" required class="form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full" placeholder="col-form-label">
+                                        <input type="text" id="Title" name="Title" required class="form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full" placeholder="Title">
                                     </div>
                                 </div>
                                 <div class="mb-4 row">
@@ -56,7 +62,7 @@
                                         Upload Image <em class="text-primary"><em class="text-danger">*</em> (jpg,png,jpeg)</em>
                                         <strong class="text-blue">(Capture Multiple images)</strong>
                                     </label>
-                                   
+
                                     <div class="sm:w-5/6">
                                         <input class="relative text-[13px] h-[2.813rem] file:h-[2.813rem] file:outline-none file:text-body-color
                                                file:py-[0.175rem] file:pl-2.5 file:pr-3 file:bg-[#f8f9fa] dark:file:bg-[#1b1b1b]
@@ -81,7 +87,7 @@
                 </div>
             </div>
 
-            <div class="lg:w-1/2 w-full">
+            <div class="lg:w-1/2 w-full" style="display:none">
                 <div class="card z-auto">
                     <div class="card-header flex flex-wrap justify-between items-center sm:p-5 sm:pt-6 p-4 pt-5 max-sm:pb-5 relative border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
                         <h4 class="card-title capitalize">Image Upload Lists</h4>
@@ -147,6 +153,11 @@
             $("#formid").on("submit", function (event) {
                 event.preventDefault();
                 var isvalid = false;
+                if ($('#RoundType').val() == '') {
+                    toastr.error("Error", 'Enter the Round Type.');
+                    isvalid = false;
+                    return false;
+                }
                 if ($('#BlockId').val() == '') {
                     toastr.error("Error", 'Enter the block.');
                     isvalid = false;
@@ -188,6 +199,10 @@
                         if ($('#Description').val() != '') {
                             isvalid = true;
                             formData.append('Description', $('#Description').val());
+                        }
+                        if ($('#RoundType').val() != '') {
+                            isvalid = true;
+                            formData.append('RoundType', $('#RoundType').val());
                         }
                         var files = $('#FileUpload')[0].files;
                         for (var i = 0; i < files.length; i++) {
@@ -239,6 +254,7 @@
 
         });//End Load Method
 
+      
         function InputClear() {
             $("input[name=Id]").val('0');
             $("input[name=UploadDate]").val('');

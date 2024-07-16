@@ -55,7 +55,7 @@
                                                 </div>
                                                 <div class="mb-4 md:w-1/2">
                                                     @Html.LabelFor(model => model.RoundType, htmlAttributes: new { @class = "form-label" })
-                                                    @Html.DropDownListFor(m => m.RoundType, CommonModel.GetRoundType(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                                    @Html.DropDownListFor(m => m.RoundType, CommonModel.GetRoundType(), "All", new { @id = "RoundType", onchange = "onchgRoundType()", @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                                                 </div>
                                             </div>
                                         </div>
@@ -100,9 +100,9 @@
             $('#BlockId').change(function () {
                 BindData();
             });
-            $('#RoundType').change(function () {
-                BindData();
-            });
+            //$('#RoundType').change(function () {
+            //    BindData();
+            //});
             //$('#CHCId').change(function () {
             //    BindPHC("PHCId", '', "0", $('#BlockId').val(), $(this).val());
             //});
@@ -115,13 +115,16 @@
 
 
         });
+        function onchgRoundType() {
+            BindData();
+        }
         function BindData() {
             $("#subdata").html('');
             var formData = $('#formid').serialize();
             var filtermodel = new Object();
             debugger
-            filtermodel.BlockId = $("#BlockId").val() == "" ? "0" : $("#BlockId").val();
-            filtermodel.RoundType = $("#RoundType").val() == "" ? "0" : $("#RoundType").val();
+            //filtermodel.BlockId = $("#BlockId").val() == "" ? "0" : $("#BlockId").val();
+           // filtermodel.RoundType = $("#RoundType").val() == "" ? "0" : $("#RoundType").val();
             var BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == "All" ? "0" : $("#BlockId").val();
             var RoundType = $("#RoundType").val() == "" || $("#RoundType").val() == "All" ? "0" : $("#RoundType").val();
 

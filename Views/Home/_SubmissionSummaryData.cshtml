@@ -45,6 +45,7 @@
                 <th class="text-center tblth" rowspan="2">Reported By</th>
                 <th class="text-center tblth" rowspan="2">Mobile No</th>
                 <th class="text-center tblth" colspan="2">Submission Data</th>
+                <th class="text-center tblth" rowspan="2">AppVersion</th>
                 <th class="text-center tblth" rowspan="2">Last<br /> Submission Data</th>
             </tr>
             <tr>
@@ -60,14 +61,15 @@
                     foreach (DataRow dr in dt.Rows)
                     {
                         string color = !string.IsNullOrWhiteSpace(dr["AppEntryDate"].ToString()) ? "#fff" : "";
-                        <tr>
-                            <td class="text-center tbltd">@(srno++)</td>
-                            <td class="text-left tbltd tdtextwrp"> @dr["ReportedBy"] </td>
-                            <td class="text-center tbltd tdtextwrp"> @dr["MobileNo"] </td>
-                            <td class="text-center tbltd "> <strong>@dr["NoOfHomeSubData"] </strong></td>
-                            <td class="text-center tbltd "> <strong>@dr["NoOfCampSubData"]</strong> </td>
-                            <td class="text-center tbltd " style="background: @dr["bgColor"] !important; color:@color !important"> <strong>@dr["AppEntryDate"]</strong> </td>
-                        </tr>
+            <tr>
+                <td class="text-center tbltd">@(srno++)</td>
+                <td class="text-left tbltd tdtextwrp"> @dr["ReportedBy"] </td>
+                <td class="text-center tbltd tdtextwrp"> @dr["MobileNo"] </td>
+                <td class="text-center tbltd "> <strong>@dr["NoOfHomeSubData"] </strong></td>
+                <td class="text-center tbltd "> <strong>@dr["NoOfCampSubData"]</strong> </td>
+                <td class="text-center tbltd tdtextwrp"> @dr["AppVersion"] </td>
+                <td class="text-center tbltd " style="background: @dr["bgColor"] !important; color:@color !important"> <strong>@dr["AppEntryDate"]</strong> </td>
+            </tr>
                     }
                 }
                 else

@@ -44,19 +44,20 @@
                         <div class="card">
                             @using (Html.BeginForm("GetImageUpload", "Home", FormMethod.Post, new { @id = "tblList-frm", @class = "panel-body form-horizontal form-padding loader" }))
                             {
-                                @Html.HiddenFor(m=>m.RoundType)
+                                @*@Html.HiddenFor(m=>m.RoundType)*@
                                 <div class="filter cm-content-box box-primary relative rounded-lg mb-0 bg-white dark:bg-[#1b1b1b]">
                                     <div class="content form excerpt border-b-color dark:border-[#ffffff1a]">
                                         <div>
                                             <div class="border-all">
                                                 <div class="mb-4 md:w-1/2">
-                                                    @Html.LabelFor(model => model.BlockId, htmlAttributes: new { @class = "form-label" })
-                                                    @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
-                                                </div>
-                                                <div class="mb-4 md:w-1/2">
                                                     @Html.LabelFor(model => model.RoundType, htmlAttributes: new { @class = "form-label" })
                                                     @Html.DropDownListFor(m => m.RoundType, CommonModel.GetRoundType(), "All", new { @id = "RoundType", onchange = "onchgRoundType()", @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                                                 </div>
+                                                <div class="mb-4 md:w-1/2">
+                                                    @Html.LabelFor(model => model.BlockId, htmlAttributes: new { @class = "form-label" })
+                                                    @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -92,11 +93,15 @@
 
         $(document).ready(function () {
 
-            BindBlock("BlockId", '', "0");
+            BindBlock("BlockId", '', "0", 2);
             setTimeout(function () {
                 BindData();
             }, 1000);
-          
+
+            //$('#RoundType').change(function () {
+            //    BindData();
+            //    BindBlock("BlockId", '', "0", $(this).val());
+            //});
             $('#BlockId').change(function () {
                 BindData();
             });
@@ -112,10 +117,10 @@
             //    LoadReport();
             //});
 
-
-
         });
         function onchgRoundType() {
+            debugger;
+            BindBlock("BlockId", '', "0", $('#RoundType').val());
             BindData();
         }
         function BindData() {

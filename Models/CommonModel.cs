@@ -11,6 +11,8 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using Image = System.Drawing.Image;
 
 namespace NCDNewMIS.Models
 {
@@ -343,23 +345,45 @@ namespace NCDNewMIS.Models
                 throw;
             }
         }
-        public static List<SelectListItem> GetBlock(int IsSelectAll = 0)
+        public static List<SelectListItem> GetBlock(int IsSelectAll = 0,int RoundType=2)
         {
             NCD_DBEntities _db = new NCD_DBEntities();
             try
             {
                 DataTable dt = new DataTable();
-                var listitem = new SelectList(_db.Block_Master.Where(x => x.IsActive == true && x.DistrictId == 1), "BlockId", "Block").OrderBy(x => x.Text).ToList();
-                listitem = new SelectList(listitem, "Value", "Text").OrderBy(x => x.Text).ToList();
-                if (IsSelectAll == 0)
+                if (RoundType == 2)
                 {
-                    listitem.Insert(0, new SelectListItem { Value = "0", Text = "All" });
+                    var listitem = new SelectList(_db.Block_Master.Where(x => x.IsActive == true && x.DistrictId == 1), "BlockId", "Block").OrderBy(x => x.Text).ToList();
+                    listitem = new SelectList(listitem, "Value", "Text").OrderBy(x => x.Text).ToList();
+                    if (IsSelectAll == 0)
+                    {
+                        listitem.Insert(0, new SelectListItem { Value = "0", Text = "All" });
+                    }
+                    if (IsSelectAll == 1)
+                    {
+                        listitem.Insert(0, new SelectListItem { Value = "0", Text = "Select" });
+                    }
+                    return listitem;
                 }
-                if (IsSelectAll == 1)
+                else if (RoundType == 1)
                 {
-                    listitem.Insert(0, new SelectListItem { Value = "0", Text = "Select" });
+                    dt = SP_Model.SP_ACT1Block();
+                    var listitem = dt.AsEnumerable().Select(x => new SelectListItem()
+                    {
+                        Value = x.Field<Int32>("BlockId").ToString(),
+                        Text = x.Field<string>("block")
+                    }).ToList();
+                    if (IsSelectAll == 0)
+                    {
+                        listitem.Insert(0, new SelectListItem { Value = "0", Text = "All" });
+                    }
+                    if (IsSelectAll == 1)
+                    {
+                        listitem.Insert(0, new SelectListItem { Value = "0", Text = "Select" });
+                    }
+                    return listitem;
                 }
-                return listitem;
+                return null;    
             }
             catch (Exception)
             {

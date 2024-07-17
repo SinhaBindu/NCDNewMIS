@@ -202,7 +202,8 @@
         }
 
         function PostAppoved(regid, regmapid, isactive) {
-            debugger;
+            debugger;//&& regmapid
+            regmapid = regmapid == "" ? 0 : regmapid;
             if (regid && regmapid) {
                 $.ajax({
                     url: document.baseURI + "/Home/PostAppoved",

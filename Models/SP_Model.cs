@@ -186,5 +186,11 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable SP_ACT1Block()
+        {
+            StoredProcedure sp = new StoredProcedure("SP_ACT1Block");
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
     }
 }

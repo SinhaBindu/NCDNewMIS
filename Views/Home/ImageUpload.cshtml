@@ -113,15 +113,15 @@
         $(document).ready(function () {
 
             BindBlock("BlockId", '', "0");
-            $("#BlockId").append("<option value='5'>Bhuban</option>");
-            $("#BlockId").append("<option value='6'>Kamakhyanagar</option>");
-            $("#BlockId").append("<option value='7'>Kankadahad</option>");
-            $("#BlockId").append("<option value='8'>Parajang</option>");
+          
             $("#UploadDate").datepicker({
                 dateFormat: 'dd-M-yy',
                 // changeMonth: true,
                 //changeYear: true,
                 maxDate: '0',
+            });
+            $("#RoundType").change(function (e) {
+                BindBlock("BlockId", '', "0", $(this).val());
             });
 
             $("#FileUpload").change(function (e) {

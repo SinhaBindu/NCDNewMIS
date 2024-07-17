@@ -49,7 +49,7 @@
                                 <td class="text-center">@dr["MobileNo"]</td>
                                 <td class="text-center">@dr["Version"]</td>
                                 <td class="text-center">
-                                    <a href="javascript:void(0);" onclick="return PostAppoved('@dr["RegId_pk"]','@dr["RegMapId_pk"]','@dr["IsApproved"].ToString()');"> <strong class="@dr["ApprovedColor"]">@dr["ApprovedStatus"]</strong></a>
+                                    <a href="javascript:void(0);" onclick="return PostAppoved('@dr["RegId_pk"]', '@dr["RegMapId_pk"]', '@dr["IsApproved"].ToString()');"> <strong class="@dr["ApprovedColor"]">@dr["ApprovedStatus"]</strong></a>
                                 </td>
                                 <td class="text-center">@CommonModel.FormateDtDMY(dr["ReportedOn"].ToString())</td>
                             </tr>

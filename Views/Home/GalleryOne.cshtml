@@ -14,41 +14,45 @@
         </div>
         <div class="row">
             <div class="w-full">
-                <div class="card">
-                    <div class="gallery">
-                        @{
-                            if (dt.Rows.Count > 0)
-                            {
-                                foreach (DataRow dr in dt.Rows)
-                                {
-                                    var img = !string.IsNullOrWhiteSpace(dr["FilePath"].ToString()) ? dr["FilePath"].ToString().Split(',') : null;
-                                    if (img != null)
-                                    {
-                                        foreach (var item in img)
+                @{
+                    if (dt.Rows.Count > 0)
+                    {
+                        DataTable dt1 = dt.DefaultView.ToTable(true, "Title");
+                        foreach (DataRow dr in dt1.Rows)
+                        {
+                            DataRow[] drow = dt.Select("Title ='" + dr[0].ToString() + "'");
+                            <div class="card" style="margin-bottom: 0.5% !important; height: auto !important;">
+                                <h4 style="text-align: center;color: blue;font-size: large;">@dr[0].ToString()</h4>
+                                <div class="gallery">
+                                    @{
+                                        foreach (DataRow dr2 in drow)
                                         {
-                                            var splitem = item.Split('~')[1];
+                                            var img = !string.IsNullOrWhiteSpace(dr2["FilePath"].ToString()) ? dr2["FilePath"].ToString().Split(',') : null;
+                                            if (img != null)
+                                            {
+                                                foreach (var item in img)
+                                                {
+                                                    var splitem = item.Split('~')[1];
 
-                                                <div class="brick">
-                                                    <label>@dr["District"]/@dr["Block"]</label>
-                                                    <a href="@(CommonModel.GetBaseUrl()+splitem)" class="js-img-viwer" data-caption="" data-id="">
-                                                        <img src="@(CommonModel.GetBaseUrl()+splitem)" alt="" />
-                                                    </a>
-                                                    <strong>@dr["Title"]</strong>
-                                                    <p>@dr["Description"]</p>
-                                                </div>
-                                            @*<div class="brick">
-                                                    <a href="~/Content/assets/images/big/img2.jpg" class="js-img-viwer" data-caption="" data-id="">
-                                                        <img src="~/Content/assets/images/big/img2.jpg" alt="" />
-                                                    </a>
-                                                </div>*@
+                                                    <div class="brick">
+                                                        <label>@dr2["District"]/@dr2["Block"]</label>
+                                                        <a href="@(CommonModel.GetBaseUrl() + splitem)" class="js-img-viwer" data-caption="" data-id="">
+                                                            <img src="@(CommonModel.GetBaseUrl() + splitem)" alt="" />
+                                                        </a>
+                                                        @*<strong>@dr2["Title"]</strong>*@
+                                                        <p>@dr2["Description"]</p>
+                                                    </div>
 
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
+                                </div>
+                            </div>
                         }
-                    </div>
-                </div>
+                    }
+                }
+
             </div>
         </div>
     </div>

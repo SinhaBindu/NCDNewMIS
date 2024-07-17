@@ -698,6 +698,7 @@ namespace NCDNewMIS.Controllers
                         tbl_GalleryUpload tbl = new tbl_GalleryUpload();
                         tbl.Date = model.Date;
                         tbl.DistrictId = getblock.DistrictId;
+                        tbl.RoundType = model.RoundType;
                         tbl.BlockId = model.BlockId;
                         tbl.Title = model.Title;
                         tbl.FilePath = filePath;

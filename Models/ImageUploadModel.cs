@@ -12,6 +12,7 @@ namespace NCDNewMIS.Models
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<int> DistrictId { get; set; }
         public Nullable<int> BlockId { get; set; }
+        public Nullable<int> RoundType { get; set; }
         public string FileName { get; set; }
         public string Title { get; set; }
         public string FilePath { get; set; }

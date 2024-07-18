@@ -446,11 +446,11 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult GetBlockList(int SelectAll = 1)
+        public ActionResult GetBlockList(int SelectAll = 1, int RoundType = 2)
         {
             try
             {
-                var items = CommonModel.GetBlock(SelectAll);
+                var items = CommonModel.GetBlock(SelectAll, RoundType);
                 if (items != null)
                 {
                     var data = JsonConvert.SerializeObject(items);
@@ -694,10 +694,25 @@ namespace NCDNewMIS.Controllers
                         var maxid = db_.tbl_GalleryUpload.Count() != 0 ? db_.tbl_GalleryUpload?.Max(x => x.Id) : 0;
                         var lastaddmaxid = maxid == 0 ? 1 : maxid + 1;
                         var getblock = db_.Block_Master.Find(model.BlockId);
-                        var filePath = CommonModel.SaveFileImage(model.FileUpload.ToArray(), lastaddmaxid.ToString(), getblock.Block + model.BlockId.ToString());
+
+                        var dadt = SP_Model.SP_ACT1Block();
+                        var results = dadt.Rows.Cast<DataRow>()
+                           .FirstOrDefault(x => x.Field<int>("BlockId") == model.BlockId);
+                        DataRow getact1 = SP_Model.SP_ACT1Block().AsEnumerable().Where(x => x.Field<int>("BlockId") == model.BlockId)?.FirstOrDefault();
+                        var d = getact1["Block"].ToString();
+                        var blockname = "";
+                        if (getblock==null)
+                        {
+                            blockname = d;
+                        }
+                        else
+                        {
+                            blockname = getblock.Block;
+                        }
+                        var filePath = CommonModel.SaveFileImage(model.FileUpload.ToArray(), lastaddmaxid.ToString(), blockname + model.BlockId.ToString());
                         tbl_GalleryUpload tbl = new tbl_GalleryUpload();
                         tbl.Date = model.Date;
-                        tbl.DistrictId = getblock.DistrictId;
+                        tbl.DistrictId = 1;
                         tbl.RoundType = model.RoundType;
                         tbl.BlockId = model.BlockId;
                         tbl.Title = model.Title;

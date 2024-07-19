@@ -816,9 +816,10 @@ namespace NCDNewMIS.Controllers
             }
         }
 
-        #region Act-I Indicator Method
+                #region Act-I Indicator Method
         public ActionResult Training()
         {
+
             return View();
         }
         [HttpPost]
@@ -899,6 +900,40 @@ namespace NCDNewMIS.Controllers
             }
         }
         #endregion
+        public ActionResult FinUtilization()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult FinUtilization(string ptype,string fyear)
+        {
+            FilterModel filterModel = new FilterModel();
+            filterModel.RoundType = ptype;
+            filterModel.PageType = fyear;
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = SP_Model.GetFinUtilization(filterModel);
+                if (dt.Rows.Count > 0)
+                {
+                    var dtjson = JsonConvert.SerializeObject(dt);
+                    var res = Json(new { IsSuccess = true, Data = dtjson }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
 
     }
 }

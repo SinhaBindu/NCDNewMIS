@@ -1,0 +1,265 @@
+﻿
+@{
+    ViewBag.Title = "Financial Utilization";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "Financial Utilizatio";
+    ViewBag.SemiTitleLink = "/";
+}
+
+<style>
+    .row {
+        margin: 1%;
+    }
+</style>
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4>@ViewBag.Title</h4>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel"></button>
+        </div>
+        <div class="w-full">
+
+            <div class="row">
+                <div class="xl:w-1/2 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-left">
+                            <strong class="text-primary"></strong>
+                        </h5>
+                        <div class="overflow-x-auto table-scroll" id="g1" style="height:300px"></div>
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-left">
+                            <strong class="text-primary">
+                            </strong>
+                        </h5>
+                        <div class="overflow-x-auto table-scroll" id="g2" style="height:300px">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="xl:w-1/1 w-full ">
+                    <div class="bg-white dark:bg-[#1b1b1b]">
+                        <h5 class="text-left">
+                            <strong class="text-primary"></strong>
+                        </h5>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="t1">
+                                    <thead class="text-center"><tr><th class="text-center">Fin-Year</th><th class="text-center">Quater</th><th class="text-center">Budget</th><th class="text-center">Utilized</th><th class="text-center">per(%)</th></tr></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    @*<script src="https://code.highcharts.com/modules/series-label.js"></script>*@
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="~/Scripts/JS/Export.js"></script>
+    <script>
+        $(document).ready(function () {
+            var act = getUrlVars()["ptype"];
+            var fin = getUrlVars()["fyear"];;
+            //if (act == 1) {
+            //    fin = '2023-24';
+            //} else {
+            //    fin = '2024-25';
+            //}
+            var param = { 'ptype': act,'fyear':fin };
+            $.ajax({
+                method: 'POST',
+                url: document.baseURI + '/Home/FinUtilization',
+                data: JSON.stringify(param),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (resp) {
+                    resp = resp.Data;
+                    var aData = JSON.parse(resp);
+                    var Qua = []
+                    var bug = [];
+                    var exp = [];
+                    var dbug = 0, dexp = 0,html='';
+                    for (var i = 0; i < aData.length; i++) {
+                        if (!Qua.includes(aData[i].QuaterType))
+                            Qua.push(aData[i].QuaterType);
+                        bug.push(aData[i].Budget);
+                        dbug += aData[i].Budget;
+                        exp.push(aData[i].Utilized);
+                        dexp += aData[i].Utilized;
+                        html = html + '<tr><td>' + aData[i].FinYear + '</td><td>' + aData[i].QuaterType + '</td><td>' + aData[i].Budget + '</td><td>' + aData[i].Utilized + '</td><td>' + aData[i].per +'</td></tr>';
+
+                    }
+                    bindgraph("g2", Qua, "Year : " + fin, "2023-24", [{ name: "Budget", data: bug }, { name: "Utilized", data: exp }]);
+                    bindgraphpie("g1", dbug.toFixed(2), "Year : " + fin, "Total Utilization : " + ((dexp * 100) / dbug).toFixed(2), [{ name: 'Budget', y: dbug, color: '#FF5733' }, { name: 'Utilized', y: ((dexp * 100) / dbug).toFixed(2), color: '#008000' }]);
+                    $("#t1 tbody").empty();
+                    $("#t1 tbody").append(html);
+                    $(".cell-border").DataTable({
+                        paging: false,
+                        "bFilter": false,
+                        "info": false
+                    });
+                },
+                error: function (resp) {
+                    alert(resp);
+                }
+            });
+        });
+        function bindgraph(id, label, head, subhead, data) {
+
+            Highcharts.chart(id, {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: head,
+                    align: 'center'
+                },
+                credits: {
+                    enabled: false
+                },
+                subtitle: subhead,
+                xAxis: {
+                    categories: label,
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Countries'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'In Amount (RS)'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' RS'
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: data
+            });
+        }
+        function bindgraphpie(id, label, head, subhead, data) {
+            Highcharts.chart(id, {
+                chart: {
+                    type: 'pie',
+                    custom: {},
+                    plotAreaWidth: 300,
+                    plotAreaHeight: 200,
+                    events: {
+                        render() {
+                            const chart = this,
+                                series = chart.series[0];
+                            let customLabel = chart.options.chart.custom.label;
+
+                            if (!customLabel) {
+                                customLabel = chart.options.chart.custom.label =
+                                    chart.renderer.label(
+                                        label
+                                    )
+                                        .css({
+                                            color: '#000',
+                                            textAnchor: 'middle'
+                                        })
+                                        .add();
+                            }
+
+                            const x = series.center[0] + chart.plotLeft,
+                                y = series.center[1] + chart.plotTop -
+                                    (customLabel.attr('height') / 2);
+
+                            customLabel.attr({
+                                x,
+                                y
+                            });
+                            // Set font size based on chart diameter
+                            customLabel.css({
+                                fontSize: `${series.center[2] / 12}px`
+                            });
+                        }
+                    }
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                title: {
+                    text: head
+                },
+                credits: {
+                    enabled: false
+                },
+                subtitle: {
+                    text: '<b>' + subhead + '</b>',
+                    verticalAlign: 'bottom',
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        borderRadius: 8,
+                        dataLabels: [{
+                            enabled: false,
+                            // distance: 20,
+                            format: '{point.name}'
+                        }, {
+                            enabled: false,
+                            // distance: -15,
+                            format: '{point.percentage:.0f}%',
+                            style: {
+                                fontSize: '0.9em'
+                            }
+                        }],
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: head,
+                    colorByPoint: true,
+                    innerSize: '75%',
+                    data: data
+                }]
+            });
+        }
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+    </script>
+}

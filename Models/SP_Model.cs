@@ -192,5 +192,13 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable GetFinUtilization(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_FinUtilizationQuaterWise");
+            sp.Command.AddParameter("@PageType", Convert.ToInt32(model.RoundType), DbType.Int32);
+            sp.Command.AddParameter("@fyear", model.PageType, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
     }
 }

@@ -692,6 +692,7 @@
     <Content Include="Scripts\JS\Chart.js" />
     <Content Include="Scripts\JS\Export.js" />
     <Content Include="Scripts\JS\INDBoundaryTest.js" />
+    <Content Include="Scripts\JS\MapDistrict2.js" />
     <Content Include="Scripts\JS\MapDistrict.js" />
     <Content Include="Scripts\JS\Mapbundle.js" />
     <Content Include="Scripts\JS\Master.js" />

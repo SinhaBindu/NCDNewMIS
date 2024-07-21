@@ -1,8 +1,18 @@
 ﻿@model NCDNewMIS.Models.FilterModel
 @{
-    ViewBag.Title = "Profile (Block)";
+    if (Model.RoundType == "1")
+    {
+        ViewBag.Title = "Profile (Block) ACT - I";
+        ViewBag.SemiTitle = "Profile (Block) ACT - I";
+    }
+    if (Model.RoundType == "2")
+    {
+        ViewBag.Title = "Profile (Block) Act - II";
+        ViewBag.SemiTitle = "Profile (Block) Act - II";
+    }
+    //ViewBag.Title = "Profile (Block)";
     ViewBag.TitleIcon = "fa fa-user";
-    ViewBag.SemiTitle = "Profile";
+    //ViewBag.SemiTitle = "Profile";
     ViewBag.SemiTitleLink = "/";
     DateTime now = DateTime.Now;
     var startDate = new DateTime(now.Year, now.Month, 1);
@@ -142,6 +152,8 @@
                         $('.tblBlock').DataTable({
                             paging: false,
                             "bFilter": false,
+                            order: [[10, 'desc']],
+                            "bSort": false,
                             //pageLength: 100,
                         });
                         if ($.fn.dataTable.isDataTable('#tbl1')) {
@@ -151,6 +163,7 @@
                             paging: false,
                             "bFilter": false,
                             pageLength: 100,
+                          
                             buttons: [{
                                 extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Data Lists',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
                                 className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',

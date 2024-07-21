@@ -1,8 +1,18 @@
 ﻿@model NCDNewMIS.Models.FilterModel
 @{
-    ViewBag.Title = "Profile";
+    if (Model.RoundType=="1")
+    {
+        ViewBag.Title = "Profile ACT - I";
+        ViewBag.SemiTitle = "Profile ACT - I";
+    }
+    if (Model.RoundType == "2")
+    {
+        ViewBag.Title = "Profile Act - II";
+        ViewBag.SemiTitle = "Profile Act - II";
+    }
+
     ViewBag.TitleIcon = "fa fa-user";
-    ViewBag.SemiTitle = "Profile";
+
     ViewBag.SemiTitleLink = "/";
     DateTime now = DateTime.Now;
     var startDate = new DateTime(now.Year, now.Month, 1);
@@ -159,6 +169,9 @@
                             //scrollX: true,
                             //fixedHeader: true,
                             //scrollCollapse: true,
+                           // "targets": [1],
+                            order: [[10, 'desc']],
+                            "bSort": false,
                             paging: false,
                             "bFilter": false,
                             "info": false,

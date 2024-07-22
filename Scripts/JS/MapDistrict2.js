@@ -114,7 +114,7 @@
                         click: function () {
                             // alert('jhghn');
                             //alert($('#hdRoundType').val());
-                            window.location.href = document.baseURI + "/Home/Blockmap?B=2&&R=1";// + $('#hdRoundType').val();
+                            window.location.href = document.baseURI + "/Home/Blockmap?B=2&&R=2";// + $('#hdRoundType').val();
                         }
                     }
                 }

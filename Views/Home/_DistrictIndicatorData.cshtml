@@ -25,7 +25,7 @@
     <table class="table table-bordered table-striped cell-border small tblfont" id="tbl" style="font-size: 10px !important">
         <thead class="text-center">
             <tr>
-                <th class="text-center">Srno.</th>
+                @*<th class="text-center">Srno.</th>*@
                 @*<th class="text-center">District</th>*@
                 @if (ViewBag.DistrictBlockType == "2")
                 {
@@ -57,7 +57,7 @@
                         //var Isstart = dr["indicatorText"].ToString().Replace("*","")==""?"color:red":"";
                         var start = dr["indicatorText"].ToString().Replace("*", dr["indicatorText"].ToString());
                         <tr>
-                            <td class="text-center">@(sno++)</td>
+                            @*<td class="text-center">@(sno++)</td>*@
                             @*<td class="text-center">@dr["district"]</td>*@
                             @if (ViewBag.DistrictBlockType == "2")
                             {

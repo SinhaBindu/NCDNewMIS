@@ -169,6 +169,13 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable SP_ACT2Indicator_Health(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_ACT2Indicator_Health");
+            sp.Command.AddParameter("@PageType", model.PageType, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
         public static DataTable SP_SummaryUserSubmission(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_SummaryUserSubmission");

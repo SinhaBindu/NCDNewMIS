@@ -783,6 +783,10 @@
     <Content Include="Views\Resource\Index.cshtml" />
     <Content Include="Views\Resource\ResourceUpload.cshtml" />
     <Content Include="Views\Shared\_Alerts.cshtml" />
+    <Content Include="Views\Home\Financial2.cshtml" />
+    <Content Include="Views\Home\FinUtilization.cshtml" />
+    <Content Include="Views\Home\Training2.cshtml" />
+    <Content Include="Views\Home\HealthEducation2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

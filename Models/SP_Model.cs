@@ -207,5 +207,13 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataSet GetHealthScreeing(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_ACT1Indicator_Health1112");
+            sp.Command.AddParameter("@PageType", model.PageType, DbType.String);
+            DataSet dt = sp.ExecuteDataSet();
+            return dt;
+        }
+
     }
 }

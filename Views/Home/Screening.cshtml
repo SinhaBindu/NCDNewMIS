@@ -24,6 +24,10 @@
     .row {
         margin: 1%;
     }
+    .collapse {
+        /*visibility: collapse !important;*/
+        visibility: visible !important;
+    }
 </style>
 <div class="content-body">
     <div class="container-fluid">
@@ -121,64 +125,72 @@
                     </div>
 
                 </div>
+                
 
             </div>
             <div class="row">
-                <div class="xl:w-1/2 w-full ">
-                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
-                        <h5 class="text-center">
-                            <strong class="text-primary">Total hypertensive suspects referred to the PHC for clinical diagnosis</strong>
-                        </h5>
-                        <br />
-                        <div class="overflow-x-auto table-scroll">
-                            <div class="dataTables_wrapper">
-                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl17">
-                                    <thead class="text-center">
-                                        <tr>
-                                            <th class="text-center">Block</th>
-                                            <th class="text-center">Target</th>
-                                            <th class="text-center">Achieved</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="xl:w-1/2 w-full">
-                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
-                        <h5 class="text-center">
-                            <strong class="text-primary">Total diabetic suspects referred to the PHC for clinical diagnosis</strong>
-                        </h5>
-                        <br />
-                        <div class="overflow-x-auto table-scroll">
-                            <div class="dataTables_wrapper">
-                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl18">
-                                    <thead class="text-center">
-                                        <tr>
-                                            <th class="text-center">Block</th>
-                                            <th class="text-center">Target</th>
-                                            <th class="text-center">Achieved</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                                <br />
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
+                <div class="xl:w-1/1 w-full">
+                <div class="accordion" id="accordionExample"></div>
+                 </div>
             </div>
+                <div class="row">
+                    <div class="xl:w-1/2 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                            <h5 class="text-center">
+                                <strong class="text-primary">Total hypertensive suspects referred to the PHC for clinical diagnosis</strong>
+                            </h5>
+                            <br />
+                            <div class="overflow-x-auto table-scroll">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered table-striped cell-border small tblfont" id="tbl17">
+                                        <thead class="text-center">
+                                            <tr>
+                                                <th class="text-center">Block</th>
+                                                <th class="text-center">Target</th>
+                                                <th class="text-center">Achieved</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="xl:w-1/2 w-full">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                            <h5 class="text-center">
+                                <strong class="text-primary">Total diabetic suspects referred to the PHC for clinical diagnosis</strong>
+                            </h5>
+                            <br />
+                            <div class="overflow-x-auto table-scroll">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered table-striped cell-border small tblfont" id="tbl18">
+                                        <thead class="text-center">
+                                            <tr>
+                                                <th class="text-center">Block</th>
+                                                <th class="text-center">Target</th>
+                                                <th class="text-center">Achieved</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
         </div>
-
-    </div>
 </div>
-
+<div id="chart-container"></div>
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
@@ -189,6 +201,8 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
     <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
     <script src="~/Scripts/JS/Export.js"></script>
     <script src="~/Scripts/JS/Master.js"></script>
     <script>
@@ -212,34 +226,61 @@
             });
         });
         function onsucess(response) {
-            var d11 = JSON.parse(response.Data).filter(function (entry) {
+            var d11 = JSON.parse(response.Data).Table.filter(function (entry) {
                 return entry.indicatorId === 11;
             });
-            var d12 = JSON.parse(response.Data).filter(function (entry) {
+            var d12 = JSON.parse(response.Data).Table.filter(function (entry) {
                 return entry.indicatorId === 12;
             });
-            var d17 = JSON.parse(response.Data).filter(function (entry) {
+            var d17 = JSON.parse(response.Data).Table.filter(function (entry) {
                 return entry.indicatorId === 17;
             });
-            var d18 = JSON.parse(response.Data).filter(function (entry) {
+            var d18 = JSON.parse(response.Data).Table.filter(function (entry) {
                 return entry.indicatorId === 18;
             });
-            var d15 = JSON.parse(response.Data).filter(function (entry) {
+            var d15 = JSON.parse(response.Data).Table.filter(function (entry) {
                 return entry.indicatorId === 15;
             });
-            var d19 = JSON.parse(response.Data).filter(function (entry) {
+            var d19 = JSON.parse(response.Data).Table.filter(function (entry) {
                 return entry.indicatorId === 19;
             });
-            var html = '';
+            var html = '', html1 = '', html2 = ''; var index = 0;
+
             for (var i = 0; i < d11.length; i++) {
-                html = html + '<tr><td>' + d11[i].block + '</td><td class="text-center">' + d11[i].target + '</td><td class="text-center">' + d11[i].achieved + '</td></tr>'
+                html = html + '<tr><td>' + d11[i].block + '</td><td class="text-center">' + d11[i].target + '</td><td class="text-center">' + d11[i].achieved + '</td></tr>';
             }
             $("#tbl11 tbody").empty().append(html);
             html = '';
             for (var i = 0; i < d12.length; i++) {
-                html = html + '<tr><td>' + d12[i].block + '</td><td class="text-center">' + d12[i].target + '</td><td class="text-center">' + d12[i].achieved + '</td></tr>'
+                html = html + '<tr><td>' + d12[i].block + '</td><td class="text-center">' + d12[i].target + '</td><td class="text-center">' + d12[i].achieved + '</td></tr>';
             }
             $("#tbl12 tbody").empty().append(html);
+            var dg = JSON.parse(response.Data).Table1;
+            for (var i = 0; i < 1; i++) {
+                index++;
+                var exp = index == 1 ? "show" : "";
+                html1 = html1 + '<div class="accordion-item">';
+                html1 = html1 + '<h2 class="accordion-header" id="headingOne_' + index + '">'
+                html1 = html1 + '<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_' + index + '" aria-expanded="true" aria-controls="collapseOne_' + index + '">'
+                html1 = html1 + '<strong>  Block : ' + dg[i].block + '</strong></button></h2>'
+                html1 = html1 + '<div id="collapseOne_' + index + '" class="accordion-collapse collapse ' + exp + '" aria-labelledby="headingOne_' + index + '" data-bs-parent="#accordionExample"> ';
+                html1 = html1 + '<div class="accordion-body">';
+                html1 = html1 + '<div class="row">';
+               bindgraph("chart-container", "<strong>Hyper</strong><br/>" + dg[0].achi1, "", "Total individuals screened : " + ((dg[0].tar1 * dg[0].achi1) / 100).toFixed(0), [{ name: 'Target', y: dg[0].tar1, color: '#FF5733' }, { name: 'Achieved', y: (dg[0].tar1 * dg[0].achi1) / 100, color: '#008000' }]);
+                var mdiv = $("#chart-container")[0];
+                html1 = html1 + '<div class="xl:w-1/2 w-full "><div class="overflow-x-auto" id=ghyp1' + dg[i].block + ' style="height:300px">' + mdiv.getInnerHTML();
+                html1 = html1 + '</div></div>';
+                bindgraph("chart-container", "<strong>Hyper</strong><br/>" + dg[0].achi2, "", "Total individuals screened : " + ((dg[0].tar2 * dg[0].achi2) / 100).toFixed(0), [{ name: 'Target', y: dg[0].tar2, color: '#FF5733' }, { name: 'Achieved', y: (dg[0].tar2 * dg[0].achi2) / 100, color: '#008000' }]);
+                var mdiv1 = $("#chart-container")[0];
+                html1 = html1 + '<div class="xl:w-1/2 w-full "><div class="overflow-x-auto" id=ghyp2' + dg[i].block + '" style = "height:300px" >' + mdiv1.outerHtml;
+                html1 = html1 + '</div></div> '
+                html1 = html1 + '</div>';
+                html1 = html1 + '</div>';
+                html1 = html1 + '</div>';
+                html1 = html1 + '</div>';
+            }
+            $("#accordionExample").empty().append(html1);
+
             html = '';
             for (var i = 0; i < d17.length; i++) {
                 html = html + '<tr><td>' + d17[i].block + '</td><td class="text-center"></td><td class="text-center">' + d17[i].achieved + '</td></tr>'
@@ -259,8 +300,10 @@
         }
 
         function bindgraph(id, label, head, subhead, data) {
-            Highcharts.chart(id, {
+           // Highcharts.chart(id, {
+            var grph = {
                 chart: {
+                   // renderTo: id,
                     type: 'pie',
                     custom: {},
                     plotAreaWidth: 300,
@@ -310,7 +353,7 @@
                     enabled: false
                 },
                 subtitle: {
-                    text: '<b>' + subhead +'</b>',
+                    text: '<b>' + subhead + '</b>',
                     verticalAlign: 'bottom',
                 },
                 tooltip: {
@@ -326,11 +369,11 @@
                         borderRadius: 8,
                         dataLabels: [{
                             enabled: false,
-                           // distance: 20,
+                            // distance: 20,
                             format: '{point.name}'
                         }, {
                             enabled: false,
-                           // distance: -15,
+                            // distance: -15,
                             format: '{point.percentage:.0f}%',
                             style: {
                                 fontSize: '0.9em'
@@ -345,7 +388,10 @@
                     innerSize: '75%',
                     data: data
                 }]
-            });
+                // });
+            }
+            var dashboard1 = Highcharts.chart(id, grph);
+            return dashboard1;
         }
 
     </script>

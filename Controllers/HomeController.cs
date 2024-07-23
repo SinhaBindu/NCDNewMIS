@@ -879,11 +879,11 @@ namespace NCDNewMIS.Controllers
         {
             FilterModel filterModel = new FilterModel();
             filterModel.PageType = ptype;
-            DataTable dt = new DataTable();
+            DataSet dt = new DataSet();
             try
             {
-                dt = SP_Model.GetHealthEducation(filterModel);
-                if (dt.Rows.Count > 0)
+                dt = SP_Model.GetHealthScreeing(filterModel);
+                if (dt.Tables.Count > 0)
                 {
                     var dtjson = JsonConvert.SerializeObject(dt);
                     var res = Json(new { IsSuccess = true, Data = dtjson }, JsonRequestBehavior.AllowGet);

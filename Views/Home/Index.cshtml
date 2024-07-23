@@ -106,7 +106,9 @@
                         defaultDate: "+1w",
                         changeMonth: true,
                         numberOfMonths: 1,
-                        dateFormat: 'dd-M-yy'
+                        dateFormat: 'dd-M-yy',
+                        //minDate: -3,
+                        //maxDate: "1w"
                     })
                     .on("change", function () {
                         to.datepicker("option", "minDate", getDate(this));
@@ -115,7 +117,9 @@
                     defaultDate: "+1w",
                     changeMonth: true,
                     numberOfMonths: 1,
-                    dateFormat: 'dd-M-yy'
+                    dateFormat: 'dd-M-yy',
+                    // minDate: -3,
+                    //maxDate: "1w"
 
                 })
                     .on("change", function () {
@@ -132,9 +136,13 @@
 
                 return date;
             }
+
+
         });
-            
+
         $(document).ready(function () {
+            $('#FD').val('@(DateTime.Today.AddDays(-1).ToString("dd-MMM-yyyy"))');
+            $('#TD').val('@DateTime.Now.Date.ToString("dd-MMM-yyyy")');
             BindData();
 
             //$('#SType').change(function () {
@@ -218,7 +226,7 @@
             });
         }
 
-      
+
 
     </script>
 }

@@ -79,7 +79,7 @@ namespace NCDNewMIS.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Home", "Home");
+                    return RedirectToAction("Home2", "Home");
                 //RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -125,7 +125,7 @@ namespace NCDNewMIS.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Districtmap", "Home");
+                    return RedirectToAction("Home2", "Home");
                         //RedirectToLocal(model.ReturnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -165,7 +165,7 @@ namespace NCDNewMIS.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Home2", "Home");
                 }
                 AddErrors(result);
             }

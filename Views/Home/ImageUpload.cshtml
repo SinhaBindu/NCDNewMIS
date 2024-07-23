@@ -1,6 +1,6 @@
 ﻿@model NCDNewMIS.Models.ImageUploadModel
 @{
-    ViewBag.Title = "Image Upload";
+    ViewBag.Title = "Image Upload (ACT - I & ACT - II)";
     ViewBag.TitleIcon = "fa fa-user";
     ViewBag.SemiTitle = "";
     ViewBag.SemiTitleLink = "/";
@@ -112,7 +112,7 @@
     <script>
         $(document).ready(function () {
 
-            BindBlock("BlockId", '', "0");
+            BindBlock("BlockId", '', "1");
           
             $("#UploadDate").datepicker({
                 dateFormat: 'dd-M-yy',
@@ -121,7 +121,7 @@
                 maxDate: '0',
             });
             $("#RoundType").change(function (e) {
-                BindBlock("BlockId", '', "0", $(this).val());
+                BindBlock("BlockId", '', "1", $(this).val());
             });
 
             $("#FileUpload").change(function (e) {

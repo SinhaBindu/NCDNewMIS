@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Intervention Geo-Location";
+    ViewBag.Title = "Intervention Geo-Location ACT - II";
     ViewBag.TitleIcon = "fa fa-user";
     ViewBag.SemiTitle = "";
     ViewBag.SemiTitleLink = "/";
@@ -82,7 +82,8 @@
             var reportMapDivWidth = $("#report-map").width();
             var tooltipX = (reportMapDivWidth / 2) + 25;
             // var MapHeight = reportMapDivWidth > 650 ? 500 : null;
-            var MapHeight = reportMapDivWidth > 650 ? 650 : null;
+            //var MapHeight = reportMapDivWidth > 650 ? 650 : null;
+            var MapHeight = reportMapDivWidth > 620 ? 620 : null;
             debugger;
             Highcharts.mapChart('report-map', {
 
@@ -94,7 +95,7 @@
                 },
 
                 title: {
-                    text: '<span style="font-size:13px;font-weight:bold;">India/District - Odisha/Dhenkanal</span>'
+                    text: '<span style="font-size:13px;font-weight:bold;"> India/District - Odisha/Dhenkanal (ACT - II)</span>'
                 },
                 subtitle: {
                     // text: '<span style="font-size:13px;"> <span  style="color: red; font-weight:bold; font-size:12px;"> ' + jsonObject[0].district + ' </span></span>'
@@ -166,7 +167,7 @@
                         format: '{point.district}',
                         style: {
                             fontSize: 9,
-                            fontWeight: 600
+                            fontWeight: 700
                         },
                     },
                     data: jsonObject,
@@ -177,7 +178,7 @@
                     minSize: 4,
                     maxSize: '12%',
                     tooltip: {
-                        pointFormat: 'District : {point.laa}'
+                        pointFormat: 'State/District : {point.laa}'
                     }
                 }
                 ]

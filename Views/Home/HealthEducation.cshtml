@@ -53,14 +53,14 @@
                                             {
                                                 var sno = 1;
                                                 DataRow[] dr = dt.Select("indicatorId = " + 4);
-                                                if (dr.Length > 0)
+                                                if (dr.Length > 0 && dr != null)
                                                 {
                                                     foreach (DataRow dr1 in dr)
                                                     {
                                                         <tr>
                                                             <td class="text-left">@dr1["block"]</td>
-                                                            <td class="text-center">@dr1["target"]</td>
-                                                            <td class="text-center">@dr1["achieved"]</td>
+                                                            <td class="text-center">@Convert.ToDecimal(dr1["target"]).ToString("N0")</td>
+                                                            <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
                                                         </tr>
                                                     }
                                                 }
@@ -105,11 +105,11 @@
                                                 {
                                                     foreach (DataRow dr1 in dr)
                                                     {
-                                                        <tr>
-                                                            <td class="text-left">@dr1["block"]</td>
-                                                            <td class="text-center">@dr1["target"]</td>
-                                                            <td class="text-center">@dr1["achieved"]</td>
-                                                        </tr>
+                                                                                <tr>
+                                                                                    <td class="text-left">@dr1["block"]</td>
+                                                                                    <td class="text-center">@Convert.ToDecimal(dr1["target"]).ToString("N0")</td>
+                                                                                    <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                                                </tr>
                                                     }
                                                 }
                                                 @*else
@@ -156,11 +156,11 @@
                                                 {
                                                     foreach (DataRow dr1 in dr)
                                                     {
-                                                        <tr>
-                                                            <td class="text-left">@dr1["block"]</td>
-                                                            @*<td class="text-center">@dr1["target"]</td>*@
-                                                            <td class="text-center">@dr1["achieved"]</td>
-                                                        </tr>
+                                                                                <tr>
+                                                                                    <td class="text-left">@dr1["block"]</td>
+                                                                                    @*<td class="text-center">@dr1["target"]</td>*@
+                                                                                    <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                                                </tr>
                                                     }
                                                 }
                                                 @*else
@@ -205,11 +205,12 @@
                                                 {
                                                     foreach (DataRow dr1 in dr)
                                                     {
-                                                        <tr>
-                                                            <td class="text-left">@dr1["block"]</td>
-                                                            @*<td class="text-center">@dr1["target"]</td>*@
-                                                            <td class="text-center">@dr1["achieved"]</td>
-                                                        </tr>
+                                                                                <tr>
+                                                                                    <td class="text-left">@dr1["block"]</td>
+                                                                                    @*<td class="text-center">@dr1["target"]</td>*@
+                                                                                   
+                                                                                    <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                                                </tr>
                                                     }
                                                 }
                                                 @*else
@@ -256,11 +257,12 @@
                                                 {
                                                     foreach (DataRow dr1 in dr)
                                                     {
-                                                        <tr>
-                                                            <td class="text-left">@dr1["block"]</td>
-                                                            @*<td class="text-center">@dr1["target"]</td>*@
-                                                            <td class="text-center">@dr1["achieved"]</td>
-                                                        </tr>
+                                                                                <tr>
+                                                                                    <td class="text-left">@dr1["block"]</td>
+                                                                                    @*<td class="text-center">@dr1["target"]</td>*@
+                                                                                   
+                                                                                    <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                                                </tr>
                                                     }
                                                 }
                                                 @*else
@@ -305,11 +307,12 @@
                                                 {
                                                     foreach (DataRow dr1 in dr)
                                                     {
-                                                        <tr>
-                                                            <td class="text-left">@dr1["block"]</td>
-                                                            @*<td class="text-center">@dr1["target"]</td>*@
-                                                            <td class="text-center">@dr1["achieved"]</td>
-                                                        </tr>
+                                                                                <tr>
+                                                                                    <td class="text-left">@dr1["block"]</td>
+                                                                                    @*<td class="text-center">@dr1["target"]</td>*@
+                                                                                
+                                                                                    <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                                                </tr>
                                                     }
                                                 }
                                                 @*else
@@ -356,11 +359,12 @@
                                                 {
                                                     foreach (DataRow dr1 in dr)
                                                     {
-                                                        <tr>
-                                                            <td class="text-left">@dr1["block"]</td>
-                                                            @*<td class="text-center">@dr1["target"]</td>*@
-                                                            <td class="text-center">@dr1["achieved"]</td>
-                                                        </tr>
+                                                                                <tr>
+                                                                                    <td class="text-left">@dr1["block"]</td>
+                                                                                    @*<td class="text-center">@dr1["target"]</td>*@
+                                                                                  
+                                                                                    <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                                                </tr>
                                                     }
                                                 }
                                                 @*else

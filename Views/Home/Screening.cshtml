@@ -279,8 +279,8 @@
             }
             document.getElementById("accordionExample").innerHTML = html1;
             for (var i = 0; i < dg.length; i++) {
-                bindgraph("ghyp1" + dg[i].block, "<strong>Hyper</strong><br/>" + (dg[i].achi1 * 100 / dg[i].tar1).toFixed(0), "", "Total individuals Target : " + dg[i].tar1 + "<br/>Total individuals screened : " + dg[i].achi1, [{ name: 'Target', y: dg[i].tar1, color: '#de6ac9' }, { name: 'Achieved', y: dg[i].achi1, color: '#ffc107' }]);
-                bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + (dg[i].achi2 * 100 / dg[i].tar2).toFixed(0), "", "Total individuals Target : " + dg[i].tar2 + "<br/>Total individuals screened : " + dg[i].achi2, [{ name: 'Target', y: dg[i].tar2, color: '#de6ac9' }, { name: 'Achieved', y: dg[i].achi2, color: '#ffc107' }]);
+                bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + (dg[i].achi1 * 100 / dg[i].tar1).toFixed(0)+" %", "", "Total individuals Target : " + dg[i].tar1 + "<br/>Total individuals screened : " + dg[i].achi1, [{ name: 'Target', y: dg[i].tar1, color: '#de6ac9' }, { name: 'Achieved', y: dg[i].achi1, color: '#ffc107' }]);
+                bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + (dg[i].achi2 * 100 / dg[i].tar2).toFixed(0) + " %", "", "Total individuals Target : " + dg[i].tar2 + "<br/>Total individuals screened : " + dg[i].achi2, [{ name: 'Target', y: dg[i].tar2, color: '#de6ac9' }, { name: 'Achieved', y: dg[i].achi2, color: '#ffc107' }]);
 
             }
             //$("#accordionExample")append(html1);

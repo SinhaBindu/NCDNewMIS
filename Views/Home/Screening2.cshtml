@@ -1,8 +1,8 @@
 ﻿@using System.Data
 @{
-    ViewBag.Title = "Screening ACT - I";
+    ViewBag.Title = "Screening ACT - II";
     ViewBag.TitleIcon = "fa fa-user";
-    ViewBag.SemiTitle = "Screening ACT - I";
+    ViewBag.SemiTitle = "Screening ACT - II";
     ViewBag.SemiTitleLink = "/";
     DateTime now = DateTime.Now;
     var startDate = new DateTime(now.Year, now.Month, 1);
@@ -24,6 +24,7 @@
     .row {
         margin: 1%;
     }
+
     .collapse {
         /*visibility: collapse !important;*/
         visibility: visible !important;
@@ -88,105 +89,105 @@
 
             </div>
             @*<div class="row">
+                                <div class="xl:w-1/2 w-full ">
+                                    <div class="bg-white dark:bg-[#1b1b1b]">
+                                        <h5 class="text-center">
+                                            <strong class="text-primary">Status of blood pressure screenings</strong>
+                                        </h5>
+                                        <div class="overflow-x-auto table-scroll" id="g15" style="height:300px"></div>
+                                        <p style="padding: 1%; font-size: smaller;">
+                                            No risk: systolic less than 120 mm Hg, diastolic less than
+                                            80 mm Hg <br />
+                                            Pre-Hypertensive (pre-hyper): systolic 120–139 mm Hg,
+                                            and/or diastolic 80–89 mm Hg
+                                            Hypertensive (hyper) : systolic 140 mm Hg or higher and/or diastolic 90 mm Hg or higher
+                                        </p>
+
+                                    </div>
+                                </div>
+
+                                <div class="xl:w-1/2 w-full">
+                                    <div class="bg-white dark:bg-[#1b1b1b]">
+                                        <h5 class="text-center">
+                                            <strong class="text-primary">
+                                                Status of random blood sugar
+                                                screenings
+                                            </strong>
+                                        </h5>
+                                        <div class="overflow-x-auto table-scroll" id="g19" style="height:300px">
+                                        </div>
+                                        <p style="
+                    padding: 1%;
+                    font-size: smaller;
+                ">RBS: Random blood sugar level</p>
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </div>
+
+                                </div>
+
+
+                            </div>*@
+            <div class="row">
+                <div class="xl:w-1/1 w-full">
+                    <div class="accordion" id="accordionExample"></div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="xl:w-1/2 w-full ">
-                    <div class="bg-white dark:bg-[#1b1b1b]">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                         <h5 class="text-center">
-                            <strong class="text-primary">Status of blood pressure screenings</strong>
+                            <strong class="text-primary">Total hypertensive suspects referred to the PHC for clinical diagnosis</strong>
                         </h5>
-                        <div class="overflow-x-auto table-scroll" id="g15" style="height:300px"></div>
-                        <p style="padding: 1%; font-size: smaller;">
-                            No risk: systolic less than 120 mm Hg, diastolic less than
-                            80 mm Hg <br />
-                            Pre-Hypertensive (pre-hyper): systolic 120–139 mm Hg,
-                            and/or diastolic 80–89 mm Hg
-                            Hypertensive (hyper) : systolic 140 mm Hg or higher and/or diastolic 90 mm Hg or higher
-                        </p>
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl17">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
 
                 <div class="xl:w-1/2 w-full">
-                    <div class="bg-white dark:bg-[#1b1b1b]">
+                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                         <h5 class="text-center">
-                            <strong class="text-primary">
-                                Status of random blood sugar
-                                screenings
-                            </strong>
+                            <strong class="text-primary">Total diabetic suspects referred to the PHC for clinical diagnosis</strong>
                         </h5>
-                        <div class="overflow-x-auto table-scroll" id="g19" style="height:300px">
+                        <br />
+                        <div class="overflow-x-auto table-scroll">
+                            <div class="dataTables_wrapper">
+                                <table class="table table-bordered table-striped cell-border small tblfont" id="tbl18">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="text-center">Block</th>
+                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Achieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                <br />
+                            </div>
                         </div>
-                        <p style="
-    padding: 1%;
-    font-size: smaller;
-">RBS: Random blood sugar level</p>
-                        <br />
-                        <br />
-                        <br />
                     </div>
 
                 </div>
-                
 
-            </div>*@
-            <div class="row">
-                <div class="xl:w-1/1 w-full">
-                <div class="accordion" id="accordionExample"></div>
-                 </div>
             </div>
-                <div class="row">
-                    <div class="xl:w-1/2 w-full ">
-                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
-                            <h5 class="text-center">
-                                <strong class="text-primary">Total hypertensive suspects referred to the PHC for clinical diagnosis</strong>
-                            </h5>
-                            <br />
-                            <div class="overflow-x-auto table-scroll">
-                                <div class="dataTables_wrapper">
-                                    <table class="table table-bordered table-striped cell-border small tblfont" id="tbl17">
-                                        <thead class="text-center">
-                                            <tr>
-                                                <th class="text-center">Block</th>
-                                                <th class="text-center">Target</th>
-                                                <th class="text-center">Achieved</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="xl:w-1/2 w-full">
-                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
-                            <h5 class="text-center">
-                                <strong class="text-primary">Total diabetic suspects referred to the PHC for clinical diagnosis</strong>
-                            </h5>
-                            <br />
-                            <div class="overflow-x-auto table-scroll">
-                                <div class="dataTables_wrapper">
-                                    <table class="table table-bordered table-striped cell-border small tblfont" id="tbl18">
-                                        <thead class="text-center">
-                                            <tr>
-                                                <th class="text-center">Block</th>
-                                                <th class="text-center">Target</th>
-                                                <th class="text-center">Achieved</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                    <br />
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
         </div>
+
+    </div>
 </div>
 <div id="chart-container"></div>
 <link rel="stylesheet"
@@ -202,7 +203,7 @@
     <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
     <script src="https://code.highcharts.com/maps/modules/map.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
-</script>
+    </script>
     <script src="~/Scripts/JS/Export.js"></script>
     <script src="~/Scripts/JS/Master.js"></script>
     <script>
@@ -217,7 +218,7 @@
             var param = { 'ptype': 'screening' };
             $.ajax({
                 method: 'POST',
-                url: document.baseURI + '/Home/Screening',
+                url: document.baseURI + '/Home/Screening2',
                 data: JSON.stringify(param),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -257,7 +258,6 @@
             $("#tbl12 tbody").empty().append(html);
             var dg = JSON.parse(response.Data).Table1;
             $("#accordionExample").empty();
-
             for (var i = 0; i < dg.length; i++) {
                 index++;
                 var exp = index == 1 ? "show" : "";
@@ -267,21 +267,36 @@
                 html1+='<strong>  Block : ' + dg[i].block + '</strong></button></h2>';
                 html1+='<div id="collapseOne_' + index + '" class="accordion-collapse collapse ' + exp + '" aria-labelledby="headingOne_' + index + '" data-bs-parent="#accordionExample"> ';
                 html1+='<div class="accordion-body">';
-                html1+='<div class="row"><div class="xl:w-1/2 w-full "><div class="overflow-x-auto" id="ghyp1' + dg[i].block + '" style="height:300px"></div></div>';
+                html1+='<div class="row"><div class="xl:w-1/3 w-full "><div class="overflow-x-auto" id="ghyp1' + dg[i].block + '" style="height:300px"></div></div>';
                // $("#accordionExample").append('<div class="xl:w-1/2 w-full "><div class="overflow-x-auto" id="ghyp1' + dg[i].block + '" style="height:300px">');
                // $("#accordionExample").append('</div></div>');
-                html1 += '<div class="xl:w-1/2 w-full "><div class="overflow-x-auto" id="ghyp2' + dg[i].block + '" style = "height:300px"></div></div>';
+                html1 += '<div class="xl:w-1/3 w-full "><div class="overflow-x-auto" id="ghyp2' + dg[i].block + '" style = "height:300px"></div></div>';
+                html1 += '<div class="xl:w-1/3 w-full "><div class="overflow-x-auto" id="ghyp3' + dg[i].block + '" style = "height:300px"></div></div>';
                 //$("#accordionExample").append('</div></div> ');
                 html1+='</div>';
                 html1+='</div>';
                 html1+='</div>';
-                html1 += '</div>';                
+                html1 += '</div>';
             }
             document.getElementById("accordionExample").innerHTML = html1;
+            var tachi1 = 0, tachi2 = 0, tmord = 0;
             for (var i = 0; i < dg.length; i++) {
-                bindgraph("ghyp1" + dg[i].block, "<strong>Hyper</strong><br/>" + (dg[i].achi1 * 100 / dg[i].tar1).toFixed(0), "", "Total individuals Target : " + dg[i].tar1 + "<br/>Total individuals screened : " + dg[i].achi1, [{ name: 'Target', y: dg[i].tar1, color: '#de6ac9' }, { name: 'Achieved', y: dg[i].achi1, color: '#ffc107' }]);
-                bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + (dg[i].achi2 * 100 / dg[i].tar2).toFixed(0), "", "Total individuals Target : " + dg[i].tar2 + "<br/>Total individuals screened : " + dg[i].achi2, [{ name: 'Target', y: dg[i].tar2, color: '#de6ac9' }, { name: 'Achieved', y: dg[i].achi2, color: '#ffc107' }]);
-
+                if (dg[i].block != "Total") {
+                    tachi1 += dg[i].achi1;
+                    tachi2 += dg[i].achi2;
+                    tmord += dg[i].TotalCOMorb;
+                }
+                if (dg[i].block != "Total") {
+                    bindgraph("ghyp1" + dg[i].block, "<strong>Hyper</strong><br/>" + (dg[i].achi1 * 100 / dg[i].tar1).toFixed(0), "", "Total individuals Target : " + dg[i].tar1 + "<br/>Total individuals screened : " + dg[i].achi1, [{ name: 'Target', y: dg[i].tar1, color: '#de6ac9' }, { name: 'Achieved', y: dg[i].achi1, color: '#ffc107' }]);
+                    bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + (dg[i].achi2 * 100 / dg[i].tar2).toFixed(0), "", "Total individuals Target : " + dg[i].tar2 + "<br/>Total individuals screened : " + dg[i].achi2, [{ name: 'Target', y: dg[i].tar2, color: '#de6ac9' }, { name: 'Achieved', y: dg[i].achi2, color: '#ffc107' }]);
+                    bindgraph("ghyp3" + dg[i].block, "<strong>Co<br/>Morbiditiesl</strong><br/>" + (dg[i].TotalCOMorb * 100 / (dg[i].achi1 + dg[i].achi2)).toFixed(0), "", "Total individuals Screened : " + (dg[i].achi1 + dg[i].achi2) + "<br/>Total individuals Co-Morbidities : " + dg[i].TotalCOMorb, [{ name: 'Screened', y: (dg[i].achi1 + dg[i].achi2), color: '#de6ac9' }, { name: 'Co-Morbidities', y: dg[i].TotalCOMorb, color: '#ffc107' }]);
+                }
+                else {
+                    bindgraph("ghyp1" + dg[i].block, "<strong>Hyper</strong><br/>" + (tachi1 * 100 / dg[i].tar1).toFixed(0), "", "Total individuals Target : " + dg[i].tar1 + "<br/>Total individuals screened : " + tachi1, [{ name: 'Target', y: dg[i].tar1, color: '#de6ac9' }, { name: 'Achieved', y: tachi1, color: '#ffc107' }]);
+                    bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + (tachi2 * 100 / dg[i].tar2).toFixed(0), "", "Total individuals Target : " + dg[i].tar2 + "<br/>Total individuals screened : " + tachi2, [{ name: 'Target', y: dg[i].tar2, color: '#de6ac9' }, { name: 'Achieved', y: tachi2, color: '#ffc107' }]);
+                    bindgraph("ghyp3" + dg[i].block, "<strong>Co<br/>Morbiditiesl</strong><br/>" + (tmord * 100 / (tachi1 + tachi2)).toFixed(0), "", "Total individuals Screened : " + (tachi1 + tachi2) + "<br/>Total individuals Co-Morbidities : " + tmord, [{ name: 'Screened', y: (tachi1 + tachi2), color: '#de6ac9' }, { name: 'Co-Morbidities', y: tmord, color: '#ffc107' }]);
+                }
+                
             }
             //$("#accordionExample")append(html1);
 

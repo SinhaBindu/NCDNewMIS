@@ -903,6 +903,39 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
             }
         }
+        public ActionResult Screening2()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Screening2(string ptype)
+        {
+            FilterModel filterModel = new FilterModel();
+            filterModel.PageType = ptype;
+            DataSet dt = new DataSet();
+            try
+            {
+                dt = SP_Model.GetHealthScreeing2(filterModel);
+                if (dt.Tables.Count > 0)
+                {
+                    var dtjson = JsonConvert.SerializeObject(dt);
+                    var res = Json(new { IsSuccess = true, Data = dtjson }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
         #endregion
         public ActionResult FinUtilization()
         {

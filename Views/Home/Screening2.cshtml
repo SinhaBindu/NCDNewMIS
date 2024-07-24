@@ -261,42 +261,44 @@
             for (var i = 0; i < dg.length; i++) {
                 index++;
                 var exp = index == 1 ? "show" : "";
-                html1 +="<div class='accordion-item'>";
-                html1 +='<h2 class="accordion-header" id="headingOne_' + index + '">';
-                html1+='<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_' + index + '" aria-expanded="true" aria-controls="collapseOne_' + index + '">';
-                html1+='<strong>  Block : ' + dg[i].block + '</strong></button></h2>';
-                html1+='<div id="collapseOne_' + index + '" class="accordion-collapse collapse ' + exp + '" aria-labelledby="headingOne_' + index + '" data-bs-parent="#accordionExample"> ';
-                html1+='<div class="accordion-body">';
-                html1+='<div class="row"><div class="xl:w-1/3 w-full "><div class="overflow-x-auto" id="ghyp1' + dg[i].block + '" style="height:300px"></div></div>';
-               // $("#accordionExample").append('<div class="xl:w-1/2 w-full "><div class="overflow-x-auto" id="ghyp1' + dg[i].block + '" style="height:300px">');
-               // $("#accordionExample").append('</div></div>');
+                html1 += "<div class='accordion-item'>";
+                html1 += '<h2 class="accordion-header" id="headingOne_' + index + '">';
+                html1 += '<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_' + index + '" aria-expanded="true" aria-controls="collapseOne_' + index + '">';
+                html1 += '<strong>  Block : ' + dg[i].block + '</strong></button></h2>';
+                html1 += '<div id="collapseOne_' + index + '" class="accordion-collapse collapse ' + exp + '" aria-labelledby="headingOne_' + index + '" data-bs-parent="#accordionExample"> ';
+                html1 += '<div class="accordion-body">';
+                html1 += '<div class="row"><div class="xl:w-1/3 w-full "><div class="overflow-x-auto" id="ghyp1' + dg[i].block + '" style="height:300px"></div></div>';
+                // $("#accordionExample").append('<div class="xl:w-1/2 w-full "><div class="overflow-x-auto" id="ghyp1' + dg[i].block + '" style="height:300px">');
+                // $("#accordionExample").append('</div></div>');
                 html1 += '<div class="xl:w-1/3 w-full "><div class="overflow-x-auto" id="ghyp2' + dg[i].block + '" style = "height:300px"></div></div>';
                 html1 += '<div class="xl:w-1/3 w-full "><div class="overflow-x-auto" id="ghyp3' + dg[i].block + '" style = "height:300px"></div></div>';
                 //$("#accordionExample").append('</div></div> ');
-                html1+='</div>';
-                html1+='</div>';
-                html1+='</div>';
+                html1 += '</div>';
+                html1 += '</div>';
+                html1 += '</div>';
                 html1 += '</div>';
             }
             document.getElementById("accordionExample").innerHTML = html1;
-            var tachi1 = 0, tachi2 = 0, tmord = 0;
+            var tachi1 = 0, tachi2 = 0, achiHY1 = 0, achiBRS1 = 0, tmord = 0;
             for (var i = 0; i < dg.length; i++) {
                 if (dg[i].block != "Total") {
                     tachi1 += dg[i].achi1;
                     tachi2 += dg[i].achi2;
+                    achiHY1 += dg[i].achiHY1;
+                    achiBRS1 += dg[i].achiBRS1;
                     tmord += dg[i].TotalCOMorb;
                 }
                 if (dg[i].block != "Total") {
-                    bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + (dg[i].achi1 * 100 / dg[i].tar1).toFixed(0) + " %", "", "Total individuals Target : " + dg[i].tar1 + "<br/>Total individuals screened : " + dg[i].achi1, [{ name: 'Target', y: dg[i].tar1, color: '#de6ac9' }, { name: 'Achieved', y: dg[i].achi1, color: '#ffc107' }]);
-                    bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + (dg[i].achi2 * 100 / dg[i].tar2).toFixed(0) + " %", "", "Total individuals Target : " + dg[i].tar2 + "<br/>Total individuals screened : " + dg[i].achi2, [{ name: 'Target', y: dg[i].tar2, color: '#de6ac9' }, { name: 'Achieved', y: dg[i].achi2, color: '#ffc107' }]);
-                    bindgraph("ghyp3" + dg[i].block, "<strong>Comorbidity</strong><br/>" + (dg[i].TotalCOMorb * 100 / (dg[i].achi1 + dg[i].achi2)).toFixed(0) + " %", "", "Total individuals Screened : " + (dg[i].achi1 + dg[i].achi2) + "<br/>Total individuals Comorbidity : " + dg[i].TotalCOMorb, [{ name: 'Screened', y: (dg[i].achi1 + dg[i].achi2), color: '#de6ac9' }, { name: 'Comorbidity', y: dg[i].TotalCOMorb, color: '#ffc107' }]);
+                    bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + (dg[i].achi1 == 0 ? 0 : (dg[i].achiHY1 * 100 / dg[i].achi1).toFixed(0)) + " %", "", "Total individuals Target : " + dg[i].tar1 + "<br/>Total individuals screened : " + dg[i].achi1 + "<br /> Individuals with hypertension : " + dg[i].achiHY1, [{ name: 'Total Screened', y: dg[i].achi1, color: '#de6ac9' }, { name: 'Hypertension', y: dg[i].achiHY1, color: '#ffc107' }]);
+                    bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + (dg[i].achi1 == 0 ? 0 : (dg[i].achiBRS1 * 100 / dg[i].achi2).toFixed(0)) + " %", "", "Total individuals Target : " + dg[i].tar2 + "<br/>Total individuals screened : " + dg[i].achi2 + "<br /> Individuals with RBS : " + dg[i].achiBRS1, [{ name: 'Total Screened', y: dg[i].achi2, color: '#de6ac9' }, { name: 'RBS', y: dg[i].achiBRS1, color: '#ffc107' }]);
+                    bindgraph("ghyp3" + dg[i].block, "<strong>Comorbidity</strong><br/>" + (dg[i].achi1 == 0 ? 0 : ((dg[i].achiHY1 + dg[i].achiBRS1) * 100 / (dg[i].achi2)).toFixed(0)) + " %", "", "Total individuals Screened : " + (dg[i].achi1) + "<br/>Total individuals Comorbidity : " + (dg[i].achiHY1 + dg[i].achiBRS1), [{ name: 'Total Screened', y: (dg[i].achi1), color: '#de6ac9' }, { name: 'Comorbidity', y: dg[i].achiHY1 + dg[i].achiBRS1, color: '#ffc107' }]);
                 }
                 else {
-                    bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + (tachi1 * 100 / dg[i].tar1).toFixed(0) + " %", "", "Total individuals Target : " + dg[i].tar1 + "<br/>Total individuals screened : " + tachi1, [{ name: 'Target', y: dg[i].tar1, color: '#de6ac9' }, { name: 'Achieved', y: tachi1, color: '#ffc107' }]);
-                    bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + (tachi2 * 100 / dg[i].tar2).toFixed(0) + " %", "", "Total individuals Target : " + dg[i].tar2 + "<br/>Total individuals screened : " + tachi2, [{ name: 'Target', y: dg[i].tar2, color: '#de6ac9' }, { name: 'Achieved', y: tachi2, color: '#ffc107' }]);
-                    bindgraph("ghyp3" + dg[i].block, "<strong>Comorbidity</strong><br/>" + (tmord * 100 / (tachi1 + tachi2)).toFixed(0) + " %", "", "Total individuals Screened : " + (tachi1 + tachi2) + "<br/>Total individuals Comorbidity : " + tmord, [{ name: 'Screened', y: (tachi1 + tachi2), color: '#de6ac9' }, { name: 'Comorbidity', y: tmord, color: '#ffc107' }]);
+                    bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + ((achiHY1 * 100) / tachi1).toFixed(0) + " %", "", "Total individuals Target : " + dg[i].tar1 + "<br/>Total individuals screened : " + tachi1 + "<br /> Individuals with hypertension : " + achiHY1, [{ name: 'Total Screened', y: tachi1, color: '#de6ac9' }, { name: 'Hypertension', y: achiHY1, color: '#ffc107' }]);
+                    bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + ((achiBRS1 * 100) / tachi2).toFixed(0) + " %", "", "Total individuals Target : " + dg[i].tar2 + "<br/>Total individuals screened : " + tachi2 + "<br /> Individuals with RBS : " + achiBRS1, [{ name: 'Total Screened', y: tachi2, color: '#de6ac9' }, { name: 'RBS', y: achiBRS1, color: '#ffc107' }]);
+                    bindgraph("ghyp3" + dg[i].block, "<strong>Comorbidity</strong><br/>" + ((achiHY1 + achiBRS1) * 100 / tachi1).toFixed(0) + " %", "", "Total individuals Screened : " + (tachi2) + "<br/>Total individuals Comorbidity : " + (achiHY1 + achiBRS1), [{ name: 'Total Screened', y: ((achiHY1 + achiBRS1)), color: '#de6ac9' }, { name: 'Comorbidity', y: (achiHY1 + achiBRS1), color: '#ffc107' }]);
                 }
-                
+
             }
             //$("#accordionExample")append(html1);
 
@@ -319,10 +321,10 @@
         }
 
         function bindgraph(id, label, head, subhead, data) {
-           // Highcharts.chart(id, {
+            // Highcharts.chart(id, {
             var grph = {
                 chart: {
-                   // renderTo: id,
+                    // renderTo: id,
                     type: 'pie',
                     custom: {},
                     plotAreaWidth: 300,

@@ -78,7 +78,7 @@
                     <div class="card-footer px-5 pb-5">
                         <p class="card-text"><strong>Budget Allocation</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;24,46,858</p>
                         <p class="card-text"><strong>Utilized</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;24,46,858</p>
-                        <p><input type="range" id="points1" name="points" min="0" max="2446858"></p>
+                        <p><input type="range" id="points1" name="points" min="0" max="2446858" disabled></p>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                                 <div class="card-footer">
                                     <p class="card-text"><strong>Budget Allocation</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;58,17,921</p>
                                     <p class="card-text"><strong>Utilized</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;58,17,921</p>
-                                    <p><input type="range" class="rangeinput" id="points2" name="points" min="0" max="5817921"></p>
+                                    <p><input type="range" class="rangeinput" id="points2" name="points" min="0" max="5817921" disabled></p>
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                                             <div class="card-footer">
                                                 <p class="card-text"><strong>Budget Allocation</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;14,29,032</p>
                                                 <p class="card-text"><strong>Utilized</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;14,29,032</p>
-                                                <p><input type="range" id="points3" name="points" min="0" max="1429032"></p>
+                                                <p><input type="range" id="points3" name="points" min="0" max="1429032" disabled></p>
                                             </div>
 
                                         </div>
@@ -193,7 +193,7 @@
                       //  html = html + '<tr><td>' + aData[i].FinYear + '</td><td>' + aData[i].QuaterType + '</td><td>' + aData[i].Budget + '</td><td>' + aData[i].Utilized + '</td><td>' + aData[i].per + '</td></tr>';
 
                     }
-                    bindgraph("pop-up2223", Qua, "", "2022-23", [{ name: "Budget", data: bug, color: "#199cc6" }, { name: "Utilized", data: exp, color: "#ff6a00" }]);
+                    bindgraph("pop-up2223", Qua, "F.Y. 2022-23", "2022-23", [{ name: "Budget", data: bug, color: "#199cc6" }, { name: "Utilized", data: exp, color: "#ff6a00" }]);
                 },
                 error: function (resp) {
                     alert(resp);
@@ -239,7 +239,7 @@
                 },
                 title: {
                     text: head,
-                    align: 'left'
+                    align: 'center'
                 },
                 credits: {
                     enabled: false

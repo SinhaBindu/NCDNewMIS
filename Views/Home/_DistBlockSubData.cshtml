@@ -9,7 +9,7 @@
         {
             columns.Add(dc.ColumnName);
         }
-        var ex = new List<string>() { "", "", "", "", "", "","","","" };
+        var ex = new List<string>() { "", "", "", "", "", "","",""};//,"","" 
         columns = columns.Where(x => !ex.Any(y => y == x)).ToList();
     }
 }
@@ -40,8 +40,8 @@
                 <th class="text-center">Total No.of <br />members</th>
                 <th class="text-center">No.of members <br />submission data</th>
                 <th class="text-center">Pending <br />submission data</th>
-                <th class="text-center">No.of members in <br />Hypertension</th>
-                <th class="text-center">No.of members <br />in RBS </th>
+                @*<th class="text-center">No.of members in <br />Hypertension</th>
+                <th class="text-center">No.of members <br />in RBS </th>*@
                 <th class="text-center">No.of Followup <br />submission data</th>
             </tr>
         </thead>
@@ -60,8 +60,8 @@
                             <td class="text-center">@dr["TM"]</td>
                             <td class="text-center">@dr["EM"]</td>
                             <td class="text-center"><strong class="text-warning">@dr["PM"]</strong></td>
-                            <td class="text-center"><strong class="text-danger">@dr["HY"]</strong></td>
-                            <td class="text-center"><strong class="text-danger">@dr["RBS"]</strong></td>
+                            @*<td class="text-center"><strong class="text-danger">@dr["HY"]</strong></td>
+                            <td class="text-center"><strong class="text-danger">@dr["RBS"]</strong></td>*@
                             <td class="text-center">@dr["FOLLOWUP"]</td>
                         </tr>
                     }
@@ -83,8 +83,8 @@
                     <td class="text-center"><strong>@dt.Compute("sum(TM)", string.Empty)</strong></td>
                     <td class="text-center"><strong>@dt.Compute("sum(EM)", string.Empty)</strong></td>
                     <td class="text-center"><strong>@dt.Compute("sum(PM)", string.Empty)</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(HY)", string.Empty)</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(RBS)", string.Empty)</strong></td>
+                    @*<td class="text-center"><strong>@dt.Compute("sum(HY)", string.Empty)</strong></td>
+                    <td class="text-center"><strong>@dt.Compute("sum(RBS)", string.Empty)</strong></td>*@
                     <td class="text-center"><strong>@dt.Compute("sum(FOLLOWUP)", string.Empty)</strong></td>
                 </tr>
             }

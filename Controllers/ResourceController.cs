@@ -52,7 +52,7 @@ namespace NCDNewMIS.Controllers
                     tbl.Subject = model.Subject;
                     tbl.Description = model.Description;
                     //tbl.LetterNo = model.LetterNo;
-                    tbl.DateofIssue = model.DateofIssue;
+                   // tbl.DateofIssue = model.DateofIssue;
                     tbl.IsActive = true;
                     tbl.Upload_date = DateTime.Now;
                     tbl.FileName = model.file.FileName;

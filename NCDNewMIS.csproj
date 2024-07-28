@@ -788,6 +788,9 @@
     <Content Include="Views\Home\Training2.cshtml" />
     <Content Include="Views\Home\HealthEducation2.cshtml" />
     <Content Include="Views\Home\Screening2.cshtml" />
+    <Content Include="Views\Home\_PendingUserMembersData.cshtml" />
+    <Content Include="Views\Home\PendingMembers.cshtml" />
+    <Content Include="Views\Resource\Index_ACT1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

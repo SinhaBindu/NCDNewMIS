@@ -1,8 +1,8 @@
 ﻿@model NCDNewMIS.Models.FilterModel
 @{
-    ViewBag.Title = "Submission Status ACT - II";
+    ViewBag.Title = "Pending Submission Status ACT - II";
     ViewBag.TitleIcon = "fa fa-user";
-    ViewBag.SemiTitle = "Submission Status ACT - II";
+    ViewBag.SemiTitle = "Pending Submission Status ACT - II";
     ViewBag.SemiTitleLink = "/";
     DateTime now = DateTime.Now;
     var startDate = new DateTime(now.Year, now.Month, 1);
@@ -23,20 +23,12 @@
             <button type="button" id="div-download" title="Click here to Download To Excel">Export To Excel</button>
         </div>
         <div class="row">
-            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
-                @*<div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
-                        <div class="cpa text-dark dark:text-white text-base font-semibold">
-                            <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
-                        </div>
-                        <div class="tools">
-                            <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
-                        </div>
-                    </div>*@
+            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]" style="display:none">
                 <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
                     <div class="p-[1.0rem] max-sm:p-2">
                         <div class="row">
 
-                            <div class="xl:w-1/5 sm:w-1/3 w-full" style="display:none;">
+                            @*<div class="xl:w-1/5 sm:w-1/3 w-full" style="display:none;">
                                 <label class="">Type of submission</label>
                                 <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="DistrictBlockType" id="DistrictBlockType">
                                     @foreach (var item in NCDNewMIS.Models.CommonModel.GetDistrictBlockType().ToList())
@@ -58,14 +50,13 @@
                                 Screening Type
                             </div>
                             <div class="xl:w-1/6 sm:w-1/6 w-full">
-                                @*<label class="form-label"></label>*@
                                 <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="SType" id="SType">
                                     @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
                                     {
                                         <option value="@item.Value">@item.Text</option>
                                     }
                                 </select>
-                            </div>
+                            </div>*@
 
 
                         </div>
@@ -75,11 +66,6 @@
 
             <div class="w-full">
                 <div class="row">
-                    <div class="xl:w-1/3" style="display:none">
-                        <div id="subchart" style="width:300px;height:400px;">
-                        </div>
-                    </div>
-
                     <div class="xl:w-1/1 bg-white w-full">
                         <div id="result"></div>
                     </div>
@@ -94,14 +80,6 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
-    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
-    <script src="~/Scripts/JS/Chart.js"></script>
-    <script src="~/Scripts/JS/Export.js"></script>
 
     <script>
 
@@ -109,35 +87,26 @@
 
             LoadReport();
 
-            $('#SType').change(function () {
-                LoadReport();
-            })
-            $('#RoundType').change(function () {
-                LoadReport();
-            })
-            $('#DistrictBlockType').change(function () {
-                LoadReport();
-            })
+            //$('#SType').change(function () {
+            //    LoadReport();
+            //})
 
         });
         function LoadReport() {
-            $('#result').html(""); $("#subchart").html("");
+            $('#result').html("");
             var id = '#tblList-frm'
             var url = $(id).attr("action");
-            var SType = $("#SType").val();
-            var RoundType = $("#RoundType").val();
-            var DistrictBlockType = $("#DistrictBlockType").val();
+            var SType = "";// $("#SType").val();
+            var RoundType = "";// $("#RoundType").val();
+            var DistrictBlockType = "";//$("#DistrictBlockType").val();
             $.ajax({
-                url: document.baseURI + '/Home/GetSubmissionData',
+                url: document.baseURI + '/Home/GetPendingMembersData',
                 //url: url,
                 type: "POST",
-                data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType },
+                data: '',
                 success: function (resp) {
                     if (resp.IsSuccess) {
                         debugger;
-                        // $('#resultmap').html(resp.Datahtml);
-                        var resD = JSON.parse(resp.resData);
-                        ChartDistBlockSub(resD);
                         $('#result').html(resp.reshtml);
                         if ($.fn.dataTable.isDataTable('#tbl')) {
                             $("#tbl").dataTable().fnDestroy();
@@ -148,7 +117,7 @@
                             //fixedHeader: true,
                             //scrollCollapse: true,
                             paging: false,
-                            "bFilter": false,
+                           // "bFilter": false,
                             pageLength: 100,
                             //fixedColumns: {
                             //    leftColumns: 1,
@@ -161,20 +130,20 @@
                                 exportOptions: { modifier: { page: 'all' } }
                             }],
                         });
-                        //$('.dataTables_filter input[type="search"]').css(
-                        //    { 'width': '500px', 'display': 'inline-block' }
-                        //);
+                        $('.dataTables_filter input[type="search"]').css(
+                            { 'width': '500px', 'display': 'inline-block' }
+                        );
                         $('#div-download').empty();
                         table.buttons().container().appendTo($('#div-download'));
                     }
                     else {
-                        $('#result').html('<h4 class="text-danger">Record Not Found !!</h4>');
+                        $('#tbl').html('<h4 class="text-danger">Record Not Found !!</h4>');
                     }
                 },
                 error: function (req, error) {
                     if (error === 'error') { error = req.statusText; }
                     var errormsg = 'There was a communication error: ' + error;
-                    $('#result').html(errormsg);
+                    $('#tbl').html(errormsg);
                 }
             });
         }

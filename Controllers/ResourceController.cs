@@ -20,7 +20,12 @@ namespace NCDNewMIS.Controllers
         // GET: Resource
         public ActionResult Index()
         {
-            var x = db.Tbl_FileResource.ToList();
+            var x = db.Tbl_FileResource.Where(a => a.DocumentType == "2" && a.IsActive == true).ToList();
+            return View(x);
+        }
+        public ActionResult Index_ACT1()
+        {
+            var x = db.Tbl_FileResource.Where(a => a.DocumentType == "1" && a.IsActive == true).ToList();
             return View(x);
         }
         public ActionResult ResourceUpload()

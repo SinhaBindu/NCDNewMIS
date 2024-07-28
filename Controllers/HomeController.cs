@@ -565,6 +565,53 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
             }
         }
+        public ActionResult PendingMembers()
+        {
+            return View();
+        }
+        public ActionResult GetPendingMembersData()
+        {
+            DataSet ds = new DataSet();
+            FilterModel filterModel = new FilterModel();
+            try
+            {
+                ds = SP_Model.SP_PendingUserMembersSubmission(filterModel);
+                if (ds.Tables.Count > 0)
+                {
+                    DataTable dt = ds.Tables[0];
+                    var resdt = JsonConvert.SerializeObject(dt);
+                    var Dthtml = ConvertViewToString("_PendingUserMembersData", dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        var res = Json(new
+                        {
+                            IsSuccess = true,
+                            reshtml = Dthtml
+                        }, JsonRequestBehavior.AllowGet);
+                        res.MaxJsonLength = int.MaxValue;
+                        return res;
+
+                    }
+                    else
+                    {
+                        var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                        res.MaxJsonLength = int.MaxValue;
+                        return res;
+                    }
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = false, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
         public ActionResult HighData()
         {
             return View();

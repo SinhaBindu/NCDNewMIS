@@ -104,6 +104,12 @@ namespace NCDNewMIS.Models
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
+        public static DataSet SP_PendingUserMembersSubmission(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_PendingUserMembersSubmission");
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
         public static DataSet SP_ACT2High(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_ACT2High");

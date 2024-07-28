@@ -64,14 +64,6 @@
                                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                                     @*<p class="bord-btm pad-ver text-main text-bold"><i class="fa fa-users spacerright2"></i>File Information</p>*@
                                                     <div class="mb-4 row">
-                                                        @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
-                                                        <div class="sm:w-5/6">
-                                                            @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "required form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full ", @required = "required", @maxlength = "120" } })<em class="text-danger">*</em>
-                                                            @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
-                                                        </div>
-                                                        <div class="mark-devide"></div>
-                                                    </div>
-                                                    <div class="mb-4 row">
                                                         @Html.LabelFor(model => model.RoundType, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
                                                         <div class="sm:w-5/6">
                                                             @Html.DropDownListFor(model => model.RoundType, NCDNewMIS.Models.CommonModel.GetRoundType(false), null, htmlAttributes: new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full select2", @required = "required" })
@@ -81,19 +73,28 @@
                                                         <div class="mark-devide"></div>
                                                     </div>
                                                     <div class="mb-4 row">
-                                                        @Html.LabelFor(model => model.DateofIssue, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
+                                                        @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
                                                         <div class="sm:w-5/6">
-                                                            @Html.EditorFor(model => model.DateofIssue, new { htmlAttributes = new { @class = "required form-control datepicker relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full  ", @required = "required", @type = "date" } })
-                                                            @Html.ValidationMessageFor(model => model.DateofIssue, "", new { @class = "text-danger" })
+                                                            @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "required form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full ", @required = "required", @maxlength = "120" } })<em class="text-danger">*</em>
+                                                            @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
                                                         </div>
                                                         <div class="mark-devide"></div>
+                                                    </div>
+
+                                                    <div class="mb-4 row">
+                                                        @*@Html.LabelFor(model => model.DateofIssue, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
+            <div class="sm:w-5/6">
+                @Html.EditorFor(model => model.DateofIssue, new { htmlAttributes = new { @class = "required form-control datepicker relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full  ", @required = "required", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.DateofIssue, "", new { @class = "text-danger" })
+            </div>
+            <div class="mark-devide"></div>*@
                                                         @*<div class="col-lg-1 text-lg-right">
-                                                                <span class="spacer-left2">@Html.LabelFor(model => model.LetterNo, htmlAttributes: new { @class = "control-label" })</span>
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                @Html.EditorFor(model => model.LetterNo, new { htmlAttributes = new { @class = "required form-control ", @required = "required", @maxlength = "120" } })
-                                                                @Html.ValidationMessageFor(model => model.LetterNo, "", new { @class = "text-danger" })
-                                                            </div>*@
+                <span class="spacer-left2">@Html.LabelFor(model => model.LetterNo, htmlAttributes: new { @class = "control-label" })</span>
+            </div>
+            <div class="col-lg-3">
+                @Html.EditorFor(model => model.LetterNo, new { htmlAttributes = new { @class = "required form-control ", @required = "required", @maxlength = "120" } })
+                @Html.ValidationMessageFor(model => model.LetterNo, "", new { @class = "text-danger" })
+            </div>*@
                                                     </div>
                                                     <div class="mb-4 row">
                                                         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
@@ -105,15 +106,15 @@
                                                     </div>
                                                     @*<p class="bord-btm pad-ver text-main text-bold"><i class="fa fa-key spacerright2"></i>Select File</p>*@
                                                     @*<div class="form-group">
-                                                        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                        <div class="col-md-8">
-                                                            <div class="input_container">
-                                                                @Html.TextBoxFor(m => m.Image, new { @class = "form-control-file", @title = "Upload Image", @type = "file", accept = "image/png, image/jpg, image/jpeg" })
-                                                            </div>
-                                                                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
-                                                                <em>*</em> <small class="text-danger">Maximum file size allowed for upload <b> 50 mb</b></small>
-                                                            </div>
-                                                        </div>*@
+        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
+            <div class="input_container">
+                @Html.TextBoxFor(m => m.Image, new { @class = "form-control-file", @title = "Upload Image", @type = "file", accept = "image/png, image/jpg, image/jpeg" })
+            </div>
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                <em>*</em> <small class="text-danger">Maximum file size allowed for upload <b> 50 mb</b></small>
+            </div>
+        </div>*@
                                                     <div class="mb-4 row">
                                                         @Html.LabelFor(model => model.file, htmlAttributes: new { @class = "control-label col-md-2" })
                                                         <div class="sm:w-5/6">

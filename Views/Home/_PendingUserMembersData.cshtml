@@ -1,0 +1,87 @@
+﻿@using System.Data
+@{
+    DataTable dt = new DataTable();
+    var columns = new List<string>();
+    if (Model != null)
+    {
+        dt = Model;
+        foreach (DataColumn dc in dt.Columns)
+        {
+            columns.Add(dc.ColumnName);
+        }
+        var ex = new List<string>() { "", "", "", "", "", "","","" };//,"","" 
+        columns = columns.Where(x => !ex.Any(y => y == x)).ToList();
+    }
+}
+<style>
+    table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled {
+        /*padding-right: 0px !important;*/
+    }
+</style>
+<div class="overflow-x-auto table-scroll">
+    <table class="table table-bordered table-striped cell-border small tblfont" id="tbl">
+        <thead class="text-center">
+            <tr>
+                <th class="text-center">Srno.</th>
+                <th class="text-center">District</th>
+                <th class="text-center">Block</th>
+                <th class="text-center">Panchyat</th>
+                <th class="text-center">Village</th>
+                <th class="text-center">Volunteer Name</th>
+                <th class="text-center">Household<br /> Head Name</th>
+                <th class="text-center">No.of members <br />submission data</th>
+                <th class="text-center">Pending <br />submission data</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (dt.Rows.Count > 0)
+                {
+                    var sno = 1;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        <tr>
+                            <td class="text-center">@(sno++)</td>
+                            <td class="text-left">@dr["District"]</td>
+                            <td class="text-left">@dr["Block"]</td>
+                            <td class="text-left" style="word-break:break-word !important;">@dr["GP"]</td>
+                            <td class="text-left" style="word-break:break-word !important;">@dr["Village"]</td>
+                            <td class="text-left" style="word-break:break-word !important;">@dr["FullName"]</td>
+                            <td class="text-left" style="word-break:break-word !important;">@dr["HHHeadName"]</td>
+                            <td class="text-center"><strong>@dr["NoofMembers"]</strong></td>
+                            <td class="text-center"><strong class="text-warning">@dr["PendingMembers"]</strong></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="@columns.Count"><strong class="text-danger">Record Not Found !!</strong></td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot>
+            @if (dt.Rows.Count > 0)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right"><strong>Grand Total :</strong></td>
+                    <td class="text-center"><strong>@dt.Compute("sum(NoofMembers)", string.Empty)</strong></td>
+                    <td class="text-center"><strong>@dt.Compute("sum(PendingMembers)", string.Empty)</strong></td>
+                </tr>
+            }
+        </tfoot>
+    </table>
+</div>
+
+@*<script>
+    $(function () {
+        $("#tbl").DataTable();
+    });
+</script>*@

@@ -18,7 +18,7 @@
             text: '<span style="font-size:13px;font-weight:bold;">District Map Odisha</span>'
         },
         subtitle: {
-            text: '<span style="font-size:13px;"> <span  style="color: red; font-weight:bold; font-size:12px;"> ' + jsonObject[0].district + ' </span></span>'
+            text: '<span style="font-size:13px;"> <span  style="color: red; font-weight:bold; font-size:12px;"> ' + jsonObject[0].district + '* </span></span>'
         },
         //subtitle: {
         //    text: '<span style="font-size:13px;">(State Level Estimate :' + ' <span  style="color: red; font-weight:bold; font-size:12px;"> ' + Pc + ValType + ' ( Den = ' + Den + ')  </span>)</span>'

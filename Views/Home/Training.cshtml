@@ -162,12 +162,18 @@
             var d3bar = JSON.parse(response.Data).filter(function (entry) {
                 return entry.indicatorId === 3;
             });
-            bindgraph("g1", "<strong>Achieved</strong><br/>" + d1[0].achieved, d1[0].indicatorText + " : " + ((d1[0].achieved)), "", [{ name: 'Achieved', y: d1[0].achieved, color: '#ffc107' }]);
-            bindgraph("g2", "<strong>Achieved</strong><br/>" + d2[0].achieved, d2[0].indicatorText + " : " + ((d2[0].achieved)), "", [{ name: 'Achieved', y: d2[0].achieved, color: '#ffc107' }]);
-            bindgraph("g3", "<strong>Achieved</strong><br/>" + d3[0].achieved, d3[0].indicatorText + " : " + ((d3[0].achieved)), "", [{ name: 'Achieved', y: d3[0].achieved, color: '#ffc107' }]);
-            Act1IndicatorChart("gbar1", "<strong>Achieved</strong><br/>", d1bar,"Block wise number of "+ d1[0].indicatorText + " : " + ((d1[0].achieved)), "","");
-            Act1IndicatorChart("gbar2", "<strong>Achieved</strong><br/>", d2bar,"Block wise number of "+ d2[0].indicatorText + " : " + ((d2[0].achieved)), "","");
-            Act1IndicatorChart("gbar3", "<strong>Achieved</strong><br/>", d3bar,"Block wise number of "+ d3[0].indicatorText + " : " + ((d3[0].achieved)), "","");
+            //bindgraph("g1", "<strong>Achieved</strong><br/>" + d1[0].achieved, d1[0].indicatorText + " : " + ((d1[0].achieved)), "", [{ name: 'Achieved', y: d1[0].achieved, color: '#ffc107' }]);
+            //bindgraph("g2", "<strong>Achieved</strong><br/>" + d2[0].achieved, d2[0].indicatorText + " : " + ((d2[0].achieved)), "", [{ name: 'Achieved', y: d2[0].achieved, color: '#ffc107' }]);
+            //bindgraph("g3", "<strong>Achieved</strong><br/>" + d3[0].achieved, d3[0].indicatorText + " : " + ((d3[0].achieved)), "", [{ name: 'Achieved', y: d3[0].achieved, color: '#ffc107' }]);
+            //Act1IndicatorChart("gbar1", "<strong>Achieved</strong><br/>", d1bar,"Block wise number of "+ d1[0].indicatorText + " : " + ((d1[0].achieved)), "","");
+            //Act1IndicatorChart("gbar2", "<strong>Achieved</strong><br/>", d2bar,"Block wise number of "+ d2[0].indicatorText + " : " + ((d2[0].achieved)), "","");
+            //Act1IndicatorChart("gbar3", "<strong>Achieved</strong><br/>", d3bar,"Block wise number of "+ d3[0].indicatorText + " : " + ((d3[0].achieved)), "","");
+            bindgraph("g1", "<strong>Achieved</strong><br/>" + d1[0].achieved, "Block wise " + d1[0].indicatorText + " ", "", [{ name: 'Achieved', y: d1[0].achieved, color: '#ffc107' }]);
+            bindgraph("g2", "<strong>Achieved</strong><br/>" + d2[0].achieved, "Block wise " + d2[0].indicatorText + " ", "", [{ name: 'Achieved', y: d2[0].achieved, color: '#ffc107' }]);
+            bindgraph("g3", "<strong>Achieved</strong><br/>" + d3[0].achieved, "Block wise " + d3[0].indicatorText + " ", "", [{ name: 'Achieved', y: d3[0].achieved, color: '#ffc107' }]);
+            Act1IndicatorChart("gbar1", "<strong>Achieved</strong><br/>", d1bar, "Block wise " +  d1[0].indicatorText + " ", "", "");
+            Act1IndicatorChart("gbar2", "<strong>Achieved</strong><br/>", d2bar, "Block wise " + d2[0].indicatorText + " ", "", "");
+            Act1IndicatorChart("gbar3", "<strong>Achieved</strong><br/>", d3bar, "Block wise " + d3[0].indicatorText + " ", "", "");
         }
         function onerror(response) {
             alert("Oops!! Something went Wrong..Please Try Again.");
@@ -289,7 +295,7 @@
                 }
                 if (targetzero.length <= 0) {
                     //dataser.push({ type: 'column', name: 'Target', data: TotalTarget, 'color': '#bc6ac9' });//bc6ac9
-                    dataser.push({ type: 'column', name: 'Target', data: TD, 'color': '#bc6ac9' });//bc6ac9
+                    dataser.push({ type: 'column', name: 'Estimated Target', data: TD, 'color': '#bc6ac9' });//bc6ac9
                 }
                 if (achievedzero <= 0) {
                    // dataser.push({ type: 'column', name: 'Achieved', data: TotalAchieved, 'color': '#ffc107' });//fbc21d//f2c02c//008000
@@ -350,9 +356,12 @@
                         categories: cate
                     },
                     yAxis: {
-                        title: {
-                            text: 'No.of data'
-                        }
+                        min: 0,
+                        title: false,
+                        labels: {
+                            enabled: false
+                        },
+                        gridLineColor: 'transparent',
                     },
                     credits: {
                         enabled: false

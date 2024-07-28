@@ -52,7 +52,7 @@
                                     <thead class="text-center">
                                         <tr>
                                             <th class="text-center">Block</th>
-                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Estimated Target</th>
                                             <th class="text-center">Achieved</th>
                                         </tr>
                                     </thead>
@@ -75,7 +75,7 @@
                                     <thead class="text-center">
                                         <tr>
                                             <th class="text-center">Block</th>
-                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Estimated Target</th>
                                             <th class="text-center">Achieved</th>
                                         </tr>
                                     </thead>
@@ -147,7 +147,7 @@
                                     <thead class="text-center">
                                         <tr>
                                             <th class="text-center">Block</th>
-                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Estimated Target</th>
                                             <th class="text-center">Achieved</th>
                                         </tr>
                                     </thead>
@@ -171,7 +171,7 @@
                                     <thead class="text-center">
                                         <tr>
                                             <th class="text-center">Block</th>
-                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Estimated Target</th>
                                             <th class="text-center">Achieved</th>
                                         </tr>
                                     </thead>
@@ -275,6 +275,7 @@
                 //$("#accordionExample").append('</div></div> ');
                 html1 += '</div>';
                 html1 += '</div>';
+
                 html1 += '</div>';
                 html1 += '</div>';
             }
@@ -296,16 +297,16 @@
                     debugger;
                     var totcprcrent = parseInt(dg[i].achi1 == 0 ? 0 : (dg[i].TotalCOMorb * 100 / (dg[i].achi1)));//.toFixed(0)
                     //var totcprcrentydata = parseInt(dg[i].achi1 == 0 ? 0 : (dg[i].TotalCOMorb * 100 / (dg[i].achi1).toFixed(0)));//.toFixed(0)
-                    bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + (dg[i].achi1 == 0 ? 0 : (dg[i].achiHY1 * 100 / dg[i].achi1).toFixed(0)) + " %", "Status of blood pressure screenings", "Total individuals screened : " + dg[i].achi1 + "<br /> Individuals with Hypertension : " + dg[i].achiHY1, [{ name: 'Hypertension', y: parseInt(dg[i].achiHY1), color: '#9CEBFE' }, { name: 'Pre-Hypertension', y: dg[i].achiPreHyper, color: '#de6ac9' }, { name: 'Normal', y: dg[i].achi1-(dg[i].achiHY1 + dg[i].achiPreHyper), color: '#ffc107' }]);
-                    bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + (dg[i].achi1 == 0 ? 0 : (dg[i].achiBRS1 * 100 / dg[i].achi2).toFixed(0)) + " %", "Status of random blood sugar screenings", "Total individuals screened : " + dg[i].achi2 + "<br /> Individuals with RBS : " + dg[i].achiBRS1, [{ name: 'RBS', y: parseInt(dg[i].achiBRS1), color: '#ffc107' }, { name: 'Normal', y: parseInt(dg[i].achi2) - parseInt(dg[i].achiBRS1), color: '#de6ac9' },]);
-                    bindgraph("ghyp3" + dg[i].block, "<strong>Comorbidity</strong><br/>" + totcprcrent + " %", "Status of blood pressure & rbs screenings", "Total individuals Screened : " + (dg[i].achi1) + "<br/>Total individuals Comorbidity : " + (dg[i].TotalCOMorb), [{ name: 'Total Screened', y: parseInt(dg[i].achi1), color: '#de6ac9' }, { name: 'Comorbidity', y: parseInt(dg[i].TotalCOMorb), color: '#ffc107' }]);
+                    bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + (dg[i].achi1 == 0 ? 0 : (dg[i].achiHY1 * 100 / dg[i].achi1).toFixed(0)) + "%", "Status of Blood Pressure Screenings", "Total Individuals screened : " + dg[i].achi1 + "<br /> Individuals with Hypertension : " + dg[i].achiHY1, [{ name: 'Hypertension', y: parseInt(dg[i].achiHY1), color: '#9CEBFE' }, { name: 'Pre-Hypertension', y: dg[i].achiPreHyper, color: '#de6ac9' }, { name: 'Normal', y: dg[i].achi1-(dg[i].achiHY1 + dg[i].achiPreHyper), color: '#ffc107' }]);
+                    bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + (dg[i].achi1 == 0 ? 0 : (dg[i].achiBRS1 * 100 / dg[i].achi2).toFixed(0)) + "%", "Status of Random Blood Sugar Screenings", "Total Individuals screened : " + dg[i].achi2 + "<br /> Individuals with RBS : " + dg[i].achiBRS1, [{ name: 'RBS', y: parseInt(dg[i].achiBRS1), color: '#ffc107' }, { name: 'Normal', y: parseInt(dg[i].achi2) - parseInt(dg[i].achiBRS1), color: '#de6ac9' },]);
+                    bindgraph("ghyp3" + dg[i].block, "<strong>Comorbidity</strong><br/>" + totcprcrent + "%", "Status of BP and RBS Screenings", "Total Individuals Screened : " + (dg[i].achi1) + "<br/>Total Individuals Comorbidity : " + (dg[i].TotalCOMorb), [{ name: 'Comorbidity', y: parseInt(dg[i].TotalCOMorb), color: '#ffc107' }, { name: 'Total Screened', y: parseInt(dg[i].achi1), color: '#de6ac9' }]);
                 }
                 else {
                     debugger;
                     var totcprcrent = tachi1 == 0 ? 0 : parseInt((tmord * 100 / tachi1));//.toFixed(0)
-                    bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + ((achiHY1 * 100) / tachi1).toFixed(0) + " %", "Status of blood pressure screenings", "Total individuals screened : " + tachi1 + "<br /> Individuals with Hypertension : " + achiHY1, [{ name: 'Hypertension', y: achiHY1, color: '#9CEBFE' }, { name: 'Pre-Hypertension', y: achiPreHyper, color: '#de6ac9' }, { name: 'Normal', y: tachi1 - (achiHY1 + achiPreHyper), color: '#ffc107' }]);
-                    bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + ((achiBRS1 * 100) / tachi2).toFixed(0) + " %", "Status of random blood sugar screenings", "Total individuals screened : " + tachi2 + "<br /> Individuals with RBS : " + achiBRS1, [{ name: 'RBS', y: achiBRS1, color: '#ffc107' }, { name: 'Normal', y: tachi2 - achiBRS1, color: '#de6ac9' }]);
-                    bindgraph("ghyp3" + dg[i].block, "<strong>Comorbidity</strong><br/>" + totcprcrent + " %", "Status of blood pressure & rbs screenings", "Total individuals Screened : " + (tachi2) + "<br/>Total individuals Comorbidity : " + tmord, [{ name: 'Total Screened', y: tachi2, color: '#de6ac9' }, { name: 'Comorbidity', y: tmord, color: '#ffc107' }]);
+                    bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + ((achiHY1 * 100) / tachi1).toFixed(0) + "%", "Status of Blood Pressure Screenings", "Total individuals screened : " + tachi1 + "<br /> Individuals with Hypertension : " + achiHY1, [{ name: 'Hypertension', y: achiHY1, color: '#9CEBFE' }, { name: 'Pre-Hypertension', y: achiPreHyper, color: '#de6ac9' }, { name: 'Normal', y: tachi1 - (achiHY1 + achiPreHyper), color: '#ffc107' }]);
+                    bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + ((achiBRS1 * 100) / tachi2).toFixed(0) + "%", "Status of random blood sugar screenings", "Total individuals screened : " + tachi2 + "<br /> Individuals with RBS : " + achiBRS1, [{ name: 'RBS', y: achiBRS1, color: '#ffc107' }, { name: 'Normal', y: tachi2 - achiBRS1, color: '#de6ac9' }]);
+                    bindgraph("ghyp3" + dg[i].block, "<strong>Comorbidity</strong><br/>" + totcprcrent + "%", "Status of BP and RBS Screenings", "Total individuals Screened : " + (tachi2) + "<br/>Total individuals Comorbidity : " + tmord, [{ name: 'Comorbidity', y: tmord, color: '#ffc107' }, { name: 'Total Screened', y: tachi2, color: '#de6ac9' }]);
                 }
 
             }
@@ -313,12 +314,12 @@
 
             html = '';
             for (var i = 0; i < d17.length; i++) {
-                html = html + '<tr><td>' + d17[i].block + '</td><td class="text-center"></td><td class="text-center">' + d17[i].achieved + '</td></tr>'
+                html = html + '<tr><td>' + d17[i].block + '</td><td class="text-center">' + d17[i].target+'</td><td class="text-center">' + d17[i].achieved + '</td></tr>'
             }
             $("#tbl17 tbody").empty().append(html);
             html = '';
             for (var i = 0; i < d18.length; i++) {
-                html = html + '<tr><td class="text-center">' + d18[i].block + '</td><td></td><td>' + d18[i].achieved + '</td></tr>'
+                html = html + '<tr><td class="text-center">' + d18[i].block + '</td><td class="text-center">' + d18[i].target +'</td><td class="text-center">' + d18[i].achieved + '</td></tr>'
             }
             $("#tbl18 tbody").empty().append(html);
 

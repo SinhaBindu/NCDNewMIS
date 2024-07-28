@@ -51,7 +51,7 @@
                                     <thead class="text-center">
                                         <tr>
                                             <th class="text-center">Block</th>
-                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Estimated Target</th>
                                             <th class="text-center">Achieved</th>
                                         </tr>
                                     </thead>
@@ -74,7 +74,7 @@
                                     <thead class="text-center">
                                         <tr>
                                             <th class="text-center">Block</th>
-                                            <th class="text-center">Target</th>
+                                            <th class="text-center">Estimated Target</th>
                                             <th class="text-center">Achieved</th>
                                         </tr>
                                     </thead>
@@ -146,7 +146,7 @@
                                         <thead class="text-center">
                                             <tr>
                                                 <th class="text-center">Block</th>
-                                                <th class="text-center">Target</th>
+                                                <th class="text-center">Estimated Target</th>
                                                 <th class="text-center">Achieved</th>
                                             </tr>
                                         </thead>
@@ -170,7 +170,7 @@
                                         <thead class="text-center">
                                             <tr>
                                                 <th class="text-center">Block</th>
-                                                <th class="text-center">Target</th>
+                                                <th class="text-center">Estimated Target</th>
                                                 <th class="text-center">Achieved</th>
                                             </tr>
                                         </thead>
@@ -280,20 +280,20 @@
             document.getElementById("accordionExample").innerHTML = html1;
             for (var i = 0; i < dg.length; i++) {
                 debugger;
-                bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + parseInt((dg[i].achiHY * 100 / dg[i].achi1).toFixed(0)) + " %", "Status of blood pressure screenings","Total individuals Screened : " + dg[i].achi1 + "<br/>Individuals with Hypertension : " + dg[i].achiHY, [{ name: 'Screened', y: dg[i].achi1, color: '#ffc107' }, { name: 'Hypertension', y: dg[i].achiHY, color: '#de6ac9' }]);//{ name: 'Target', y: dg[i].tar1, color: '#de6ac9' },
-                bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + ((dg[i].achiRBS * 100) / dg[i].achi2).toFixed(0) + " %", "Status of random blood sugar screenings", "Total individuals Screened : " + dg[i].achi2 + "<br/>Individuals with RBS : " + dg[i].achiRBS, [{ name: 'Screened', y: dg[i].achi2, color: '#ffc107' }, { name: 'RBS', y: dg[i].achiRBS, color: '#de6ac9' }]);//{ name: 'Target', y: dg[i].tar2, color: '#de6ac9' }, 
+                bindgraph("ghyp1" + dg[i].block, "<strong>Hypertension</strong><br/>" + parseInt((dg[i].achiHY * 100 / dg[i].achi1).toFixed(0)) + "%", "Status of blood pressure screenings", "Total individuals Screened : " + dg[i].achi1 + "<br/>Individuals with Hypertension : " + dg[i].achiHY, [{ name: 'Hypertension', y: dg[i].achiHY, color: '#de6ac9' }, { name: 'Screened', y: dg[i].achi1, color: '#ffc107' }]);//{ name: 'Target', y: dg[i].tar1, color: '#de6ac9' },
+                bindgraph("ghyp2" + dg[i].block, "<strong>RBS >140mg/dl</strong><br/>" + ((dg[i].achiRBS * 100) / dg[i].achi2).toFixed(0) + "%", "Status of random blood sugar screenings", "Total individuals Screened : " + dg[i].achi2 + "<br/>Individuals with RBS : " + dg[i].achiRBS, [{ name: 'RBS', y: dg[i].achiRBS, color: '#de6ac9' }, { name: 'Screened', y: dg[i].achi2, color: '#ffc107' }]);//{ name: 'Target', y: dg[i].tar2, color: '#de6ac9' }, 
 
             }
             //$("#accordionExample")append(html1);
 
             html = '';
             for (var i = 0; i < d17.length; i++) {
-                html = html + '<tr><td>' + d17[i].block + '</td><td class="text-center"></td><td class="text-center">' + d17[i].achieved + '</td></tr>'
+                html = html + '<tr><td>' + d17[i].block + '</td><td class="text-center">' + d17[i].target + '</td><td class="text-center">' + d17[i].achieved + '</td></tr>'
             }
             $("#tbl17 tbody").empty().append(html);
             html = '';
             for (var i = 0; i < d18.length; i++) {
-                html = html + '<tr><td class="text-center">' + d18[i].block + '</td><td></td><td>' + d18[i].achieved + '</td></tr>'
+                html = html + '<tr><td class="text-center">' + d18[i].block + '</td><td class="text-center">' + d18[i].target + '</td><td>' + d18[i].achieved + '</td></tr>'
             }
             $("#tbl18 tbody").empty().append(html);
 

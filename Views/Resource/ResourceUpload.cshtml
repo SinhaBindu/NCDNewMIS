@@ -99,8 +99,8 @@
                                                     <div class="mb-4 row">
                                                         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label sm:w-1/6 py-[7px] text-body-color text-[0.76563rem] col-form-label-sm" })
                                                         <div class="sm:w-5/6">
-                                                            @Html.TextAreaFor(model => model.Description, new { @class = "required form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full ", @required = "required", @maxlength = "220" })
-                                                            <em class="text-danger">*</em>
+                                                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500 outline-none w-full ", @maxlength = "220" })
+                                                            @*<em class="text-danger">*</em>*@
                                                             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                                         </div>
                                                     </div>

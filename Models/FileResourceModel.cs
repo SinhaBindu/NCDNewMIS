@@ -27,13 +27,13 @@ namespace NCDNewMIS.Models
         public HttpPostedFileBase Image { get; set; }
         public string AttachmentFile { get; set; }
         public string AttachmentImage { get; set; }
-        [Required]
+        //[Required]
         [DisplayName("Date of Issue")]
         public Nullable<System.DateTime> DateofIssue { get; set; }
         [Required]
         [DisplayName("Title")]
         public string Subject { get; set; }
-        [Required]
+        //[Required]
         [DisplayName("Description")]
         public string Description { get; set; }
         public Nullable<bool> IsActive { get; set; }

@@ -411,6 +411,14 @@
     <Content Include="Content\assets\images\big\img6.jpg" />
     <Content Include="Content\assets\images\big\img7.jpg" />
     <Content Include="Content\assets\images\big\img8.jpg" />
+    <Content Include="Content\assets\images\BlockPic\Bhuban-01.png" />
+    <Content Include="Content\assets\images\BlockPic\Dhenkanal sadar-01.png" />
+    <Content Include="Content\assets\images\BlockPic\Gandia-01.png" />
+    <Content Include="Content\assets\images\BlockPic\Hindol-01.png" />
+    <Content Include="Content\assets\images\BlockPic\Kamakshyanagar-01.png" />
+    <Content Include="Content\assets\images\BlockPic\Kankadahad-01.png" />
+    <Content Include="Content\assets\images\BlockPic\Odapada copy-01.png" />
+    <Content Include="Content\assets\images\BlockPic\Parjang-01.png" />
     <Content Include="Content\assets\images\card\1.png" />
     <Content Include="Content\assets\images\card\2.png" />
     <Content Include="Content\assets\images\card\3.png" />

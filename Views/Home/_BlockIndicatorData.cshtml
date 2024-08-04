@@ -23,11 +23,11 @@
 
     .collapse {
         /*visibility: collapse !important;*/
-        
+
         visibility: visible !important;
     }
 </style>
-<h5 class="text-center">District :<strong class="text-center">  @dt.Rows[0]["district"] </strong></h5>
+<h5 class="text-center">District :<strong class="text-center">  @dt.Rows[0]["district"]* </strong></h5>
 
 @*<div class="table-responsive">*@
 <link rel="stylesheet"
@@ -45,9 +45,12 @@
             var exp = index == 1 ? "show" : "";
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne_@index">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@index" aria-expanded="true" aria-controls="collapseOne_@index">
+                    <button onclick="BindHideShowImages('@item.Key',this)" class="accordion-button toggleButton" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@index" aria-expanded="true" aria-controls="collapseOne_@index">
+                            <strong>  Block : @item.Key</strong>
+                        </button>
+                    @*<a href="~/Content/assets/images/BlockPic/@(@item.Key)-01.png" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@index" aria-expanded="true" aria-controls="collapseOne_@index">
                         <strong>  Block : @item.Key</strong>
-                    </button>
+                    </a>*@
                 </h2>
                 <div id="collapseOne_@index" class="accordion-collapse collapse @exp" aria-labelledby="headingOne_@index" data-bs-parent="#accordionExample">
                     @*<div class="accordion-body">

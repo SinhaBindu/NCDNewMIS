@@ -216,7 +216,7 @@ namespace NCDNewMIS.Controllers
                         }
                         filepath = filepath + "/Error/";
                     }
-                    filepath = filepath + UserName + "^" + Version + "^" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ".txt";
+                    filepath = filepath + UserName + "^" + Version + "^"+ Guid.NewGuid() + "^-" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ".txt";
                     System.IO.StreamWriter sw = new System.IO.StreamWriter(System.Web.Hosting.HostingEnvironment.MapPath(filepath), false, System.Text.Encoding.UTF8);
                     sw.WriteLine(JsonData);
                     sw.Close();

@@ -177,7 +177,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "Record Issues." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         //public ActionResult Blockmap()
@@ -1114,7 +1114,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "Record Issues." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
 

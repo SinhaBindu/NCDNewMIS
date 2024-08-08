@@ -228,5 +228,15 @@ namespace NCDNewMIS.Models
             return dt;
         }
 
+        public static DataSet SP_RawDataFollowup(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_RowDataShowFollowUP");
+            sp.Command.AddParameter("@SType", model.SType, DbType.String);
+            sp.Command.AddParameter("@FD", model.FormDt, DbType.String);
+            sp.Command.AddParameter("@TD", model.ToDt, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
+
     }
 }

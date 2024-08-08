@@ -1,0 +1,166 @@
+﻿@using System.Data
+@{
+    DataTable dt = new DataTable();
+    dt = Model;
+}
+<style>
+    table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled {
+        padding-right: 0px !important;
+    }
+
+    table.dataTable th.dt-type-numeric, table.dataTable th.dt-type-date,
+    table.dataTable td.dt-type-numeric,
+    table.dataTable td.dt-type-date {
+        text-align: left !important;
+    }
+
+    .tblth {
+        vertical-align: middle !important;
+        font-size: 8px !important;
+
+    }
+    th, td {
+        padding-top: 10px;
+        padding-bottom: 20px;
+        padding-left: 30px;
+        padding-right: 40px;
+    }
+    .tbltd {
+        vertical-align: middle !important;
+        font-size: 8px !important;
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 0px !important;
+    }
+
+    .tdtextwrp {
+        /*word-wrap: break-word !important;*/
+        text-wrap: wrap !important;
+    }
+
+    .tdhide {
+        display: none;
+    }
+</style>
+<div class="overflow-x-auto table-scroll">
+    <table class="table table-bordered table-striped cell-border small tblfont" id="tbl">
+        <thead class="text-center">
+            <tr>
+                <th class="text-center tblth">Srno.</th>
+                <th class="text-center tblth">Screening<br /> Types</th>
+                <th class="text-center tblth" width="5%">App Entry Date</th>
+
+                <th class="text-center tblth">No.Of <br />Followup Visits?</th>
+                <th class="text-center tblth">Is this person <br />(he/she) avaliable<br /> for followed up?</th>
+
+                <th class="text-center tblth">Volunteer<br /> name</th>
+                <th class="text-center tblth" width="6%">Volunteer No</th>
+                <th class="text-center tblth" width="5%">District</th>
+                <th class="text-center tblth" width="5%">Block</th>
+                <th class="text-center tblth" width="5%">CHC</th>
+                <th class="text-center tblth" width="5%">PHC</th>
+                <th class="text-center tblth">Subcenter</th>
+                <th class="text-center tblth">Panchayat</th>
+                <th class="text-center tblth">Village</th>
+
+                <th class="text-center tblth tdhide">Household ID</th>
+                <th class="text-center tblth">Household <br />head name</th>
+                <th class="text-center tblth tdhide">Member Id</th>
+                <th class="text-center tblth" width="5%">Member Name</th>
+                <th class="text-center tblth" width="6%">HHHead<br /> Mobile No</th>
+
+                <th class="text-center tblth ">Has this person<br /> been followed <br />up by NCD Mitra</th>
+
+                @*(BP screening)*@
+                <th class="text-center tblth tdhide">Whether this person has visited Sub-centre,Primary Health Centre for BP screening by a medical doctor?</th>
+                <th class="text-center tblth tdhide">If yes, where did he/she visit for the check-up?   </th>
+                <th class="text-center tblth tdhide">If Other, where did he/she visit for the check-up?  </th>
+                <th class="text-center tblth tdhide">What was the result of check-up by a medical doctor? </th>
+                <th class="text-center tblth tdhide">Have you started with the medication? </th>
+                <th class="text-center tblth tdhide">Other ,Have you started with the medication? </th>
+
+                @*(blood sugar)*@
+                <th class="text-center tblth tdhide">Whether this person has visited Sub-centre,Primary Health Centre for blood sugar screening by a medical doctor?</th>
+                <th class="text-center tblth tdhide">If yes, where did he/she visit for the check-up? </th>
+                <th class="text-center tblth tdhide">If Other, where did he/she visit for the check-up? </th>
+                <th class="text-center tblth tdhide">What was the result of check-up by a medical doctor? </th>
+                <th class="text-center tblth tdhide">Have you started with the medication?</th>
+                <th class="text-center tblth tdhide">Other , Have you started with the medication?</th>
+
+                @*(habit Other information)*@
+                <th class="text-center tblth tdhide">Whether this person has started making changes in their dietary habit?</th>
+                <th class="text-center tblth tdhide">Whether this person has started regular exercise/yoga?</th>
+                <th class="text-center tblth tdhide">Whether this person has taking 8 hours of sound sleep?</th>
+                <th class="text-center tblth tdhide">Whether this person has started with destressing practices?</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (dt.Rows.Count > 0)
+                {
+                    int srno = 1;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        <tr>
+                            <td class="text-center tbltd">@(srno++)</td>
+                            <td class="text-center tbltd fw-bold"><strong>@dr["Screening Types"]</strong></td>
+                            <td class="text-center tbltd fw-bold" width="6%"><strong>@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["APPDate"].ToString())</strong></td>
+                            <td class="text-center tbltd tdtextwrp"> @dr["No.Of Followup Visits?"] </td>
+                            <td class="text-center tbltd tdtextwrp"> @dr["Is this person (he/she) avaliable for followed up?"] </td>
+
+                            <td class="text-left tbltd tdtextwrp"> @dr["VolunteerName"] </td>
+                            <td class="text-center tbltd tdtextwrp"> @dr["Volunteer No"] </td>
+                            <td class="text-left tbltd small tdtextwrp"> @dr["District"] </td>
+                            <td class="text-left tbltd small tdtextwrp"> @dr["Block"] </td>
+                            <td class="text-left tbltd small tdtextwrp"> @dr["CHCN"] </td>
+                            <td class="text-left tbltd small tdtextwrp"> @dr["PHC"] </td>
+                            <td class="text-left tbltd small tdtextwrp"> @dr["SubCenter"] </td>
+                            <td class="text-left tbltd small tdtextwrp"> @dr["GP"] </td>
+                            <td class="text-left tbltd small tdtextwrp" style="word-break: break-word;"> @dr["Village"] </td>
+
+                            <td class="text-left tbltd tdhide"> @dr["HId"] </td>
+                            <td class="text-left tbltd tdtextwrp"> @dr["HHHeadName"] </td>
+                            <td class="text-left tbltd tdhide"> @dr["MemberId"] </td>
+                            <td class="text-left tbltd tdtextwrp"> @dr["MemberName"] </td>
+                            <td class="text-center tbltd tdtextwrp"> @dr["MobileNo"] </td>
+
+                            <td class="text-center tbltd tdtextwrp"> @dr["Has this person been followed up by NCD Mitra?"] </td>
+
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["Whether this person has visited Sub-centre,Primary Health Centre for BP screening by a medical doctor?"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["If yes, where did he/she visit for the check-up? (BP screening)"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["otherValueBP"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["What was the result of check-up by a medical doctor? (BP screening)"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["Have you started with the medication? (BP screening)"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["meditationStartValueBpOther"] </td>
+                                                   
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["Whether this person has visited Sub-centre,Primary Health Centre for blood sugar screening by a medical doctor?"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["If yes, where did he/she visit for the check-up? (blood sugar)"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["otherValueSugar"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["What was the result of check-up by a medical doctor? (blood sugar)"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["Have you started with the medication? (blood sugar)"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["meditationStartValueSugarOther"] </td>
+                                                   
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["Whether this person has started making changes in their dietary habit?"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["Whether this person has started regular exercise/yoga?"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["Whether this person has taking 8 hours of sound sleep?"] </td>
+                            <td class="text-center tdhide tbltd tdtextwrp"> @dr["Whether this person has started with destressing practices?"] </td>
+
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="14" class="text-center"><strong class="text-danger">Record Not Found !!</strong></td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+
+</div>

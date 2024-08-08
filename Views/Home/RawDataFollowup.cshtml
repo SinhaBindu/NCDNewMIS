@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Raw Data - ACT II";
+    ViewBag.Title = "Followup Raw Data - ACT II";
 }
 <style>
     .loading {
@@ -204,7 +204,7 @@
             var TD = $("#TD").val();
             $.ajax({
                 type: "Get",
-                url: document.baseURI + "/Home/GetDataRowList",
+                url: document.baseURI + "/Home/GetDataRawFollowupList",
                 data: { SType: SType, FD: FD, TD: TD },
                 //cache: false,
                 success: function (res) {
@@ -242,9 +242,9 @@
                             ],
                             order: [[0, 'asc']],
                             buttons: [{
-                                extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span>', title: 'NCD Data Lists',//$('#IDDistrict option:selected').text() +
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span>', title: 'NCD Followup Data Lists',//$('#IDDistrict option:selected').text() +
                                 className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
-                                filename: 'NCD Data List',
+                                filename: 'NCD Followup Data List',
                                 exportOptions: { modifier: { page: 'all' } }
                             }],
                         });
@@ -263,8 +263,8 @@
                 error: function (req, error) {
                     if (error === 'error') { error = req.statusText; }
                     var errormsg = 'There was a communication error: ' + error;
-                    //Do To Message display
                     $('#spinner').hide();
+                    //Do To Message display
                 }
             });
         }

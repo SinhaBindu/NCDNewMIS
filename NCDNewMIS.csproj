@@ -799,6 +799,8 @@
     <Content Include="Views\Home\_PendingUserMembersData.cshtml" />
     <Content Include="Views\Home\PendingMembers.cshtml" />
     <Content Include="Views\Resource\Index_ACT1.cshtml" />
+    <Content Include="Views\Home\_RowDataFollowup.cshtml" />
+    <Content Include="Views\Home\RawDataFollowup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -29,6 +29,9 @@
         /*visibility: collapse !important;*/
         visibility: visible !important;
     }
+    .h5, h5 {
+        font-size: 1.0rem !important;
+    }
 </style>
 <div class="content-body">
     <div class="container-fluid">
@@ -45,9 +48,9 @@
                         <h5 class="text-center">
                             <strong class="text-primary">Total population screened for hypertension</strong>
                         </h5>
-                        <br />
                         <div class="overflow-x-auto table-scroll">
                             <div class="dataTables_wrapper">
+                                <span class="text-center"> <img src="~/Content/assets/images/Screening_hypertension.png" style="width: 72px; margin-left: 225px !important;" /></span>
                                 <table class="table table-bordered table-striped cell-border small tblfont" id="tbl11">
                                     <thead class="text-center">
                                         <tr>
@@ -68,9 +71,10 @@
                         <h5 class="text-center">
                             <strong class="text-primary">Total population screened for diabetes (Random blood sugar test)</strong>
                         </h5>
-                        <br />
+
                         <div class="overflow-x-auto table-scroll">
                             <div class="dataTables_wrapper">
+                                <span class="text-center"> <img src="~/Content/assets/images/Screening_Randombloodsugar.png" style="width: 72px; margin-left: 225px !important;" /></span>
                                 <table class="table table-bordered table-striped cell-border small tblfont" id="tbl12">
                                     <thead class="text-center">
                                         <tr>
@@ -89,60 +93,62 @@
 
             </div>
             @*<div class="row">
-                                <div class="xl:w-1/2 w-full ">
-                                    <div class="bg-white dark:bg-[#1b1b1b]">
-                                        <h5 class="text-center">
-                                            <strong class="text-primary">Status of blood pressure screenings</strong>
-                                        </h5>
-                                        <div class="overflow-x-auto table-scroll" id="g15" style="height:300px"></div>
-                                        <p style="padding: 1%; font-size: smaller;">
-                                            No risk: systolic less than 120 mm Hg, diastolic less than
-                                            80 mm Hg <br />
-                                            Pre-Hypertensive (pre-hyper): systolic 120–139 mm Hg,
-                                            and/or diastolic 80–89 mm Hg
-                                            Hypertensive (hyper) : systolic 140 mm Hg or higher and/or diastolic 90 mm Hg or higher
-                                        </p>
+                        <div class="xl:w-1/2 w-full ">
+                            <div class="bg-white dark:bg-[#1b1b1b]">
+                                <h5 class="text-center">
+                                    <strong class="text-primary">Status of blood pressure screenings</strong>
+                                </h5>
+                                <div class="overflow-x-auto table-scroll" id="g15" style="height:300px"></div>
+                                <p style="padding: 1%; font-size: smaller;">
+                                    No risk: systolic less than 120 mm Hg, diastolic less than
+                                    80 mm Hg <br />
+                                    Pre-Hypertensive (pre-hyper): systolic 120–139 mm Hg,
+                                    and/or diastolic 80–89 mm Hg
+                                    Hypertensive (hyper) : systolic 140 mm Hg or higher and/or diastolic 90 mm Hg or higher
+                                </p>
 
-                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="xl:w-1/2 w-full">
+                            <div class="bg-white dark:bg-[#1b1b1b]">
+                                <h5 class="text-center">
+                                    <strong class="text-primary">
+                                        Status of random blood sugar
+                                        screenings
+                                    </strong>
+                                </h5>
+                                <div class="overflow-x-auto table-scroll" id="g19" style="height:300px">
                                 </div>
+                                <p style="
+            padding: 1%;
+            font-size: smaller;
+        ">RBS: Random blood sugar level</p>
+                                <br />
+                                <br />
+                                <br />
+                            </div>
 
-                                <div class="xl:w-1/2 w-full">
-                                    <div class="bg-white dark:bg-[#1b1b1b]">
-                                        <h5 class="text-center">
-                                            <strong class="text-primary">
-                                                Status of random blood sugar
-                                                screenings
-                                            </strong>
-                                        </h5>
-                                        <div class="overflow-x-auto table-scroll" id="g19" style="height:300px">
-                                        </div>
-                                        <p style="
-                    padding: 1%;
-                    font-size: smaller;
-                ">RBS: Random blood sugar level</p>
-                                        <br />
-                                        <br />
-                                        <br />
-                                    </div>
-
-                                </div>
+                        </div>
 
 
-                            </div>*@
+                    </div>*@
+            <div class="mb-1"></div>
             <div class="row">
                 <div class="xl:w-1/1 w-full">
                     <div class="accordion" id="accordionExample"></div>
                 </div>
             </div>
+            <div class="mb-1"></div>
             <div class="row">
                 <div class="xl:w-1/2 w-full ">
                     <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                         <h5 class="text-center">
                             <strong class="text-primary">Total hypertensive suspects referred to the PHC for clinical diagnosis</strong>
                         </h5>
-                        <br />
                         <div class="overflow-x-auto table-scroll">
                             <div class="dataTables_wrapper">
+                                <span class="text-center"> <img src="~/Content/assets/images/ScreeningHospital.png" style="width: 72px; margin-left: 225px !important;" /></span>
                                 <table class="table table-bordered table-striped cell-border small tblfont" id="tbl17">
                                     <thead class="text-center">
                                         <tr>
@@ -164,9 +170,9 @@
                         <h5 class="text-center">
                             <strong class="text-primary">Total diabetic suspects referred to the PHC for clinical diagnosis</strong>
                         </h5>
-                        <br />
                         <div class="overflow-x-auto table-scroll">
                             <div class="dataTables_wrapper">
+                                <span class="text-center"> <img src="~/Content/assets/images/ScreeningHospital.png" style="width: 72px; margin-left: 225px !important;" /></span>
                                 <table class="table table-bordered table-striped cell-border small tblfont" id="tbl18">
                                     <thead class="text-center">
                                         <tr>

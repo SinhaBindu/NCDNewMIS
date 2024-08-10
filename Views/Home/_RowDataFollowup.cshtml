@@ -49,7 +49,8 @@
             <tr>
                 <th class="text-center tblth">Srno.</th>
                 <th class="text-center tblth">Screening<br /> Types</th>
-                <th class="text-center tblth" width="5%">Submission Date</th>
+                <th class="text-center tblth" width="5%">Date Of Survey</th>
+                <th class="text-center tblth" width="5%">Submission Date<br />(App Entry)</th>
 
                 <th class="text-center tblth">No.Of <br />Followup Visits?</th>
                 <th class="text-center tblth">Is this person <br />(he/she) avaliable<br /> for followed up?</th>
@@ -107,6 +108,7 @@
                         <tr>
                             <td class="text-center tbltd">@(srno++)</td>
                             <td class="text-center tbltd fw-bold"><strong>@dr["Screening Types"]</strong></td>
+                            <td class="text-center tbltd fw-bold" width="6%"><strong>@dr["SurveyDate"]</strong></td>
                             <td class="text-center tbltd fw-bold" width="6%"><strong>@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["APPDate"].ToString())</strong></td>
                             <td class="text-center tbltd tdtextwrp"> @dr["No.Of Followup Visits?"] </td>
                             <td class="text-center tbltd tdtextwrp"> @dr["Is this person (he/she) avaliable for followed up?"] </td>

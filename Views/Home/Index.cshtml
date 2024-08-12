@@ -1,5 +1,20 @@
-﻿@{
+﻿@using System.Data
+@{
     ViewBag.Title = "Raw Data - ACT II";
+    DataSet ds = new DataSet();
+    DataTable dtmains = new DataTable();
+    DataTable dt1 = new DataTable();
+    DataTable dt2 = new DataTable();
+    if (Model != null)
+    {
+        ds = Model;
+        if (ds.Tables.Count > 0)
+        {
+            dtmains = ds.Tables[0];
+            dt1 = ds.Tables[1];
+            dt2 = ds.Tables[2];
+        }
+    }
 }
 <style>
     .loading {
@@ -11,28 +26,32 @@
         display: none;
         background: rgba(0,0,0,0.6);
     }
-.cv-spinner {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px #ddd solid;
-  border-top: 4px #2e93e6 solid;
-  border-radius: 50%;
-  animation: sp-anime 0.8s infinite linear;
-}
-@@keyframes sp-anime {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-.is-hide{
-  display:none;
-}
+
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #2e93e6 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+
+    @@keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .is-hide {
+        display: none;
+    }
 </style>
 <div id="spinner" class="loading">
     <div class="cv-spinner">
@@ -46,6 +65,8 @@
             <h4>@ViewBag.Title</h4>
             <button type="button" id="div-download"
                     title="Click here to Download To Excel"></button>
+
+            <button id="exportBtn">Export to Excel</button>
         </div>
 
         <div class="row">
@@ -104,6 +125,130 @@
                         <div class="overflow-x-auto table-scroll">
                             <div class="col-md-12" id="subdata">
                             </div>
+                            <div class="col-md-12">
+                                <div class="summarydata">
+                                    @{
+                                        if (dt1.Rows.Count > 0)
+                                        {
+                                            <table id="tblsummary1" class="display tblsummarydata" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>District</th>
+                                                        <th>Block</th>
+                                                        <th>
+                                                            No risk <br />
+                                                            systolic: less <br />than 120 mm Hg <br /> diastolic: less than 80 mm Hg
+                                                        </th>
+                                                        <th>
+                                                            Pre-hyper
+                                                            systolic: 120–139<br /> mm Hg and/or <br /> diastolic: 80–89 mm Hg
+                                                        </th>
+                                                        <th>
+                                                            Hyper <br />
+                                                            systolic: 140 mm Hg or higher<br /> and/or diastolic:<br /> 90 mm Hg or higher
+                                                        </th>
+                                                        <th># of members screened<br /> for hypertension<br />  (denominator)</th>
+                                                        <th>Blood sugar <br /> level (>140mg/dl)</th>
+                                                        <th># of members<br /> screened for<br /> diabetes (denominator)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (DataRow dr in dt1.Rows)
+                                                    {
+                                                        <tr>
+                                                            <td>@dr["District"]</td>
+                                                            <td>@dr["Block"]</td>
+                                                            <td>@dr["NoRisk"]</td>
+                                                            <td>@dr["PreHyper"]</td>
+                                                            <td>@dr["Hyper"]</td>
+                                                            <td>@dr["HyperReading"]</td>
+                                                            <td>@dr["RandomBloodSugar"]</td>
+                                                            <td>@dr["SugerReading"]</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        }
+                                        if (dt2.Rows.Count > 0)
+                                        {
+                                            <table id="tblsummary2" class="display tblsummarydata" style="width:100%">
+                                                <thead>
+                                                    <tr> <th colspan="7"><strong>Screening status of four Blocks</strong></th></tr>
+                                                    <tr>
+
+                                                        <th>District</th>
+                                                        <th>Block</th>
+                                                        <th>
+                                                            Target
+                                                        </th>
+                                                        <th>
+                                                            Achieved<br />
+                                                            (bood pressure)
+                                                        </th>
+                                                        <th>
+                                                            Pending<br />
+                                                            (bood pressure)
+                                                        </th>
+                                                        <th>
+                                                            Achieved<br />
+                                                            (blood sugar)
+                                                        </th>
+                                                        <th>
+                                                            Pending<br />
+                                                            (blood sugar)
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (DataRow dr in dt2.Rows)
+                                                    {
+                                                        <tr>
+                                                            <td>@dr["District"]</td>
+                                                            <td>@dr["Block"]</td>
+                                                            <td>@dr["Target"]</td>
+                                                            <td>@dr["HyperReading"]</td>
+                                                            <td>@dr["PendingHyperReading"]</td>
+                                                            <td>@dr["SugerReading"]</td>
+                                                            <td>@dr["PendingSugerReading"]</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+
+
+
+                                        }
+
+
+
+                                        <!-- Table 2 -->
+
+
+
+                                    }
+
+                                    <table id="table1" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Office</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>d4</td>
+                                                <td>d6</td>
+                                                <td>d7</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,7 +262,6 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
-
 
 
     @*<link href="https://cdn.datatables.net/2.0.6/css/dataTables.dataTables.css" />*@
@@ -134,6 +278,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>*@
 
     <script>
         $(function () {
@@ -190,7 +335,144 @@
             $("#btnsubmit").click(function (e) {
                 e.preventDefault();
                 BindData();
+                $('#tblsummary1').DataTable();
+                $('#tblsummary2').DataTable();
             });
+
+            //export to excel
+            $('#exportBtn').click(function () {
+                debugger;
+                $('#table1').DataTable();
+                // Get Data from Table 1
+                var table1 = $('#table1').DataTable();
+                var table1Data = table1.rows().data().toArray();
+
+                // Get Data from Table 2
+                var table2 = $('#tblsummary1').DataTable();
+                var table2Data = table2.rows().data().toArray();
+
+                var table3 = $('#tblsummary2').DataTable();
+                var table3Data = table3.rows().data().toArray();
+
+                // Create Workbook and Sheets
+                var wb = XLSX.utils.book_new();
+
+                // Create Sheet 1 for Table 1 Data
+                var ws1 = XLSX.utils.json_to_sheet(table1Data, {
+                    header: ["Name", "Position", "Office"]
+                });
+                XLSX.utils.book_append_sheet(wb, ws1, "Table 1");
+
+                // Create Sheet 2 for Table 2 Data
+                var ws2 = XLSX.utils.json_to_sheet(table2Data, {
+                    header: ["Department", "Head", "Location"]
+                });
+                var ws2 = XLSX.utils.json_to_sheet(table3Data, {
+                    header: ["Department", "Head", "Location"]
+                });
+                XLSX.utils.book_append_sheet(wb, ws2, "Table 2");
+
+                // Export to Excel
+                XLSX.writeFile(wb, "ExportedData.xlsx");
+
+
+                //test
+                // Convert JSON data to sheets
+                //var headers1 = table1.columns().header().toArray();
+                //var wsRaw1 = XLSX.utils.json_to_sheet(table1Data, {
+                //    header: headers1
+                //});
+                ////var wsRawSumary = XLSX.utils.json_to_sheet(table2Data);
+                //var headers2 = table2.columns().header().toArray();
+                //var headerNames = headers2.map(function (hrd) {
+                //    return $(hrd).text().trim();
+                //});
+
+                //var ws1 = XLSX.utils.json_to_sheet(table2Data, {
+                //    header: [headerNames]
+                //});
+
+
+               // var wsRaw1 = XLSX.utils.json_to_sheet(table1Data);
+               // var ws1 = XLSX.utils.json_to_sheet(table2Data, {
+               //     header: ["District","Block","No risk ystolic: less than 120 mm Hg diastolic: less than 80 mm Hg",
+               //         "Pre-hyper systolic: 120–139 mm Hg and / or diastolic: 80–89 mm Hg",
+               //         "Hyper systolic: 140 mm Hg or higher and / or diastolic: 90 mm Hg or higher",
+               //         "# of members screened for hypertension (denominator)",
+               //         "# of members screened for diabetes (denominator)",
+               //     ]
+               // });
+               // var ws2 = XLSX.utils.json_to_sheet(table3Data);
+
+               // // Create a new workbook
+               // var wb = XLSX.utils.book_new();
+
+               // // Append sheets to workbook
+               // XLSX.utils.book_append_sheet(wb, wsRaw1, "RawDataSet");
+               //// XLSX.utils.book_append_sheet(wb, wsRawSumary, "RawDataSet");
+               // XLSX.utils.book_append_sheet(wb, ws1, "Hypertension");
+               // XLSX.utils.book_append_sheet(wb, ws2, "ScreeningStatus");
+
+               // // Export the workbook to an Excel file
+               // XLSX.writeFile(wb, "RawDataSummary.xlsx");
+
+
+            });
+
+            //$('#exportBtn').click(function () {
+            //    // Get Data from Table 1
+            //    var table1 = $('#tbl').DataTable();
+            //    var table1Data = table1.rows().data().toArray();
+
+            //    // Get Data from Table 2
+            //    var table2 = $('.tblsummarydata').DataTable();
+            //    var table2Data = table2.rows().data().toArray();
+
+            //    //// Create Workbook and Sheets
+            //    //var wb = XLSX.utils.book_new();
+
+            //    //// Create Sheet 1 for Table 1 Data
+            //    //var ws1 = XLSX.utils.json_to_sheet(table1Data, {
+            //    //  //  header: ["Name", "Position", "Office", "Age", "Start date", "Salary"]
+            //    //});
+            //    //XLSX.utils.book_append_sheet(wb, ws1, "Table 1");
+
+            //    //// Create Sheet 2 for Table 2 Data
+            //    //var ws2 = XLSX.utils.json_to_sheet(table2Data, {
+            //    //    //header: ["Department", "Head", "Location"]
+            //    //});
+            //    //XLSX.utils.book_append_sheet(wb, ws2, "Table 2");
+
+            //    //// Export to Excel
+            //    //XLSX.writeFile(wb, "ExportedData.xlsx");
+
+            //    // Combine the Data
+            //    var combinedData = [];
+
+            //    // Add a header for Table 1
+            //    combinedData.push(["Name", "Position", "Office", "Age", "Start date", "Salary"]);
+            //    combinedData = combinedData.concat(table1Data.map(function (row) {
+            //        return Object.values(row);
+            //    }));
+
+            //    // Add an empty row to separate the data
+            //    combinedData.push([]);
+
+            //    // Add a header for Table 2
+            //    combinedData.push(["Department", "Head", "Location"]);
+            //    combinedData = combinedData.concat(table2Data.map(function (row) {
+            //        return Object.values(row);
+            //    }));
+
+            //    // Create Workbook and Sheet
+            //    var wb = XLSX.utils.book_new();
+            //    var ws = XLSX.utils.aoa_to_sheet(combinedData);
+            //    XLSX.utils.book_append_sheet(wb, ws, "Combined Data");
+
+            //    // Export to Excel
+            //    XLSX.writeFile(wb, "CombinedData.xlsx");
+
+            //});
 
 
         });//End Load Method
@@ -241,18 +523,18 @@
                                 }
                             ],
                             order: [[0, 'asc']],
-                            buttons: [{
-                                extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span>', title: 'NCD Raw Data Lists',//$('#IDDistrict option:selected').text() +
-                                className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
-                                filename: 'NCD Raw Data List',
-                                exportOptions: { modifier: { page: 'all' } }
-                            }],
+                            //buttons: [{
+                            //    extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span>', title: 'NCD Raw Data Lists',//$('#IDDistrict option:selected').text() +
+                            //    className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
+                            //    filename: 'NCD Raw Data List',
+                            //    exportOptions: { modifier: { page: 'all' } }
+                            //}],
                         });
                         $('.dataTables_filter input[type="search"]').css(
                             { 'width': '500px', 'display': 'inline-block' }
                         );
-                        $('#div-download').empty();
-                        table.buttons().container().appendTo($('#div-download'));
+                       // $('#div-download').empty();
+                       // table.buttons().container().appendTo($('#div-download'));
                         $('#spinner').hide();
                     }
                     else {

@@ -112,7 +112,9 @@ namespace NCDNewMIS.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            DataSet ds =new DataSet();
+            ds = SP_Model.SP_RawDataSummary();
+            return View(ds);
         }
         public ActionResult GalleryOne()
         {

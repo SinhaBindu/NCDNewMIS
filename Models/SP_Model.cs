@@ -237,6 +237,12 @@ namespace NCDNewMIS.Models
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
+        public static DataSet SP_RawDataSummary()
+        {
+            StoredProcedure sp = new StoredProcedure("SP_RawDataSummary");
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
 
     }
 }

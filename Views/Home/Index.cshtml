@@ -255,16 +255,8 @@
                                                     }
                                                 </tbody>
                                             </table>
-
-
-
-
                                         }
                                     }
-
-
-
-
                                 </div>
                             </div>
                         </div>
@@ -485,6 +477,7 @@
                 var headerNamestbl = headerstbl.map(function (hrd) {
                     return $(hrd).text().trim();
                 });
+                combinedData.push(["Raw Submission Data"]);
                 combinedData.push(headerNamestbl);
                 combinedData = combinedData.concat(table1Data.map(function (row) {
                     return Object.values(row);
@@ -492,14 +485,14 @@
 
                 // Add an empty row to separate the data
                 combinedData.push([]);
-                combinedData1.push([]);
+                //combinedData1.push([]);
 
-
-                  // Add a header for Table main summary
+                // Add a header for Table main summary
                 var headersmainsumary = tablesmain.columns().header().toArray();
                 var headerNames2mainsummary = headersmainsumary.map(function (hrd, i) {
                     return $(hrd).text().trim();
                 });
+                combinedData1.push(["Block wise"]);
                 combinedData1.push(headerNames2mainsummary);
                 combinedData1 = combinedData1.concat(tablemainsummaryData.map(function (row) {
                     return Object.values(row);
@@ -512,7 +505,7 @@
                 var headerNames1 = headers1.map(function (hrd) {
                     return $(hrd).text().trim();
                 });
-                combinedData1.push(["Block Wises"]);
+                combinedData1.push([]);
                 combinedData1.push(headerNames1);
                 combinedData1 = combinedData1.concat(table2Data.map(function (row) {
                     return Object.values(row);
@@ -535,6 +528,34 @@
                 var wb = XLSX.utils.book_new();
                 var ws = XLSX.utils.aoa_to_sheet(combinedData);
                 var ws1 = XLSX.utils.aoa_to_sheet(combinedData1);
+
+                // Define merge ranges using decode_range
+                var mergeRange1 = XLSX.utils.decode_range("A1:AK1"); // Merge A1:D1
+                var mergeRange2 = XLSX.utils.decode_range("A1:U1"); // Merge A1:D1
+                var mergeRange3 = XLSX.utils.decode_range("A18:G18"); // Merge A1:D1
+               // var mergeRange2 = XLSX.utils.decode_range("A2:D2"); // Merge A2:D2
+                // Apply merges to the worksheet
+                ws['!merges'] = [mergeRange1];
+                ws1['!merges'] = [mergeRange2, mergeRange3];
+
+                // Optionally, apply some styling (for example)
+                var titleStyle = {
+                    font: { bold: true, sz: 14, color: { rgb: "#000000" } },  // Bold, 14pt, white font
+                    fill: { fgColor: { rgb: "#4F81BD" } },                    // Blue background
+                    alignment: { horizontal: "center", vertical: "center" }  // Center alignment
+                };
+
+                // Apply style to the merged title cells
+                ws['A1'].s = titleStyle;
+                //ws['A2'].s = titleStyle;
+                var range = XLSX.utils.decode_range(ws['!ref']);
+                for (var C = range.s.c; C <= range.e.c; ++C) {
+                    var address = XLSX.utils.encode_col(C) + "1"; // <-- first row, column number C
+                    if (!ws[address]) continue;
+                    ws[address].v = ws[address].v.toUpperCase();
+                }
+
+
                // var ws2 = XLSX.utils.aoa_to_sheet(combinedData2);
                 XLSX.utils.book_append_sheet(wb, ws, "Raw Submission Data");
                 XLSX.utils.book_append_sheet(wb, ws1, "Raw Summary Data");

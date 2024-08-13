@@ -126,39 +126,43 @@
                             <div class="col-md-12" id="subdata">
                             </div>
                             <div class="col-md-12">
-                                <div class="summarydata" style="display:none;" ">
+                                <div class="summarydata" style="display:none;">
                                     @{
                                         <!-- Table Raw Summary Main -->
                                         if (dtmains.Rows.Count > 0)
                                         {
                                             <table id="tblsummary" class="display tblsummarydata" style="width:100%;">
                                                 <thead>
-                                                    <tr> <th colspan="7"><strong>Screening status of four Blocks</strong></th></tr>
                                                     <tr>
-
-                                                        <th>District</th>
-                                                        <th>Block</th>
-                                                        <th>Total household visit target (estimated)</th>
-                                                        <th>Total HHs visited</th>
-                                                        <th>Total member age 30+ interacted </th>
-                                                        <th>% of household members age 30+ who are already a patient of hypertension</th>
-                                                        <th># of household members age 30+ who are already a patient of hypertension (numerator)</th>
-                                                        <th>If yes, % of members continuing with medication</th>
+                                                        <th rowspan="2">District</th>
+                                                        <th rowspan="2">Block</th>
+                                                        <th rowspan="2">Total household visit target (estimated)</th>
+                                                        <th rowspan="2">Total HHs visited</th>
+                                                        <th rowspan="2">Total member age 30+ interacted </th>
+                                                        <th rowspan="2">% of household members age 30+ who are already a patient of hypertension</th>
+                                                        <th rowspan="2"># of household members age 30+ who are already a patient of hypertension (numerator)</th>
+                                                        <th rowspan="2">If yes, % of members continuing with medication</th>
+                                                        <th colspan="5">If yes, whom does he/she consult for medication?</th>
+                                                        <th rowspan="2">% of household members who are already a patient of diabetes</th>
+                                                        <th rowspan="2"># of household members who are already a patient of diabetes (numerator)</th>
+                                                        <th rowspan="2">If yes, % of member continuing with medication</th>
+                                                        <th colspan="5">If yes, whom does he/she consult for medication?</th>
+                                                    </tr>
+                                                    <tr>
                                                         <th>Government Doctor</th>
                                                         <th>Private Doctor</th>
                                                         <th>Private pharmacist (Self medication)</th>
                                                         <th>Rural medical practitioner</th>
                                                         <th>Did not consult  any medical practit</th>
-                                                        <th>% of household members who are already a patient of diabetes</th>
-                                                        <th># of household members who are already a patient of diabetes (numerator)</th>
-                                                        <th>If yes, % of member continuing with medication</th>
                                                         <th>Government Doctor</th>
                                                         <th>Private Doctor</th>
                                                         <th>Private pharmacist (Self medication)</th>
                                                         <th>Rural medical practitioner</th>
                                                         <th>Did not consult any medical practit</th>
+                                                       
                                                     </tr>
                                                 </thead>
+                                               
                                                 <tbody>
                                                     @foreach (DataRow dr in dtmains.Rows)
                                                     {
@@ -487,16 +491,22 @@
                 combinedData.push([]);
                 //combinedData1.push([]);
 
+                debugger;
                 // Add a header for Table main summary
                 var headersmainsumary = tablesmain.columns().header().toArray();
                 var headerNames2mainsummary = headersmainsumary.map(function (hrd, i) {
                     return $(hrd).text().trim();
                 });
+                //headerNames2mainsummary.push([{ text: "If yes, whom does he/she consult for medication?", range: "I2:M2" }]);
                 combinedData1.push(["Block wise"]);
-                combinedData1.push(headerNames2mainsummary);
+                combinedData1.push([]);
+                //combinedData1.push(["If yes, whom does he/she consult for medication?"]);
+                //combinedData1.push(["If yes, whom does he/she consult for medication?"]);
+                combinedData1.push(headerNames2mainsummary,);
                 combinedData1 = combinedData1.concat(tablemainsummaryData.map(function (row) {
                     return Object.values(row);
                 }));
+
 
                 combinedData1.push([]);
 
@@ -529,14 +539,17 @@
                 var ws = XLSX.utils.aoa_to_sheet(combinedData);
                 var ws1 = XLSX.utils.aoa_to_sheet(combinedData1);
 
+                
                 // Define merge ranges using decode_range
                 var mergeRange1 = XLSX.utils.decode_range("A1:AK1"); // Merge A1:D1
                 var mergeRange2 = XLSX.utils.decode_range("A1:U1"); // Merge A1:D1
+                var mergeRange2_1 = XLSX.utils.decode_range("I2:M2"); // Merge A1:D1
+                var mergeRange2_2 = XLSX.utils.decode_range("Q2:U2"); // Merge A1:D1
                 var mergeRange3 = XLSX.utils.decode_range("A18:G18"); // Merge A1:D1
                // var mergeRange2 = XLSX.utils.decode_range("A2:D2"); // Merge A2:D2
                 // Apply merges to the worksheet
                 ws['!merges'] = [mergeRange1];
-                ws1['!merges'] = [mergeRange2, mergeRange3];
+                ws1['!merges'] = [mergeRange2, mergeRange2_1, mergeRange2_2,mergeRange3];
 
                 // Optionally, apply some styling (for example)
                 var titleStyle = {

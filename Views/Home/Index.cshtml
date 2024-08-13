@@ -66,7 +66,7 @@
             <button type="button" id="div-download"
                     title="Click here to Download To Excel"></button>
 
-            <button id="exportBtn">Export to Excel</button>
+            <button id="exportBtn" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300"><i class="fa fa-file-export"></i> Export to Excel</button>
         </div>
 
         <div class="row">
@@ -126,28 +126,83 @@
                             <div class="col-md-12" id="subdata">
                             </div>
                             <div class="col-md-12">
-                                <div class="summarydata">
+                                <div class="summarydata" style="display:none;" ">
                                     @{
+                                        <!-- Table Raw Summary Main -->
+                                        if (dtmains.Rows.Count > 0)
+                                        {
+                                            <table id="tblsummary" class="display tblsummarydata" style="width:100%;">
+                                                <thead>
+                                                    <tr> <th colspan="7"><strong>Screening status of four Blocks</strong></th></tr>
+                                                    <tr>
+
+                                                        <th>District</th>
+                                                        <th>Block</th>
+                                                        <th>Total household visit target (estimated)</th>
+                                                        <th>Total HHs visited</th>
+                                                        <th>Total member age 30+ interacted </th>
+                                                        <th>% of household members age 30+ who are already a patient of hypertension</th>
+                                                        <th># of household members age 30+ who are already a patient of hypertension (numerator)</th>
+                                                        <th>If yes, % of members continuing with medication</th>
+                                                        <th>Government Doctor</th>
+                                                        <th>Private Doctor</th>
+                                                        <th>Private pharmacist (Self medication)</th>
+                                                        <th>Rural medical practitioner</th>
+                                                        <th>Did not consult  any medical practit</th>
+                                                        <th>% of household members who are already a patient of diabetes</th>
+                                                        <th># of household members who are already a patient of diabetes (numerator)</th>
+                                                        <th>If yes, % of member continuing with medication</th>
+                                                        <th>Government Doctor</th>
+                                                        <th>Private Doctor</th>
+                                                        <th>Private pharmacist (Self medication)</th>
+                                                        <th>Rural medical practitioner</th>
+                                                        <th>Did not consult any medical practit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (DataRow dr in dtmains.Rows)
+                                                    {
+                                                        <tr>
+                                                            <td>@dr["District"]</td>
+                                                            <td>@dr["Block"]</td>
+                                                            <td>@dr["Target"]</td>
+                                                            <td>@dr["HHVisted"]</td>
+                                                            <td>@dr["MemberAge30"]</td>
+                                                            <td>@dr["MemberHyperPer"]</td>
+                                                            <td>@dr["MemberHypertensionMedication30yes"]</td>
+                                                            <td>@dr["MemberHyperMedicationPer"]</td>
+                                                            <td>@dr["MemberHyperGovtDoctorPer"]</td>
+                                                            <td>@dr["MemberHyperPrivateDoctorPer"]</td>
+                                                            <td>@dr["MemberHyperPrivatePharmacistPer"]</td>
+                                                            <td>@dr["MemberHyperRuralPer"]</td>
+                                                            <td>@dr["MemberHyperNoOnePer"]</td>
+                                                            <td>@dr["MemberDiabitisePer"]</td>
+                                                            <td>@dr["MemberConsultDiabitisevalueMedication"]</td>
+                                                            <td>@dr["MemberDiabitiseContinueMedicationPer"]</td>
+                                                            <td>@dr["MemberDiabitiseGovtDoctorPer"]</td>
+                                                            <td>@dr["MemberDiabitisePrivateDoctorPer"]</td>
+                                                            <td>@dr["MemberDiabitisePrivatePharmacistPer"]</td>
+                                                            <td>@dr["MemberDiabitiseRuralPer"]</td>
+                                                            <td>@dr["MemberDiabitiseNoOnePer"]</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        }
+                                        <!-- Table 1 -->
                                         if (dt1.Rows.Count > 0)
                                         {
-                                            <table id="tblsummary1" class="display tblsummarydata" style="width:100%">
+                                            <table id="tblsummary1" class="display tblsummarydata" style="width:100%;">
                                                 <thead>
                                                     <tr>
                                                         <th>District</th>
                                                         <th>Block</th>
+                                                        <th> No risk <br /> systolic: less <br />than 120 mm Hg <br /> diastolic: less than 80 mm Hg</th>
                                                         <th>
-                                                            No risk <br />
-                                                            systolic: less <br />than 120 mm Hg <br /> diastolic: less than 80 mm Hg
+                                                            Pre-hyper  systolic: 120–139<br /> mm Hg and/or <br /> diastolic: 80–89 mm Hg
                                                         </th>
-                                                        <th>
-                                                            Pre-hyper
-                                                            systolic: 120–139<br /> mm Hg and/or <br /> diastolic: 80–89 mm Hg
-                                                        </th>
-                                                        <th>
-                                                            Hyper <br />
-                                                            systolic: 140 mm Hg or higher<br /> and/or diastolic:<br /> 90 mm Hg or higher
-                                                        </th>
-                                                        <th># of members screened<br /> for hypertension<br />  (denominator)</th>
+                                                        <th> Hyper <br /> systolic: 140 mm Hg or higher<br /> and/or diastolic:<br /> 90 mm Hg or higher</th>
+                                                        <th># of members screened<br /> for hypertension<br /> (denominator)</th>
                                                         <th>Blood sugar <br /> level (>140mg/dl)</th>
                                                         <th># of members<br /> screened for<br /> diabetes (denominator)</th>
                                                     </tr>
@@ -169,34 +224,20 @@
                                                 </tbody>
                                             </table>
                                         }
+                                        <!-- Table 2 -->
                                         if (dt2.Rows.Count > 0)
                                         {
-                                            <table id="tblsummary2" class="display tblsummarydata" style="width:100%">
+                                            <table id="tblsummary2" class="display tblsummarydata" style="width:100%;">
                                                 <thead>
                                                     <tr> <th colspan="7"><strong>Screening status of four Blocks</strong></th></tr>
                                                     <tr>
-
                                                         <th>District</th>
                                                         <th>Block</th>
-                                                        <th>
-                                                            Target
-                                                        </th>
-                                                        <th>
-                                                            Achieved<br />
-                                                            (bood pressure)
-                                                        </th>
-                                                        <th>
-                                                            Pending<br />
-                                                            (bood pressure)
-                                                        </th>
-                                                        <th>
-                                                            Achieved<br />
-                                                            (blood sugar)
-                                                        </th>
-                                                        <th>
-                                                            Pending<br />
-                                                            (blood sugar)
-                                                        </th>
+                                                        <th>Target</th>
+                                                        <th>Achieved (bood pressure)</th>
+                                                        <th>Pending (bood pressure)</th>
+                                                        <th>Achieved (blood sugar) </th>
+                                                        <th>Pending (blood sugar)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -219,32 +260,9 @@
 
 
                                         }
-
-
-
-                                        <!-- Table 2 -->
-
-
-
                                     }
 
-                                    <table id="table1" class="display" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>d4</td>
-                                                <td>d6</td>
-                                                <td>d7</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
 
 
                                 </div>
@@ -335,144 +353,198 @@
             $("#btnsubmit").click(function (e) {
                 e.preventDefault();
                 BindData();
+
+                $('#tbl').DataTable();
+                $('#tblsummary').DataTable();
                 $('#tblsummary1').DataTable();
                 $('#tblsummary2').DataTable();
             });
 
             //export to excel
-            $('#exportBtn').click(function () {
-                debugger;
-                $('#table1').DataTable();
-                // Get Data from Table 1
-                var table1 = $('#table1').DataTable();
-                var table1Data = table1.rows().data().toArray();
-
-                // Get Data from Table 2
-                var table2 = $('#tblsummary1').DataTable();
-                var table2Data = table2.rows().data().toArray();
-
-                var table3 = $('#tblsummary2').DataTable();
-                var table3Data = table3.rows().data().toArray();
-
-                // Create Workbook and Sheets
-                var wb = XLSX.utils.book_new();
-
-                // Create Sheet 1 for Table 1 Data
-                var ws1 = XLSX.utils.json_to_sheet(table1Data, {
-                    header: ["Name", "Position", "Office"]
-                });
-                XLSX.utils.book_append_sheet(wb, ws1, "Table 1");
-
-                // Create Sheet 2 for Table 2 Data
-                var ws2 = XLSX.utils.json_to_sheet(table2Data, {
-                    header: ["Department", "Head", "Location"]
-                });
-                var ws2 = XLSX.utils.json_to_sheet(table3Data, {
-                    header: ["Department", "Head", "Location"]
-                });
-                XLSX.utils.book_append_sheet(wb, ws2, "Table 2");
-
-                // Export to Excel
-                XLSX.writeFile(wb, "ExportedData.xlsx");
-
-
-                //test
-                // Convert JSON data to sheets
-                //var headers1 = table1.columns().header().toArray();
-                //var wsRaw1 = XLSX.utils.json_to_sheet(table1Data, {
-                //    header: headers1
-                //});
-                ////var wsRawSumary = XLSX.utils.json_to_sheet(table2Data);
-                //var headers2 = table2.columns().header().toArray();
-                //var headerNames = headers2.map(function (hrd) {
-                //    return $(hrd).text().trim();
-                //});
-
-                //var ws1 = XLSX.utils.json_to_sheet(table2Data, {
-                //    header: [headerNames]
-                //});
-
-
-               // var wsRaw1 = XLSX.utils.json_to_sheet(table1Data);
-               // var ws1 = XLSX.utils.json_to_sheet(table2Data, {
-               //     header: ["District","Block","No risk ystolic: less than 120 mm Hg diastolic: less than 80 mm Hg",
-               //         "Pre-hyper systolic: 120–139 mm Hg and / or diastolic: 80–89 mm Hg",
-               //         "Hyper systolic: 140 mm Hg or higher and / or diastolic: 90 mm Hg or higher",
-               //         "# of members screened for hypertension (denominator)",
-               //         "# of members screened for diabetes (denominator)",
-               //     ]
-               // });
-               // var ws2 = XLSX.utils.json_to_sheet(table3Data);
-
-               // // Create a new workbook
-               // var wb = XLSX.utils.book_new();
-
-               // // Append sheets to workbook
-               // XLSX.utils.book_append_sheet(wb, wsRaw1, "RawDataSet");
-               //// XLSX.utils.book_append_sheet(wb, wsRawSumary, "RawDataSet");
-               // XLSX.utils.book_append_sheet(wb, ws1, "Hypertension");
-               // XLSX.utils.book_append_sheet(wb, ws2, "ScreeningStatus");
-
-               // // Export the workbook to an Excel file
-               // XLSX.writeFile(wb, "RawDataSummary.xlsx");
-
-
-            });
-
             //$('#exportBtn').click(function () {
+            //    debugger;
+            //    $('#tbl').DataTable();
             //    // Get Data from Table 1
             //    var table1 = $('#tbl').DataTable();
             //    var table1Data = table1.rows().data().toArray();
 
             //    // Get Data from Table 2
-            //    var table2 = $('.tblsummarydata').DataTable();
+            //    var table2 = $('#tblsummary1').DataTable();
             //    var table2Data = table2.rows().data().toArray();
+
+            //    var table3 = $('#tblsummary2').DataTable();
+            //    var table3Data = table3.rows().data().toArray();
 
             //    //// Create Workbook and Sheets
             //    //var wb = XLSX.utils.book_new();
 
             //    //// Create Sheet 1 for Table 1 Data
             //    //var ws1 = XLSX.utils.json_to_sheet(table1Data, {
-            //    //  //  header: ["Name", "Position", "Office", "Age", "Start date", "Salary"]
+            //    //    header: ["Name", "Position", "Office"]
             //    //});
             //    //XLSX.utils.book_append_sheet(wb, ws1, "Table 1");
 
             //    //// Create Sheet 2 for Table 2 Data
             //    //var ws2 = XLSX.utils.json_to_sheet(table2Data, {
-            //    //    //header: ["Department", "Head", "Location"]
+            //    //    header: ["Department", "Head", "Location"]
+            //    //});
+            //    //var ws2 = XLSX.utils.json_to_sheet(table3Data, {
+            //    //    header: ["Department", "Head", "Location"]
             //    //});
             //    //XLSX.utils.book_append_sheet(wb, ws2, "Table 2");
 
             //    //// Export to Excel
             //    //XLSX.writeFile(wb, "ExportedData.xlsx");
 
-            //    // Combine the Data
-            //    var combinedData = [];
 
-            //    // Add a header for Table 1
-            //    combinedData.push(["Name", "Position", "Office", "Age", "Start date", "Salary"]);
-            //    combinedData = combinedData.concat(table1Data.map(function (row) {
-            //        return Object.values(row);
-            //    }));
+            //    //test
+            //    // Convert JSON data to sheets
+            //    //var headers1 = table1.columns().header().toArray();
+            //    //var wsRaw1 = XLSX.utils.json_to_sheet(table1Data, {
+            //    //    header: headers1
+            //    //});
+            //    ////var wsRawSumary = XLSX.utils.json_to_sheet(table2Data);
+            //    //var headers2 = table2.columns().header().toArray();
+            //    //var headerNames = headers2.map(function (hrd) {
+            //    //    return $(hrd).text().trim();
+            //    //});
 
-            //    // Add an empty row to separate the data
-            //    combinedData.push([]);
+            //    //var ws1 = XLSX.utils.json_to_sheet(table2Data, {
+            //    //    header: [headerNames]
+            //    //});
 
-            //    // Add a header for Table 2
-            //    combinedData.push(["Department", "Head", "Location"]);
-            //    combinedData = combinedData.concat(table2Data.map(function (row) {
-            //        return Object.values(row);
-            //    }));
 
-            //    // Create Workbook and Sheet
-            //    var wb = XLSX.utils.book_new();
-            //    var ws = XLSX.utils.aoa_to_sheet(combinedData);
-            //    XLSX.utils.book_append_sheet(wb, ws, "Combined Data");
+            //   // var wsRaw1 = XLSX.utils.json_to_sheet(table1Data);
+            //   // var ws1 = XLSX.utils.json_to_sheet(table2Data, {
+            //   //     header: ["District","Block","No risk ystolic: less than 120 mm Hg diastolic: less than 80 mm Hg",
+            //   //         "Pre-hyper systolic: 120–139 mm Hg and / or diastolic: 80–89 mm Hg",
+            //   //         "Hyper systolic: 140 mm Hg or higher and / or diastolic: 90 mm Hg or higher",
+            //   //         "# of members screened for hypertension (denominator)",
+            //   //         "# of members screened for diabetes (denominator)",
+            //   //     ]
+            //   // });
+            //   // var ws2 = XLSX.utils.json_to_sheet(table3Data);
 
-            //    // Export to Excel
-            //    XLSX.writeFile(wb, "CombinedData.xlsx");
+            //   // // Create a new workbook
+            //   // var wb = XLSX.utils.book_new();
+
+            //   // // Append sheets to workbook
+            //   // XLSX.utils.book_append_sheet(wb, wsRaw1, "RawDataSet");
+            //   //// XLSX.utils.book_append_sheet(wb, wsRawSumary, "RawDataSet");
+            //   // XLSX.utils.book_append_sheet(wb, ws1, "Hypertension");
+            //   // XLSX.utils.book_append_sheet(wb, ws2, "ScreeningStatus");
+
+            //   // // Export the workbook to an Excel file
+            //   // XLSX.writeFile(wb, "RawDataSummary.xlsx");
+
 
             //});
+
+            $('#exportBtn').click(function () {
+                // Get Data from Table 1
+                var table1 = $('#tbl').DataTable();
+                var table1Data = table1.rows().data().toArray();
+
+                // Get Data from Table 2
+                var tablesmain = $('#tblsummary').DataTable();
+                var tablemainsummaryData = tablesmain.rows().data().toArray();
+
+                // Get Data from Table 2
+                var table2 = $('#tblsummary1').DataTable();
+                var table2Data = table2.rows().data().toArray();
+
+                // Get Data from Table 2
+                var table3 = $('#tblsummary2').DataTable();
+                var table3Data = table3.rows().data().toArray();
+
+                //// Create Workbook and Sheets
+                //var wb = XLSX.utils.book_new();
+
+                //// Create Sheet 1 for Table 1 Data
+                //var ws1 = XLSX.utils.json_to_sheet(table1Data, {
+                //  //  header: ["Name", "Position", "Office", "Age", "Start date", "Salary"]
+                //});
+                //XLSX.utils.book_append_sheet(wb, ws1, "Table 1");
+
+                //// Create Sheet 2 for Table 2 Data
+                //var ws2 = XLSX.utils.json_to_sheet(table2Data, {
+                //    //header: ["Department", "Head", "Location"]
+                //});
+                //XLSX.utils.book_append_sheet(wb, ws2, "Table 2");
+
+                //// Export to Excel
+                //XLSX.writeFile(wb, "ExportedData.xlsx");
+
+                // Combine the Data
+                var combinedData = [];
+                var combinedData1 = [];
+                var combinedData2 = [];
+
+                // Add a header for Table 1
+                 var headerstbl = table1.columns().header().toArray();
+                var headerNamestbl = headerstbl.map(function (hrd) {
+                    return $(hrd).text().trim();
+                });
+                combinedData.push(headerNamestbl);
+                combinedData = combinedData.concat(table1Data.map(function (row) {
+                    return Object.values(row);
+                }));
+
+                // Add an empty row to separate the data
+                combinedData.push([]);
+                combinedData1.push([]);
+
+
+                  // Add a header for Table main summary
+                var headersmainsumary = tablesmain.columns().header().toArray();
+                var headerNames2mainsummary = headersmainsumary.map(function (hrd, i) {
+                    return $(hrd).text().trim();
+                });
+                combinedData1.push(headerNames2mainsummary);
+                combinedData1 = combinedData1.concat(tablemainsummaryData.map(function (row) {
+                    return Object.values(row);
+                }));
+
+                combinedData1.push([]);
+
+                // Add a header for Table 1
+                var headers1 = table2.columns().header().toArray();
+                var headerNames1 = headers1.map(function (hrd) {
+                    return $(hrd).text().trim();
+                });
+                combinedData1.push(["Block Wises"]);
+                combinedData1.push(headerNames1);
+                combinedData1 = combinedData1.concat(table2Data.map(function (row) {
+                    return Object.values(row);
+                }));
+
+                combinedData1.push([]);
+
+                // Add a header for Table 2
+                var headers2 = table3.columns().header().toArray();
+                var headerNames2 = headers2.map(function (hrd, i) {
+                    return $(hrd).text().trim();
+                });
+                combinedData1.push(["Screening status of four Blocks"]);
+                combinedData1.push(headerNames2);
+                combinedData1 = combinedData1.concat(table3Data.map(function (row) {
+                    return Object.values(row);
+                }));
+
+                // Create Workbook and Sheet
+                var wb = XLSX.utils.book_new();
+                var ws = XLSX.utils.aoa_to_sheet(combinedData);
+                var ws1 = XLSX.utils.aoa_to_sheet(combinedData1);
+               // var ws2 = XLSX.utils.aoa_to_sheet(combinedData2);
+                XLSX.utils.book_append_sheet(wb, ws, "Raw Submission Data");
+                XLSX.utils.book_append_sheet(wb, ws1, "Raw Summary Data");
+                //XLSX.utils.book_append_sheet(wb, ws2, "Raw Summary Data");
+
+
+                // Export to Excel
+                XLSX.writeFile(wb, "Raw Submission.xlsx");
+
+            });
 
 
         });//End Load Method

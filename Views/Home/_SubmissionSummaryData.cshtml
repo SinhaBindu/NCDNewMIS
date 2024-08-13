@@ -46,7 +46,7 @@
                 <th class="text-center tblth" rowspan="2">Mobile No</th>
                 <th class="text-center tblth" colspan="3">Submission Data</th>
                 <th class="text-center tblth" rowspan="2">AppVersion</th>
-                <th class="text-center tblth" rowspan="2">Last<br /> Submission Data <br />(App Entry)</th>
+                <th class="text-center tblth" rowspan="2">Last <br />App Entry Date</th>
             </tr>
             <tr>
                 <th class="text-center">Home</th>
@@ -82,6 +82,21 @@
                 }
             }
         </tbody>
+        @if (dt.Rows.Count > 0)
+        {
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><strong>Grand Total : </strong></td>
+                    <td class="text-center tbltd "> <strong>@(dt.Compute("sum(NoOfHomeSubData)",string.Empty)) </strong></td>
+                    <td class="text-center tbltd "> <strong>@(dt.Compute("sum(NoOfCampSubData)", string.Empty)) </strong></td>
+                    <td class="text-center tbltd "> <strong>@(dt.Compute("sum(NoOfFollowupSubData)", string.Empty)) </strong></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        }
 
     </table>
 

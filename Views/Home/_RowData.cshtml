@@ -49,8 +49,8 @@
             <tr>
                 <th class="text-center tblth">Srno.</th>
                 <th class="text-center tblth">Screening<br /> Types</th>
-                <th class="text-center tblth" width="5%">Date Of Survey</th>
-                <th class="text-center tblth" width="5%">Submission Date <br />(App Entry)</th>
+                <th class="text-center tblth" width="5%">Visited Date</th>
+                <th class="text-center tblth" width="5%">App Entry Date</th>
                 <th class="text-center tblth" width="5%">Sync Date</th>
                 <th class="text-center tblth tdhide">Household ID</th>
                 <th class="text-center tblth">Household <br />head name</th>
@@ -103,10 +103,10 @@
                     {
                         <tr>
                             <td class="text-center tbltd">@(srno++)</td>
-                            <td class="text-center tbltd fw-bold"><strong>@dr["ScreeningTypes"]</strong></td>
-                            <td class="text-center tbltd fw-bold" width="6%"><strong>@dr["DateOfSurvey"].ToString()</strong></td>
-                            <td class="text-center tbltd fw-bold" width="6%"><strong>@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["SurveyDt"].ToString())</strong></td>
-                            <td class="text-center tbltd fw-bold" width="6%"><strong>@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["medicalServerEntryDate"].ToString())</strong></td>
+                            <td class="text-center tbltd fw-bold" style="font-weight:bold">@dr["ScreeningTypes"]</td>
+                            <td class="text-center tbltd fw-bold" width="6%" style="font-weight:bold">@dr["DateOfSurvey"].ToString()</td>
+                            <td class="text-center tbltd fw-bold" width="6%" style="font-weight:bold">@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["SurveyDt"].ToString())</td>
+                            <td class="text-center tbltd fw-bold" width="6%" style="font-weight:bold">@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["medicalServerEntryDate"].ToString())</td>
                             <td class="text-left tbltd tdhide"> @dr["HId"] </td>
                             <td class="text-left tbltd tdtextwrp"> @dr["HHHeadName"] </td>
                             <td class="text-center tbltd tdtextwrp"> @dr["NoofMember"] </td>

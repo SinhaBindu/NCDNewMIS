@@ -10,6 +10,10 @@ using System.Linq;
 using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
+using ClosedXML;
+using ClosedXML.Excel;
+using static NCDNewMIS.Controllers.ResourceController;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace NCDNewMIS.Controllers
 {
@@ -182,6 +186,42 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "Record Issues." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
+        //Main RawDataDownload
+        public ActionResult ReportRawDataExcel()
+        {
+            DataSet ds = new DataSet();
+            DataTable dt = new System.Data.DataTable();
+            FilterModel filterModel = new FilterModel();
+            //fill datatable by some data i just use empty databale
+            System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
+            ds = SP_Model.SP_AllRawDataShow(filterModel);
+            dt= ds.Tables[0];
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wb.Style.Font.Bold = true;
+
+                Response.Clear();
+                Response.Buffer = true;
+                Response.Charset = "";
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment;filename=RAWSUBMISSIONDATA" + DateTime.Now.Date.ToString("DD/MMM/YYYY") + ".xlsx");
+
+                using (MemoryStream MyMemoryStream = new MemoryStream())
+                {
+                    wb.SaveAs(MyMemoryStream);
+                    MyMemoryStream.WriteTo(Response.OutputStream);
+                    // memoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
+                }
+            }
+           return new EmptyResult();
+      
+        }
+
         //public ActionResult Blockmap()
         //{
         //    return View();

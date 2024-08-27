@@ -66,6 +66,15 @@ namespace NCDNewMIS.Models
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
+        public static DataSet SP_AllRawDataShow(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_AllRawData");
+            //sp.Command.AddParameter("@SType", model.SType, DbType.String);
+            //sp.Command.AddParameter("@FD", model.FormDt, DbType.String);
+            //sp.Command.AddParameter("@TD", model.ToDt, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
         public static DataTable SP_RegLocation(RegLocationModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_RegLocation");

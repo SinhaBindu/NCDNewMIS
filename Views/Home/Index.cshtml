@@ -63,6 +63,9 @@
     <div class="container-fluid">
         <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
             <h4>@ViewBag.Title</h4>
+            @Html.ActionLink("Download (Till Yesterday)", "ReportRawDataExcel", "Home", new object { },
+                new {@id="btnallRaw", @class = "mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" })
+
             <button type="button" id="div-download"
                     title="Click here to Download To Excel"></button>
 
@@ -159,10 +162,10 @@
                                                         <th>Private pharmacist (Self medication)</th>
                                                         <th>Rural medical practitioner</th>
                                                         <th>Did not consult any medical practit</th>
-                                                       
+
                                                     </tr>
                                                 </thead>
-                                               
+
                                                 <tbody>
                                                     @foreach (DataRow dr in dtmains.Rows)
                                                     {
@@ -356,6 +359,8 @@
                 $('#tblsummary2').DataTable();
             });
 
+
+
             //export to excel
             //$('#exportBtn').click(function () {
             //    debugger;
@@ -435,6 +440,8 @@
 
 
             //});
+
+
 
             $('#exportBtn').click(function () {
                 // Get Data from Table 1
@@ -539,7 +546,7 @@
                 var ws = XLSX.utils.aoa_to_sheet(combinedData);
                 var ws1 = XLSX.utils.aoa_to_sheet(combinedData1);
 
-                
+
                 // Define merge ranges using decode_range
                 var mergeRange1 = XLSX.utils.decode_range("A1:AK1"); // Merge A1:D1
                 var mergeRange2 = XLSX.utils.decode_range("A1:U1"); // Merge A1:D1
@@ -665,5 +672,8 @@
             $('#spinner').hide();
         });
 
+
+
+
     </script>
-}
+    }

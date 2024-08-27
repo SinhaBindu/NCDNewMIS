@@ -40,9 +40,10 @@
                 <th class="text-center">Total No.of <br />members</th>
                 <th class="text-center">No.of members <br />submission data</th>
                 <th class="text-center">Pending <br />submission data</th>
-                @*<th class="text-center">No.of members in <br />Hypertension</th>
-                <th class="text-center">No.of members <br />in RBS </th>*@
                 <th class="text-center">No.of Followup <br />submission data</th>
+                <th class="text-center">No.of members in <br />Hypertension</th>
+                <th class="text-center">No.of members <br />in RBS </th>
+                <th class="text-center">No.of members <br />in Both(Hypertension/RBS) </th>
             </tr>
         </thead>
         <tbody>
@@ -52,20 +53,21 @@
                     var sno = 1;
                     foreach (DataRow dr in dt.Rows)
                     {
-                        <tr>
-                            <td class="text-center">@(sno++)</td>
-                            <td class="text-center">@dr["District"]</td>
-                            <td class="text-center">@dr["Block"]</td>
-                            <td class="text-center">@dr["TotalHousehold"]</td>
-                            <td class="text-center">@dr["TM"]</td>
-                            <td class="text-center">@dr["EM"]</td>
-                            <td class="text-center">
-                                <a href="~/Home/PendingMembers"><strong class="text-warning">@dr["PM"]</strong></a>
-                            </td>
-                            @*<td class="text-center"><strong class="text-danger">@dr["HY"]</strong></td>
-                            <td class="text-center"><strong class="text-danger">@dr["RBS"]</strong></td>*@
-                            <td class="text-center">@dr["FOLLOWUP"]</td>
-                        </tr>
+            <tr>
+                <td class="text-center">@(sno++)</td>
+                <td class="text-center">@dr["District"]</td>
+                <td class="text-center">@dr["Block"]</td>
+                <td class="text-center">@dr["TotalHousehold"]</td>
+                <td class="text-center">@dr["TM"]</td>
+                <td class="text-center">@dr["EM"]</td>
+                <td class="text-center">
+                    <a href="~/Home/PendingMembers"><strong class="text-warning">@dr["PM"]</strong></a>
+                </td>
+                <td class="text-center">@dr["FOLLOWUP"]</td>
+                <td class="text-center">@dr["HY"]</td>
+                <td class="text-center">@dr["RBS"]</td>
+                <td class="text-center">@dr["COMorbCase"]</td>
+            </tr>
                     }
                 }
                 else
@@ -79,16 +81,17 @@
         <tfoot>
             @if (dt.Rows.Count > 0)
             {
-                <tr>
-                    <td class="text-right" colspan="3"><strong>Grand Total :</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(TotalHousehold)", string.Empty)</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(TM)", string.Empty)</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(EM)", string.Empty)</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(PM)", string.Empty)</strong></td>
-                    @*<td class="text-center"><strong>@dt.Compute("sum(HY)", string.Empty)</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(RBS)", string.Empty)</strong></td>*@
-                    <td class="text-center"><strong>@dt.Compute("sum(FOLLOWUP)", string.Empty)</strong></td>
-                </tr>
+            <tr>
+                <td class="text-right" colspan="3"><strong>Grand Total :</strong></td>
+                <td class="text-center"><strong>@dt.Compute("sum(TotalHousehold)", string.Empty)</strong></td>
+                <td class="text-center"><strong>@dt.Compute("sum(TM)", string.Empty)</strong></td>
+                <td class="text-center"><strong>@dt.Compute("sum(EM)", string.Empty)</strong></td>
+                <td class="text-center"><strong>@dt.Compute("sum(PM)", string.Empty)</strong></td>
+                <td class="text-center"><strong>@dt.Compute("sum(FOLLOWUP)", string.Empty)</strong></td>
+                <td class="text-center"><strong>@dt.Compute("sum(HY)", string.Empty)</strong></td>
+                <td class="text-center"><strong>@dt.Compute("sum(RBS)", string.Empty)</strong></td>
+                <td class="text-center"><strong>@dt.Compute("sum(COMorbCase)", string.Empty)</strong></td>
+            </tr>
             }
         </tfoot>
 

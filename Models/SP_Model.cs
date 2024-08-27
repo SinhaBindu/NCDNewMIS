@@ -68,7 +68,16 @@ namespace NCDNewMIS.Models
         }
         public static DataSet SP_AllRawDataShow(FilterModel model)
         {
-            StoredProcedure sp = new StoredProcedure("SP_AllRawData");
+            StoredProcedure sp = new StoredProcedure("SP_AllRawDataDownload");
+            //sp.Command.AddParameter("@SType", model.SType, DbType.String);
+            //sp.Command.AddParameter("@FD", model.FormDt, DbType.String);
+            //sp.Command.AddParameter("@TD", model.ToDt, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
+        public static DataSet SP_AllRawDataFollowUpDownload(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_AllRawDataFollowUpDownload");
             //sp.Command.AddParameter("@SType", model.SType, DbType.String);
             //sp.Command.AddParameter("@FD", model.FormDt, DbType.String);
             //sp.Command.AddParameter("@TD", model.ToDt, DbType.String);

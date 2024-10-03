@@ -261,6 +261,11 @@ namespace NCDNewMIS.Models
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
-
+        public static DataSet Sp_FollowupSuspectedSummary()
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummary");
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
     }
 }

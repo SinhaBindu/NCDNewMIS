@@ -824,15 +824,14 @@ namespace NCDNewMIS.Controllers
                         var maxid = db_.tbl_GalleryUpload.Count() != 0 ? db_.tbl_GalleryUpload?.Max(x => x.Id) : 0;
                         var lastaddmaxid = maxid == 0 ? 1 : maxid + 1;
                         var getblock = db_.Block_Master.Find(model.BlockId);
-
-                        var dadt = SP_Model.SP_ACT1Block();
-                        var results = dadt.Rows.Cast<DataRow>()
-                           .FirstOrDefault(x => x.Field<int>("BlockId") == model.BlockId);
-                        DataRow getact1 = SP_Model.SP_ACT1Block().AsEnumerable().Where(x => x.Field<int>("BlockId") == model.BlockId)?.FirstOrDefault();
-                        var d = getact1["Block"].ToString();
                         var blockname = "";
                         if (getblock == null)
                         {
+                            var dadt = SP_Model.SP_ACT1Block();
+                            var results = dadt.Rows.Cast<DataRow>()
+                               .FirstOrDefault(x => x.Field<int>("BlockId") == model.BlockId);
+                            DataRow getact1 = SP_Model.SP_ACT1Block().AsEnumerable().Where(x => x.Field<int>("BlockId") == model.BlockId)?.FirstOrDefault();
+                            var d = getact1["Block"].ToString();
                             blockname = d;
                         }
                         else
@@ -1196,7 +1195,19 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "Record Issues." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
+        public ActionResult FollowSuspSummary()
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                ds = SP_Model.Sp_FollowupSuspectedSummary();
+            }
+            catch (Exception ex)
+            {
 
+            }
+            return View(ds);
+        }
         #endregion
 
     }

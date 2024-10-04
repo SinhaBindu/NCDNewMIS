@@ -296,14 +296,14 @@
                         TotalAchieved += Data[i].achieved;
                     }
                 }
-                if (targetzero.length <= 0) {
+                //if (targetzero.length <= 0) {
                     //dataser.push({ type: 'column', name: 'Target', data: TotalTarget, 'color': '#bc6ac9' });//bc6ac9
                     dataser.push({ type: 'column', name: 'Estimated Target', data: TD, 'color': '#bc6ac9' });//bc6ac9
-                }
-                if (achievedzero <= 0) {
+                //}
+                //if (achievedzero <= 0) {
                    // dataser.push({ type: 'column', name: 'Achieved', data: TotalAchieved, 'color': '#ffc107' });//fbc21d//f2c02c//008000
                     dataser.push({ type: 'column', name: 'Achieved', data: AD, 'color': '#ffc107' });//fbc21d//f2c02c//008000
-                }
+                //}
                 Highcharts.chart(id, {
 
                     chart: {

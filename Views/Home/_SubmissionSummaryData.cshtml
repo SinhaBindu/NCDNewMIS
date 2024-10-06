@@ -1,4 +1,5 @@
 ﻿@using System.Data
+@using System.Globalization
 @{
     DataTable dt = new DataTable();
     dt = Model;
@@ -66,9 +67,9 @@
                             <td class="text-center tbltd">@(srno++)</td>
                             <td class="text-left tbltd tdtextwrp"> @dr["ReportedBy"] </td>
                             <td class="text-center tbltd tdtextwrp"> @dr["MobileNo"] </td>
-                            <td class="text-center tbltd "> <strong>@dr["NoOfHomeSubData"] </strong></td>
-                            <td class="text-center tbltd "> <strong>@dr["NoOfCampSubData"]</strong> </td>
-                            <td class="text-center tbltd "> <strong>@dr["NoOfFollowupSubData"]</strong> </td>
+                            <td class="text-center tbltd "> <strong>@(!string.IsNullOrWhiteSpace(dr["NoOfHomeSubData"].ToString()) ? Convert.ToDecimal(dr["NoOfHomeSubData"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty) </strong></td>
+                            <td class="text-center tbltd "> <strong>@(!string.IsNullOrWhiteSpace(dr["NoOfCampSubData"].ToString()) ? Convert.ToDecimal(dr["NoOfCampSubData"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong> </td>
+                            <td class="text-center tbltd "> <strong>@(!string.IsNullOrWhiteSpace(dr["NoOfFollowupSubData"].ToString()) ? Convert.ToDecimal(dr["NoOfFollowupSubData"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong> </td>
                             <td class="text-center tbltd tdtextwrp"> @dr["AppVersion"] </td>
                             <td class="text-center tbltd " style="background: @dr["bgColor"] !important; color:@color !important"> <strong>@dr["AppEntryDate"]</strong> </td>
                         </tr>
@@ -89,15 +90,15 @@
                     <td></td>
                     <td></td>
                     <td><strong>Grand Total : </strong></td>
-                    <td class="text-center tbltd "> <strong>@(dt.Compute("sum(NoOfHomeSubData)",string.Empty)) </strong></td>
-                    <td class="text-center tbltd "> <strong>@(dt.Compute("sum(NoOfCampSubData)", string.Empty)) </strong></td>
-                    <td class="text-center tbltd "> <strong>@(dt.Compute("sum(NoOfFollowupSubData)", string.Empty)) </strong></td>
+                    <td class="text-center tbltd "> <strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(NoOfHomeSubData)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(NoOfHomeSubData)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty) </strong></td>
+                    <td class="text-center tbltd "> <strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(NoOfCampSubData)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(NoOfCampSubData)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty) </strong></td>
+                    <td class="text-center tbltd "> <strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(NoOfFollowupSubData)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(NoOfFollowupSubData)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty) </strong></td>
                     <td></td>
                     <td></td>
                 </tr>
             </tfoot>
         }
-
+        
     </table>
 
 </div>

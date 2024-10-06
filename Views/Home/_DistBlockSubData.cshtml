@@ -1,7 +1,11 @@
 ﻿@using System.Data
+@using System.Globalization
 @{
     DataTable dt = new DataTable();
     var columns = new List<string>();
+    var cultureInfo = new CultureInfo("hi-IN");
+    var numberFormatInfo = (NumberFormatInfo)cultureInfo.NumberFormat.Clone();
+    numberFormatInfo.CurrencySymbol = "";
     if (Model != null)
     {
         dt = Model;
@@ -9,7 +13,7 @@
         {
             columns.Add(dc.ColumnName);
         }
-        var ex = new List<string>() { "", "", "", "", "", "","",""};//,"","" 
+        var ex = new List<string>() { "", "", "", "", "", "", "", "" };//,"",""
         columns = columns.Where(x => !ex.Any(y => y == x)).ToList();
     }
 }
@@ -25,7 +29,7 @@
     }
     else
     {
-<strong class="text-bg-primary">Home and Camp Wise Submission Data</strong>
+        <strong class="text-bg-primary">Home and Camp Wise Submission Data</strong>
     }
 </h5>
 <br />
@@ -53,21 +57,35 @@
                     var sno = 1;
                     foreach (DataRow dr in dt.Rows)
                     {
-            <tr>
-                <td class="text-center">@(sno++)</td>
-                <td class="text-center">@dr["District"]</td>
-                <td class="text-center">@dr["Block"]</td>
-                <td class="text-center">@dr["TotalHousehold"]</td>
-                <td class="text-center">@dr["TM"]</td>
-                <td class="text-center">@dr["EM"]</td>
-                <td class="text-center">
-                    <a href="~/Home/PendingMembers"><strong class="text-warning">@dr["PM"]</strong></a>
-                </td>
-                <td class="text-center">@dr["FOLLOWUP"]</td>
-                <td class="text-center">@dr["HY"]</td>
-                <td class="text-center">@dr["RBS"]</td>
-                <td class="text-center">@dr["COMorbCase"]</td>
-            </tr>
+                        <tr>
+                            <td class="text-center">@(sno++)</td>
+                            <td class="text-center">@dr["District"]</td>
+                            <td class="text-center">@dr["Block"]</td>
+                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["TotalHousehold"].ToString()) ? Convert.ToDecimal(dr["TotalHousehold"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
+                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["TM"].ToString()) ? Convert.ToDecimal(dr["TM"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
+                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["EM"].ToString()) ? Convert.ToDecimal(dr["EM"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
+                            <td class="text-center">
+                                <a href="~/Home/PendingMembers">
+                                    <strong class="text-warning">
+                                        @(!string.IsNullOrWhiteSpace(dr["PM"].ToString()) ? Convert.ToDecimal(dr["PM"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                                    </strong>
+                                </a>
+
+                            </td>
+
+                            <td class="text-center">
+                                @(!string.IsNullOrWhiteSpace(dr["FOLLOWUP"].ToString()) ? Convert.ToDecimal(dr["FOLLOWUP"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                            </td>
+                            <td class="text-center">
+                                @(!string.IsNullOrWhiteSpace(dr["HY"].ToString()) ? Convert.ToDecimal(dr["HY"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                            </td>
+                            <td class="text-center">
+                                @(!string.IsNullOrWhiteSpace(dr["RBS"].ToString()) ? Convert.ToDecimal(dr["RBS"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                            </td>
+                            <td class="text-center">
+                                @(!string.IsNullOrWhiteSpace(dr["COMorbCase"].ToString()) ? Convert.ToDecimal(dr["COMorbCase"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                            </td>
+                        </tr>
                     }
                 }
                 else
@@ -81,20 +99,22 @@
         <tfoot>
             @if (dt.Rows.Count > 0)
             {
-            <tr>
-                <td class="text-right" colspan="3"><strong>Grand Total :</strong></td>
-                <td class="text-center"><strong>@dt.Compute("sum(TotalHousehold)", string.Empty)</strong></td>
-                <td class="text-center"><strong>@dt.Compute("sum(TM)", string.Empty)</strong></td>
-                <td class="text-center"><strong>@dt.Compute("sum(EM)", string.Empty)</strong></td>
-                <td class="text-center"><strong>@dt.Compute("sum(PM)", string.Empty)</strong></td>
-                <td class="text-center"><strong>@dt.Compute("sum(FOLLOWUP)", string.Empty)</strong></td>
-                <td class="text-center"><strong>@dt.Compute("sum(HY)", string.Empty)</strong></td>
-                <td class="text-center"><strong>@dt.Compute("sum(RBS)", string.Empty)</strong></td>
-                <td class="text-center"><strong>@dt.Compute("sum(COMorbCase)", string.Empty)</strong></td>
-            </tr>
+                <tr>
+                    <td class="text-right" colspan="3">
+                        <strong>Grand Total :</strong>
+                    </td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(TotalHousehold)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(TotalHousehold)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(TM)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(TM)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(EM)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(EM)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(PM)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(PM)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(FOLLOWUP)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(FOLLOWUP)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(HY)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(HY)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(RBS)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(RBS)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(COMorbCase)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(COMorbCase)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                </tr>
             }
         </tfoot>
-
+        
     </table>
 </div>
 

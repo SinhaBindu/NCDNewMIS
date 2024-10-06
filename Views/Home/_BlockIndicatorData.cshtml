@@ -1,4 +1,5 @@
 ﻿@using System.Data
+@using System.Globalization
 @{
     DataTable dt = new DataTable();
     var columns = new List<string>();
@@ -23,7 +24,6 @@
 
     .collapse {
         /*visibility: collapse !important;*/
-
         visibility: visible !important;
     }
 </style>
@@ -46,11 +46,11 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne_@index">
                     <button onclick="BindHideShowImages('@item.Key',this)" class="accordion-button toggleButton" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@index" aria-expanded="true" aria-controls="collapseOne_@index">
-                            <strong>  Block : @item.Key</strong>
-                        </button>
-                    @*<a href="~/Content/assets/images/BlockPic/@(@item.Key)-01.png" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@index" aria-expanded="true" aria-controls="collapseOne_@index">
                         <strong>  Block : @item.Key</strong>
-                    </a>*@
+                    </button>
+                    @*<a href="~/Content/assets/images/BlockPic/@(@item.Key)-01.png" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@index" aria-expanded="true" aria-controls="collapseOne_@index">
+                            <strong>  Block : @item.Key</strong>
+                        </a>*@
                 </h2>
                 <div id="collapseOne_@index" class="accordion-collapse collapse @exp" aria-labelledby="headingOne_@index" data-bs-parent="#accordionExample">
                     @*<div class="accordion-body">
@@ -78,7 +78,16 @@
                                             <tr>
                                                 @*<td class="text-center">@(sno1++)</td>*@
                                                 <td class="text-left">@dr["indicatorText"]</td>
-                                                <td class="text-center">@dr["Total"]</td>
+                                                @*<td class="text-center">@dr["Total"]</td>*@
+                                                @if (dr["Total"].ToString().Contains('%'))
+                                                {
+                                                    <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["Total"].ToString()) ? dr["Total"].ToString() : string.Empty)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["Total"].ToString()) ? Convert.ToDecimal(dr["Total"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
+
+                                                }
                                                 <td class="text-center">@dr["male"]</td>
                                                 <td class="text-center">@dr["female"]</td>
                                             </tr>

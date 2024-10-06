@@ -261,7 +261,11 @@
                     gridLineColor: 'transparent',
                 },
                 tooltip: {
-                    valueSuffix: ' RS'
+                    valueSuffix: ' RS',
+                    formatter: function () {
+                        return '<b>' + this.series.name + '</b><br>' +
+                            'Value: ' + this.point.y.toLocaleString('en-IN');
+                    }
                 },
                 plotOptions: {
                     column: {

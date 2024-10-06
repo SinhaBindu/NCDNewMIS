@@ -1,7 +1,11 @@
 ﻿@using System.Data
+@using System.Globalization
 @{
     DataTable dt = new DataTable();
     var columns = new List<string>();
+    var cultureInfo = new CultureInfo("hi-IN");
+    var numberFormatInfo = (NumberFormatInfo)cultureInfo.NumberFormat.Clone();
+    numberFormatInfo.CurrencySymbol = "";
     if (Model != null)
     {
         dt = Model;
@@ -56,30 +60,39 @@
                         //var spstar = dr["indicatorText"].ToString().Split('*');
                         //var Isstart = dr["indicatorText"].ToString().Replace("*","")==""?"color:red":"";
                         var start = dr["indicatorText"].ToString().Replace("*", dr["indicatorText"].ToString());
-                        <tr>
-                            @*<td class="text-center">@(sno++)</td>*@
-                            @*<td class="text-center">@dr["district"]</td>*@
-                            @if (ViewBag.DistrictBlockType == "2")
-                            {
-                                <td class="text-center">@dr["block"]</td>
-                            }
-                            <td class="text-left">@dr["indicatorText"].ToString() 
-                            @*<span style="color:red">@(spstar.Length-1).ToString()
-                                  </span>*@
-                            </td>
-                            @*@if (ViewBag.RoundType == "1")
-                            {
-                                <td class="text-center">@dr["Total"]</td>
-                            }
-                            @if (ViewBag.RoundType == "2")
-                            {
-                                <td class="text-center">@dr["Total"]</td>
-                                <td class="text-center">@dr["TotalMember"]</td>
-                            }*@
-                            <td class="text-center">@dr["Total"]</td>
-                            <td class="text-center">@dr["male"]</td>
-                            <td class="text-center">@dr["female"]</td>
-                        </tr>
+            <tr>
+                @*<td class="text-center">@(sno++)</td>*@
+                @*<td class="text-center">@dr["district"]</td>*@
+                @if (ViewBag.DistrictBlockType == "2")
+                {
+                    <td class="text-center">@dr["block"]</td>
+                }
+                <td class="text-left">
+                    @dr["indicatorText"].ToString()
+                    @*<span style="color:red">@(spstar.Length-1).ToString()
+            </span>*@
+                </td>
+                @*@if (ViewBag.RoundType == "1")
+        {
+            <td class="text-center">@dr["Total"]</td>
+        }
+        @if (ViewBag.RoundType == "2")
+        {
+            <td class="text-center">@dr["Total"]</td>
+            <td class="text-center">@dr["TotalMember"]</td>
+        }*@
+                @if (dr["Total"].ToString().Contains('%'))
+                {
+                     <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["Total"].ToString()) ? dr["Total"].ToString() : string.Empty)</td>
+                }
+                else
+                {
+                    <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["Total"].ToString()) ? Convert.ToDecimal(dr["Total"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
+
+                }
+                <td class="text-center">@dr["male"]</td>
+                <td class="text-center">@dr["female"]</td>
+            </tr>
                         index++;
                     }
 

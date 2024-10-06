@@ -1,4 +1,5 @@
 ﻿@using System.Data
+@using  System.Globalization
 @{
     ViewBag.Title = "Health Education ACT - I";
     ViewBag.TitleIcon = "fa fa-user";
@@ -9,6 +10,9 @@
     var endDate = startDate.AddMonths(1).AddDays(-1);
     DataTable dt = new DataTable();
     var columns = new List<string>();
+    var cultureInfo = new CultureInfo("hi-IN");
+    var numberFormatInfo = (NumberFormatInfo)cultureInfo.NumberFormat.Clone();
+    numberFormatInfo.CurrencySymbol = "";
     if (Model != null)
     {
         dt = Model;
@@ -59,8 +63,8 @@
                                                     {
                                                         <tr>
                                                             <td class="text-left">@dr1["block"]</td>
-                                                            <td class="text-center">@Convert.ToDecimal(dr1["target"]).ToString("N0")</td>
-                                                            <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr1["target"].ToString()) ? Convert.ToDecimal(dr1["target"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
+                                                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr1["achieved"].ToString()) ? Convert.ToDecimal(dr1["achieved"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
                                                         </tr>
                                                     }
                                                 }
@@ -107,11 +111,11 @@
                                                 {
                                                     foreach (DataRow dr1 in dr)
                                                     {
-                                                        <tr>
-                                                            <td class="text-left">@dr1["block"]</td>
-                                                            <td class="text-center">@Convert.ToDecimal(dr1["target"]).ToString("N0")</td>
-                                                            <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
-                                                        </tr>
+                                        <tr>
+                                            <td class="text-left">@dr1["block"]</td>
+                                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr1["target"].ToString()) ? Convert.ToDecimal(dr1["target"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
+                                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr1["achieved"].ToString()) ? Convert.ToDecimal(dr1["achieved"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
+                                        </tr>
                                                     }
                                                 }
                                                 @*else
@@ -136,7 +140,7 @@
                 <div class="xl:w-1/2 w-full ">
                     <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                         <h5 class="text-center">
-                            <strong class="text-primary">NDiscussion on healthy lifestyle</strong>
+                            <strong class="text-primary">Discussion on healthy lifestyle</strong>
                         </h5>
                         <div class="overflow-x-auto table-scroll">
                             <div class="dataTables_wrapper">
@@ -162,7 +166,7 @@
                                                         <tr>
                                                             <td class="text-left">@dr1["block"]</td>
                                                             @*<td class="text-center">@dr1["target"]</td>*@
-                                                            <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr1["achieved"].ToString()) ? Convert.ToDecimal(dr1["achieved"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
                                                         </tr>
                                                     }
                                                 }
@@ -212,7 +216,7 @@
                                                             <td class="text-left">@dr1["block"]</td>
                                                             @*<td class="text-center">@dr1["target"]</td>*@
 
-                                                            <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr1["achieved"].ToString()) ? Convert.ToDecimal(dr1["achieved"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
                                                         </tr>
                                                     }
                                                 }
@@ -265,7 +269,7 @@
                                                             <td class="text-left">@dr1["block"]</td>
                                                             @*<td class="text-center">@dr1["target"]</td>*@
 
-                                                            <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr1["achieved"].ToString()) ? Convert.ToDecimal(dr1["achieved"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
                                                         </tr>
                                                     }
                                                 }
@@ -315,7 +319,7 @@
                                                             <td class="text-left">@dr1["block"]</td>
                                                             @*<td class="text-center">@dr1["target"]</td>*@
 
-                                                            <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr1["achieved"].ToString()) ? Convert.ToDecimal(dr1["achieved"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
                                                         </tr>
                                                     }
                                                 }
@@ -368,7 +372,7 @@
                                                             <td class="text-left">@dr1["block"]</td>
                                                             @*<td class="text-center">@dr1["target"]</td>*@
 
-                                                            <td class="text-center">@Convert.ToInt32(dr1["achieved"]).ToString("N0")</td>
+                                                            <td class="text-center">@(!string.IsNullOrWhiteSpace(dr1["achieved"].ToString()) ? Convert.ToDecimal(dr1["achieved"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
                                                         </tr>
                                                     }
                                                 }

@@ -163,13 +163,13 @@
                 return entry.indicatorId === 3;
             });
             if (d1.length!=0) {
-                bindgraph("g1", "<strong>Achieved</strong><br/>" + d1[0].achieved, "Block wise number of " + d1[0].indicatorText + " ", "", [{ name: 'Achieved', y: d1[0].achieved, color: '#ffc107' }]);
+                bindgraph("g1", "<strong>Achieved</strong><br/>" + d1[0].achieved.toLocaleString('en-IN'), "Block wise number of " + d1[0].indicatorText + " ", "", [{ name: 'Achieved', y: d1[0].achieved, color: '#ffc107' }]);
             }
             if (d2.length != 0) {
-                bindgraph("g2", "<strong>Achieved</strong><br/>" + d2[0].achieved, "Block wise number of " + d2[0].indicatorText + " ", "", [{ name: 'Achieved', y: d2[0].achieved, color: '#ffc107' }]);
+                bindgraph("g2", "<strong>Achieved</strong><br/>" + d2[0].achieved.toLocaleString('en-IN'), "Block wise number of " + d2[0].indicatorText + " ", "", [{ name: 'Achieved', y: d2[0].achieved, color: '#ffc107' }]);
             }
             if (d2.length != 0) {
-                bindgraph("g3", "<strong>Achieved</strong><br/>" + d3[0].achieved, "Block wise number of " + d3[0].indicatorText + " ", "", [{ name: 'Achieved', y: d3[0].achieved, color: '#ffc107' }]);
+                bindgraph("g3", "<strong>Achieved</strong><br/>" + d3[0].achieved.toLocaleString('en-IN'), "Block wise number of " + d3[0].indicatorText + " ", "", [{ name: 'Achieved', y: d3[0].achieved, color: '#ffc107' }]);
             }
             //Act1IndicatorChart("gbar1", "<strong>Achieved</strong><br/>", d1bar, "Block wise number of " + d1bar[0].indicatorText + " : " + ((d1bar[0].achieved)), "", "");
             //Act1IndicatorChart("gbar2", "<strong>Achieved</strong><br/>", d2bar, "Block wise number of " + d2bar[0].indicatorText + " : " + ((d2bar[0].achieved)), "","");
@@ -369,9 +369,12 @@
                     credits: {
                         enabled: false
                     },
-                    //tooltip: {
-                    //    valueSuffix: ' million liters'
-                    //},
+                    tooltip: {
+                        formatter: function () {
+                            return '<b>' + this.series.name + '</b><br>' +
+                                'Value: ' + this.point.y.toLocaleString('en-IN');
+                        }
+                    },
                     //plotOptions: {
                     //    series: {
                     //        borderRadius: '25%'

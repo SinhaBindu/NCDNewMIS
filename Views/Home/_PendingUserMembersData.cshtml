@@ -1,4 +1,5 @@
 ﻿@using System.Data
+@using System.Globalization
 @{
     DataTable dt = new DataTable();
     var columns = new List<string>();
@@ -48,8 +49,8 @@
                             <td class="text-left" style="word-break:break-word !important;">@dr["Village"]</td>
                             <td class="text-left" style="word-break:break-word !important;">@dr["FullName"]</td>
                             <td class="text-left" style="word-break:break-word !important;">@dr["HHHeadName"]</td>
-                            <td class="text-center"><strong>@dr["NoofMembers"]</strong></td>
-                            <td class="text-center"><strong class="text-warning">@dr["PendingMembers"]</strong></td>
+                            <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dr["NoofMembers"].ToString()) ? Convert.ToDecimal(dr["NoofMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                            <td class="text-center"><strong class="text-warning">@(!string.IsNullOrWhiteSpace(dr["PendingMembers"].ToString()) ? Convert.ToDecimal(dr["PendingMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                         </tr>
                     }
                 }
@@ -72,8 +73,8 @@
                     <td></td>
                     <td></td>
                     <td class="text-right"><strong>Grand Total :</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(NoofMembers)", string.Empty)</strong></td>
-                    <td class="text-center"><strong>@dt.Compute("sum(PendingMembers)", string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(NoofMembers)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(NoofMembers)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(PendingMembers)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(PendingMembers)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                 </tr>
             }
         </tfoot>

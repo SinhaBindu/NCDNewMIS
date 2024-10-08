@@ -22,13 +22,17 @@
         font-size: 14px !important;
     }
 </style>
-<script>
-    $(document).ready(function () {
-        foo();
-    });
-    function foo() {
-        setTimeout(function () {
-            $('#dv-alter').css('display','none');
-        }, 500);
-    }​
-</script>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            foo();
+        });
+        function foo() {
+            setTimeout(function () {
+                $('#dv-alter').css('display', 'none');
+            }, 500);
+        }
+    </script>
+    }

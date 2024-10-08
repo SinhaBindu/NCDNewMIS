@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="mb-4 row">
                                     <label class="sm:w-1/6 py-[7px] text-body-color text-[1.09375rem] font-medium col-form-label-lg">
-                                        Upload Image <em class="text-primary"><em class="text-danger">*</em> (Max limit 2 MB jpg,png,jpeg)</em>
+                                        Upload Image <em class="text-primary"><em class="text-danger">*</em> (Max limits 2 MB For Each File in jpg,png,jpeg)</em>
                                         <strong class="text-blue">(Capture Multiple images)</strong>
                                     </label>
 
@@ -136,7 +136,7 @@
                             // formData.append(sfilename, fileInput.files[i]);
                             var file = fileInput.files[i], img;
                             if (allowedExtension.indexOf(file.type) > -1) {
-                                if (Math.round(file.size / (1024 * 1024)) > 1) { // make it in MB so divide by 1024*1024  = 2 MB
+                                if (Math.round(file.size / (2 * 1024 * 1024)) > 1) { // make it in MB so divide by 1024*1024  = 2 MB
                                     toastr.error("Error", 'Please select image size less than 2 MB');
                                     return false;
                                 }

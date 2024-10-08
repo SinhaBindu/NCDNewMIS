@@ -67,7 +67,7 @@
                                             }
                                             else
                                             {
-                                                <tr><td colspan="6" class="text-danger"><strong> Record Not Found !!</strong></td></tr>
+                                                <tr><td colspan="4" class="text-danger"><strong> Record Not Found !!</strong></td></tr>
                                             }
                                         }
                                     </tbody>
@@ -84,13 +84,15 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
+<script>
         $(function () {
-            $("#ListDataTable").DataTable({
-               // paging: false,
-                //"bFilter": false,
-                //"info": false
-            });
+            if ('@Model.Count()' > '0') {
+                $("#ListDataTable").DataTable({
+                    // paging: false,
+                    //"bFilter": false,
+                    //"info": false
+                });
+            }
         });
-    </script>
+</script>
 }

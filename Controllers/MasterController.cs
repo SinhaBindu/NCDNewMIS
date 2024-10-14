@@ -300,7 +300,53 @@ namespace NCDNewMIS.Controllers
                 return msg;// Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
+        [AllowAnonymous]
+        [HttpPost]
+        [EnableCors("*")]
+        public async Task<string> JsonPostImage(string imgid="",string base64="",string type="",string SurveyType="")
+        {
+            string fullOutputPath = string.Empty;bool bsaveimg = false;string filetype = string.Empty; string jsval = string.Empty;
+            if (SurveyType == "F")
+                fullOutputPath = "~/ImageUploads/SurveyImages/FollowUp/";
+            else
+                fullOutputPath = "~/ImageUploads/SurveyImages/Home/";
 
+            byte[] bytes = Convert.FromBase64String(base64);
+            if (type == ".pdf" || type == ".PDF" || type == "pdf" || type == "PDF")
+            {
+                fullOutputPath = fullOutputPath + imgid + ".PDF";
+                System.IO.File.WriteAllBytes(Server.MapPath(fullOutputPath), bytes);
+                bsaveimg = true;
+                filetype = "PDF";
+            }
+            else
+            {
+                fullOutputPath = fullOutputPath + imgid + ".png";
+                System.Drawing.Image image;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes))
+                {
+                    using (image = System.Drawing.Image.FromStream(ms))
+                    {
+                        image.Save(Server.MapPath(fullOutputPath), System.Drawing.Imaging.ImageFormat.Png);
+                    }
+                }
+                bsaveimg = true;
+            }
+            if (bsaveimg)
+            {
+                DataTable dt = new DataTable();
+                dt = SP_Model.SP_UploadImgApi(imgid, fullOutputPath, filetype);
+                if (dt.Rows.Count > 0)
+                {
+                    jsval = "{\"Table\":[{\"Name\":\'"+imgid+"',\"path\":\'"+ fullOutputPath + "'}]}";
+                }
+                else
+                {
+                    jsval = "{\"Table\":[{\"Name\":\"\",\"path\":\"\"}]}";
+                }
+            }
+            return jsval;
+        }
 
     }
 }

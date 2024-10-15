@@ -116,7 +116,7 @@ namespace NCDNewMIS.Controllers
 
         public ActionResult Index()
         {
-            DataSet ds =new DataSet();
+            DataSet ds = new DataSet();
             ds = SP_Model.SP_RawDataSummary();
             return View(ds);
         }
@@ -195,7 +195,7 @@ namespace NCDNewMIS.Controllers
             //fill datatable by some data i just use empty databale
             System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
             ds = SP_Model.SP_AllRawDataShow(filterModel);
-            dt= ds.Tables[0];
+            dt = ds.Tables[0];
 
             using (XLWorkbook wb = new XLWorkbook())
             {
@@ -219,8 +219,8 @@ namespace NCDNewMIS.Controllers
                     Response.End();
                 }
             }
-           return new EmptyResult();
-      
+            return new EmptyResult();
+
         }
         //FollowUp Download
         public ActionResult ReportFollowUPRawDataExcel()
@@ -1192,7 +1192,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "Record Issues." }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         public ActionResult FollowSuspSummary()
@@ -1208,6 +1208,41 @@ namespace NCDNewMIS.Controllers
             }
             return View(ds);
         }
+        public ActionResult FollowSuspSummaryData()
+        {
+            return View();
+        }
+        public ActionResult GetFollowupDataSummmary()
+        {
+            DataSet ds = new DataSet();
+            DataTable tbllist = new DataTable();
+            try
+            {
+                ds = SP_Model.Sp_FollowupSuspectedSummaryData();
+                bool IsCheck = false;
+                if (ds.Tables.Count > 0)
+                {
+                    IsCheck = true;
+                    var resData = JsonConvert.SerializeObject(ds);
+                    var res1 = Json(new { IsSuccess = IsCheck, Data = resData }, JsonRequestBehavior.AllowGet);
+                    res1.MaxJsonLength = int.MaxValue;
+                    return res1;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = IsCheck, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "Record Issues." }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+
+
         #endregion
 
     }

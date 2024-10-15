@@ -1,0 +1,894 @@
+﻿@using System.Data
+@{
+    ViewBag.Title = "Follow-Ups Summary";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "Follow-Ups Summary";
+    ViewBag.SemiTitleLink = "/";
+    DateTime now = DateTime.Now;
+    var startDate = new DateTime(now.Year, now.Month, 1);
+    var endDate = startDate.AddMonths(1).AddDays(-1);
+    DataSet ds = new DataSet();
+    DataTable dt = new DataTable();
+    DataTable dt1 = new DataTable();
+    DataTable dt2 = new DataTable();
+    DataTable dt3 = new DataTable();
+    int TotalFollowUp = 0, TotalSuspectedVisitBP = 0, TotalSuspectedVisitBS = 0, TotalSuspectedVisitCOMorb = 0;
+    if (Model != null)
+    {
+        ds = Model;
+        if (ds.Tables.Count > 0)
+        {
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                dt = ds.Tables[0];
+                TotalFollowUp = Convert.ToInt32(dt.Rows[0][0]);
+                TotalSuspectedVisitBP = Convert.ToInt32(dt.Rows[0][1]);
+                TotalSuspectedVisitBS = Convert.ToInt32(dt.Rows[0][2]);
+                TotalSuspectedVisitCOMorb = Convert.ToInt32(dt.Rows[0][3]);
+            }
+            if (ds.Tables[1].Rows.Count > 0)
+            {
+                dt1 = ds.Tables[1];
+
+            }
+            if (ds.Tables[2].Rows.Count > 0)
+            {
+                dt2 = ds.Tables[2];
+            }
+            if (ds.Tables[3].Rows.Count > 0)
+            {
+                dt3 = ds.Tables[3];
+            }
+        }
+    }
+}
+<style>
+    table {
+        text-indent: 0;
+        border-color: inherit;
+        border-collapse: separate !important;
+    }
+    .SizeFn{
+        font-size:10px !important;
+    }
+    h6, .h6 {
+        font-size: 0.900rem !important;
+    }
+</style>
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4>@ViewBag.Title</h4>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel"></button>
+        </div>
+        <div class="w-full">
+            <div class="row">
+                <div class="xl:w-1/3 w-full ">
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b] SizeFn" style="padding:5px;">
+                            <h6 class="text-center">
+                                <strong class="text-primary">Details Of Follow-Ups: Hypertensive Suspects</strong>
+                            </h6>
+                            <div class="overflow-x-auto table-scroll">
+                                <div>Number of suspects followed-up : <strong id="TotalFollowupHP"></strong></div>
+                                <div>Number suspects visited Health Facility : <strong id="TotalSuspectedVisitHP"></strong> &nbsp; || <strong id="TotalFollowupHPPercentage"></strong> (%) </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="xl:w-1/3 w-full ">
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b] SizeFn" style="padding:5px">
+                            <h6 class="text-center">
+                                <strong class="text-primary">Detail of follow-ups: Diabetic suspects</strong>
+                            </h6>
+                            <div class="overflow-x-auto table-scroll">
+                                <div>Number of suspects followed-up : <strong id="TotalFollowupBS"></strong></div>
+                                <div>Number suspects visited Health Facility : <strong id="TotalSuspectedVisitBS"></strong> &nbsp; || <strong id="TotalFollowupBSPercentage"></strong> (%) </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="xl:w-1/3 w-full ">
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b] SizeFn" style="padding:5px">
+                            <h5 class="text-center">
+                                <strong class="text-primary">Detail of follow-ups: Comorbidity</strong>
+                            </h5>
+                            <div class="overflow-x-auto table-scroll">
+                                <div>Number of suspects followed-up : <strong id="TotalFollowupCOM"></strong></div>
+                                <div>Number suspects visited Health Facility : <strong id="TotalSuspectedVisitCOMorb"></strong> &nbsp; || <strong id="TotalFollowupCOMPercentage"></strong> (%) </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full ">
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYPlaceVisitBPBar"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYCheckBPPie"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYMedicationBPPie"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="xl:w-1/2 w-full ">
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYPlaceVisitBSBar"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYCheckBSPie"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYMedicationBSPie"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                @*<div class="xl:w-1/3 w-full">
+            <div class="xl:w-1/1 w-full ">
+                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+                    <h5 class="text-center">
+                        <strong class="text-primary">Details Of Follow-Ups: Dibetic Suspects</strong>
+                    </h5>
+                    <div class="overflow-x-auto table-scroll">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl5">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th class="text-center" colspan="2"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (dt2.Rows.Count > 0)
+                                        {
+                                            var sno = 1;
+                                            DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 1);
+                                            DataRow[] dr2 = dt2.Select("Type = " + 2 + " and TableNo=" + 2);
+                                            if (dr1.Length > 0 && dr2.Length > 0)
+                                            {
+                                                foreach (DataRow dr in dr1)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@dr["Label"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@Convert.ToInt32(dr["Value"]).ToString("N0")</td>
+                                                    </tr>
+                                                }
+                                                foreach (DataRow dr in dr2)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center" style="background-color:#faddd7;">@dr["Label"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#faddd7;">@Convert.ToInt32(dr["Value"]) (@((Convert.ToInt32(dr["Value"]) * 100) / @TotalFollowUp)%)</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="2"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="xl:w-1/1 w-full ">
+                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                    <div class="overflow-x-auto table-scroll">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4" style="color: #fff !important;">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th class="text-center" style="background-color:#b03d80;">Place Of Visit</th>
+                                        <th class="text-center" style="background-color:#b03d80;">Number</th>
+                                        <th class="text-center" style="background-color:#b03d80;">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                                    if (dt2.Rows.Count > 0)
+                                                    {
+                                                        var sno = 1;
+                                                        DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 3);
+                                                        int RowTotal = 0;
+                                                        if (dr1.Length > 0)
+                                                        {
+                                                            foreach (DataRow dr in dr1)
+                                                            {
+                                                                RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                    <tr>
+                                                        <td class="text-center" style="background-color:#b03d80;">@dr["Label"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#b03d80;">@dr["Value"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#b03d80;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td class="text-center" style="background-color:#b03d80;">Total</td>
+                                                    <td class="text-center" style="background-color:#b03d80;">@RowTotal</td>
+                                                    <td class="text-center" style="background-color:#b03d80;"></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="xl:w-1/1 w-full ">
+                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                    <div class="overflow-x-auto table-scroll">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th class="text-center" style="background-color:#e8f4f6;">Testing Result</th>
+                                        <th class="text-center" style="background-color:#e8f4f6;">Number</th>
+                                        <th class="text-center" style="background-color:#e8f4f6;">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (dt2.Rows.Count > 0)
+                                        {
+                                            var sno = 1;
+                                            DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 4);
+                                            int RowTotal = 0;
+                                            if (dr1.Length > 0)
+                                            {
+                                                foreach (DataRow dr in dr1)
+                                                {
+                                                    RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                    <tr>
+                                                        <td class="text-center" style="background-color:#e8f4f6;">@dr["Label"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#e8f4f6;">@dr["Value"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#e8f4f6;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td class="text-center" style="background-color:#e8f4f6;">Total</td>
+                                                    <td class="text-center" style="background-color:#e8f4f6;">@RowTotal</td>
+                                                    <td class="text-center" style="background-color:#e8f4f6;"></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="xl:w-1/1 w-full ">
+                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                    <div class="overflow-x-auto table-scroll">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th class="text-center" style="background-color:#fdefec;">Medication Status</th>
+                                        <th class="text-center" style="background-color:#fdefec;">Number</th>
+                                        <th class="text-center" style="background-color:#fdefec;">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (dt2.Rows.Count > 0)
+                                        {
+                                            var sno = 1;
+                                            DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 5);
+                                            int RowTotal = 0;
+                                            if (dr1.Length > 0)
+                                            {
+                                                foreach (DataRow dr in dr1)
+                                                {
+                                                    RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                    <tr>
+                                                        <td class="text-center" style="background-color:#fdefec;">@dr["Label"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#fdefec;">@dr["Value"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#fdefec;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td class="text-center" style="background-color:#fdefec;">Total</td>
+                                                    <td class="text-center" style="background-color:#fdefec;">@RowTotal</td>
+                                                    <td class="text-center" style="background-color:#fdefec;"></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="xl:w-1/3 w-full">
+            <div class="xl:w-1/1 w-full ">
+                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+                    <h5 class="text-center">
+                        <strong class="text-primary">Details Of Follow-Ups: Comorbidity Suspects</strong>
+                    </h5>
+                    <div class="overflow-x-auto table-scroll">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl5">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th class="text-center" colspan="2"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (dt3.Rows.Count > 0)
+                                        {
+                                            var sno = 1;
+                                            DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 1);
+                                            DataRow[] dr2 = dt3.Select("Type = " + 2 + " and TableNo=" + 2);
+                                            if (dr1.Length > 0 && dr2.Length > 0)
+                                            {
+                                                foreach (DataRow dr in dr1)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@dr["Label"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@Convert.ToInt32(dr["Value"]).ToString("N0")</td>
+                                                    </tr>
+                                                }
+                                                foreach (DataRow dr in dr2)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center" style="background-color:#faddd7;">@dr["Label"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#faddd7;">@Convert.ToInt32(dr["Value"]) (@((Convert.ToInt32(dr["Value"]) * 100) / @TotalFollowUp)%)</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="2"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="xl:w-1/1 w-full ">
+                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                    <div class="overflow-x-auto table-scroll">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4" style="color: #fff !important;">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th class="text-center" style="background-color:#b03d80;">Place Of Visit</th>
+                                        <th class="text-center" style="background-color:#b03d80;">Number</th>
+                                        <th class="text-center" style="background-color:#b03d80;">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (dt3.Rows.Count > 0)
+                                        {
+                                            var sno = 1;
+                                            DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 3);
+                                            int RowTotal = 0;
+                                            if (dr1.Length > 0)
+                                            {
+                                                foreach (DataRow dr in dr1)
+                                                {
+                                                    RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                    <tr>
+                                                        <td class="text-center" style="background-color:#b03d80;">@dr["Label"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#b03d80;">@dr["Value"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#b03d80;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td class="text-center" style="background-color:#b03d80;">Total</td>
+                                                    <td class="text-center" style="background-color:#b03d80;">@RowTotal</td>
+                                                    <td class="text-center" style="background-color:#b03d80;"></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="xl:w-1/1 w-full ">
+                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                    <div class="overflow-x-auto table-scroll">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th class="text-center" style="background-color:#e8f4f6;">Testing Result</th>
+                                        <th class="text-center" style="background-color:#e8f4f6;">Number</th>
+                                        <th class="text-center" style="background-color:#e8f4f6;">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (dt3.Rows.Count > 0)
+                                        {
+                                            var sno = 1;
+                                            DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 4);
+                                            int RowTotal = 0;
+                                            if (dr1.Length > 0)
+                                            {
+                                                foreach (DataRow dr in dr1)
+                                                {
+                                                    RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                    <tr>
+                                                        <td class="text-center" style="background-color:#e8f4f6;">@dr["Label"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#e8f4f6;">@dr["Value"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#e8f4f6;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td class="text-center" style="background-color:#e8f4f6;">Total</td>
+                                                    <td class="text-center" style="background-color:#e8f4f6;">@RowTotal</td>
+                                                    <td class="text-center" style="background-color:#e8f4f6;"></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="xl:w-1/1 w-full ">
+                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                    <div class="overflow-x-auto table-scroll">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th class="text-center" style="background-color:#fdefec;">Medication Status</th>
+                                        <th class="text-center" style="background-color:#fdefec;">Number</th>
+                                        <th class="text-center" style="background-color:#fdefec;">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (dt3.Rows.Count > 0)
+                                        {
+                                            var sno = 1;
+                                            DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 5);
+                                            int RowTotal = 0;
+                                            if (dr1.Length > 0)
+                                            {
+                                                foreach (DataRow dr in dr1)
+                                                {
+                                                    RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                    <tr>
+                                                        <td class="text-center" style="background-color:#fdefec;">@dr["Label"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#fdefec;">@dr["Value"].ToString()</td>
+                                                        <td class="text-center" style="background-color:#fdefec;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td class="text-center" style="background-color:#fdefec;">Total</td>
+                                                    <td class="text-center" style="background-color:#fdefec;">@RowTotal</td>
+                                                    <td class="text-center" style="background-color:#fdefec;"></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <script>
+        $(function () {
+            $("table").attr("width", "100%");
+        });
+        $(document).ready(function () {
+            $.ajax({
+                method: 'POST',
+                url: document.baseURI + '/Home/GetFollowupDataSummmary',
+                data: '',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: onsucess,
+                error: onerror
+            });
+        });
+        function onsucess(resp) {
+            debugger;
+            var categories = []; var dataS = []; var dataSplinePresent = []; GandTotal = 0;
+            var DataList = JSON.parse(resp.Data);
+            var Table1Total = (DataList.Table);
+            var Table2 = (DataList.Table1);
+            var Table3 = (DataList.Table2);
+            var Table4 = (DataList.Table3);
+            var Table5 = (DataList.Table4);
+            var Table6 = (DataList.Table5);
+            var Table7 = (DataList.Table6);
+           // var Table8 = (DataList.Table7);
+            if (Table1Total != null) {
+                $('#TotalFollowupHP').html(Table1Total[0].TotalFollowupHP);
+                $('#TotalSuspectedVisitHP').html(Table1Total[0].TotalSuspectedVisitHP);
+                $('#TotalFollowupHPPercentage').html(Table1Total[0].TotalFollowupHPPercentage);
+
+                $('#TotalFollowupBS').html(Table1Total[0].TotalFollowupBS);
+                $('#TotalSuspectedVisitBS').html(Table1Total[0].TotalSuspectedVisitBS);
+                $('#TotalFollowupBSPercentage').html(Table1Total[0].TotalFollowupBSPercentage);
+
+                $('#TotalFollowupCOM').html(Table1Total[0].TotalFollowupCOM);
+                $('#TotalSuspectedVisitCOMorb').html(Table1Total[0].TotalSuspectedVisitCOMorb);
+                $('#TotalFollowupCOMPercentage').html(Table1Total[0].TotalFollowupCOMPercentage);
+
+            }
+            if (Table2 != null) {
+                for (var i = 0; i < Table2.length; i++) {
+                    categories.push(Table2[i].Label);
+                    dataS.push(Table2[i].NoofPlaceofvisitBP);
+                    dataSplinePresent.push(Table2[i].Percentage);
+                }
+                BindBar('HYPlaceVisitBPBar', categories, dataS, dataSplinePresent, 'Place of visit: Hypertensive Suspects');
+            }
+            if (Table3 != null) {
+                categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                for (var i = 0; i < Table3.length; i++) {
+                    GandTotal += Table3[i].TestingresultBP;
+                    categories.push(Table3[i].Label);
+                    dataS.push({ name: Table3[i].Label, d: Table3[i].TestingresultBP, y: Table3[i].Percentage });
+                    dataSplinePresent.push(Table3[i].Percentage);
+                }
+                BindPie('HYCheckBPPie', categories, dataS, dataSplinePresent, 'Testing result: Hypertensive Suspects', 'Testing result', '<b> Total suspects : ' + GandTotal + '</b>');
+            }
+            if (Table4 != null) {
+                categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                for (var i = 0; i < Table4.length; i++) {
+                    GandTotal += Table4[i].MedicationBP;
+                    categories.push(Table4[i].Label);
+                    dataS.push({ name: Table4[i].Label, d: Table4[i].MedicationBP, y: Table4[i].Percentage });
+                    dataSplinePresent.push(Table4[i].Percentage);
+                }
+                BindPie('HYMedicationBPPie', categories, dataS, dataSplinePresent, 'Medication status: Hypertensive Suspects', 'Medication status', '<b> Total suspects : ' + GandTotal + '</b>');
+            }
+            //Started FOR Diabetic suspects
+            if (Table5 != null) {
+                categories = []; dataS = []; dataSplinePresent = [];
+                for (var i = 0; i < Table5.length; i++) {
+                    categories.push(Table5[i].Label);
+                    dataS.push(Table5[i].NoofPlaceofvisitBS);
+                    dataSplinePresent.push(Table5[i].Percentage);
+                }
+                BindBar('HYPlaceVisitBSBar', categories, dataS, dataSplinePresent, 'Place of visit: Diabetic suspects');
+            }
+            if (Table6 != null) {
+                categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                for (var i = 0; i < Table6.length; i++) {
+                    GandTotal += Table6[i].TestingresultBS;
+                    categories.push(Table6[i].Label);
+                    dataS.push({ name: Table6[i].Label, d: Table6[i].TestingresultBS, y: Table6[i].Percentage });
+                    dataSplinePresent.push(Table6[i].Percentage);
+                }
+                BindPie('HYCheckBSPie', categories, dataS, dataSplinePresent, 'Testing result: Diabetic suspects', 'Testing result', '<b> Total suspects : ' + GandTotal +'</b>');
+            }
+            if (Table7 != null) {
+                categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                for (var i = 0; i < Table7.length; i++) {
+                    GandTotal += Table7[i].MedicationBS;
+                    categories.push(Table7[i].Label);
+                    dataS.push({ name: Table7[i].Label, d: Table7[i].MedicationBS, y: Table7[i].Percentage });
+                    dataSplinePresent.push(Table7[i].Percentage);
+                }
+                BindPie('HYMedicationBSPie', categories, dataS, dataSplinePresent, 'Medication status: Diabetic suspects', 'Medication status', '<b> Total suspects : ' + GandTotal + '</b>');
+            }
+
+           
+
+        }
+        function onerror(resp) {
+            alert("Oops!! Something went Wrong..Please Try Again.");
+        }
+
+        function BindBar(DivId, categories, dataS, dataSplinePresent, Title) {
+            Highcharts.chart(DivId, {
+                chart: {
+                    zooming: {
+                        type: 'xy'
+                    }
+                },
+                title: {
+                    text: Title,
+                    align: 'left'
+                },
+                //subtitle: {
+                //    text: '',
+                //    align: 'left'
+                //},
+                credits: {
+                    enabled: false,
+                },
+                xAxis: [{
+                    categories: categories,
+                    crosshair: true
+                }],
+                yAxis: [{ // Primary yAxis
+                    labels: {
+                        //format: '{value}°C',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
+                    title: {
+                        //text: 'Temperature',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    }
+                }, { // Secondary yAxis
+                    title: {
+                        //text: 'Precipitation',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    labels: {
+                        //format: '{value} mm',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    shared: true
+                },
+                plotOptions: {
+                    series: {
+                        //dataLabels: {
+                        //    enabled: true
+                        //}
+                        dataLabels: {
+                            enabled: true,
+                            borderRadius: 5,
+                            backgroundColor: 'rgba(252, 255, 197, 0.7)',
+                            borderWidth: 1,
+                            borderColor: '#AAA',
+                            y: -6
+                        }
+                    }
+                    //series: {
+                    //    dataLabels: {
+                    //        enabled: true,
+                    //        align: 'right',
+                    //        color: '#FFFFFF',
+                    //        x: -10
+                    //    },
+                    //    pointPadding: 0.2,
+                    //    groupPadding: 0
+                    //}
+                },
+                legend: {
+                    align: 'left',
+                    x: 80,
+                    verticalAlign: 'top',
+                    y: 60,
+                    floating: true,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || // theme
+                        'rgba(255,255,255,0.25)'
+                },
+                series: [{
+                    name: 'Place of visit',
+                    type: 'column',
+                    yAxis: 1,
+                    data: dataS,
+                    //tooltip: {
+                    //    valueSuffix: ' mm'
+                    //}
+
+                }, {
+                    name: 'Place of visit %',
+                    type: 'spline',
+                    data: dataSplinePresent,
+                    //tooltip: {
+                    //    valueSuffix: '°C'
+                    //}
+                }]
+            });
+        }
+
+        function BindPie(DivId, categories, dataS, dataSplinePresent, Title, NM, GandTotal) {
+            Highcharts.chart(DivId, {
+                chart: {
+                    type: 'pie'
+                },
+                title: {
+                    text: Title,
+                    align: 'left'
+                },
+                subtitle: {
+                    text: GandTotal,
+                    align: 'left'
+                },
+                credits: {
+                    enabled: false,
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    },
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+
+                plotOptions: {
+                    series: {
+                        borderRadius: 5,
+                        dataLabels: [{
+                            enabled: true,
+                            distance: 15,
+                            format: '{point.name}'
+                        }, {
+                            enabled: true,
+                            distance: '-30%',
+                            filter: {
+                                property: 'percentage',
+                                operator: '>',
+                                value: 5
+                            },
+                            format: '{point.y:.1f}%',
+                            style: {
+                                fontSize: '0.9em',
+                                textOutline: 'none'
+                            }
+                        }]
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
+                        '<b>{point.d} | {point.y:.2f}%</b> of total<br/>'
+                },
+
+                series: [
+                    {
+                        name: NM,
+                        colorByPoint: true,
+                        data: dataS
+                    }
+                ],
+                
+            });
+        }
+
+    </script>
+}

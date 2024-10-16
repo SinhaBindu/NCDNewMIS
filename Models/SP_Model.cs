@@ -268,12 +268,13 @@ namespace NCDNewMIS.Models
             return ds;
         }
 
-        public static DataTable SP_UploadImgApi(string imgid = "", string filepath = "", string type = "")
+        public static DataTable SP_UploadImgApi(string imgid = "", string filepath = "", string type = "",string Version="")
         {
             StoredProcedure sp = new StoredProcedure("Usp_SaveApiImage");
             sp.Command.AddParameter("@imgid", imgid, DbType.String);
             sp.Command.AddParameter("@filepath", filepath, DbType.String);
             sp.Command.AddParameter("@filetype", type, DbType.String);
+            sp.Command.AddParameter("@Version", Version, DbType.String);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }

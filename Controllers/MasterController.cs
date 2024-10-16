@@ -216,7 +216,7 @@ namespace NCDNewMIS.Controllers
                         }
                         filepath = filepath + "/Error/";
                     }
-                    filepath = filepath + UserName + "^" + Version + "^"+ Guid.NewGuid() + "^-" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ".txt";
+                    filepath = filepath + UserName + "^" + Version + "^" + Guid.NewGuid() + "^-" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ".txt";
                     System.IO.StreamWriter sw = new System.IO.StreamWriter(System.Web.Hosting.HostingEnvironment.MapPath(filepath), false, System.Text.Encoding.UTF8);
                     sw.WriteLine(JsonData);
                     sw.Close();
@@ -303,13 +303,19 @@ namespace NCDNewMIS.Controllers
         [AllowAnonymous]
         [HttpPost]
         [EnableCors("*")]
-        public async Task<string> JsonPostImage(string imgid="",string base64="",string type="",string SurveyType="")
+        public async Task<string> JsonPostImage(string imgid = "", string base64 = "", string type = "", string SurveyType = "", string Version = "")
         {
-            string fullOutputPath = string.Empty;bool bsaveimg = false;string filetype = string.Empty; string jsval = string.Empty;
+            string fullOutputPath = string.Empty; bool bsaveimg = false; string filetype = string.Empty; string jsval = string.Empty;
+            string filepath = "~/ImageUploads/FollowUp_MainArchive/";
+            var resjsondata = "{imgid:" + imgid + " ,base64:" + base64 + ",type:" + type + ",SurveyType:" + SurveyType + ",Version:" + Version + "}";
+            filepath = filepath + "^" + Version + "^" + Guid.NewGuid() + "^-" + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ".txt";
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(System.Web.Hosting.HostingEnvironment.MapPath(filepath), false, System.Text.Encoding.UTF8);
+            sw.WriteLine(resjsondata);
+            sw.Close();
             if (SurveyType == "F")
                 fullOutputPath = "~/ImageUploads/SurveyImages/FollowUp/";
             else
-                fullOutputPath = "~/ImageUploads/SurveyImages/Home/";
+                fullOutputPath = "~/ImageUploads/SurveyImages/FollowUp/";
 
             byte[] bytes = Convert.FromBase64String(base64);
             if (type == ".pdf" || type == ".PDF" || type == "pdf" || type == "PDF")
@@ -335,10 +341,10 @@ namespace NCDNewMIS.Controllers
             if (bsaveimg)
             {
                 DataTable dt = new DataTable();
-                dt = SP_Model.SP_UploadImgApi(imgid, fullOutputPath, filetype);
+                dt = SP_Model.SP_UploadImgApi(imgid, fullOutputPath, filetype, Version);
                 if (dt.Rows.Count > 0)
                 {
-                    jsval = "{\"Table\":[{\"Name\":\'"+imgid+"',\"path\":\'"+ fullOutputPath + "'}]}";
+                    jsval = "{\"Table\":[{\"Name\":\'" + imgid + "',\"path\":\'" + fullOutputPath + "'}]}";
                 }
                 else
                 {

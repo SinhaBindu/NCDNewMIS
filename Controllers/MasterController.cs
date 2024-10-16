@@ -344,10 +344,12 @@ namespace NCDNewMIS.Controllers
                 dt = SP_Model.SP_UploadImgApi(imgid, fullOutputPath, filetype, Version);
                 if (dt.Rows.Count > 0)
                 {
-                    jsval = "{\"Table\":[{\"Name\":\'" + imgid + "',\"path\":\'" + fullOutputPath + "'}]}";
+                    //jsval = "{\"Table\":[{\"Name\":\'" + imgid + "',\"path\":\'" + fullOutputPath + "'}]}";
+                    jsval = "{\"Table\":[{\"Name\":\"" + imgid + "\",\"path\":\"" + fullOutputPath + "\"}]}";
                 }
                 else
                 {
+                    //jsval = "{\"Table\":[{\"Name\":\"\",\"path\":\"\"}]}";
                     jsval = "{\"Table\":[{\"Name\":\"\",\"path\":\"\"}]}";
                 }
             }

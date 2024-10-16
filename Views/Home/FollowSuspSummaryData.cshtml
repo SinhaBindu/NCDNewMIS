@@ -48,12 +48,15 @@
         border-color: inherit;
         border-collapse: separate !important;
     }
-    .SizeFn{
-        font-size:10px !important;
+
+    .SizeFn {
+        font-size: 10px !important;
     }
+
     h6, .h6 {
         font-size: 0.900rem !important;
     }
+   
 </style>
 <div class="content-body">
     <div class="container-fluid">
@@ -104,7 +107,7 @@
                         </div>
                     </div>
                 </div>
-
+                <br />
                 <div class="xl:w-1/2 w-full ">
                     <div class="xl:w-1/1 w-full ">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
@@ -115,6 +118,7 @@
 
                         </div>
                     </div>
+                    <br />
                     <div class="xl:w-1/1 w-full ">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
@@ -124,6 +128,7 @@
 
                         </div>
                     </div>
+                    <br />
                     <div class="xl:w-1/1 w-full ">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
@@ -134,7 +139,7 @@
                         </div>
                     </div>
                 </div>
-
+                <br />
                 <div class="xl:w-1/2 w-full ">
                     <div class="xl:w-1/1 w-full ">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
@@ -145,6 +150,7 @@
 
                         </div>
                     </div>
+                    <br />
                     <div class="xl:w-1/1 w-full ">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
@@ -154,6 +160,7 @@
 
                         </div>
                     </div>
+                    <br />
                     <div class="xl:w-1/1 w-full ">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
@@ -164,17 +171,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -635,7 +631,7 @@
             var Table5 = (DataList.Table4);
             var Table6 = (DataList.Table5);
             var Table7 = (DataList.Table6);
-           // var Table8 = (DataList.Table7);
+            // var Table8 = (DataList.Table7);
             if (Table1Total != null) {
                 $('#TotalFollowupHP').html(Table1Total[0].TotalFollowupHP);
                 $('#TotalSuspectedVisitHP').html(Table1Total[0].TotalSuspectedVisitHP);
@@ -656,7 +652,7 @@
                     dataS.push(Table2[i].NoofPlaceofvisitBP);
                     dataSplinePresent.push(Table2[i].Percentage);
                 }
-                BindBar('HYPlaceVisitBPBar', categories, dataS, dataSplinePresent, 'Place of visit: Hypertensive Suspects');
+                BindBar('HYPlaceVisitBPBar', categories, dataS, dataSplinePresent, 'Place of visit: Hypertensive Suspects', "#F06F6A", "#9f3575");
             }
             if (Table3 != null) {
                 categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
@@ -667,6 +663,7 @@
                     dataSplinePresent.push(Table3[i].Percentage);
                 }
                 BindPie('HYCheckBPPie', categories, dataS, dataSplinePresent, 'Testing result: Hypertensive Suspects', 'Testing result', '<b> Total suspects : ' + GandTotal + '</b>');
+
             }
             if (Table4 != null) {
                 categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
@@ -686,7 +683,7 @@
                     dataS.push(Table5[i].NoofPlaceofvisitBS);
                     dataSplinePresent.push(Table5[i].Percentage);
                 }
-                BindBar('HYPlaceVisitBSBar', categories, dataS, dataSplinePresent, 'Place of visit: Diabetic suspects');
+                BindBar('HYPlaceVisitBSBar', categories, dataS, dataSplinePresent, 'Place of visit: Diabetic suspects', "#eb9532", '#9746af');
             }
             if (Table6 != null) {
                 categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
@@ -696,7 +693,7 @@
                     dataS.push({ name: Table6[i].Label, d: Table6[i].TestingresultBS, y: Table6[i].Percentage });
                     dataSplinePresent.push(Table6[i].Percentage);
                 }
-                BindPie('HYCheckBSPie', categories, dataS, dataSplinePresent, 'Testing result: Diabetic suspects', 'Testing result', '<b> Total suspects : ' + GandTotal +'</b>');
+                BindPie('HYCheckBSPie', categories, dataS, dataSplinePresent, 'Testing result: Diabetic suspects', 'Testing result', '<b> Total suspects : ' + GandTotal + '</b>', ['#da5c2d', '#DDDF00', '#2f628a', '#24CBE5', '#914518', '#489631']);
             }
             if (Table7 != null) {
                 categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
@@ -709,18 +706,18 @@
                 BindPie('HYMedicationBSPie', categories, dataS, dataSplinePresent, 'Medication status: Diabetic suspects', 'Medication status', '<b> Total suspects : ' + GandTotal + '</b>');
             }
 
-           
-
         }
         function onerror(resp) {
             alert("Oops!! Something went Wrong..Please Try Again.");
         }
 
-        function BindBar(DivId, categories, dataS, dataSplinePresent, Title) {
+        function BindBar(DivId, categories, dataS, dataSplinePresent, Title, Color, Color1) {
             Highcharts.chart(DivId, {
                 chart: {
+                    height: 500,
                     zooming: {
-                        type: 'xy'
+                        type: 'xy',
+                       
                     }
                 },
                 title: {
@@ -736,16 +733,30 @@
                 },
                 xAxis: [{
                     categories: categories,
-                    crosshair: true
+                    crosshair: true,
+                    //labels: {
+                    //    //rotation: 10,
+                    //    //align: 'right',
+                    //   // step: 10,
+                    //    // enabled: true
+                      
+                    //},
+                    //tickColor: '#FF0000',
+                    //tickWidth: 3,
+                    style: {
+                        fontSize: '8px'
+                    },
                 }],
                 yAxis: [{ // Primary yAxis
                     labels: {
+                        enabled: false,
                         //format: '{value}°C',
                         style: {
                             color: Highcharts.getOptions().colors[1]
                         }
                     },
                     title: {
+                        enabled: false,
                         //text: 'Temperature',
                         style: {
                             color: Highcharts.getOptions().colors[1]
@@ -753,12 +764,14 @@
                     }
                 }, { // Secondary yAxis
                     title: {
+                        enabled: false,
                         //text: 'Precipitation',
                         style: {
                             color: Highcharts.getOptions().colors[0]
                         }
                     },
                     labels: {
+                        enabled: false,
                         //format: '{value} mm',
                         style: {
                             color: Highcharts.getOptions().colors[0]
@@ -766,6 +779,9 @@
                     },
                     opposite: true
                 }],
+                //yAxis: {
+                //    title: false
+                //},
                 tooltip: {
                     shared: true
                 },
@@ -809,6 +825,7 @@
                     type: 'column',
                     yAxis: 1,
                     data: dataS,
+                    color: Color
                     //tooltip: {
                     //    valueSuffix: ' mm'
                     //}
@@ -817,6 +834,8 @@
                     name: 'Place of visit %',
                     type: 'spline',
                     data: dataSplinePresent,
+                    color: Color1
+
                     //tooltip: {
                     //    valueSuffix: '°C'
                     //}
@@ -824,7 +843,11 @@
             });
         }
 
-        function BindPie(DivId, categories, dataS, dataSplinePresent, Title, NM, GandTotal) {
+        Highcharts.setOptions({
+            colors: ['#da5c2d', '#DDDF00', '#2f628a', '#24CBE5', '#914518', '#489631']
+            // colors: ['#489631', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+        });
+        function BindPie(DivId, categories, dataS, dataSplinePresent, Title, NM, GandTotal,colorarry) {
             Highcharts.chart(DivId, {
                 chart: {
                     type: 'pie'
@@ -883,10 +906,12 @@
                     {
                         name: NM,
                         colorByPoint: true,
-                        data: dataS
+                        data: dataS,
+                        color: colorarry
+
                     }
                 ],
-                
+
             });
         }
 

@@ -850,6 +850,8 @@
     <Content Include="Views\Home\RawDataFollowup.cshtml" />
     <Content Include="Views\Home\FollowSuspSummary.cshtml" />
     <Content Include="Views\Home\FollowSuspSummaryData.cshtml" />
+    <Content Include="Views\Home\FollowDocumentDownload.cshtml" />
+    <Content Include="Views\Home\_RowDocumentFollowup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

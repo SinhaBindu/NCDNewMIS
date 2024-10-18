@@ -370,7 +370,7 @@ function BindDistrict(ElementId, SelectedValue, SelectAll, Para) {
     //console.log('select value-'+SelectedValue);
     $('#' + ElementId).trigger("chosen:updated");
 }
-function BindBlock(ElementId, SelectedValue, SelectAll, RoundType=2) {
+function BindBlock(ElementId, SelectedValue, SelectAll, RoundType = 2) {
     $('#' + ElementId).empty();
     $('#' + ElementId).prop("disabled", false);
     //var fst = SelectAll == "0" ? "All" : "Select"
@@ -382,35 +382,37 @@ function BindBlock(ElementId, SelectedValue, SelectAll, RoundType=2) {
     //        $("#BlockId").append("<option value='8'>Parajang</option>");
     //}
     //else if (RoundType == 2) {
-        $.ajax({
-            //url: document.baseURI + "/Master/GetHSCDistrict",
-            url: document.baseURI + "Home/GetBlockList",
-            type: "Post",
-            data: JSON.stringify({ 'SelectAll': SelectAll, 'RoundType': RoundType }),
-            contentType: "application/json; charset=utf-8",
-            //global: false,
-            //async: false,
-            dataType: "json",
-            success: function (resp) {
-                if (resp.IsSuccess) {
-                    var data = JSON.parse(resp.res);
-                    $.each(data, function (i, exp) {
-                        $('#' + ElementId).append($("<option>").val(exp.Value).text(exp.Text));
-                    });
-                    //$('#' + ElementId).val(SelectedValue);
+    $.ajax({
+        //url: document.baseURI + "/Master/GetHSCDistrict",
+        url: document.baseURI + "Home/GetBlockList",
+        type: "Post",
+        data: JSON.stringify({ 'SelectAll': SelectAll, 'RoundType': RoundType }),
+        contentType: "application/json; charset=utf-8",
+        //global: false,
+        //async: false,
+        dataType: "json",
+        success: function (resp) {
+            if (resp.IsSuccess) {
+                var data = JSON.parse(resp.res);
+                $.each(data, function (i, exp) {
+                    $('#' + ElementId).append($("<option>").val(exp.Value).text(exp.Text));
+                });
+                if (SelectedValue != null && SelectedValue != '', SelectedValue != '0') {
+                    $('#' + ElementId).val(SelectedValue);
                 }
-                else {
-                    //alert(resp.IsSuccess);
-                }
-            },
-            error: function (req, error) {
-                if (error === 'error') { error = req.statusText; }
-                var errormsg = 'There was a communication error: ' + error;
-                //Do To Message display
             }
-        });
+            else {
+                //alert(resp.IsSuccess);
+            }
+        },
+        error: function (req, error) {
+            if (error === 'error') { error = req.statusText; }
+            var errormsg = 'There was a communication error: ' + error;
+            //Do To Message display
+        }
+    });
     //}
-   
+
 
     //console.log('select value-'+SelectedValue);
     $('#' + ElementId).trigger("chosen:updated");
@@ -487,6 +489,47 @@ function BindPHC(ElementId, SelectedValue, SelectAll, Para1, Para2) {
     $('#' + ElementId).trigger("chosen:updated");
 }
 
+function BindSubcenter(ElementId, SelectedValue, SelectAll, Para1, Para2, Para3, Para4) {
+    debugger;
+    $('#' + ElementId).empty();
+    $('#' + ElementId).prop("disabled", false);
+    //var fst = SelectAll == "0" ?"All":"Select"
+    //$('#' + ElementId).append($("<option>").val('0').text(fst));
+    $.ajax({
+        url: document.baseURI + "Home/GetSubCenterList",
+        type: "Post",
+        data: JSON.stringify({ 'DistrictId': Para1, 'BlockId': Para2, 'CHCId': Para3, 'PHCId': Para4, 'SelectAll': SelectAll }),
+        contentType: "application/json; charset=utf-8",
+        //global: false,
+        //async: false,
+        dataType: "json",
+        success: function (resp) {
+            if (resp.IsSuccess) {
+                var data = JSON.parse(resp.res);
+                $.each(data, function (i, exp) {
+                    $('#' + ElementId).append($("<option>").val(exp.Value).text(exp.Text));
+                });
+                if (SelectedValue != null && SelectedValue != '') {
+                    $('#' + ElementId).val(SelectedValue);
+                }
+                if (SelectedValue == '0') {
+                    $('#' + ElementId).val(SelectedValue);
+                }
+            }
+            else {
+                //alert(resp.IsSuccess);
+            }
+        },
+        error: function (req, error) {
+            if (error === 'error') { error = req.statusText; }
+            var errormsg = 'There was a communication error: ' + error;
+            //Do To Message display
+        }
+    });
+
+    //console.log('select value-'+SelectedValue);
+    $('#' + ElementId).trigger("chosen:updated");
+}
 
 
 function BindBatchList(ElementId, SelectedValue, SelectAll) {

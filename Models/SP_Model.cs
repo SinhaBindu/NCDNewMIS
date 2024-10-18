@@ -241,7 +241,7 @@ namespace NCDNewMIS.Models
         public static DataSet GetHealthScreeing2(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_ACT1Indicator_HB");
-           // sp.Command.AddParameter("@PageType", model.PageType, DbType.String);
+            // sp.Command.AddParameter("@PageType", model.PageType, DbType.String);
             DataSet dt = sp.ExecuteDataSet();
             return dt;
         }
@@ -268,7 +268,7 @@ namespace NCDNewMIS.Models
             return ds;
         }
 
-        public static DataTable SP_UploadImgApi(string imgid = "", string filepath = "", string type = "",string Version="")
+        public static DataTable SP_UploadImgApi(string imgid = "", string filepath = "", string type = "", string Version = "")
         {
             StoredProcedure sp = new StoredProcedure("Usp_SaveApiImage");
             sp.Command.AddParameter("@imgid", imgid, DbType.String);
@@ -283,6 +283,28 @@ namespace NCDNewMIS.Models
             StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummaryData");
             DataSet ds = sp.ExecuteDataSet();
             return ds;
+        }
+
+        public static DataTable Usp_FollowupImageDocumentLoad(FilterModel model)
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_FollowupImageDocumentLoad");
+            sp.Command.AddParameter("@DistrictId",Convert.ToInt32(model.DistrictId), DbType.Int32);
+            sp.Command.AddParameter("@BlockId", Convert.ToInt32(model.BlockId), DbType.Int32);
+            sp.Command.AddParameter("@SubCenterId", Convert.ToInt32(model.SCId), DbType.Int32);
+            sp.Command.AddParameter("@PanchayatId", Convert.ToInt32(model.GPId), DbType.Int32);
+            sp.Command.AddParameter("@VillageId", Convert.ToInt32(model.VIId), DbType.Int32);
+            sp.Command.AddParameter("@FD", model.FormDt, DbType.String);
+            sp.Command.AddParameter("@TD", model.ToDt, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
+        public static DataTable Usp_ZipFileFollowDownload(string MId = "",string FMId="")
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_ZipFileFollowDownload");
+            sp.Command.AddParameter("@MId", MId, DbType.String);
+            sp.Command.AddParameter("@FMId", FMId, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
         }
     }
 }

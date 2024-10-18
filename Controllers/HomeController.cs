@@ -14,6 +14,8 @@ using ClosedXML;
 using ClosedXML.Excel;
 using static NCDNewMIS.Controllers.ResourceController;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.IO.Compression;
+using Ionic.Zip;
 
 namespace NCDNewMIS.Controllers
 {
@@ -529,6 +531,23 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult GetDistrictList(int SelectAll = 1)
+        {
+            try
+            {
+                var items = CommonModel.GetDistrict(SelectAll);
+                if (items != null)
+                {
+                    var data = JsonConvert.SerializeObject(items);
+                    return Json(new { IsSuccess = true, res = data }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { IsSuccess = false, res = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult GetBlockList(int SelectAll = 1, int RoundType = 2)
         {
             try
@@ -568,6 +587,23 @@ namespace NCDNewMIS.Controllers
             try
             {
                 var items = CommonModel.GetPHC(BlockId, CHCId, SelectAll);
+                if (items != null)
+                {
+                    var data = JsonConvert.SerializeObject(items);
+                    return Json(new { IsSuccess = true, res = data }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { IsSuccess = false, res = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetSubCenterList(int DistrictId = 0, int BlockId = 0, int CHCId = 0, int PHCId = 0, int SelectAll = 1)
+        {
+            try
+            {
+                var items = CommonModel.GetSP_GetSubCenterCenterLists(SelectAll, BlockId, CHCId, PHCId);
                 if (items != null)
                 {
                     var data = JsonConvert.SerializeObject(items);
@@ -1241,7 +1277,77 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "Record Issues." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
+        public ActionResult FollowDocumentDownload()
+        {
+            FilterModel model = new FilterModel();
+            return View(model);
+        }
+        public ActionResult GetFollowupImageDoc(FilterModel filtermodel)
+        {
+            DataTable dt = new DataTable();
+            var html = "";
+            try
+            {
+                dt = SP_Model.Usp_FollowupImageDocumentLoad(filtermodel);
+                bool IsCheck = false;
+                if (dt.Rows.Count > 0)
+                {
+                    IsCheck = true;
+                    html = ConvertViewToString("_RowDocumentFollowup", dt);
+                    var res1 = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);
+                    res1.MaxJsonLength = int.MaxValue;
+                    return res1;
+                }
+                IsCheck = false;
+                var res = Json(new { IsSuccess = IsCheck, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                res.MaxJsonLength = int.MaxValue;
+                return res;
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+        public ActionResult GetDownFollowImgDocZip(string MId = "",string FMId = "")
+        {
+            DataTable dt = new DataTable();
+            dt = SP_Model.Usp_ZipFileFollowDownload(MId, FMId);
+            // Define the folder path where images and PDFs are stored
+            string folderPath = Server.MapPath("~/ImageUploads/SurveyImages"); // Example path, change as needed
 
+            // Define the path for the temporary zip file
+            string zipPath = Server.MapPath("~/ImageUploads/SurveyImages/CombinedFilesFollowupZip.zip");
+
+            // Make sure the TempZips directory exists, if not, create it
+            if (!Directory.Exists(Server.MapPath("~/ImageUploads/SurveyImages/TempZips")))
+            {
+                Directory.CreateDirectory(Server.MapPath("~/ImageUploads/SurveyImages/TempZips"));
+            }
+
+            // Create the zip file
+            using (ZipArchive zip = System.IO.Compression.ZipFile.Open(zipPath, ZipArchiveMode.Create))
+            {
+                // Get all image and PDF files from the folder
+                var files = Directory.GetFiles(folderPath, "*.*");
+                                    // .Where(f => f.EndsWith(".jpg") || f.EndsWith(".jpeg") || f.EndsWith(".png") || f.EndsWith(".pdf") || f.EndsWith(".pdf"));
+
+                // Loop through each file and add it to the zip
+                foreach (var file in files)
+                {
+                    // Get the file name from the full path
+                    string fileName = Path.GetFileName(file);
+
+
+                    // Add the file to the zip
+                    zip.CreateEntryFromFile(file, fileName);
+                }
+            }
+
+            // Return the zip file as a download
+            byte[] fileBytes = System.IO.File.ReadAllBytes(zipPath);
+            return File(fileBytes, "application/zip", "CombinedFilesFollowupZip.zip");
+        }
 
         #endregion
 

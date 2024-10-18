@@ -69,10 +69,9 @@
                 <th class="text-center tblth" width="5%">Member Name</th>
                 <th class="text-center tblth" width="6%">HHHead<br /> Mobile No</th>
                 <th class="text-center tblth" width="3%">Download</th>
-                <th class="text-center tblth tdhide">uuid</th>
-                <th class="text-center tblth tdhide">MemberUUID</th>
                 <th class="text-center tblth tdhide">FollowUID</th>
-                <th class="text-center tblth tdhide"></th>
+                <th class="text-center tblth tdhide">MemberUID</th>
+                <th class="text-center tblth tdhide">FollowUID_MemberUID</th>
             </tr>
         </thead>
         <tbody>
@@ -88,7 +87,6 @@
                             <td class="text-center tbltd fw-bold" width="6%"><strong>@dr["SurveyDate"]</strong></td>
                             <td class="text-center tbltd fw-bold" width="6%"><strong>@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["APPDate"].ToString())</strong></td>
                             <td class="text-center tbltd fw-bold" width="6%"><strong>@NCDNewMIS.Models.CommonModel.FormateDtDMY(dr["ServerEntryDate"].ToString())</strong></td>
-
                             <td class="text-left tbltd tdtextwrp"> @dr["VolunteerName"] </td>
                             <td class="text-center tbltd tdtextwrp"> @dr["Volunteer No"] </td>
                             <td class="text-left tbltd small tdtextwrp"> @dr["District"] </td>
@@ -99,26 +97,24 @@
                             <td class="text-left tbltd small tdtextwrp"> @dr["GP"] </td>
                             <td class="text-left tbltd small tdtextwrp" style="word-break: break-word;"> @dr["Village"] </td>
                             <td class="text-left tbltd small tdtextwrp"> @dr["AWCCode"] </td>
-
                             <td class="text-left tbltd tdhide"> @dr["HId"] </td>
                             <td class="text-left tbltd tdtextwrp"> @dr["HHHeadName"] </td>
                             <td class="text-left tbltd tdhide"> @dr["MemberId"] </td>
                             <td class="text-left tbltd tdtextwrp"> @dr["MemberName"] </td>
                             <td class="text-center tbltd tdtextwrp"> @dr["MobileNo"] </td>
-
-                            <td class="text-center tbltd tdtextwrp"> @dr["MobileNo"] </td>
-
-                            <td class="text-left tbltd small tdtextwrp tdhide" style="word-break: break-word;"> @dr["uuid"] </td>
-                            <td class="text-left tbltd small tdtextwrp tdhide" style="word-break: break-word;"> @dr["MemberUUID"] </td>
-                            <td class="text-left tbltd small tdtextwrp tdhide" style="word-break: break-word;"> @dr["FollowUID"] </td>
-
+                            <td class="text-center tbltd tdtextwrp">
+                                <a href="~/Home/GetDownFollowImgDocZip?MId=@dr["MemberUID"]&FMId=@dr["FollowupId_MemberId"]" target="_blank"><strong><i class="fa fa-download"></i></strong></a>
+                            </td>
+                            <td class="text-left tbltd small tdtextwrp tdhide" style="word-break: break-word;"> @dr["FollowUpUID"] </td>
+                            <td class="text-left tbltd small tdtextwrp tdhide" style="word-break: break-word;"> @dr["MemberUID"] </td>
+                            <td class="text-left tbltd small tdtextwrp tdhide" style="word-break: break-word;"> @dr["FollowupId_MemberId"] </td>
                         </tr>
                     }
                 }
                 else
                 {
                     <tr>
-                        <td colspan="14" class="text-center"><strong class="text-danger">Record Not Found !!</strong></td>
+                        <td colspan="24" class="text-center"><strong class="text-danger">Record Not Found !!</strong></td>
                     </tr>
                 }
             }

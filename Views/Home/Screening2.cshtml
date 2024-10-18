@@ -266,7 +266,8 @@
             $("#accordionExample").empty();
             for (var i = 0; i < dg.length; i++) {
                 index++;
-                var exp = index == 1 ? "show" : "";
+                var exp = dg[i].block == "Total" ? "show" : "";
+                //var exp = index == 1 ? "show" : "";
                 html1 += "<div class='accordion-item'>";
                 html1 += '<h2 class="accordion-header" id="headingOne_' + index + '">';
                 html1 += '<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_' + index + '" aria-expanded="true" aria-controls="collapseOne_' + index + '">';

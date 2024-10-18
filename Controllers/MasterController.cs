@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -321,9 +322,19 @@ namespace NCDNewMIS.Controllers
             if (type == ".pdf" || type == ".PDF" || type == "pdf" || type == "PDF")
             {
                 fullOutputPath = fullOutputPath + imgid + ".PDF";
-                System.IO.File.WriteAllBytes(Server.MapPath(fullOutputPath), bytes);
-                bsaveimg = true;
-                filetype = "PDF";
+                if (ValidateImageSizeDocoument(bytes, 5)) // 5 MB validation
+                {
+                    System.IO.File.WriteAllBytes(Server.MapPath(fullOutputPath), bytes);
+                    bsaveimg = true;
+                    filetype = "PDF";
+                    
+                }
+                else
+                {
+                    //sval = "{\"Table\":[{\"Name\":\"" + imgid + "\",\"Massage\":\"" + "Document size exceeds 10 MB." + "\",\"path\":\"" + fullOutputPath + "\"}]}";
+                    jsval = "{\"Table\":[{\"statuscode\":\"" + "201" + "\",\"msg\":\"" + "Document size exceeds 5 MB." + "\"}]}";
+                    bsaveimg = false;
+                }
             }
             else
             {
@@ -333,10 +344,19 @@ namespace NCDNewMIS.Controllers
                 {
                     using (image = System.Drawing.Image.FromStream(ms))
                     {
-                        image.Save(Server.MapPath(fullOutputPath), System.Drawing.Imaging.ImageFormat.Png);
+                        if (ValidateImageSize(ms))
+                        {
+                            image.Save(Server.MapPath(fullOutputPath), System.Drawing.Imaging.ImageFormat.Png);
+                            bsaveimg = true;
+                        }
+                        else
+                        {
+                            //jsval = "{\"Table\":[{\"Name\":\"" + imgid + "\",\"Massage\":\"" + "Image size exceeds 1 MB." + "\",\"path\":\"" + fullOutputPath + "\"}]}";
+                            jsval = "{\"Table\":[{\"statuscode\":\"" + "201" + "\",\"msg\":\"" + "Image size exceeds 1 MB." + "\"}]}";
+                            bsaveimg = false;
+                        }
                     }
                 }
-                bsaveimg = true;
             }
             if (bsaveimg)
             {
@@ -345,16 +365,43 @@ namespace NCDNewMIS.Controllers
                 if (dt.Rows.Count > 0)
                 {
                     //jsval = "{\"Table\":[{\"Name\":\'" + imgid + "',\"path\":\'" + fullOutputPath + "'}]}";
-                    jsval = "{\"Table\":[{\"Name\":\"" + imgid + "\",\"path\":\"" + fullOutputPath + "\"}]}";
+
+                    //jsval = "{\"Table\":[{\"S\":\"" + imgid + "\",\"path\":\"" + fullOutputPath + "\"}]}";
+                    jsval = "{\"Table\":[{\"statuscode\":\"" + "200" + "\",\"msg\":\"" + "" + "\"}]}";
                 }
                 else
                 {
                     //jsval = "{\"Table\":[{\"Name\":\"\",\"path\":\"\"}]}";
-                    jsval = "{\"Table\":[{\"Name\":\"\",\"path\":\"\"}]}";
+                    // jsval = "{\"Table\":[{\"statuscode\":\"\",\"path\":\"\"}]}";
+                    jsval = "{\"Table\":[{\"statuscode\":\"" + "201" + "\",\"msg\":\"" + "Server Error." + "\"}]}";
                 }
             }
             return jsval;
         }
+        public static bool ValidateImageSize(MemoryStream ms)
+        {
+            const int maxSizeInBytes = 1 * 1024 * 1024; // 1 MB in bytes
 
+            // Check if the stream size is less than or equal to 1 MB
+            if (ms.Length <= maxSizeInBytes)
+            {
+                return true; // Valid size
+            }
+
+            return false; // Invalid size
+        }
+        public static bool ValidateImageSizeDocoument(byte[] imageBytes, int maxMB)
+        {
+            // Convert MB to bytes (1 MB = 1024 * 1024 bytes)
+            int maxSizeInBytes = maxMB * 1024 * 1024;
+
+            // Check if the image size is less than or equal to the specified limit
+            if (imageBytes.Length <= maxSizeInBytes)
+            {
+                return true; // Valid size
+            }
+
+            return false; // Invalid size
+        }
     }
 }

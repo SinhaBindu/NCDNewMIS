@@ -1,9 +1,9 @@
 ﻿@model NCDNewMIS.Models.FilterModel
 @using NCDNewMIS.Models
 @{
-    ViewBag.Title = "User List (Approved) ACT - II";
+    ViewBag.Title = "Follow-Up (Download-Image/Document) - ACT II";
     ViewBag.TitleIcon = "fa fa-user";
-    ViewBag.SemiTitle = "User List (Approved) ACT - II";
+    ViewBag.SemiTitle = "Follow-Up (Download-Image/Document) - ACT II";
     ViewBag.SemiTitleLink = "/";
     DateTime now = DateTime.Now;
     var startDate = new DateTime(now.Year, now.Month, 1);
@@ -46,31 +46,38 @@
                     <div class="row">
 
                         <div class="card">
-                            @using (Html.BeginForm("RegApprove", "Home", FormMethod.Post, new { @id = "tblList-frm", @class = "panel-body form-horizontal form-padding loader" }))
+                            @using (Html.BeginForm("GetFollowupImageDoc", "Home", FormMethod.Post, new { @id = "tblList-frm", @class = "panel-body form-horizontal form-padding loader" }))
                             {
                                 <div class="filter cm-content-box box-primary relative rounded-lg mb-0 bg-white dark:bg-[#1b1b1b]">
                                     <div class="content form excerpt border-b-color dark:border-[#ffffff1a]">
                                         <div>
                                             <div class="border-all">
+                                                <div class="mb-4 md:w-1/2" style="display:none">
+                                                    @Html.LabelFor(model => model.DistrictId, htmlAttributes: new { @class = "form-label" })
+                                                    @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                                </div>
                                                 <div class="mb-4 md:w-1/2">
                                                     @Html.LabelFor(model => model.BlockId, htmlAttributes: new { @class = "form-label" })
                                                     @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                                                 </div>
-                                                <div class="mb-4 md:w-1/2" style="display:none">
-                                                    @Html.LabelFor(model => model.CHCId, htmlAttributes: new { @class = "form-label" })
-                                                    @Html.DropDownListFor(m => m.CHCId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full", @required = "required" })
-                                                    @Html.ValidationMessageFor(model => model.CHCId, "", new { @class = "text-danger" })
+                                                <div class="mb-4 md:w-1/2">
+                                                    @Html.LabelFor(model => model.SCId, htmlAttributes: new { @class = "form-label" })
+                                                    @Html.DropDownListFor(m => m.SCId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.SCId, "", new { @class = "text-danger" })
                                                 </div>
-                                                <div class="sm:w-1/3" style="display:none">
-                                                    @Html.LabelFor(model => model.PHCId, htmlAttributes: new { @class = "form-label" })
-                                                    @Html.DropDownListFor(m => m.PHCId, new List<SelectListItem>(), "All", htmlAttributes: new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full", @required = "required" })
-                                                    @Html.ValidationMessageFor(model => model.PHCId, "", new { @class = "text-danger" })
+                                                <div class="mb-4 md:w-1/2">
+                                                    <label class="form-label">From Date (App Entry)</label>
+                                                    <input type="text" name="FD" id="FD" class="datepicker
+                                                form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full
+                                                date-picker-input" value="" autocomplete="off" />
                                                 </div>
-                                                <div class="sm:w-1/2">
-                                                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "form-label" })
-                                                    @Html.DropDownListFor(m => m.IsActive, CommonModel.GetActive(), null, htmlAttributes: new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full", @required = "required" })
-                                                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                                                <div class="mb-4 md:w-1/2">
+                                                    <label class="form-label">To Date (App Entry)</label>
+                                                    <input type="text" name="TD" id="TD" class="datepicker
+                                                form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full
+                                                date-picker-input" value="" autocomplete="off" />
                                                 </div>
+
                                                 <div class="sm:w-1/2 mt-6">
                                                     <button name="btnsubmit" id="btnsubmit"
                                                             class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">
@@ -78,7 +85,7 @@
                                                     </button>
                                                     @*<input type="submit" name="btnsubmit" id="btnsubmit"
                                                         class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" value="Search" />*@
-                                                    <a href="~/Home/RegApprove" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-warning bg-warning text-white hover:bg-[#ffa91a] duration-300"><i class="fa fa-refresh"></i></a>
+                                                    <a href="~/Home/FollowDocumentDownload" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-warning bg-warning text-white hover:bg-[#ffa91a] duration-300"><i class="fa fa-refresh"></i></a>
                                                 </div>
                                             </div>
                                             @*<div id="subchart" style="width:400px;height:400px;">
@@ -115,29 +122,73 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
-    @*<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
-    <script src="https://code.highcharts.com/maps/modules/map.js"></script>*@
-    <script src="~/Scripts/JS/Chart.js"></script>
     <script src="~/Scripts/JS/Export.js"></script>
     <script src="~/Scripts/JS/Master.js"></script>
 
-
     <script>
+        $(function () {
+            var dateFormat = "dd-M-yy",
+                from = $("#FD")
+                    .datepicker({
+                        defaultDate: "+1w",
+                        changeMonth: true,
+                        numberOfMonths: 1,
+                        dateFormat: 'dd-M-yy',
+                        //minDate: -3,
+                        //maxDate: "1w"
+                    })
+                    .on("change", function () {
+                        to.datepicker("option", "minDate", getDate(this));
+                    }),
+                to = $("#TD").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    numberOfMonths: 1,
+                    dateFormat: 'dd-M-yy',
+                    // minDate: -3,
+                    //maxDate: "1w"
+
+                })
+                    .on("change", function () {
+                        from.datepicker("option", "maxDate", getDate(this));
+                    });
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    date = null;
+                }
+
+                return date;
+            }
+
+
+        });
 
         $(document).ready(function () {
 
-            BindBlock("BlockId", '', "0");
+            //BindDistrict("DistrictId", '', "0");
+            //$('select[name="DistrictId"]').find('option').eq(2).attr("selected", true).change();
+            //$('#DistrictId').change(function () {
+            //    BindBlock("BlockId", '', "0");
+            //});
+            BindBlock("BlockId", '1', "0");
+            debugger;
+            //$('select[name="BlockId"]').find('option').eq(2).attr("selected", true).change();
+            setTimeout(function () {
+                if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
+                    BindSubcenter("SCId", '', "1", "1", $('#BlockId').val(), 0, 0,);
+                    //$('select[name="SCId"]').find('option').eq(2).attr("selected", true).change();
+                    LoadReport();
+                }
+            }, 500);
+           
+           
             $('#BlockId').change(function () {
-                BindCHC("CHCId", '', "0", $(this).val());
+                BindSubcenter("SCId", '', "1", $('#DistrictId').val(), $('#BlockId').val(), 0, 0);
             });
-            $('#CHCId').change(function () {
-                BindPHC("PHCId", '', "0", $('#BlockId').val(), $(this).val());
-            });
-            LoadReport();
             $("#btnsubmit").click(function (e) {
                 e.preventDefault();
                 LoadReport();
@@ -149,10 +200,9 @@
             var id = '#tblList-frm'
             var url = $(id).attr("action");
             var filtermodel = new Object();
-            filtermodel.BlockId = $("#BlockId").val() == "" ? "0" : $("#BlockId").val();
-            filtermodel.CHCId = $("#CHCId").val() == "" ? "0" : $("#CHCId").val();
-            filtermodel.PHCId = $("#PHCId").val() == "" ? "0" : $("#PHCId").val();
-            filtermodel.IsActive = $("#IsActive").val() == "" ? "-1" : $("#IsActive").val();
+            filtermodel.DistrictId = "1";// $("#DistrictId").val() == "" || $("#DistrictId").val() == null ? 0 : parseInt($("#DistrictId").val());
+            filtermodel.BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? 0 : parseInt($("#BlockId").val());
+            filtermodel.SCId = $("#SCId").val() == "" || $("#SCId").val() == null ? 0 : parseInt($("#SCId").val());
             $.ajax({
                 url: url,
                 type: "POST",
@@ -161,7 +211,7 @@
                     if (resp.IsSuccess) {
                         debugger;
                         // $('#resultmap').html(resp.Datahtml);
-                        $('#result').html(resp.Datahtml);
+                        $('#result').html(resp.Data);
                         if ($.fn.dataTable.isDataTable('#tbl')) {
                             $("#tbl").dataTable().fnDestroy();
                         }
@@ -200,47 +250,6 @@
                 }
             });
         }
-
-        function PostAppoved(regid, regmapid, isactive) {
-            debugger;//&& regmapid
-            regmapid = regmapid == "" ? 0 : regmapid;
-            if (regid && regmapid) {
-                $.ajax({
-                    url: document.baseURI + "/Home/PostAppoved",
-                    type: "Post",
-                    data: { 'RegId': regid, 'RegMapId': regmapid, 'IsApproved': isactive },
-                    //cache: false,
-                    //contentType: false,
-                    //processData: false,
-                    //contentType: "application/json; charset=utf-8",
-                    // data: JSON.stringify(model),
-                    //global: false,
-                    // async: false,
-                    // dataType: "json",
-                    success: function (resp) {
-                        if (resp.IsSuccess) {
-                            toastr.success("Success", resp.Message);
-                            LoadReport();
-                        }
-                        else {
-                            toastr.error("Error", resp.Message);
-                        }
-                    },
-                    error: function (req, error) {
-                        if (error === 'error') { error = req.statusText; }
-                        var errormsg = 'There was a communication error: ' + error;
-                        toastr.error("Error", errormsg);
-                        //jQuery.event.trigger("ajaxStop");
-                        return false;
-                    }
-                });
-            }
-            else {
-                return false;
-            }
-
-        }
-
 
     </script>
 }

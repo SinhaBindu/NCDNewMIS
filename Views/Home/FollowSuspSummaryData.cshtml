@@ -56,7 +56,10 @@
     h6, .h6 {
         font-size: 0.900rem !important;
     }
-   
+
+    .charts {
+        border: 2px solid #1d2d5b !important;
+    }
 </style>
 <div class="content-body">
     <div class="container-fluid">
@@ -109,7 +112,7 @@
                 </div>
                 <br />
                 <div class="xl:w-1/2 w-full ">
-                    <div class="xl:w-1/1 w-full ">
+                    <div class="xl:w-1/1 w-full charts">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
                             <div class="overflow-x-auto table-scroll">
@@ -119,7 +122,7 @@
                         </div>
                     </div>
                     <br />
-                    <div class="xl:w-1/1 w-full ">
+                    <div class="xl:w-1/1 w-full charts">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
                             <div class="overflow-x-auto table-scroll">
@@ -129,7 +132,7 @@
                         </div>
                     </div>
                     <br />
-                    <div class="xl:w-1/1 w-full ">
+                    <div class="xl:w-1/1 w-full charts">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
                             <div class="overflow-x-auto table-scroll">
@@ -141,7 +144,7 @@
                 </div>
                 <br />
                 <div class="xl:w-1/2 w-full ">
-                    <div class="xl:w-1/1 w-full ">
+                    <div class="xl:w-1/1 w-full charts">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
                             <div class="overflow-x-auto table-scroll">
@@ -151,7 +154,7 @@
                         </div>
                     </div>
                     <br />
-                    <div class="xl:w-1/1 w-full ">
+                    <div class="xl:w-1/1 w-full charts">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
                             <div class="overflow-x-auto table-scroll">
@@ -161,7 +164,7 @@
                         </div>
                     </div>
                     <br />
-                    <div class="xl:w-1/1 w-full ">
+                    <div class="xl:w-1/1 w-full charts">
                         <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
                             <div class="overflow-x-auto table-scroll">
@@ -175,423 +178,423 @@
 
 
                 @*<div class="xl:w-1/3 w-full">
-            <div class="xl:w-1/1 w-full ">
-                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-                    <h5 class="text-center">
-                        <strong class="text-primary">Details Of Follow-Ups: Dibetic Suspects</strong>
-                    </h5>
-                    <div class="overflow-x-auto table-scroll">
-                        <div class="dataTables_wrapper">
-                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl5">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th class="text-center" colspan="2"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        if (dt2.Rows.Count > 0)
-                                        {
-                                            var sno = 1;
-                                            DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 1);
-                                            DataRow[] dr2 = dt2.Select("Type = " + 2 + " and TableNo=" + 2);
-                                            if (dr1.Length > 0 && dr2.Length > 0)
-                                            {
-                                                foreach (DataRow dr in dr1)
-                                                {
-                                                    <tr>
-                                                        <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@dr["Label"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@Convert.ToInt32(dr["Value"]).ToString("N0")</td>
-                                                    </tr>
-                                                }
-                                                foreach (DataRow dr in dr2)
-                                                {
-                                                    <tr>
-                                                        <td class="text-center" style="background-color:#faddd7;">@dr["Label"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#faddd7;">@Convert.ToInt32(dr["Value"]) (@((Convert.ToInt32(dr["Value"]) * 100) / @TotalFollowUp)%)</td>
-                                                    </tr>
-                                                }
-                                            }
-                                            else
-                                            {
+                        <div class="xl:w-1/1 w-full ">
+                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+                                <h5 class="text-center">
+                                    <strong class="text-primary">Details Of Follow-Ups: Dibetic Suspects</strong>
+                                </h5>
+                                <div class="overflow-x-auto table-scroll">
+                                    <div class="dataTables_wrapper">
+                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl5">
+                                            <thead class="text-center">
                                                 <tr>
-                                                    <td colspan="2"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                    <th class="text-center" colspan="2"></th>
                                                 </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="xl:w-1/1 w-full ">
-                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                    <div class="overflow-x-auto table-scroll">
-                        <div class="dataTables_wrapper">
-                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4" style="color: #fff !important;">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th class="text-center" style="background-color:#b03d80;">Place Of Visit</th>
-                                        <th class="text-center" style="background-color:#b03d80;">Number</th>
-                                        <th class="text-center" style="background-color:#b03d80;">%</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
+                                            </thead>
+                                            <tbody>
+                                                @{
                                                     if (dt2.Rows.Count > 0)
                                                     {
                                                         var sno = 1;
-                                                        DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 3);
+                                                        DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 1);
+                                                        DataRow[] dr2 = dt2.Select("Type = " + 2 + " and TableNo=" + 2);
+                                                        if (dr1.Length > 0 && dr2.Length > 0)
+                                                        {
+                                                            foreach (DataRow dr in dr1)
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@dr["Label"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@Convert.ToInt32(dr["Value"]).ToString("N0")</td>
+                                                                </tr>
+                                                            }
+                                                            foreach (DataRow dr in dr2)
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-center" style="background-color:#faddd7;">@dr["Label"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#faddd7;">@Convert.ToInt32(dr["Value"]) (@((Convert.ToInt32(dr["Value"]) * 100) / @TotalFollowUp)%)</td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td colspan="2"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="xl:w-1/1 w-full ">
+                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                                <div class="overflow-x-auto table-scroll">
+                                    <div class="dataTables_wrapper">
+                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4" style="color: #fff !important;">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th class="text-center" style="background-color:#b03d80;">Place Of Visit</th>
+                                                    <th class="text-center" style="background-color:#b03d80;">Number</th>
+                                                    <th class="text-center" style="background-color:#b03d80;">%</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                                if (dt2.Rows.Count > 0)
+                                                                {
+                                                                    var sno = 1;
+                                                                    DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 3);
+                                                                    int RowTotal = 0;
+                                                                    if (dr1.Length > 0)
+                                                                    {
+                                                                        foreach (DataRow dr in dr1)
+                                                                        {
+                                                                            RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                                <tr>
+                                                                    <td class="text-center" style="background-color:#b03d80;">@dr["Label"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#b03d80;">@dr["Value"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#b03d80;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
+                                                                </tr>
+                                                            }
+                                                            <tr>
+                                                                <td class="text-center" style="background-color:#b03d80;">Total</td>
+                                                                <td class="text-center" style="background-color:#b03d80;">@RowTotal</td>
+                                                                <td class="text-center" style="background-color:#b03d80;"></td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="xl:w-1/1 w-full ">
+                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                                <div class="overflow-x-auto table-scroll">
+                                    <div class="dataTables_wrapper">
+                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th class="text-center" style="background-color:#e8f4f6;">Testing Result</th>
+                                                    <th class="text-center" style="background-color:#e8f4f6;">Number</th>
+                                                    <th class="text-center" style="background-color:#e8f4f6;">%</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (dt2.Rows.Count > 0)
+                                                    {
+                                                        var sno = 1;
+                                                        DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 4);
                                                         int RowTotal = 0;
                                                         if (dr1.Length > 0)
                                                         {
                                                             foreach (DataRow dr in dr1)
                                                             {
                                                                 RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                    <tr>
-                                                        <td class="text-center" style="background-color:#b03d80;">@dr["Label"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#b03d80;">@dr["Value"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#b03d80;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
-                                                    </tr>
+                                                                <tr>
+                                                                    <td class="text-center" style="background-color:#e8f4f6;">@dr["Label"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#e8f4f6;">@dr["Value"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#e8f4f6;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
+                                                                </tr>
+                                                            }
+                                                            <tr>
+                                                                <td class="text-center" style="background-color:#e8f4f6;">Total</td>
+                                                                <td class="text-center" style="background-color:#e8f4f6;">@RowTotal</td>
+                                                                <td class="text-center" style="background-color:#e8f4f6;"></td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                            </tr>
+                                                        }
+                                                    }
                                                 }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="xl:w-1/1 w-full ">
+                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                                <div class="overflow-x-auto table-scroll">
+                                    <div class="dataTables_wrapper">
+                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
+                                            <thead class="text-center">
                                                 <tr>
-                                                    <td class="text-center" style="background-color:#b03d80;">Total</td>
-                                                    <td class="text-center" style="background-color:#b03d80;">@RowTotal</td>
-                                                    <td class="text-center" style="background-color:#b03d80;"></td>
+                                                    <th class="text-center" style="background-color:#fdefec;">Medication Status</th>
+                                                    <th class="text-center" style="background-color:#fdefec;">Number</th>
+                                                    <th class="text-center" style="background-color:#fdefec;">%</th>
                                                 </tr>
-                                            }
-                                            else
-                                            {
-                                                <tr>
-                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (dt2.Rows.Count > 0)
+                                                    {
+                                                        var sno = 1;
+                                                        DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 5);
+                                                        int RowTotal = 0;
+                                                        if (dr1.Length > 0)
+                                                        {
+                                                            foreach (DataRow dr in dr1)
+                                                            {
+                                                                RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                                <tr>
+                                                                    <td class="text-center" style="background-color:#fdefec;">@dr["Label"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#fdefec;">@dr["Value"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#fdefec;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
+                                                                </tr>
+                                                            }
+                                                            <tr>
+                                                                <td class="text-center" style="background-color:#fdefec;">Total</td>
+                                                                <td class="text-center" style="background-color:#fdefec;">@RowTotal</td>
+                                                                <td class="text-center" style="background-color:#fdefec;"></td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-
-                </div>
-            </div>
-            <div class="xl:w-1/1 w-full ">
-                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                    <div class="overflow-x-auto table-scroll">
-                        <div class="dataTables_wrapper">
-                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th class="text-center" style="background-color:#e8f4f6;">Testing Result</th>
-                                        <th class="text-center" style="background-color:#e8f4f6;">Number</th>
-                                        <th class="text-center" style="background-color:#e8f4f6;">%</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        if (dt2.Rows.Count > 0)
-                                        {
-                                            var sno = 1;
-                                            DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 4);
-                                            int RowTotal = 0;
-                                            if (dr1.Length > 0)
-                                            {
-                                                foreach (DataRow dr in dr1)
-                                                {
-                                                    RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                    <tr>
-                                                        <td class="text-center" style="background-color:#e8f4f6;">@dr["Label"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#e8f4f6;">@dr["Value"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#e8f4f6;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
-                                                    </tr>
+                    <div class="xl:w-1/3 w-full">
+                        <div class="xl:w-1/1 w-full ">
+                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+                                <h5 class="text-center">
+                                    <strong class="text-primary">Details Of Follow-Ups: Comorbidity Suspects</strong>
+                                </h5>
+                                <div class="overflow-x-auto table-scroll">
+                                    <div class="dataTables_wrapper">
+                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl5">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th class="text-center" colspan="2"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (dt3.Rows.Count > 0)
+                                                    {
+                                                        var sno = 1;
+                                                        DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 1);
+                                                        DataRow[] dr2 = dt3.Select("Type = " + 2 + " and TableNo=" + 2);
+                                                        if (dr1.Length > 0 && dr2.Length > 0)
+                                                        {
+                                                            foreach (DataRow dr in dr1)
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@dr["Label"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@Convert.ToInt32(dr["Value"]).ToString("N0")</td>
+                                                                </tr>
+                                                            }
+                                                            foreach (DataRow dr in dr2)
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-center" style="background-color:#faddd7;">@dr["Label"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#faddd7;">@Convert.ToInt32(dr["Value"]) (@((Convert.ToInt32(dr["Value"]) * 100) / @TotalFollowUp)%)</td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td colspan="2"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                            </tr>
+                                                        }
+                                                    }
                                                 }
-                                                <tr>
-                                                    <td class="text-center" style="background-color:#e8f4f6;">Total</td>
-                                                    <td class="text-center" style="background-color:#e8f4f6;">@RowTotal</td>
-                                                    <td class="text-center" style="background-color:#e8f4f6;"></td>
-                                                </tr>
-                                            }
-                                            else
-                                            {
-                                                <tr>
-                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="xl:w-1/1 w-full ">
+                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
-                </div>
-            </div>
-            <div class="xl:w-1/1 w-full ">
-                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                    <div class="overflow-x-auto table-scroll">
-                        <div class="dataTables_wrapper">
-                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th class="text-center" style="background-color:#fdefec;">Medication Status</th>
-                                        <th class="text-center" style="background-color:#fdefec;">Number</th>
-                                        <th class="text-center" style="background-color:#fdefec;">%</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        if (dt2.Rows.Count > 0)
-                                        {
-                                            var sno = 1;
-                                            DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 5);
-                                            int RowTotal = 0;
-                                            if (dr1.Length > 0)
-                                            {
-                                                foreach (DataRow dr in dr1)
-                                                {
-                                                    RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                    <tr>
-                                                        <td class="text-center" style="background-color:#fdefec;">@dr["Label"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#fdefec;">@dr["Value"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#fdefec;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
-                                                    </tr>
+                                <div class="overflow-x-auto table-scroll">
+                                    <div class="dataTables_wrapper">
+                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4" style="color: #fff !important;">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th class="text-center" style="background-color:#b03d80;">Place Of Visit</th>
+                                                    <th class="text-center" style="background-color:#b03d80;">Number</th>
+                                                    <th class="text-center" style="background-color:#b03d80;">%</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (dt3.Rows.Count > 0)
+                                                    {
+                                                        var sno = 1;
+                                                        DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 3);
+                                                        int RowTotal = 0;
+                                                        if (dr1.Length > 0)
+                                                        {
+                                                            foreach (DataRow dr in dr1)
+                                                            {
+                                                                RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                                <tr>
+                                                                    <td class="text-center" style="background-color:#b03d80;">@dr["Label"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#b03d80;">@dr["Value"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#b03d80;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
+                                                                </tr>
+                                                            }
+                                                            <tr>
+                                                                <td class="text-center" style="background-color:#b03d80;">Total</td>
+                                                                <td class="text-center" style="background-color:#b03d80;">@RowTotal</td>
+                                                                <td class="text-center" style="background-color:#b03d80;"></td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                            </tr>
+                                                        }
+                                                    }
                                                 }
-                                                <tr>
-                                                    <td class="text-center" style="background-color:#fdefec;">Total</td>
-                                                    <td class="text-center" style="background-color:#fdefec;">@RowTotal</td>
-                                                    <td class="text-center" style="background-color:#fdefec;"></td>
-                                                </tr>
-                                            }
-                                            else
-                                            {
-                                                <tr>
-                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
+                        <div class="xl:w-1/1 w-full ">
+                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
-                </div>
-            </div>
-        </div>
-        <div class="xl:w-1/3 w-full">
-            <div class="xl:w-1/1 w-full ">
-                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-                    <h5 class="text-center">
-                        <strong class="text-primary">Details Of Follow-Ups: Comorbidity Suspects</strong>
-                    </h5>
-                    <div class="overflow-x-auto table-scroll">
-                        <div class="dataTables_wrapper">
-                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl5">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th class="text-center" colspan="2"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        if (dt3.Rows.Count > 0)
-                                        {
-                                            var sno = 1;
-                                            DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 1);
-                                            DataRow[] dr2 = dt3.Select("Type = " + 2 + " and TableNo=" + 2);
-                                            if (dr1.Length > 0 && dr2.Length > 0)
-                                            {
-                                                foreach (DataRow dr in dr1)
-                                                {
-                                                    <tr>
-                                                        <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@dr["Label"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@Convert.ToInt32(dr["Value"]).ToString("N0")</td>
-                                                    </tr>
-                                                }
-                                                foreach (DataRow dr in dr2)
-                                                {
-                                                    <tr>
-                                                        <td class="text-center" style="background-color:#faddd7;">@dr["Label"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#faddd7;">@Convert.ToInt32(dr["Value"]) (@((Convert.ToInt32(dr["Value"]) * 100) / @TotalFollowUp)%)</td>
-                                                    </tr>
-                                                }
-                                            }
-                                            else
-                                            {
+                                <div class="overflow-x-auto table-scroll">
+                                    <div class="dataTables_wrapper">
+                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
+                                            <thead class="text-center">
                                                 <tr>
-                                                    <td colspan="2"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                    <th class="text-center" style="background-color:#e8f4f6;">Testing Result</th>
+                                                    <th class="text-center" style="background-color:#e8f4f6;">Number</th>
+                                                    <th class="text-center" style="background-color:#e8f4f6;">%</th>
                                                 </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (dt3.Rows.Count > 0)
+                                                    {
+                                                        var sno = 1;
+                                                        DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 4);
+                                                        int RowTotal = 0;
+                                                        if (dr1.Length > 0)
+                                                        {
+                                                            foreach (DataRow dr in dr1)
+                                                            {
+                                                                RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                                <tr>
+                                                                    <td class="text-center" style="background-color:#e8f4f6;">@dr["Label"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#e8f4f6;">@dr["Value"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#e8f4f6;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
+                                                                </tr>
+                                                            }
+                                                            <tr>
+                                                                <td class="text-center" style="background-color:#e8f4f6;">Total</td>
+                                                                <td class="text-center" style="background-color:#e8f4f6;">@RowTotal</td>
+                                                                <td class="text-center" style="background-color:#e8f4f6;"></td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="xl:w-1/1 w-full ">
-                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+                        <div class="xl:w-1/1 w-full ">
+                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
 
-                    <div class="overflow-x-auto table-scroll">
-                        <div class="dataTables_wrapper">
-                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4" style="color: #fff !important;">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th class="text-center" style="background-color:#b03d80;">Place Of Visit</th>
-                                        <th class="text-center" style="background-color:#b03d80;">Number</th>
-                                        <th class="text-center" style="background-color:#b03d80;">%</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        if (dt3.Rows.Count > 0)
-                                        {
-                                            var sno = 1;
-                                            DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 3);
-                                            int RowTotal = 0;
-                                            if (dr1.Length > 0)
-                                            {
-                                                foreach (DataRow dr in dr1)
-                                                {
-                                                    RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                    <tr>
-                                                        <td class="text-center" style="background-color:#b03d80;">@dr["Label"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#b03d80;">@dr["Value"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#b03d80;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
-                                                    </tr>
+                                <div class="overflow-x-auto table-scroll">
+                                    <div class="dataTables_wrapper">
+                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th class="text-center" style="background-color:#fdefec;">Medication Status</th>
+                                                    <th class="text-center" style="background-color:#fdefec;">Number</th>
+                                                    <th class="text-center" style="background-color:#fdefec;">%</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (dt3.Rows.Count > 0)
+                                                    {
+                                                        var sno = 1;
+                                                        DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 5);
+                                                        int RowTotal = 0;
+                                                        if (dr1.Length > 0)
+                                                        {
+                                                            foreach (DataRow dr in dr1)
+                                                            {
+                                                                RowTotal += Convert.ToInt32(dr["Value"].ToString());
+                                                                <tr>
+                                                                    <td class="text-center" style="background-color:#fdefec;">@dr["Label"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#fdefec;">@dr["Value"].ToString()</td>
+                                                                    <td class="text-center" style="background-color:#fdefec;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
+                                                                </tr>
+                                                            }
+                                                            <tr>
+                                                                <td class="text-center" style="background-color:#fdefec;">Total</td>
+                                                                <td class="text-center" style="background-color:#fdefec;">@RowTotal</td>
+                                                                <td class="text-center" style="background-color:#fdefec;"></td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
+                                                            </tr>
+                                                        }
+                                                    }
                                                 }
-                                                <tr>
-                                                    <td class="text-center" style="background-color:#b03d80;">Total</td>
-                                                    <td class="text-center" style="background-color:#b03d80;">@RowTotal</td>
-                                                    <td class="text-center" style="background-color:#b03d80;"></td>
-                                                </tr>
-                                            }
-                                            else
-                                            {
-                                                <tr>
-                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="xl:w-1/1 w-full ">
-                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                    <div class="overflow-x-auto table-scroll">
-                        <div class="dataTables_wrapper">
-                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th class="text-center" style="background-color:#e8f4f6;">Testing Result</th>
-                                        <th class="text-center" style="background-color:#e8f4f6;">Number</th>
-                                        <th class="text-center" style="background-color:#e8f4f6;">%</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        if (dt3.Rows.Count > 0)
-                                        {
-                                            var sno = 1;
-                                            DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 4);
-                                            int RowTotal = 0;
-                                            if (dr1.Length > 0)
-                                            {
-                                                foreach (DataRow dr in dr1)
-                                                {
-                                                    RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                    <tr>
-                                                        <td class="text-center" style="background-color:#e8f4f6;">@dr["Label"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#e8f4f6;">@dr["Value"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#e8f4f6;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
-                                                    </tr>
-                                                }
-                                                <tr>
-                                                    <td class="text-center" style="background-color:#e8f4f6;">Total</td>
-                                                    <td class="text-center" style="background-color:#e8f4f6;">@RowTotal</td>
-                                                    <td class="text-center" style="background-color:#e8f4f6;"></td>
-                                                </tr>
-                                            }
-                                            else
-                                            {
-                                                <tr>
-                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="xl:w-1/1 w-full ">
-                <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                    <div class="overflow-x-auto table-scroll">
-                        <div class="dataTables_wrapper">
-                            <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th class="text-center" style="background-color:#fdefec;">Medication Status</th>
-                                        <th class="text-center" style="background-color:#fdefec;">Number</th>
-                                        <th class="text-center" style="background-color:#fdefec;">%</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        if (dt3.Rows.Count > 0)
-                                        {
-                                            var sno = 1;
-                                            DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 5);
-                                            int RowTotal = 0;
-                                            if (dr1.Length > 0)
-                                            {
-                                                foreach (DataRow dr in dr1)
-                                                {
-                                                    RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                    <tr>
-                                                        <td class="text-center" style="background-color:#fdefec;">@dr["Label"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#fdefec;">@dr["Value"].ToString()</td>
-                                                        <td class="text-center" style="background-color:#fdefec;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
-                                                    </tr>
-                                                }
-                                                <tr>
-                                                    <td class="text-center" style="background-color:#fdefec;">Total</td>
-                                                    <td class="text-center" style="background-color:#fdefec;">@RowTotal</td>
-                                                    <td class="text-center" style="background-color:#fdefec;"></td>
-                                                </tr>
-                                            }
-                                            else
-                                            {
-                                                <tr>
-                                                    <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>*@
+                    </div>*@
             </div>
         </div>
     </div>
@@ -633,17 +636,17 @@
             var Table7 = (DataList.Table6);
             // var Table8 = (DataList.Table7);
             if (Table1Total != null) {
-                $('#TotalFollowupHP').html(Table1Total[0].TotalFollowupHP);
-                $('#TotalSuspectedVisitHP').html(Table1Total[0].TotalSuspectedVisitHP);
-                $('#TotalFollowupHPPercentage').html(Table1Total[0].TotalFollowupHPPercentage);
+                $('#TotalFollowupHP').html(format(Table1Total[0].TotalFollowupHP));
+                $('#TotalSuspectedVisitHP').html(format(Table1Total[0].TotalSuspectedVisitHP));
+                $('#TotalFollowupHPPercentage').html(format(Table1Total[0].TotalFollowupHPPercentage));
 
-                $('#TotalFollowupBS').html(Table1Total[0].TotalFollowupBS);
-                $('#TotalSuspectedVisitBS').html(Table1Total[0].TotalSuspectedVisitBS);
-                $('#TotalFollowupBSPercentage').html(Table1Total[0].TotalFollowupBSPercentage);
+                $('#TotalFollowupBS').html(format(Table1Total[0].TotalFollowupBS));
+                $('#TotalSuspectedVisitBS').html(format(Table1Total[0].TotalSuspectedVisitBS));
+                $('#TotalFollowupBSPercentage').html(format(Table1Total[0].TotalFollowupBSPercentage));
 
-                $('#TotalFollowupCOM').html(Table1Total[0].TotalFollowupCOM);
-                $('#TotalSuspectedVisitCOMorb').html(Table1Total[0].TotalSuspectedVisitCOMorb);
-                $('#TotalFollowupCOMPercentage').html(Table1Total[0].TotalFollowupCOMPercentage);
+                $('#TotalFollowupCOM').html(format(Table1Total[0].TotalFollowupCOM));
+                $('#TotalSuspectedVisitCOMorb').html(format(Table1Total[0].TotalSuspectedVisitCOMorb));
+                $('#TotalFollowupCOMPercentage').html(format(Table1Total[0].TotalFollowupCOMPercentage));
 
             }
             if (Table2 != null) {
@@ -659,10 +662,10 @@
                 for (var i = 0; i < Table3.length; i++) {
                     GandTotal += Table3[i].TestingresultBP;
                     categories.push(Table3[i].Label);
-                    dataS.push({ name: Table3[i].Label, d: Table3[i].TestingresultBP, y: Table3[i].Percentage });
+                    dataS.push({ name: Table3[i].Label, d: format(Table3[i].TestingresultBP), y: Table3[i].Percentage });
                     dataSplinePresent.push(Table3[i].Percentage);
                 }
-                BindPie('HYCheckBPPie', categories, dataS, dataSplinePresent, 'Testing result: Hypertensive Suspects', 'Testing result', '<b> Total suspects : ' + GandTotal + '</b>');
+                BindPie('HYCheckBPPie', categories, dataS, dataSplinePresent, 'Testing result: Hypertensive Suspects', 'Testing result', '<b> Total suspects : ' + format(GandTotal) + '</b>');
 
             }
             if (Table4 != null) {
@@ -670,10 +673,10 @@
                 for (var i = 0; i < Table4.length; i++) {
                     GandTotal += Table4[i].MedicationBP;
                     categories.push(Table4[i].Label);
-                    dataS.push({ name: Table4[i].Label, d: Table4[i].MedicationBP, y: Table4[i].Percentage });
+                    dataS.push({ name: Table4[i].Label, d: format(Table4[i].MedicationBP), y: Table4[i].Percentage });
                     dataSplinePresent.push(Table4[i].Percentage);
                 }
-                BindPie('HYMedicationBPPie', categories, dataS, dataSplinePresent, 'Medication status: Hypertensive Suspects', 'Medication status', '<b> Total suspects : ' + GandTotal + '</b>');
+                BindPie('HYMedicationBPPie', categories, dataS, dataSplinePresent, 'Medication status: Hypertensive Suspects', 'Medication status', '<b> Total suspects : ' + format(GandTotal) + '</b>');
             }
             //Started FOR Diabetic suspects
             if (Table5 != null) {
@@ -690,39 +693,52 @@
                 for (var i = 0; i < Table6.length; i++) {
                     GandTotal += Table6[i].TestingresultBS;
                     categories.push(Table6[i].Label);
-                    dataS.push({ name: Table6[i].Label, d: Table6[i].TestingresultBS, y: Table6[i].Percentage });
+                    dataS.push({ name: Table6[i].Label, d: format(Table6[i].TestingresultBS), y: Table6[i].Percentage });
                     dataSplinePresent.push(Table6[i].Percentage);
                 }
-                BindPie('HYCheckBSPie', categories, dataS, dataSplinePresent, 'Testing result: Diabetic suspects', 'Testing result', '<b> Total suspects : ' + GandTotal + '</b>', ['#da5c2d', '#DDDF00', '#2f628a', '#24CBE5', '#914518', '#489631']);
+                BindPie('HYCheckBSPie', categories, dataS, dataSplinePresent, 'Testing result: Diabetic suspects', 'Testing result', '<b> Total suspects : ' + format(GandTotal) + '</b>', ['#da5c2d', '#DDDF00', '#2f628a', '#24CBE5', '#914518', '#489631']);
             }
             if (Table7 != null) {
                 categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
                 for (var i = 0; i < Table7.length; i++) {
                     GandTotal += Table7[i].MedicationBS;
                     categories.push(Table7[i].Label);
-                    dataS.push({ name: Table7[i].Label, d: Table7[i].MedicationBS, y: Table7[i].Percentage });
+                    dataS.push({ name: Table7[i].Label, d: format(Table7[i].MedicationBS), y: Table7[i].Percentage });
                     dataSplinePresent.push(Table7[i].Percentage);
                 }
-                BindPie('HYMedicationBSPie', categories, dataS, dataSplinePresent, 'Medication status: Diabetic suspects', 'Medication status', '<b> Total suspects : ' + GandTotal + '</b>');
+                BindPie('HYMedicationBSPie', categories, dataS, dataSplinePresent, 'Medication status: Diabetic suspects', 'Medication status', '<b> Total suspects : ' + format(GandTotal) + '</b>');
             }
 
         }
         function onerror(resp) {
             alert("Oops!! Something went Wrong..Please Try Again.");
         }
-
+        function format(n) {
+            n = n.toString()
+            while (true) {
+                var n2 = n.replace(/(\d)(\d{3})($|,|\.)/g, '$1,$2$3')
+                if (n == n2) break
+                n = n2
+            }
+            return n
+        }
         function BindBar(DivId, categories, dataS, dataSplinePresent, Title, Color, Color1) {
             Highcharts.chart(DivId, {
                 chart: {
                     height: 500,
                     zooming: {
                         type: 'xy',
-                       
+
                     }
                 },
                 title: {
-                    text: Title,
-                    align: 'left'
+                    text: '<b>' + Title + '</b>',
+                    align: 'left',
+                    style: {
+                        color: '#c57e31',
+                        font: 'bold 16px "Trebuchet MS", Verdana, sans-serif',
+                        textdecoration: 'underline',
+                    },
                 },
                 //subtitle: {
                 //    text: '',
@@ -739,7 +755,7 @@
                     //    //align: 'right',
                     //   // step: 10,
                     //    // enabled: true
-                      
+
                     //},
                     //tickColor: '#FF0000',
                     //tickWidth: 3,
@@ -842,23 +858,36 @@
                 }]
             });
         }
-
+        Highcharts.setOptions({
+            lang: {
+                thousandsSep: ','
+            }
+        });
         Highcharts.setOptions({
             colors: ['#da5c2d', '#DDDF00', '#2f628a', '#24CBE5', '#914518', '#489631']
             // colors: ['#489631', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
         });
-        function BindPie(DivId, categories, dataS, dataSplinePresent, Title, NM, GandTotal,colorarry) {
+        function BindPie(DivId, categories, dataS, dataSplinePresent, Title, NM, GandTotal, colorarry) {
             Highcharts.chart(DivId, {
                 chart: {
                     type: 'pie'
                 },
                 title: {
-                    text: Title,
-                    align: 'left'
+                    text: '<b>' + Title + '</b>',
+                    align: 'left',
+                    style: {
+                        color: '#c57e31',
+                        font: 'bold 16px "Trebuchet MS", Verdana, sans-serif',
+                        textdecoration: 'underline',
+                    },
                 },
                 subtitle: {
-                    text: GandTotal,
-                    align: 'left'
+                    text: '<b>' + GandTotal + '</b>',
+                    align: 'left',
+                    style: {
+                        color: '#262a58',
+                        //font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+                    },
                 },
                 credits: {
                     enabled: false,

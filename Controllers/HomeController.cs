@@ -1310,7 +1310,7 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
-        public ActionResult GetDownFollowImgDocZip(string MId = "",string FMId = "")
+        public ActionResult GetDownFollowImgDocZip(string MId = "", string FMId = "")
         {
             DataTable dt = new DataTable();
             dt = SP_Model.Usp_ZipFileFollowDownload(MId, FMId);
@@ -1319,7 +1319,7 @@ namespace NCDNewMIS.Controllers
             var random = new Random();
             int month = random.Next(1, 1200);
             // Define the path for the temporary zip file
-            string zipPath = Server.MapPath("~/ImageUploads/SurveyImages/CombinedFilesFollowupZip"+month+".zip");
+            string zipPath = Server.MapPath("~/ImageUploads/SurveyImages/CombinedFilesFollowupZip" + month + ".zip");
 
             // Make sure the TempZips directory exists, if not, create it
             if (!Directory.Exists(Server.MapPath("~/ImageUploads/SurveyImages/TempZips")))

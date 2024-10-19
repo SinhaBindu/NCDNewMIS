@@ -62,6 +62,7 @@
                 <th class="text-center tblth">Panchayat</th>
                 <th class="text-center tblth">Village</th>
                 <th class="text-center tblth">AWC Code</th>
+                <th class="text-center tblth">No Of Followup</th>
 
                 <th class="text-center tblth tdhide">Household ID</th>
                 <th class="text-center tblth">Household <br />Head name</th>
@@ -81,6 +82,10 @@
                     int srno = 1;
                     foreach (DataRow dr in dt.Rows)
                     {
+                        //if (dr["MemberUID"].ToString() == "e8c0d431-5f7a-412c-b5a5-a50b22b2f6ae")
+                        //{
+
+                        //}
                         <tr>
                             <td class="text-center tbltd">@(srno++)</td>
                             <td class="text-center tbltd fw-bold"><strong>@dr["Screening Types"]</strong></td>
@@ -97,6 +102,7 @@
                             <td class="text-left tbltd small tdtextwrp"> @dr["GP"] </td>
                             <td class="text-left tbltd small tdtextwrp" style="word-break: break-word;"> @dr["Village"] </td>
                             <td class="text-left tbltd small tdtextwrp"> @dr["AWCCode"] </td>
+                            <td class="text-left tbltd small tdtextwrp"> @dr["NoofFollowupcount"] </td>
                             <td class="text-left tbltd tdhide"> @dr["HId"] </td>
                             <td class="text-left tbltd tdtextwrp"> @dr["HHHeadName"] </td>
                             <td class="text-left tbltd tdhide"> @dr["MemberId"] </td>

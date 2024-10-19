@@ -16,6 +16,7 @@ using static NCDNewMIS.Controllers.ResourceController;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.IO.Compression;
 using Ionic.Zip;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace NCDNewMIS.Controllers
 {
@@ -1314,10 +1315,11 @@ namespace NCDNewMIS.Controllers
             DataTable dt = new DataTable();
             dt = SP_Model.Usp_ZipFileFollowDownload(MId, FMId);
             // Define the folder path where images and PDFs are stored
-            string folderPath = Server.MapPath("~/ImageUploads/SurveyImages"); // Example path, change as needed
-
+            string folderPath = Server.MapPath("~/ImageUploads/SurveyImages/FollowUp"); // Example path, change as needed
+            var random = new Random();
+            int month = random.Next(1, 1200);
             // Define the path for the temporary zip file
-            string zipPath = Server.MapPath("~/ImageUploads/SurveyImages/CombinedFilesFollowupZip.zip");
+            string zipPath = Server.MapPath("~/ImageUploads/SurveyImages/CombinedFilesFollowupZip"+month+".zip");
 
             // Make sure the TempZips directory exists, if not, create it
             if (!Directory.Exists(Server.MapPath("~/ImageUploads/SurveyImages/TempZips")))
@@ -1329,19 +1331,27 @@ namespace NCDNewMIS.Controllers
             using (ZipArchive zip = System.IO.Compression.ZipFile.Open(zipPath, ZipArchiveMode.Create))
             {
                 // Get all image and PDF files from the folder
-                var files = Directory.GetFiles(folderPath, "*.*");
-                                    // .Where(f => f.EndsWith(".jpg") || f.EndsWith(".jpeg") || f.EndsWith(".png") || f.EndsWith(".pdf") || f.EndsWith(".pdf"));
+                //var files = Directory.GetFiles(folderPath, "*.*");
+                // .Where(f => f.EndsWith(".jpg") || f.EndsWith(".jpeg") || f.EndsWith(".png") || f.EndsWith(".pdf") || f.EndsWith(".pdf"));
 
-                // Loop through each file and add it to the zip
-                foreach (var file in files)
+                foreach (DataRow dr in dt.Rows)
                 {
-                    // Get the file name from the full path
-                    string fileName = Path.GetFileName(file);
-
-
+                    string filePath = dr["FilePathFull"].ToString();
+                    string fileName = Path.GetFileName(filePath);
                     // Add the file to the zip
-                    zip.CreateEntryFromFile(file, fileName);
+                    //var file = Directory.GetFiles(filePath, "*.*");
+                    string filePathc = Path.Combine(folderPath, fileName);
+
+                    zip.CreateEntryFromFile(filePathc, fileName);
                 }
+                // Loop through each file and add it to the zip
+                //foreach (var file in files)
+                //{
+                //    // Get the file name from the full path
+                //    string fileName = Path.GetFileName(file);
+                //    // Add the file to the zip
+                //    zip.CreateEntryFromFile(file, fileName);
+                //}
             }
 
             // Return the zip file as a download

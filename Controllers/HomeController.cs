@@ -17,6 +17,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using System.IO.Compression;
 using Ionic.Zip;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Vml.Office;
 
 namespace NCDNewMIS.Controllers
 {
@@ -1326,7 +1327,7 @@ namespace NCDNewMIS.Controllers
             {
                 Directory.CreateDirectory(Server.MapPath("~/ImageUploads/SurveyImages/TempZips"));
             }
-
+            byte[] fileBytes;
             // Create the zip file
             using (ZipArchive zip = System.IO.Compression.ZipFile.Open(zipPath, ZipArchiveMode.Create))
             {
@@ -1355,7 +1356,10 @@ namespace NCDNewMIS.Controllers
             }
 
             // Return the zip file as a download
-            byte[] fileBytes = System.IO.File.ReadAllBytes(zipPath);
+            fileBytes = System.IO.File.ReadAllBytes(zipPath);
+            if(System.IO.File.Exists(zipPath))
+                System.IO.File.Delete(zipPath);
+
             return File(fileBytes, "application/zip", "CombinedFilesFollowupZip.zip");
         }
 

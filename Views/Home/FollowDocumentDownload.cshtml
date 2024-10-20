@@ -203,6 +203,8 @@
             filtermodel.DistrictId = "1";// $("#DistrictId").val() == "" || $("#DistrictId").val() == null ? 0 : parseInt($("#DistrictId").val());
             filtermodel.BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? 0 : parseInt($("#BlockId").val());
             filtermodel.SCId = $("#SCId").val() == "" || $("#SCId").val() == null ? 0 : parseInt($("#SCId").val());
+            filtermodel.FormDt = $("#FD").val() == "" || $("#FD").val() == null ? '0' : $("#FD").val();
+            filtermodel.ToDt = $("#TD").val() == "" || $("#TD").val() == null ? '0' : $("#TD").val();
             $.ajax({
                 url: url,
                 type: "POST",

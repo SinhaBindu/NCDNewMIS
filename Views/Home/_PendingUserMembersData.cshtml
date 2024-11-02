@@ -18,6 +18,9 @@
     table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled {
         /*padding-right: 0px !important;*/
     }
+    .tdhide {
+        display: none;
+    }
 </style>
 <div class="overflow-x-auto table-scroll">
     <table class="table table-bordered table-striped cell-border small tblfont" id="tbl">
@@ -33,6 +36,7 @@
                 <th class="text-center">Household<br /> No</th>
                 <th class="text-center">No.of members <br />submission data</th>
                 <th class="text-center">Pending <br />submission data</th>
+                <th class="text-center tdhide">HH uuid</th>
             </tr>
         </thead>
         <tbody>
@@ -53,6 +57,7 @@
                             <td class="text-left" style="word-break:break-word !important;">@dr["HId"]</td>
                             <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dr["NoofMembers"].ToString()) ? Convert.ToDecimal(dr["NoofMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                             <td class="text-center"><strong class="text-warning">@(!string.IsNullOrWhiteSpace(dr["PendingMembers"].ToString()) ? Convert.ToDecimal(dr["PendingMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                            <td class="text-center tdhide">@dr["HHuuid"]</td>
                         </tr>
                     }
                 }
@@ -68,6 +73,8 @@
             @if (dt.Rows.Count > 0)
             {
                 <tr>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>

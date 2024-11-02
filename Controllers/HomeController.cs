@@ -1135,7 +1135,7 @@ namespace NCDNewMIS.Controllers
             }
         }
 
-        #region Act-I Indicator Method
+        #region Act-II Indicator Method
         public ActionResult Training2()
         {
 

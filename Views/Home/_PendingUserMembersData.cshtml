@@ -30,6 +30,7 @@
                 <th class="text-center">Village</th>
                 <th class="text-center">Volunteer Name</th>
                 <th class="text-center">Household<br /> Head Name</th>
+                <th class="text-center">Household<br /> No</th>
                 <th class="text-center">No.of members <br />submission data</th>
                 <th class="text-center">Pending <br />submission data</th>
             </tr>
@@ -49,6 +50,7 @@
                             <td class="text-left" style="word-break:break-word !important;">@dr["Village"]</td>
                             <td class="text-left" style="word-break:break-word !important;">@dr["FullName"]</td>
                             <td class="text-left" style="word-break:break-word !important;">@dr["HHHeadName"]</td>
+                            <td class="text-left" style="word-break:break-word !important;">@dr["HId"]</td>
                             <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dr["NoofMembers"].ToString()) ? Convert.ToDecimal(dr["NoofMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                             <td class="text-center"><strong class="text-warning">@(!string.IsNullOrWhiteSpace(dr["PendingMembers"].ToString()) ? Convert.ToDecimal(dr["PendingMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                         </tr>

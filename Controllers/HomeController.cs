@@ -18,6 +18,7 @@ using System.IO.Compression;
 using Ionic.Zip;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Vml.Office;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace NCDNewMIS.Controllers
 {
@@ -682,14 +683,15 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
             }
         }
-        public ActionResult PendingMembers()
+        public ActionResult PendingMembers(int BId=0)
         {
-            return View();
+            FilterModel filterModel = new FilterModel();
+            filterModel.BlockId = BId.ToString();
+            return View(filterModel);
         }
-        public ActionResult GetPendingMembersData()
+        public ActionResult GetPendingMembersData(FilterModel filterModel)
         {
             DataSet ds = new DataSet();
-            FilterModel filterModel = new FilterModel();
             try
             {
                 ds = SP_Model.SP_PendingUserMembersSubmission(filterModel);
@@ -1250,13 +1252,13 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult GetFollowupDataSummmary()
+        public ActionResult GetFollowupDataSummmary(string StartDate, string EndDate)
         {
             DataSet ds = new DataSet();
             DataTable tbllist = new DataTable();
             try
             {
-                ds = SP_Model.Sp_FollowupSuspectedSummaryData();
+                ds = SP_Model.Sp_FollowupSuspectedSummaryData(StartDate,EndDate);
                 bool IsCheck = false;
                 if (ds.Tables.Count > 0)
                 {
@@ -1363,6 +1365,41 @@ namespace NCDNewMIS.Controllers
             return File(fileBytes, "application/zip", "CombinedFilesFollowupZip.zip");
         }
 
+        public ActionResult FollowUpSummaryRawDataExcel(string StartDate, string EndDate)
+        {
+            DataSet ds = new DataSet();
+            DataTable dt = new System.Data.DataTable();
+            FilterModel filterModel = new FilterModel();
+            //fill datatable by some data i just use empty databale
+            System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
+            ds = SP_Model.Sp_FollowupSuspectedSummaryInExcel(StartDate, EndDate);
+            dt = ds.Tables[0];
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wb.Style.Font.Bold = true;
+
+                var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
+                Response.Clear();
+                Response.Buffer = true;
+                Response.Charset = "";
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment;filename=RAWSUBMISSIONDATA" + DTDAY + ".xlsx");
+
+                using (MemoryStream MyMemoryStream = new MemoryStream())
+                {
+                    wb.SaveAs(MyMemoryStream);
+                    MyMemoryStream.WriteTo(Response.OutputStream);
+                    // memoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
+                }
+            }
+            return new EmptyResult();
+
+        }
         #endregion
 
     }

@@ -12,7 +12,6 @@
     #report-map {
         width: 480px !important
     }
-    
 </style>
 <!-- Content body start -->
 <div class="content-body">
@@ -23,40 +22,49 @@
             <button type="button" id="div-download" title="Click here to Download To Excel">Export To Excel</button>
         </div>
         <div class="row">
-            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]" style="display:none">
+            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
                 <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
                     <div class="p-[1.0rem] max-sm:p-2">
                         <div class="row">
+                            <div class="mb-4 md:w-1/2">
+                                @Html.LabelFor(model => model.BlockId, htmlAttributes: new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                            </div>
+                            <div class="mb-4 md:w-1/2" style="display:none;">
+                                @Html.LabelFor(model => model.SCId, htmlAttributes: new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.SCId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full", @required = "required" })
+                                @Html.ValidationMessageFor(model => model.SCId, "", new { @class = "text-danger" })
+                            </div>
 
                             @*<div class="xl:w-1/5 sm:w-1/3 w-full" style="display:none;">
-                                <label class="">Type of submission</label>
-                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="DistrictBlockType" id="DistrictBlockType">
-                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetDistrictBlockType().ToList())
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="xl:w-1/5 sm:w-1/3 w-full" style="display:none;">
-                                <label class="form-label">Type of round</label>
-                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="RoundType" id="RoundType">
-                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetRoundType(true).ToList())
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="xl:w-1/6 sm:w-1/6 w-full">
-                                Screening Type
-                            </div>
-                            <div class="xl:w-1/6 sm:w-1/6 w-full">
-                                <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="SType" id="SType">
-                                    @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
-                            </div>*@
+                                    <label class="">Type of submission</label>
+                                    <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="DistrictBlockType" id="DistrictBlockType">
+                                        @foreach (var item in NCDNewMIS.Models.CommonModel.GetDistrictBlockType().ToList())
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="xl:w-1/5 sm:w-1/3 w-full" style="display:none;">
+                                    <label class="form-label">Type of round</label>
+                                    <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="RoundType" id="RoundType">
+                                        @foreach (var item in NCDNewMIS.Models.CommonModel.GetRoundType(true).ToList())
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="xl:w-1/6 sm:w-1/6 w-full">
+                                    Screening Type
+                                </div>
+                                <div class="xl:w-1/6 sm:w-1/6 w-full">
+                                    <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="SType" id="SType">
+                                        @foreach (var item in NCDNewMIS.Models.CommonModel.GetScreeningType(true).ToList())
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>*@
 
 
                         </div>
@@ -80,12 +88,30 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JS/Master.js"></script>
 
     <script>
 
         $(document).ready(function () {
 
-            LoadReport();
+            BindBlock("BlockId", '@Model.BlockId', '0');
+            debugger;
+            //$('select[name="BlockId"]').find('option').eq(2).attr("selected", true).change();
+            setTimeout(function () {
+                if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
+                   // BindSubcenter("SCId", '', "1", "1", $('#BlockId').val(), 0, 0,);
+                    //$('select[name="SCId"]').find('option').eq(2).attr("selected", true).change();
+                    LoadReport();
+                }
+            }, 200);
+
+
+            $('#BlockId').change(function () {
+                LoadReport();
+                //BindSubcenter("SCId", '', "1", $('#DistrictId').val(), $('#BlockId').val(), 0, 0);
+            });
+
+            //LoadReport();
 
             //$('#SType').change(function () {
             //    LoadReport();
@@ -99,11 +125,16 @@
             var SType = "";// $("#SType").val();
             var RoundType = "";// $("#RoundType").val();
             var DistrictBlockType = "";//$("#DistrictBlockType").val();
+            var filtermodel = new Object();
+            //filtermodel.DistrictId = "1";// $("#DistrictId").val() == "" || $("#DistrictId").val() == null ? 0 : parseInt($("#DistrictId").val());
+            filtermodel.BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? 0 : parseInt($("#BlockId").val());
+            filtermodel.SCId = $("#SCId").val() == "" || $("#SCId").val() == null ? 0 : parseInt($("#SCId").val());
+
             $.ajax({
                 url: document.baseURI + '/Home/GetPendingMembersData',
                 //url: url,
                 type: "POST",
-                data: '',
+                data: filtermodel,
                 success: function (resp) {
                     if (resp.IsSuccess) {
                         debugger;
@@ -117,7 +148,7 @@
                             //fixedHeader: true,
                             //scrollCollapse: true,
                             paging: false,
-                           // "bFilter": false,
+                            // "bFilter": false,
                             pageLength: 100,
                             //fixedColumns: {
                             //    leftColumns: 1,

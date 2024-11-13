@@ -1,4 +1,5 @@
-﻿using NCDNewMIS.Models;
+﻿using DocumentFormat.OpenXml.EMMA;
+using NCDNewMIS.Models;
 using SubSonic.Schema;
 using System;
 using System.Collections.Generic;
@@ -125,6 +126,8 @@ namespace NCDNewMIS.Models
         public static DataSet SP_PendingUserMembersSubmission(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_PendingUserMembersSubmission");
+            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.Int32);
+            sp.Command.AddParameter("@SubCenterId", model.SCId, DbType.Int32);
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
@@ -278,9 +281,19 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
-        public static DataSet Sp_FollowupSuspectedSummaryData()
+        public static DataSet Sp_FollowupSuspectedSummaryData(string StartDate,string EndDate)
         {
             StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummaryData");
+            sp.Command.AddParameter("@StartDate", StartDate, DbType.String);
+            sp.Command.AddParameter("@EndDate", EndDate, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
+        public static DataSet Sp_FollowupSuspectedSummaryInExcel(string StartDate, string EndDate)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_FollowUpSummaryInExcel");
+            sp.Command.AddParameter("@StartDate", StartDate, DbType.String);
+            sp.Command.AddParameter("@EndDate", EndDate, DbType.String);
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }

@@ -80,7 +80,6 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
                     <td class="text-right"><strong>Grand Total :</strong></td>
                     <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(NoofMembers)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(NoofMembers)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                     <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(PendingMembers)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(PendingMembers)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>

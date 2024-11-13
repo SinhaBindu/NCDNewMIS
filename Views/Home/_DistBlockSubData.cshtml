@@ -65,7 +65,7 @@
                             <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["TM"].ToString()) ? Convert.ToDecimal(dr["TM"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
                             <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["EM"].ToString()) ? Convert.ToDecimal(dr["EM"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
                             <td class="text-center">
-                                <a href="~/Home/PendingMembers">
+                                <a href="~/Home/PendingMembers?BId=@dr["BlockId"]">
                                     <strong class="text-warning">
                                         @(!string.IsNullOrWhiteSpace(dr["PM"].ToString()) ? Convert.ToDecimal(dr["PM"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
                                     </strong>

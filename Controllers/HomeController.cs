@@ -683,7 +683,7 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
             }
         }
-        public ActionResult PendingMembers(int BId=0)
+        public ActionResult PendingMembers(int BId = 0)
         {
             FilterModel filterModel = new FilterModel();
             filterModel.BlockId = BId.ToString();
@@ -1258,7 +1258,7 @@ namespace NCDNewMIS.Controllers
             DataTable tbllist = new DataTable();
             try
             {
-                ds = SP_Model.Sp_FollowupSuspectedSummaryData(StartDate,EndDate);
+                ds = SP_Model.Sp_FollowupSuspectedSummaryData(StartDate, EndDate);
                 bool IsCheck = false;
                 if (ds.Tables.Count > 0)
                 {
@@ -1359,44 +1359,51 @@ namespace NCDNewMIS.Controllers
 
             // Return the zip file as a download
             fileBytes = System.IO.File.ReadAllBytes(zipPath);
-            if(System.IO.File.Exists(zipPath))
+            if (System.IO.File.Exists(zipPath))
                 System.IO.File.Delete(zipPath);
 
             return File(fileBytes, "application/zip", "CombinedFilesFollowupZip.zip");
         }
 
-        public ActionResult FollowUpSuspectedSummaryRawDataDownload(string StartDate="", string EndDate="")
+        public ActionResult FollowUpSuspectedSummaryRawDataDownload(string StartDate = "", string EndDate = "")
         {
             DataSet ds = new DataSet();
             DataTable dt = new System.Data.DataTable();
             FilterModel filterModel = new FilterModel();
             //fill datatable by some data i just use empty databale
             System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
-            ds = SP_Model.Sp_FollowupSuspectedSummaryInDownload(StartDate, EndDate);
-            dt = ds.Tables[0];
+            if (TempData["FUSData"] != null)
+            {
+                dt = (DataTable)TempData["FUSData"];
+            }
+            else
+            {
+                ds = SP_Model.Sp_FollowupSuspectedSummaryInDownload(StartDate, EndDate);
+                dt = ds.Tables[0];
+            }
 
             using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                wb.Style.Font.Bold = true;
-
-                var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
-                Response.Clear();
-                Response.Buffer = true;
-                Response.Charset = "";
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment;filename=RawFollowUpVisitedSuspected" + DTDAY + ".xlsx");
-
-                using (MemoryStream MyMemoryStream = new MemoryStream())
                 {
-                    wb.SaveAs(MyMemoryStream);
-                    MyMemoryStream.WriteTo(Response.OutputStream);
-                    // memoryStream.WriteTo(Response.OutputStream);
-                    Response.Flush();
-                    Response.End();
+                    wb.Worksheets.Add(dt);
+                    wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    wb.Style.Font.Bold = true;
+
+                    var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.Charset = "";
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    Response.AddHeader("content-disposition", "attachment;filename=RawFollowUpVisitedSuspected" + DTDAY + ".xlsx");
+
+                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                    {
+                        wb.SaveAs(MyMemoryStream);
+                        MyMemoryStream.WriteTo(Response.OutputStream);
+                        // memoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
                 }
-            }
             return new EmptyResult();
 
         }
@@ -1405,20 +1412,22 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult GetRawFollowupVisitDataList(string StartDate="", string EndDate="")
+        public ActionResult GetRawFollowupVisitDataList(string StartDate = "", string EndDate = "")
         {
             DataSet ds = new DataSet();
             DataTable tbllist = new DataTable();
+            TempData["FUSData"] = null;
             var html = "";
             try
             {
-                ds = SP_Model.Sp_FollowupSuspectedSummaryInDownload(StartDate,EndDate);
+                ds = SP_Model.Sp_FollowupSuspectedSummaryInDownload(StartDate, EndDate);
                 bool IsCheck = false;
                 if (ds.Tables.Count > 0)
                 {
                     tbllist = ds.Tables[0];
                     if (tbllist.Rows.Count > 0)
                     {
+                        TempData["FUSData"] = tbllist;
                         IsCheck = true;
                         html = ConvertViewToString("_RawFollowupVisitSuspData", tbllist);
                         var res1 = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);

@@ -289,9 +289,9 @@ namespace NCDNewMIS.Models
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
-        public static DataSet Sp_FollowupSuspectedSummaryInExcel(string StartDate, string EndDate)
+        public static DataSet Sp_FollowupSuspectedSummaryInDownload(string StartDate, string EndDate)
         {
-            StoredProcedure sp = new StoredProcedure("SP_FollowUpSummaryInExcel");
+            StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummaryDataDownload");
             sp.Command.AddParameter("@StartDate", StartDate, DbType.String);
             sp.Command.AddParameter("@EndDate", EndDate, DbType.String);
             DataSet ds = sp.ExecuteDataSet();

@@ -1365,14 +1365,14 @@ namespace NCDNewMIS.Controllers
             return File(fileBytes, "application/zip", "CombinedFilesFollowupZip.zip");
         }
 
-        public ActionResult FollowUpSummaryRawDataExcel(string StartDate, string EndDate)
+        public ActionResult FollowUpSuspectedSummaryRawDataDownload(string StartDate="", string EndDate="")
         {
             DataSet ds = new DataSet();
             DataTable dt = new System.Data.DataTable();
             FilterModel filterModel = new FilterModel();
             //fill datatable by some data i just use empty databale
             System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
-            ds = SP_Model.Sp_FollowupSuspectedSummaryInExcel(StartDate, EndDate);
+            ds = SP_Model.Sp_FollowupSuspectedSummaryInDownload(StartDate, EndDate);
             dt = ds.Tables[0];
 
             using (XLWorkbook wb = new XLWorkbook())
@@ -1386,7 +1386,7 @@ namespace NCDNewMIS.Controllers
                 Response.Buffer = true;
                 Response.Charset = "";
                 Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment;filename=RAWSUBMISSIONDATA" + DTDAY + ".xlsx");
+                Response.AddHeader("content-disposition", "attachment;filename=RawFollowUpVisitedSuspected" + DTDAY + ".xlsx");
 
                 using (MemoryStream MyMemoryStream = new MemoryStream())
                 {
@@ -1400,6 +1400,50 @@ namespace NCDNewMIS.Controllers
             return new EmptyResult();
 
         }
+
+        public ActionResult RawFollowupVisitData()
+        {
+            return View();
+        }
+        public ActionResult GetRawFollowupVisitDataList(string StartDate, string EndDate)
+        {
+            DataSet ds = new DataSet();
+            DataTable tbllist = new DataTable();
+            var html = "";
+            try
+            {
+                ds = SP_Model.Sp_FollowupSuspectedSummaryInDownload(StartDate,EndDate);
+                bool IsCheck = false;
+                if (ds.Tables.Count > 0)
+                {
+                    tbllist = ds.Tables[0];
+                    if (tbllist.Rows.Count > 0)
+                    {
+                        IsCheck = true;
+                        html = ConvertViewToString("_RawFollowupVisitSuspData", tbllist);
+                        var res1 = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);
+                        res1.MaxJsonLength = int.MaxValue;
+                        return res1;
+                    }
+                    IsCheck = false;
+                    var res = Json(new { IsSuccess = IsCheck, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = IsCheck, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+
         #endregion
 
     }

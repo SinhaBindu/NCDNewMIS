@@ -861,6 +861,8 @@
     <Content Include="Views\Home\FollowSuspSummaryData.cshtml" />
     <Content Include="Views\Home\FollowDocumentDownload.cshtml" />
     <Content Include="Views\Home\_RowDocumentFollowup.cshtml" />
+    <Content Include="Views\Home\_RawFollowupVisitSuspData.cshtml" />
+    <Content Include="Views\Home\RawFollowupVisitData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1405,7 +1405,7 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult GetRawFollowupVisitDataList(string StartDate, string EndDate)
+        public ActionResult GetRawFollowupVisitDataList(string StartDate="", string EndDate="")
         {
             DataSet ds = new DataSet();
             DataTable tbllist = new DataTable();

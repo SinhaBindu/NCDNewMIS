@@ -1452,6 +1452,38 @@ namespace NCDNewMIS.Controllers
         }
 
         #endregion
+        public ActionResult ReportFollowUPDetailsDataExcel()
+        {
+            DataSet ds = new DataSet();
+            DataTable dt = new System.Data.DataTable();
+            System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
+            ds = SP_Model.SP_FollowUpDetailsDownload();
+            dt = ds.Tables[0];
 
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wb.Style.Font.Bold = true;
+
+                var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
+                Response.Clear();
+                Response.Buffer = true;
+                Response.Charset = "";
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment;filename=FOLLOWUPDETAILSDATA" + DTDAY + ".xlsx");
+
+                using (MemoryStream MyMemoryStream = new MemoryStream())
+                {
+                    wb.SaveAs(MyMemoryStream);
+                    MyMemoryStream.WriteTo(Response.OutputStream);
+                    // memoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
+                }
+            }
+            return new EmptyResult();
+
+        }
     }
 }

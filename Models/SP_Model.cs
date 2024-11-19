@@ -320,5 +320,11 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataSet SP_FollowUpDetailsDownload()
+        {
+            StoredProcedure sp = new StoredProcedure("USP_FollowUpDetailsData");
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
     }
 }

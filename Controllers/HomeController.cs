@@ -1252,13 +1252,13 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult GetFollowupDataSummmary(string StartDate, string EndDate)
+        public ActionResult GetFollowupDataSummmary(string BlockId, string StartDate, string EndDate)
         {
             DataSet ds = new DataSet();
             DataTable tbllist = new DataTable();
             try
             {
-                ds = SP_Model.Sp_FollowupSuspectedSummaryData(StartDate, EndDate);
+                ds = SP_Model.Sp_FollowupSuspectedSummaryData(BlockId,StartDate, EndDate);
                 bool IsCheck = false;
                 if (ds.Tables.Count > 0)
                 {
@@ -1364,7 +1364,6 @@ namespace NCDNewMIS.Controllers
 
             return File(fileBytes, "application/zip", "CombinedFilesFollowupZip.zip");
         }
-
         public ActionResult FollowUpSuspectedSummaryRawDataDownload(string StartDate = "", string EndDate = "")
         {
             DataSet ds = new DataSet();
@@ -1407,7 +1406,6 @@ namespace NCDNewMIS.Controllers
             return new EmptyResult();
 
         }
-
         public ActionResult RawFollowupVisitData()
         {
             return View();

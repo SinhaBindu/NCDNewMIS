@@ -281,9 +281,10 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
-        public static DataSet Sp_FollowupSuspectedSummaryData(string StartDate,string EndDate)
+        public static DataSet Sp_FollowupSuspectedSummaryData(string BlockId, string StartDate,string EndDate)
         {
             StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummaryData");
+            sp.Command.AddParameter("@BlockId", BlockId, DbType.String);
             sp.Command.AddParameter("@StartDate", StartDate, DbType.String);
             sp.Command.AddParameter("@EndDate", EndDate, DbType.String);
             DataSet ds = sp.ExecuteDataSet();

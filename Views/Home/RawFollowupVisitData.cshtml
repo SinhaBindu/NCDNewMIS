@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Followup Visit Raw Data - ACT II";
+    ViewBag.Title = "Health facility visit follow-up Raw Data - ACT II";
 }
 <style>
     .loading {
@@ -182,7 +182,8 @@
 
         $(document).ready(function () {
            // $('#FD').val('@(DateTime.Today.AddDays(-1).ToString("dd-MMM-yyyy"))');
-            $('#FD').val('01-Apr-2024');//@DateTime.Now.Date.ToString("dd-MMM-yyyy")
+            //$('#FD').val('01-Apr-2024');//@DateTime.Now.Date.ToString("dd-MMM-yyyy")
+            $('#FD').val('@DateTime.Now.Date.ToString("dd-MMM-yyyy")');//@DateTime.Now.Date.ToString("dd-MMM-yyyy")
             $('#TD').val('@DateTime.Now.Date.ToString("dd-MMM-yyyy")');
             BindData();
 

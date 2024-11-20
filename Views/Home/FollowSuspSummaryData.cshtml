@@ -156,7 +156,6 @@
                         </div>
                     </div>
 
-
                 </div>
                 <div class="xl:w-1/3 w-full " style="padding-bottom:5px;">
                     <div class="xl:w-1/1 w-full ">
@@ -261,7 +260,6 @@
                         </div>
                     </div>
                 </div>
-
 
 
                 @*<div class="xl:w-1/3 w-full">
@@ -769,6 +767,7 @@
                     cb(start, end);
                 }
             }, 200);
+
             $('#BlockId').change(function () {
                 $('#spinner').show();
                 cb(start, end);
@@ -812,7 +811,7 @@
             if (Table2 != null) {
                 for (var i = 0; i < Table2.length; i++) {
                     categories.push(Table2[i].Label);
-                    dataS.push(Table2[i].NoofPlaceofvisitBP);
+                    dataS.push({ y: Table2[i].NoofPlaceofvisitBP, percentage: Table2[i].Percentage });
                     dataSplinePresent.push(Table2[i].Percentage);
                 }
                 BindBar('HYPlaceVisitBPBar', categories, dataS, dataSplinePresent, 'Place of visit: Hypertensive Suspects', "#F06F6A", "#9f3575");
@@ -843,7 +842,8 @@
                 categories = []; dataS = []; dataSplinePresent = [];
                 for (var i = 0; i < Table5.length; i++) {
                     categories.push(Table5[i].Label);
-                    dataS.push(Table5[i].NoofPlaceofvisitBS);
+                    // dataS.push(Table5[i].NoofPlaceofvisitBS);
+                    dataS.push({ y: Table5[i].NoofPlaceofvisitBS, percentage: Table5[i].Percentage });
                     dataSplinePresent.push(Table5[i].Percentage);
                 }
                 BindBar('HYPlaceVisitBSBar', categories, dataS, dataSplinePresent, 'Place of visit: Diabetic suspects', "#eb9532", '#9746af');
@@ -959,8 +959,13 @@
                 //yAxis: {
                 //    title: false
                 //},
+                //tooltip: {
+                //    shared: true
+                //},
                 tooltip: {
-                    shared: true
+                    formatter: function () {
+                        return 'Place of visit:'+ this.y + '/' + this.percentage + '%';
+                    }
                 },
                 plotOptions: {
                     series: {
@@ -973,7 +978,11 @@
                             backgroundColor: 'rgba(252, 255, 197, 0.7)',
                             borderWidth: 1,
                             borderColor: '#AAA',
-                            y: -6
+                            y: -6,
+                            formatter: function () {
+                                //debugger
+                                return this.y + '/'+this.percentage + '%';
+                            }
                         }
                     }
                     //series: {
@@ -1007,16 +1016,18 @@
                     //    valueSuffix: ' mm'
                     //}
 
-                }, {
-                    name: 'Place of visit %',
-                    type: 'spline',
-                    data: dataSplinePresent,
-                    color: Color1
+                }
+                    //, {
+                    //name: 'Place of visit %',
+                    //type: 'spline',
+                    //data: dataSplinePresent,
+                    //color: Color1
 
-                    //tooltip: {
-                    //    valueSuffix: '°C'
+                    ////tooltip: {
+                    ////    valueSuffix: '°C'
+                    ////}
                     //}
-                }]
+                ]
             });
         }
         Highcharts.setOptions({

@@ -32,7 +32,10 @@ namespace NCDNewMIS.Models
             Loginfailed = 7
         }
 
-       
+        public enum Default1stValue
+        {
+            BlockId=1
+        }
 
-    }
+        }
 }

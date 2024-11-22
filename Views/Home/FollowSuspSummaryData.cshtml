@@ -135,7 +135,8 @@
                     <div class="p-[1.0rem] max-sm:p-2">
                         <div class="row">
                             <div class="mb-4 md:w-1/2">
-                                @Html.Label("BlockId", htmlAttributes: new { @class = "form-label" })
+                                <label class="form-label">Block</label>
+                                @*@Html.Label("form-label", htmlAttributes: new { @class = "form-label" })*@
                                 @Html.DropDownList("BlockId", new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                             </div>
                         </div>
@@ -701,7 +702,7 @@
             $("table").attr("width", "100%");
         });
         $(document).ready(function () {
-            BindBlock("BlockId", '1', '0');
+            BindBlock("BlockId", '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)', '0');
 
             //$('select[name="BlockId"]').find('option').eq(2).attr("selected", true).change();
 
@@ -964,7 +965,7 @@
                 //},
                 tooltip: {
                     formatter: function () {
-                        return 'Place of visit:'+ this.y + '/' + this.percentage + '%';
+                        return 'Place of visit : '+ this.y + ' ( ' + this.percentage + ' % )';
                     }
                 },
                 plotOptions: {
@@ -981,7 +982,7 @@
                             y: -6,
                             formatter: function () {
                                 //debugger
-                                return this.y + '/'+this.percentage + '%';
+                                return  this.percentage + ' %';
                             }
                         }
                     }

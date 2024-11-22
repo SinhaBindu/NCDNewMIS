@@ -118,13 +118,6 @@ namespace NCDNewMIS.Controllers
                 return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
             }
         }
-
-        public ActionResult Index()
-        {
-            DataSet ds = new DataSet();
-            ds = SP_Model.SP_RawDataSummary();
-            return View(ds);
-        }
         public ActionResult GalleryOne()
         {
             FilterModel model = new FilterModel();
@@ -149,7 +142,13 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult GetDataRowList(string SType, string FD, string TD)
+        public ActionResult Index()
+        {
+            DataSet ds = new DataSet();
+            ds = SP_Model.SP_RawDataSummary();
+            return View(ds);
+        }
+        public ActionResult GetDataRowList(string BlockId, string SType, string FD, string TD)
         {
             DataSet ds = new DataSet();
             DataTable tbllist = new DataTable();
@@ -158,6 +157,7 @@ namespace NCDNewMIS.Controllers
             filterModel.SType = SType;
             filterModel.FormDt = FD;
             filterModel.ToDt = TD;
+            filterModel.BlockId = BlockId;
             try
             {
                 ds = SP_Model.SP_RowDataShow(filterModel);
@@ -1190,10 +1190,12 @@ namespace NCDNewMIS.Controllers
 
         public ActionResult RawDataFollowup()
         {
-            return View();
+            FilterModel model = new FilterModel();
+            model.BlockId = Convert.ToInt16(Enums.Default1stValue.BlockId).ToString();
+            return View(model);
         }
 
-        public ActionResult GetDataRawFollowupList(string SType, string FD, string TD)
+        public ActionResult GetDataRawFollowupList(string BlockId, string SType, string FD, string TD)
         {
             DataSet ds = new DataSet();
             DataTable tbllist = new DataTable();
@@ -1202,6 +1204,7 @@ namespace NCDNewMIS.Controllers
             filterModel.SType = SType;
             filterModel.FormDt = FD;
             filterModel.ToDt = TD;
+            filterModel.BlockId = BlockId;
             try
             {
                 ds = SP_Model.SP_RawDataFollowup(filterModel);
@@ -1258,7 +1261,7 @@ namespace NCDNewMIS.Controllers
             DataTable tbllist = new DataTable();
             try
             {
-                ds = SP_Model.Sp_FollowupSuspectedSummaryData(BlockId,StartDate, EndDate);
+                ds = SP_Model.Sp_FollowupSuspectedSummaryData(BlockId, StartDate, EndDate);
                 bool IsCheck = false;
                 if (ds.Tables.Count > 0)
                 {
@@ -1382,27 +1385,27 @@ namespace NCDNewMIS.Controllers
             }
 
             using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wb.Style.Font.Bold = true;
+
+                var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
+                Response.Clear();
+                Response.Buffer = true;
+                Response.Charset = "";
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment;filename=RawFollowUpVisitedSuspected" + DTDAY + ".xlsx");
+
+                using (MemoryStream MyMemoryStream = new MemoryStream())
                 {
-                    wb.Worksheets.Add(dt);
-                    wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                    wb.Style.Font.Bold = true;
-
-                    var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
-                    Response.Clear();
-                    Response.Buffer = true;
-                    Response.Charset = "";
-                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                    Response.AddHeader("content-disposition", "attachment;filename=RawFollowUpVisitedSuspected" + DTDAY + ".xlsx");
-
-                    using (MemoryStream MyMemoryStream = new MemoryStream())
-                    {
-                        wb.SaveAs(MyMemoryStream);
-                        MyMemoryStream.WriteTo(Response.OutputStream);
-                        // memoryStream.WriteTo(Response.OutputStream);
-                        Response.Flush();
-                        Response.End();
-                    }
+                    wb.SaveAs(MyMemoryStream);
+                    MyMemoryStream.WriteTo(Response.OutputStream);
+                    // memoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
                 }
+            }
             return new EmptyResult();
 
         }

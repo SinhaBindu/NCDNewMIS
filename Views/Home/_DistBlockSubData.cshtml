@@ -44,6 +44,9 @@
                 <th class="text-center">Total No.of <br />members</th>
                 <th class="text-center">No.of members <br />submission data</th>
                 <th class="text-center">Pending <br />submission data</th>
+                <th class="text-center">No.of Not Followup <br />Members</th>
+                <th class="text-center">No.of Not Followup <br />BP Members</th>
+                <th class="text-center">No.of Not Followup <br />BS Members</th>
                 <th class="text-center">No.of Followup <br />submission data</th>
                 <th class="text-center">No.of members in <br />Hypertension</th>
                 <th class="text-center">No.of members <br />in RBS </th>
@@ -65,12 +68,21 @@
                             <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["TM"].ToString()) ? Convert.ToDecimal(dr["TM"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
                             <td class="text-center">@(!string.IsNullOrWhiteSpace(dr["EM"].ToString()) ? Convert.ToDecimal(dr["EM"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</td>
                             <td class="text-center">
-                                <a href="~/Home/PendingMembers?BId=@dr["BlockId"]">
+                                <a href="~/Home/PendingMembers?BId=@dr["BlockId"]" target="_blank">
                                     <strong class="text-warning">
                                         @(!string.IsNullOrWhiteSpace(dr["PM"].ToString()) ? Convert.ToDecimal(dr["PM"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
                                     </strong>
                                 </a>
 
+                            </td>
+                            <td class="text-center">
+                                @(!string.IsNullOrWhiteSpace(dr["NotNoofFollowupMembers"].ToString()) ? Convert.ToDecimal(dr["NotNoofFollowupMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                            </td>
+                            <td class="text-center">
+                                @(!string.IsNullOrWhiteSpace(dr["NoofMembersBPYes"].ToString()) ? Convert.ToDecimal(dr["NoofMembersBPYes"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                            </td>
+                            <td class="text-center">
+                                @(!string.IsNullOrWhiteSpace(dr["NoofMembersBSYes"].ToString()) ? Convert.ToDecimal(dr["NoofMembersBSYes"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
                             </td>
 
                             <td class="text-center">

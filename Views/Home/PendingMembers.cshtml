@@ -13,6 +13,49 @@
         width: 480px !important
     }
 </style>
+<style>
+    .loading {
+        position: fixed;
+        top: 0;
+        z-index: 900;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background: rgba(0,0,0,0.6);
+    }
+
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #2e93e6 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+
+    @@keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .is-hide {
+        display: none;
+    }
+</style>
+<div id="spinner" class="loading">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+    @*<img src="~/Content/assets/images/Loading_2.gif" alt="Loading" />*@
+</div>
 <!-- Content body start -->
 <div class="content-body">
     <div class="container-fluid">
@@ -97,13 +140,7 @@
             BindBlock("BlockId", '@Model.BlockId', '0');
             debugger;
             //$('select[name="BlockId"]').find('option').eq(2).attr("selected", true).change();
-            setTimeout(function () {
-                if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
-                   // BindSubcenter("SCId", '', "1", "1", $('#BlockId').val(), 0, 0,);
-                    //$('select[name="SCId"]').find('option').eq(2).attr("selected", true).change();
-                    LoadReport();
-                }
-            }, 200);
+            LoadReport();
 
 
             $('#BlockId').change(function () {
@@ -119,6 +156,7 @@
 
         });
         function LoadReport() {
+            $('#spinner').show();
             $('#result').html("");
             var id = '#tblList-frm'
             var url = $(id).attr("action");
@@ -127,16 +165,18 @@
             var DistrictBlockType = "";//$("#DistrictBlockType").val();
             var filtermodel = new Object();
             //filtermodel.DistrictId = "1";// $("#DistrictId").val() == "" || $("#DistrictId").val() == null ? 0 : parseInt($("#DistrictId").val());
-            filtermodel.BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? 0 : parseInt($("#BlockId").val());
-            filtermodel.SCId = $("#SCId").val() == "" || $("#SCId").val() == null ? 0 : parseInt($("#SCId").val());
+            filtermodel.BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? '@Model.BlockId' : parseInt($("#BlockId").val());
+            //filtermodel.SCId = $("#SCId").val() == "" || $("#SCId").val() == null ? '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)' : parseInt($("#SCId").val());
 
             $.ajax({
                 url: document.baseURI + '/Home/GetPendingMembersData',
                 //url: url,
                 type: "POST",
                 data: filtermodel,
+                async: true,
                 success: function (resp) {
                     if (resp.IsSuccess) {
+                        $('#spinner').hide();
                         debugger;
                         $('#result').html(resp.reshtml);
                         if ($.fn.dataTable.isDataTable('#tbl')) {
@@ -168,17 +208,24 @@
                         table.buttons().container().appendTo($('#div-download'));
                     }
                     else {
+                        $('#spinner').hide();
                         $('#tbl').html('<h4 class="text-danger">Record Not Found !!</h4>');
                     }
                 },
                 error: function (req, error) {
                     if (error === 'error') { error = req.statusText; }
                     var errormsg = 'There was a communication error: ' + error;
-                    $('#tbl').html(errormsg);
+                    $('#tbl').html(errormsg); $('#spinner').hide();
                 }
             });
         }
+        $(document).ajaxSend(function () {
+            $('#spinner').show();
+        });
 
+        $(document).ajaxComplete(function () {
+            $('#spinner').hide();
+        });
 
     </script>
 }

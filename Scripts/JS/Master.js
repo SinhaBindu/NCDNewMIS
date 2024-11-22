@@ -389,7 +389,7 @@ function BindBlock(ElementId, SelectedValue, SelectAll, RoundType = 2) {
         data: JSON.stringify({ 'SelectAll': SelectAll, 'RoundType': RoundType }),
         contentType: "application/json; charset=utf-8",
         //global: false,
-        //async: false,
+        async: false,
         dataType: "json",
         success: function (resp) {
             if (resp.IsSuccess) {

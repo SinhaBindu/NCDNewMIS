@@ -12,8 +12,50 @@
     #report-map {
         width: 480px !important
     }
-    
 </style>
+<style>
+    .loading {
+        position: fixed;
+        top: 0;
+        z-index: 900;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background: rgba(0,0,0,0.6);
+    }
+
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #2e93e6 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+
+    @@keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .is-hide {
+        display: none;
+    }
+</style>
+<div id="spinner" class="loading">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+    @*<img src="~/Content/assets/images/Loading_2.gif" alt="Loading" />*@
+</div>
 <!-- Content body start -->
 <div class="content-body">
     <div class="container-fluid">
@@ -121,6 +163,7 @@
 
         });
         function LoadReport() {
+            $('#spinner').show();
             $('#result').html(""); $("#subchart").html("");
             var id = '#tblList-frm'
             var url = $(id).attr("action");
@@ -131,9 +174,11 @@
                 url: document.baseURI + '/Home/GetSubmissionData',
                 //url: url,
                 type: "POST",
+                async: true,
                 data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType },
                 success: function (resp) {
                     if (resp.IsSuccess) {
+                        $('#spinner').hide();
                         debugger;
                         // $('#resultmap').html(resp.Datahtml);
                         var resD = JSON.parse(resp.resData);
@@ -169,6 +214,7 @@
                         table.buttons().container().appendTo($('#div-download'));
                     }
                     else {
+                        $('#spinner').hide();
                         $('#result').html('<h4 class="text-danger">Record Not Found !!</h4>');
                     }
                 },
@@ -176,10 +222,18 @@
                     if (error === 'error') { error = req.statusText; }
                     var errormsg = 'There was a communication error: ' + error;
                     $('#result').html(errormsg);
+                    $('#spinner').hide();
                 }
             });
         }
 
+        $(document).ajaxSend(function () {
+            $('#spinner').show();
+        });
+
+        $(document).ajaxComplete(function () {
+            $('#spinner').hide();
+        });
 
     </script>
 }

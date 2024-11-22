@@ -1,4 +1,5 @@
-﻿@{
+﻿@model NCDNewMIS.Models.FilterModel
+@{
     ViewBag.Title = "Followup Raw Data - ACT II";
 }
 <style>
@@ -55,7 +56,7 @@
             <button type="button" id="div-download"
                     title="Click here to Download To Excel"></button>
 
-            @Html.ActionLink("Download Followup Details", "ReportFollowUPDetailsDataExcel", "Home", new object { },
+            @Html.ActionLink("Download Followup Details (Till Yesterday)", "ReportFollowUPDetailsDataExcel", "Home", new object { },
                 new { @id = "btnallRaw", @class = "mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" })
 
 
@@ -76,6 +77,10 @@
                     <div class="p-[1.0rem] max-sm:p-4">
                         <div class="border-all">
 
+                            <div class="mb-4 md:w-1/2">
+                                @Html.LabelFor(model => model.BlockId, htmlAttributes: new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                            </div>
                             <div class="mb-4 md:w-1/2">
                                 <label class="form-label">Screening Type</label>
                                 <select class="nice-select style-1 py-1.5 px-[1.563rem] bg-transparent text-[13px] font-normal outline-none relative focus:ring-0 border border-b-color text-[#a5a5a5] h-[2.813rem] leading-[1.813rem]" name="SType" id="SType">
@@ -99,10 +104,10 @@
                             </div>
                             <div class="sm:w-1/2 mt-6">
                                 <button name="btnsubmit" id="btnsubmit"
-                                        class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">
+                                        class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[12px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">
                                     Search
                                 </button>
-                                <a href="~/Home/RawDataFollowup" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[15px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-warning bg-warning text-white hover:bg-[#ffa91a] duration-300"><i class="fa fa-refresh"></i></a>
+                                <a href="~/Home/RawDataFollowup" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[12px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-warning bg-warning text-white hover:bg-[#ffa91a] duration-300"><i class="fa fa-refresh"></i></a>
                             </div>
 
                         </div>
@@ -131,8 +136,6 @@
 {
     @Scripts.Render("~/bundles/jqueryval")
 
-
-
     @*<link href="https://cdn.datatables.net/2.0.6/css/dataTables.dataTables.css" />*@
     <link href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css" />
@@ -147,6 +150,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
+    <script src="~/Scripts/JS/Master.js"></script>
 
     <script>
         $(function () {
@@ -191,6 +195,9 @@
         });
 
         $(document).ready(function () {
+            
+
+             BindBlock("BlockId", '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)', '0');
            // $('#FD').val('@(DateTime.Today.AddDays(-1).ToString("dd-MMM-yyyy"))');
             $('#FD').val('@DateTime.Now.Date.ToString("dd-MMM-yyyy")');
             $('#TD').val('@DateTime.Now.Date.ToString("dd-MMM-yyyy")');
@@ -215,10 +222,12 @@
             var SType = $("#SType").val();
             var FD = $("#FD").val();
             var TD = $("#TD").val();
+            var BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)' : $("#BlockId").val();
             $.ajax({
                 type: "Get",
                 url: document.baseURI + "/Home/GetDataRawFollowupList",
-                data: { SType: SType, FD: FD, TD: TD },
+                data: { BlockId: BlockId, SType: SType, FD: FD, TD: TD },
+                async: true,
                 //cache: false,
                 success: function (res) {
                     if (res.IsSuccess) {

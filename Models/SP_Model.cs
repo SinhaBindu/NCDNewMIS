@@ -64,6 +64,8 @@ namespace NCDNewMIS.Models
             sp.Command.AddParameter("@SType", model.SType, DbType.String);
             sp.Command.AddParameter("@FD", model.FormDt, DbType.String);
             sp.Command.AddParameter("@TD", model.ToDt, DbType.String);
+            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.String);
+            sp.Command.AddParameter("@SubCenterId", model.SCId, DbType.String);
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
@@ -117,6 +119,7 @@ namespace NCDNewMIS.Models
         public static DataSet SP_DistrictBlockData(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("Usp_DistBlockWiseData");
+            //sp.Command.CommandTimeout = 0;//300 5mint; 2 120 mints;
             sp.Command.AddParameter("@flg", model.DistrictBlockType, DbType.Int16);
             sp.Command.AddParameter("@RoundType", model.RoundType, DbType.String);
             sp.Command.AddParameter("@SType", model.SType, DbType.String);
@@ -252,6 +255,8 @@ namespace NCDNewMIS.Models
         public static DataSet SP_RawDataFollowup(FilterModel model)
         {
             StoredProcedure sp = new StoredProcedure("SP_RowDataShowFollowUP");
+            sp.Command.AddParameter("@BlockId", model.BlockId, DbType.String);
+            sp.Command.AddParameter("@SubCenterId", model.SCId, DbType.String);
             sp.Command.AddParameter("@SType", model.SType, DbType.String);
             sp.Command.AddParameter("@FD", model.FormDt, DbType.String);
             sp.Command.AddParameter("@TD", model.ToDt, DbType.String);

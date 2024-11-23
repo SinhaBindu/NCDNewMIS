@@ -124,13 +124,15 @@
         <div class="row">
             <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
                 @*<div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
-                        <div class="cpa text-dark dark:text-white text-base font-semibold">
-                            <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
-                        </div>
-                        <div class="tools">
-                            <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
-                        </div>
-                    </div>*@
+            <div class="cpa text-dark dark:text-white text-base font-semibold">
+                <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
+            </div>
+            <div class="tools">
+                <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+            </div>
+        </div>*@
+
+
                 <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
                     <div class="p-[1.0rem] max-sm:p-2">
                         <div class="row">
@@ -142,6 +144,29 @@
                         </div>
                     </div>
                 </div>
+                <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
+                    <div class="p-[1.0rem] max-sm:p-2">
+                        <div class="row">
+                            <div class="mb-4 md:w-1/2">
+                                <label class="form-label">Gender</label>
+                                @*@Html.Label("form-label", htmlAttributes: new { @class = "form-label" })*@
+                                @Html.DropDownList("Gender", new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
+                    <div class="p-[1.0rem] max-sm:p-2">
+                        <div class="row">
+                            <div class="mb-4 md:w-1/2">
+                                <label class="form-label">Gender</label>
+                                @*@Html.Label("form-label", htmlAttributes: new { @class = "form-label" })*@
+                                @Html.DropDownList("TypeOfPatient", new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 

@@ -41,13 +41,15 @@
                 <th class="text-center">District</th>
                 <th class="text-center">Block</th>
                 <th class="text-center">Total Household</th>
-                <th class="text-center">Total No.of <br />members</th>
-                <th class="text-center">No.of members <br />submission data</th>
-                <th class="text-center">Pending <br />submission data</th>
+                <th class="text-center">Total No.of <br />Members</th>
+                <th class="text-center">No.of members <br />Submission Data</th>
+                <th class="text-center">Pending <br />Submission data</th>
+                <th class="text-center">Total No.of Suspects <br />In Members Data</th>
                 <th class="text-center">No.of Not Followup <br />Members</th>
-                <th class="text-center">No.of Not Followup <br />BP Members</th>
-                <th class="text-center">No.of Not Followup <br />BS Members</th>
-                <th class="text-center">No.of Followup <br />submission data</th>
+                <th class="text-center">No.of Not Followup <br />BP Members Data</th>
+                <th class="text-center">No.of Not Followup <br />BS Members Data</th>
+                <th class="text-center">No.of Followup <br />Submission Data</th>
+                <th class="text-center">No.of Followup <br />In Members Data</th>
                 <th class="text-center">No.of members in <br />Hypertension</th>
                 <th class="text-center">No.of members <br />in RBS </th>
                 <th class="text-center">No.of members <br />in Both(Hypertension/RBS) </th>
@@ -76,17 +78,33 @@
 
                             </td>
                             <td class="text-center">
-                                @(!string.IsNullOrWhiteSpace(dr["NotNoofFollowupMembers"].ToString()) ? Convert.ToDecimal(dr["NotNoofFollowupMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                                <strong class="text-primary">
+                                    @(!string.IsNullOrWhiteSpace(dr["supectNoofFollowupMembers"].ToString()) ? Convert.ToDecimal(dr["supectNoofFollowupMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                                </strong>
                             </td>
                             <td class="text-center">
-                                @(!string.IsNullOrWhiteSpace(dr["NoofMembersBPYes"].ToString()) ? Convert.ToDecimal(dr["NoofMembersBPYes"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                                <strong class="text-warning" style="color: #e71209 !important";>
+                                    @(!string.IsNullOrWhiteSpace(dr["NotNoofFollowupMembers"].ToString()) ? Convert.ToDecimal(dr["NotNoofFollowupMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                                </strong>
                             </td>
                             <td class="text-center">
-                                @(!string.IsNullOrWhiteSpace(dr["NoofMembersBSYes"].ToString()) ? Convert.ToDecimal(dr["NoofMembersBSYes"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                                <strong class="text-warning">
+                                    @(!string.IsNullOrWhiteSpace(dr["NoofMembersBPYes"].ToString()) ? Convert.ToDecimal(dr["NoofMembersBPYes"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                                </strong>
+                            </td>
+                            <td class="text-center">
+                                <strong class="text-warning">
+                                    @(!string.IsNullOrWhiteSpace(dr["NoofMembersBSYes"].ToString()) ? Convert.ToDecimal(dr["NoofMembersBSYes"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                                </strong>
                             </td>
 
                             <td class="text-center">
                                 @(!string.IsNullOrWhiteSpace(dr["FOLLOWUP"].ToString()) ? Convert.ToDecimal(dr["FOLLOWUP"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                            </td>
+                            <td class="text-center">
+                                <strong class="text-primary">
+                                    @(!string.IsNullOrWhiteSpace(dr["TotalNoofFollowupMembers"].ToString()) ? Convert.ToDecimal(dr["TotalNoofFollowupMembers"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
+                                </strong>
                             </td>
                             <td class="text-center">
                                 @(!string.IsNullOrWhiteSpace(dr["HY"].ToString()) ? Convert.ToDecimal(dr["HY"]).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)
@@ -121,14 +139,19 @@
                     <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(TM)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(TM)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                     <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(EM)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(EM)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                     <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(PM)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(PM)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(supectNoofFollowupMembers)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(supectNoofFollowupMembers)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(NotNoofFollowupMembers)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(NotNoofFollowupMembers)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(NoofMembersBPYes)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(NoofMembersBPYes)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(NoofMembersBSYes)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(NoofMembersBSYes)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                     <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(FOLLOWUP)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(FOLLOWUP)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
+                    <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(TotalNoofFollowupMembers)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(TotalNoofFollowupMembers)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                     <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(HY)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(HY)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                     <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(RBS)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(RBS)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                     <td class="text-center"><strong>@(!string.IsNullOrWhiteSpace(dt.Compute("sum(COMorbCase)", string.Empty).ToString()) ? Convert.ToDecimal(dt.Compute("sum(COMorbCase)", string.Empty)).ToString("#,#", CultureInfo.CreateSpecificCulture("hi-IN")) : string.Empty)</strong></td>
                 </tr>
             }
         </tfoot>
-        
+
     </table>
 </div>
 

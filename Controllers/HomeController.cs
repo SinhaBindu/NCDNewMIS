@@ -1187,14 +1187,12 @@ namespace NCDNewMIS.Controllers
             }
             return View(dt);
         }
-
         public ActionResult RawDataFollowup()
         {
             FilterModel model = new FilterModel();
             model.BlockId = Convert.ToInt16(Enums.Default1stValue.BlockId).ToString();
             return View(model);
         }
-
         public ActionResult GetDataRawFollowupList(string BlockId, string SType, string FD, string TD)
         {
             DataSet ds = new DataSet();
@@ -1486,7 +1484,6 @@ namespace NCDNewMIS.Controllers
                 }
             }
             return new EmptyResult();
-
         }
     }
 }

@@ -256,6 +256,22 @@ namespace NCDNewMIS.Models
         #endregion
 
         #region Master 
+        public static List<SelectListItem> GetGender()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Value = "", Text = "All" });
+            list.Add(new SelectListItem { Value = "1", Text = "Male" });
+            list.Add(new SelectListItem { Value = "2", Text = "Female" });
+            return list.OrderBy(x => Convert.ToInt16(x.Value)).ToList();
+        }
+        public static List<SelectListItem> GetTypeofPatient()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Value = "", Text = "All" });
+            list.Add(new SelectListItem { Value = "1", Text = "Already Patient" });
+            list.Add(new SelectListItem { Value = "2", Text = "First Timer Patient" });
+            return list.OrderBy(x => Convert.ToInt16(x.Value)).ToList();
+        }
         public static List<SelectListItem> GetActive()
         {
             List<SelectListItem> list = new List<SelectListItem>();

@@ -165,7 +165,7 @@
             var DistrictBlockType = "";//$("#DistrictBlockType").val();
             var filtermodel = new Object();
             //filtermodel.DistrictId = "1";// $("#DistrictId").val() == "" || $("#DistrictId").val() == null ? 0 : parseInt($("#DistrictId").val());
-            filtermodel.BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? '@Model.BlockId' : parseInt($("#BlockId").val());
+            filtermodel.BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? '@Model.BlockId' : $("#BlockId").val();
             //filtermodel.SCId = $("#SCId").val() == "" || $("#SCId").val() == null ? '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)' : parseInt($("#SCId").val());
 
             $.ajax({

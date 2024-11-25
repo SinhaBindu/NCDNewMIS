@@ -438,6 +438,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\css\Accordioncss.css" />
     <Content Include="Content\assets\css\bootstrap-multiselect.css" />
     <Content Include="Content\assets\css\style.css" />
     <Content Include="Content\assets\icons\flaticon\flaticon.css" />

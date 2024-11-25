@@ -286,12 +286,15 @@ namespace NCDNewMIS.Models
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
-        public static DataSet Sp_FollowupSuspectedSummaryData(string BlockId, string StartDate,string EndDate)
+        public static DataSet Sp_FollowupSuspectedSummaryData(string BlockId, string StartDate,string EndDate, string TypeOfPatient, string GenderId,string Ageyrs)
         {
             StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummaryData");
             sp.Command.AddParameter("@BlockId", BlockId, DbType.String);
             sp.Command.AddParameter("@StartDate", StartDate, DbType.String);
             sp.Command.AddParameter("@EndDate", EndDate, DbType.String);
+            sp.Command.AddParameter("@TypeOfPatient", TypeOfPatient, DbType.String);
+            sp.Command.AddParameter("@GenderId", GenderId, DbType.String);
+            sp.Command.AddParameter("@Ageyrs", Ageyrs, DbType.String);
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }

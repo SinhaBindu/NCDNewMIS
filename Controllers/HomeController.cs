@@ -1253,13 +1253,13 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult GetFollowupDataSummmary(string BlockId, string StartDate, string EndDate)
+        public ActionResult GetFollowupDataSummmary(string BlockId, string StartDate, string EndDate, string TypeOfPatient, string GenderId,string Ageyrs)
         {
             DataSet ds = new DataSet();
             DataTable tbllist = new DataTable();
             try
             {
-                ds = SP_Model.Sp_FollowupSuspectedSummaryData(BlockId, StartDate, EndDate);
+                ds = SP_Model.Sp_FollowupSuspectedSummaryData(BlockId, StartDate, EndDate, TypeOfPatient, GenderId, Ageyrs);
                 bool IsCheck = false;
                 if (ds.Tables.Count > 0)
                 {

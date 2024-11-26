@@ -66,22 +66,31 @@
             <h4>Financial Utillization ACT - II</h4>
         </div>
         <div class="row">
-                <div class="xl:w-1/3">
-                    <div class="card dz-card dz-tab-area" id="card-title-2" style="/* text-align: center; */align-items: center;">
-                        <div class="card-header flex flex-wrap justify-between items-center sm:p-5 sm:pt-6 p-4 pt-[1.875rem] max-sm:pb-5 relative z-[2] border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
-                            <h5 class="card-title capitalize">F.Y. 2023-24</h5>
+            <div class="xl:w-1/3">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="card dz-card dz-tab-area" id="card-title-2" style="/* text-align: center; */align-items: center;">
+                                <div class="card-header flex flex-wrap justify-between items-center sm:p-5 sm:pt-6 p-4 pt-[1.875rem] max-sm:pb-5 relative z-[2] border-b border-[#E6E6E6] dark:border-[#ffffff1a]">
+                                    <h5 class="card-title capitalize">F.Y. 2023-24</h5>
+                                </div>
+                                <div class="p-[1.875rem]">
+                                    @*<i class="fa-solid fa-indian-rupee-sign" style="font-size:xx-large !important;"></i>*@
+                                    <img src="~/Content/assets/images/indian-rupee-sign.png" />
+                                </div>
+                                <div class="card-footer">
+                                    <p class="card-text"><strong>Budget Allocation</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;14,72,000</p>
+                                    <p class="card-text"><strong>Utilized</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;14,72,000</p>
+                                    <p><input type="range" class="rangeinput" id="points3" name="points" min="0" max="1472000" disabled></p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="p-[1.875rem]">
-                            @*<i class="fa-solid fa-indian-rupee-sign" style="font-size:xx-large !important;"></i>*@
-                            <img src="~/Content/assets/images/indian-rupee-sign.png" />
-                        </div>
-                        <div class="card-footer">
-                            <p class="card-text"><strong>Budget Allocation</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;14,72,000</p>
-                            <p class="card-text"><strong>Utilized</strong>&nbsp;&nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;&nbsp;14,72,000</p>
-                            <p><input type="range" class="rangeinput" id="points3" name="points" min="0" max="1472000" disabled></p>
+                        <div class="flip-card-back">
+                            <div id="pop-up202324" style="height:270px"></div>
                         </div>
                     </div>
                 </div>
+            </div>
             <div class="xl:w-1/3">
                 <div class="flip-card">
                     <div class="flip-card-inner">
@@ -129,33 +138,34 @@
 
         </div>
     </div>
-    </div>
-    <link rel="stylesheet" href="~/Content/smartphoto.min.css">
-    @section Scripts {
-        <!-- Gallery -->
-        @Scripts.Render("~/bundles/jqueryval")
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        @*<script src="https://code.highcharts.com/modules/series-label.js"></script>*@
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-        <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
-        <script src="https://code.highcharts.com/maps/modules/map.js"></script>
-        <script src="~/Scripts/JS/Export.js"></script>
-        <script src="~/Scripts/smartphoto.js"></script>
-        <script>
+</div>
+<link rel="stylesheet" href="~/Content/smartphoto.min.css">
+@section Scripts {
+    <!-- Gallery -->
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    @*<script src="https://code.highcharts.com/modules/series-label.js"></script>*@
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="~/Scripts/JS/Export.js"></script>
+    <script src="~/Scripts/smartphoto.js"></script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             new smartPhoto(".js-img-viwer");
         });
-            $("#points1").val("515142");
-            $("#points2").val("0");
-            $("#points3").val("1472000");
+        $("#points1").val("515142");
+        $("#points2").val("0");
+        $("#points3").val("1472000");
         document.getElementsByClassName("myinput").oninput = function () {
             var value = (this.value - this.min) / (this.max - this.min) * 100
             this.style.background = 'linear-gradient(to right, #82CFD0 0%, #82CFD0 ' + value + '%, #fff ' + value + '%, white 100%)'
         };
         $(document).ready(function () {
             var param = { 'ptype': '2', 'fyear': '2024-25' };
+            var param1 = { 'ptype': '2', 'fyear': '2023-24' };
             $.ajax({
                 method: 'POST',
                 url: document.baseURI + '/Home/FinUtilization',
@@ -176,15 +186,46 @@
                         dbug += aData[i].Budget;
                         exp.push(aData[i].Utilized);
                         dexp += aData[i].Utilized;
-                      //  html = html + '<tr><td>' + aData[i].FinYear + '</td><td>' + aData[i].QuaterType + '</td><td>' + aData[i].Budget + '</td><td>' + aData[i].Utilized + '</td><td>' + aData[i].per + '</td></tr>';
+                        //  html = html + '<tr><td>' + aData[i].FinYear + '</td><td>' + aData[i].QuaterType + '</td><td>' + aData[i].Budget + '</td><td>' + aData[i].Utilized + '</td><td>' + aData[i].per + '</td></tr>';
 
                     }
-                    bindgraph("pop-up202425", Qua, "F.Y. 2024-25", "2024-25", [{ name: "Budget", data: bug, color:"#199cc6" }, { name: "Utilized", data: exp, color:"#ff6a00" }]);
+                    bindgraph("pop-up202425", Qua, "F.Y. 2024-25", "2024-25", [{ name: "Budget", data: bug, color: "#199cc6" }, { name: "Utilized", data: exp, color: "#ff6a00" }]);
+               },
+                error: function (resp) {
+                    alert(resp);
+                }
+            });
+            $.ajax({
+                method: 'POST',
+                url: document.baseURI + '/Home/FinUtilization',
+                data: JSON.stringify(param1),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (resp) {
+                    resp = resp.Data;
+                    var aData = JSON.parse(resp);
+                    var Qua = []
+                    var bug = [];
+                    var exp = [];
+                    var dbug = 0, dexp = 0, html = '';
+                    for (var i = 0; i < aData.length; i++) {
+                        if (!Qua.includes(aData[i].QuaterType))
+                            Qua.push(aData[i].QuaterType);
+                        bug.push(aData[i].Budget);
+                        dbug += aData[i].Budget;
+                        exp.push(aData[i].Utilized);
+                        dexp += aData[i].Utilized;
+                        //  html = html + '<tr><td>' + aData[i].FinYear + '</td><td>' + aData[i].QuaterType + '</td><td>' + aData[i].Budget + '</td><td>' + aData[i].Utilized + '</td><td>' + aData[i].per + '</td></tr>';
+
+                    }
+                 bindgraph("pop-up202324", Qua, "F.Y. 2023-24", "2023-24", [{ name: "Budget", data: bug, color: "#199cc6" }, { name: "Utilized", data: exp, color: "#ff6a00" }]);
                 },
                 error: function (resp) {
                     alert(resp);
                 }
             });
+            //////////////////////////////
+           
             //--------------------------------------------------------------------------------------------------------------
             //var param = { 'ptype': '1', 'fyear': '2023-24' };
             //$.ajax({
@@ -309,7 +350,7 @@
         //        $('div#pop-up2324').hide();
         //    });
         //});
-        </script>
+    </script>
 
 
-    }
+}

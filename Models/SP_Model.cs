@@ -123,6 +123,8 @@ namespace NCDNewMIS.Models
             sp.Command.AddParameter("@flg", model.DistrictBlockType, DbType.Int16);
             sp.Command.AddParameter("@RoundType", model.RoundType, DbType.String);
             sp.Command.AddParameter("@SType", model.SType, DbType.String);
+            sp.Command.AddParameter("@StartDate", model.FormDt, DbType.String);
+            sp.Command.AddParameter("@EndDate", model.ToDt, DbType.String);
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }

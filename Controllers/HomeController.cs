@@ -635,11 +635,12 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult GetSubmissionData(string DistrictBlockType, string RoundType, string SType)
+        public ActionResult GetSubmissionData(string DistrictBlockType, string RoundType, string SType, string StartDate, string EndDate)
         {
             DataSet ds = new DataSet();
             FilterModel filterModel = new FilterModel();
             filterModel.DistrictBlockType = DistrictBlockType; filterModel.RoundType = RoundType; filterModel.SType = SType;
+            filterModel.FormDt = StartDate; filterModel.ToDt = EndDate;
             try
             {
                 ds = SP_Model.SP_DistrictBlockData(filterModel);
@@ -1253,7 +1254,7 @@ namespace NCDNewMIS.Controllers
         {
             return View();
         }
-        public ActionResult GetFollowupDataSummmary(string BlockId, string StartDate, string EndDate, string TypeOfPatient, string GenderId,string Ageyrs)
+        public ActionResult GetFollowupDataSummmary(string BlockId, string StartDate, string EndDate, string TypeOfPatient, string GenderId, string Ageyrs)
         {
             DataSet ds = new DataSet();
             DataTable tbllist = new DataTable();

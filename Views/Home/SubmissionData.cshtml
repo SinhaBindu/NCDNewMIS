@@ -108,6 +108,15 @@
                                     }
                                 </select>
                             </div>
+                            <div class="xl:w-1/5 sm:w-1/3 w-full">
+                                <div class="title"></div>
+                                <div class="tools">
+                                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; width: 100%">
+                                        <i class="fa fa-calendar"></i>&nbsp;
+                                        <span>January 1, 2024 - December 31, 2024</span> <i class="fa fa-caret-down"></i>
+                                    </div>
+                                </div>
+                            </div>
 
 
                         </div>
@@ -146,7 +155,7 @@
     <script src="~/Scripts/JS/Export.js"></script>
 
     <script>
-
+        var startDate = "", endDate = "";
         $(document).ready(function () {
 
             LoadReport();
@@ -159,10 +168,38 @@
             })
             $('#DistrictBlockType').change(function () {
                 LoadReport();
-            })
+            });
+
+            $('#reportrange').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'This Year': [moment().startOf('year'), moment().endOf('year')],
+                    'All Time': [moment('2024-01-01'), moment()]
+                }
+            }, cb);
+
+            var start = moment().startOf('year');//moment().subtract(29, 'days');
+            var end = moment().endOf('year');//moment();
+            startDate = start.format('YYYY-MM-DD');
+            endDate = end.format('YYYY-MM-DD');
+
+            LoadReport(startDate, endDate);
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                startDate = start.format('YYYY-MM-DD');
+                endDate = end.format('YYYY-MM-DD');
+                LoadReport(startDate, endDate);
+            }
 
         });
-        function LoadReport() {
+        function LoadReport(startDate, endDate) {
             $('#spinner').show();
             $('#result').html(""); $("#subchart").html("");
             var id = '#tblList-frm'
@@ -170,12 +207,13 @@
             var SType = $("#SType").val();
             var RoundType = $("#RoundType").val();
             var DistrictBlockType = $("#DistrictBlockType").val();
+
             $.ajax({
                 url: document.baseURI + '/Home/GetSubmissionData',
                 //url: url,
                 type: "POST",
                 async: true,
-                data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType },
+                data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType, 'StartDate': startDate, 'EndDate': endDate },
                 success: function (resp) {
                     if (resp.IsSuccess) {
                         $('#spinner').hide();
@@ -200,9 +238,9 @@
                             //    rightColumns: 1
                             //},
                             buttons: [{
-                                extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Data Lists',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Submission Status Lists'+'@DateTime.Now.Date',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
                                 className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
-                                filename: 'Data List',
+                                filename: 'Submission Status List',
                                 exportOptions: { modifier: { page: 'all' } },
                                 footer: true
                             }],

@@ -302,7 +302,7 @@ namespace NCDNewMIS.Models
         }
         public static DataSet Sp_FollowupSuspectedSummaryInDownload(string StartDate, string EndDate)
         {
-            StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummaryDataDownload");
+            StoredProcedure sp = new StoredProcedure("SP_Followup_UniqueFacilityVisit");
             sp.Command.AddParameter("@StartDate", StartDate, DbType.String);
             sp.Command.AddParameter("@EndDate", EndDate, DbType.String);
             DataSet ds = sp.ExecuteDataSet();

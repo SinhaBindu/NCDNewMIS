@@ -7,40 +7,40 @@
     DateTime now = DateTime.Now;
     var startDate = new DateTime(now.Year, now.Month, 1);
     var endDate = startDate.AddMonths(1).AddDays(-1);
-    DataSet ds = new DataSet();
-    DataTable dt = new DataTable();
-    DataTable dt1 = new DataTable();
-    DataTable dt2 = new DataTable();
-    DataTable dt3 = new DataTable();
-    int TotalFollowUp = 0, TotalSuspectedVisitBP = 0, TotalSuspectedVisitBS = 0, TotalSuspectedVisitCOMorb = 0;
-    if (Model != null)
-    {
-        ds = Model;
-        if (ds.Tables.Count > 0)
-        {
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                dt = ds.Tables[0];
-                TotalFollowUp = Convert.ToInt32(dt.Rows[0][0]);
-                TotalSuspectedVisitBP = Convert.ToInt32(dt.Rows[0][1]);
-                TotalSuspectedVisitBS = Convert.ToInt32(dt.Rows[0][2]);
-                TotalSuspectedVisitCOMorb = Convert.ToInt32(dt.Rows[0][3]);
-            }
-            if (ds.Tables[1].Rows.Count > 0)
-            {
-                dt1 = ds.Tables[1];
+    //DataSet ds = new DataSet();
+    //DataTable dt = new DataTable();
+    //DataTable dt1 = new DataTable();
+    //DataTable dt2 = new DataTable();
+    //DataTable dt3 = new DataTable();
+    //int TotalFollowUp = 0, TotalSuspectedVisitBP = 0, TotalSuspectedVisitBS = 0, TotalSuspectedVisitCOMorb = 0;
+    //if (Model != null)
+    //{
+    //    ds = Model;
+    //    if (ds.Tables.Count > 0)
+    //    {
+    //        if (ds.Tables[0].Rows.Count > 0)
+    //        {
+    //            dt = ds.Tables[0];
+    //            TotalFollowUp = Convert.ToInt32(dt.Rows[0][0]);
+    //            TotalSuspectedVisitBP = Convert.ToInt32(dt.Rows[0][1]);
+    //            TotalSuspectedVisitBS = Convert.ToInt32(dt.Rows[0][2]);
+    //            TotalSuspectedVisitCOMorb = Convert.ToInt32(dt.Rows[0][3]);
+    //        }
+    //        if (ds.Tables[1].Rows.Count > 0)
+    //        {
+    //            dt1 = ds.Tables[1];
 
-            }
-            if (ds.Tables[2].Rows.Count > 0)
-            {
-                dt2 = ds.Tables[2];
-            }
-            if (ds.Tables[3].Rows.Count > 0)
-            {
-                dt3 = ds.Tables[3];
-            }
-        }
-    }
+    //        }
+    //        if (ds.Tables[2].Rows.Count > 0)
+    //        {
+    //            dt2 = ds.Tables[2];
+    //        }
+    //        if (ds.Tables[3].Rows.Count > 0)
+    //        {
+    //            dt3 = ds.Tables[3];
+    //        }
+    //    }
+    //}
 }
 <style>
     table {
@@ -114,6 +114,9 @@
     .sp {
         font-weight: 700 !important;
     }
+    .highcharts-legend-item {
+        display: none !important;
+    }
 </style>
 <div id="spinner" class="loading" hidden>
     <div class="cv-spinner">
@@ -148,7 +151,7 @@
                         <section class="accordion">
                             <div class="tab">
                                 <input type="checkbox" name="accordionfilter-1" id="cbfilter1">
-                                <label for="cbfilter1" class="tab__label">Filter </label>
+                                <label for="cbfilter1" class="tab__label"><strong>Filter</strong> </label>
                                 <div class="tab__content">
                                     <div class="border-all">
 
@@ -156,18 +159,27 @@
                                             <label class="form-label">Block</label>
                                             @Html.DropDownList("BlockId", new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                                         </div>
-                                        <div class="mb-4 md:w-1/2">
+                                        <div class="mb-4 md:w-1/2" style="display:none;">
                                             <label class="form-label">Patient</label>
                                             @Html.DropDownList("TypeOfPatient", NCDNewMIS.Models.CommonModel.GetTypeofPatient(), null, new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                                         </div>
-                                        <div class="mb-4 md:w-1/2">
+                                        <div class="mb-4 md:w-1/1">
                                             <label class="form-label">Gender</label>
                                             @Html.DropDownList("GenderId", NCDNewMIS.Models.CommonModel.GetGender(), null, new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                                         </div>
 
-                                        <div class="mb-4 md:w-1/2">
+                                        <div class="mb-4 md:w-1/1">
                                             <label class="form-label">Age</label>
                                             @Html.DropDownList("Ageyrs", NCDNewMIS.Models.CommonModel.GetAgeYrs(), null, new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                        </div>
+                                        <div class="mb-4 md:w-1/2">
+                                            <div class="title"></div>
+                                            <div class="tools">
+                                                <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; width: 100%">
+                                                    <i class="fa fa-calendar"></i>&nbsp;
+                                                    <span>January 1, 2024 - December 31, 2024</span> <i class="fa fa-caret-down"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="sm:w-1/2 mt-6">
                                             <button name="btnsubmit" id="btnsubmit"
@@ -194,7 +206,7 @@
                 <section class="accordion">
                     <div class="tab">
                         <input type="checkbox" name="accordion-1" id="cb1">
-                        <label for="cb1" class="tab__label">Total Screening </label>
+                        <label for="cb1" class="tab__label"><strong>Total Screening</strong> </label>
                         <div class="tab__content">
                             <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                                 <h5 class="text-left">
@@ -209,7 +221,7 @@
                     </div>
                     <div class="tab">
                         <input type="checkbox" name="accordion-1" id="cb2">
-                        <label for="cb2" class="tab__label">Followup Visit For Hypertension &amp; Diabetic Suspect</label>
+                        <label for="cb2" class="tab__label"><strong>Followup Visit For Hypertension &amp; Diabetic Suspect</strong></label>
                         <div class="tab__content">
                             <div class="row">
 
@@ -217,10 +229,10 @@
                                     <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                                         <h5 class="text-center"><strong>For Hypertension suspect</strong> </h5>
                                         <h5 class="text-left">
-                                            <strong class="fw">1. Total No. of patients not followedup : <b class="sp" id="NotfupNoofMembersBPYes"></b> </strong><br />
-                                            <strong class="fw">2. Total No. of patients followed up : <b class="sp" id="TotalnooffupNCDMitraYesNoBP"></b> </strong><br />
-                                            <strong class="fw">3. Total No. of patients availaible during follow up : <b class="sp" id="TotalnooffupNCDMitraYesBP"></b> </strong><br />
-                                            <strong class="fw">4. Total No. of patients that didn't visit any facility after been followedup's : <b class="sp" id="TotalNotnooffupNCDMitraYesNotBP"></b> </strong>
+                                            <strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnooffupNCDMitraYesBP"></b> </strong><br />
+                                            <strong class="fw">Total No. of suspects remaining for followup : <b class="sp" id="NotfupNoofMembersBPYes"></b> </strong><br />
+                                            <strong class="fw">Total No. of suspects Who visited health facility after followup : <b class="sp" id="TotalnooffupNCDMitraYesNoBP"></b> </strong><br />
+                                            <strong class="fw">Total No. of suspects Who did not visited health facility even after 3 times of followup : <b class="sp" id="TotalNotnooffupNCDMitraYesNotBP"></b> </strong>
                                         </h5>
                                     </div>
                                 </div>
@@ -229,10 +241,10 @@
                                     <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                                         <h5 class="text-center"><strong>For Diabetic suspect</strong> </h5>
                                         <h5 class="text-left">
-                                            <strong class="fw">1. Total No. of patients not followedup : <b class="sp" id="NotfupNotNoofMembersBSYes"></b> </strong><br />
-                                            <strong class="fw">2. Total No. of patients followed up : <b class="sp" id="TotalnoofNCDMitraBS"></b> </strong><br />
-                                            <strong class="fw">3 Total No. of patients availaible during follow up : <b class="sp" id="TotalnoofNCDMitraYesBS"></b> </strong><br />
-                                            <strong class="fw">4. Total No. of patients that didn't visit any facility after been followedup's : <b class="sp" id="TotalNotnoofNCDMitraYesNoBS"></b> </strong>
+                                            <strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnoofNCDMitraYesBS"></b> </strong><br />
+                                            <strong class="fw">Total No. of suspects remaining for followup : <b class="sp" id="NotfupNotNoofMembersBSYes"></b> </strong><br />
+                                            <strong class="fw">Total No. of suspects Who visited health facility after followup : <b class="sp" id="TotalnoofNCDMitraBS"></b> </strong><br />
+                                            <strong class="fw">Total No. of suspects Who did not visited health facility even after 3 times of followup : <b class="sp" id="TotalNotnoofNCDMitraYesNoBS"></b> </strong>
                                         </h5>
                                     </div>
                                 </div>
@@ -247,15 +259,6 @@
 
             <div class="row">
 
-                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="title"></div>
-                    <div class="tools">
-                        <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; width: 100%">
-                            <i class="fa fa-calendar"></i>&nbsp;
-                            <span>January 1, 2024 - December 31, 2024</span> <i class="fa fa-caret-down"></i>
-                        </div>
-                    </div>
-                </div>
                 <div class="xl:w-1/3 w-full " style="padding-bottom:5px;">
                     <div class="xl:w-1/1 w-full ">
                         <div class="bg-white dark:bg-[#1b1b1b] SizeFn" style="padding:5px;">
@@ -264,7 +267,7 @@
                             </h6>
                             <div class="overflow-x-auto table-scroll SizeFn" style="">
                                 <div>Number of suspects followed-up : <strong id="TotalFollowupHP"></strong></div>
-                                <div>Number suspects visited Health Facility : <strong id="TotalSuspectedVisitHP"></strong> &nbsp; || <strong id="TotalFollowupHPPercentage"></strong> (%) </div>
+                                <div>Number of suspects visited Health Facility : <strong id="TotalSuspectedVisitHP"></strong> &nbsp; || <strong id="TotalFollowupHPPercentage"></strong> (%) </div>
                             </div>
                         </div>
                     </div>
@@ -277,7 +280,7 @@
                             </h6>
                             <div class="overflow-x-auto table-scroll SizeFn">
                                 <div>Number of suspects followed-up : <strong id="TotalFollowupBS"></strong></div>
-                                <div>Number suspects visited Health Facility :  <strong id="TotalSuspectedVisitBS" style="padding-left:1%;"></strong> &nbsp; || <strong id="TotalFollowupBSPercentage"></strong> (%) </div>
+                                <div>Number of suspects visited Health Facility :  <strong id="TotalSuspectedVisitBS" style="padding-left:1%;"></strong> &nbsp; || <strong id="TotalFollowupBSPercentage"></strong> (%) </div>
                             </div>
                         </div>
                     </div>
@@ -290,7 +293,7 @@
                             </h5>
                             <div class="overflow-x-auto table-scroll">
                                 <div>Number of suspects followed-up : <strong id="TotalFollowupCOM"></strong></div>
-                                <div>Number suspects visited Health Facility :  <strong id="TotalSuspectedVisitCOMorb"></strong> &nbsp; || <strong id="TotalFollowupCOMPercentage"></strong> (%) </div>
+                                <div>Number of suspects visited Health Facility :  <strong id="TotalSuspectedVisitCOMorb"></strong> &nbsp; || <strong id="TotalFollowupCOMPercentage"></strong> (%) </div>
                             </div>
                         </div>
                     </div>
@@ -302,6 +305,7 @@
 
                             <div class="overflow-x-auto table-scroll">
                                 <div id="HYPlaceVisitBPBar"></div>
+                                <p id="p-bpbar"></p>
                             </div>
 
                         </div>
@@ -312,6 +316,7 @@
 
                             <div class="overflow-x-auto table-scroll">
                                 <div id="HYCheckBPPie"></div>
+                              
                             </div>
 
                         </div>
@@ -334,6 +339,7 @@
 
                             <div class="overflow-x-auto table-scroll">
                                 <div id="HYPlaceVisitBSBar"></div>
+                                <p id="p-bsbar"></p>
                             </div>
 
                         </div>
@@ -360,425 +366,6 @@
                     </div>
                 </div>
 
-
-                @*<div class="xl:w-1/3 w-full">
-                        <div class="xl:w-1/1 w-full ">
-                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-                                <h5 class="text-center">
-                                    <strong class="text-primary">Details Of Follow-Ups: Dibetic Suspects</strong>
-                                </h5>
-                                <div class="overflow-x-auto table-scroll">
-                                    <div class="dataTables_wrapper">
-                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl5">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th class="text-center" colspan="2"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    if (dt2.Rows.Count > 0)
-                                                    {
-                                                        var sno = 1;
-                                                        DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 1);
-                                                        DataRow[] dr2 = dt2.Select("Type = " + 2 + " and TableNo=" + 2);
-                                                        if (dr1.Length > 0 && dr2.Length > 0)
-                                                        {
-                                                            foreach (DataRow dr in dr1)
-                                                            {
-                                                                <tr>
-                                                                    <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@dr["Label"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@Convert.ToInt32(dr["Value"]).ToString("N0")</td>
-                                                                </tr>
-                                                            }
-                                                            foreach (DataRow dr in dr2)
-                                                            {
-                                                                <tr>
-                                                                    <td class="text-center" style="background-color:#faddd7;">@dr["Label"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#faddd7;">@Convert.ToInt32(dr["Value"]) (@((Convert.ToInt32(dr["Value"]) * 100) / @TotalFollowUp)%)</td>
-                                                                </tr>
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            <tr>
-                                                                <td colspan="2"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="xl:w-1/1 w-full ">
-                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                                <div class="overflow-x-auto table-scroll">
-                                    <div class="dataTables_wrapper">
-                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4" style="color: #fff !important;">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th class="text-center" style="background-color:#b03d80;">Place Of Visit</th>
-                                                    <th class="text-center" style="background-color:#b03d80;">Number</th>
-                                                    <th class="text-center" style="background-color:#b03d80;">%</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                                if (dt2.Rows.Count > 0)
-                                                                {
-                                                                    var sno = 1;
-                                                                    DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 3);
-                                                                    int RowTotal = 0;
-                                                                    if (dr1.Length > 0)
-                                                                    {
-                                                                        foreach (DataRow dr in dr1)
-                                                                        {
-                                                                            RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                                <tr>
-                                                                    <td class="text-center" style="background-color:#b03d80;">@dr["Label"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#b03d80;">@dr["Value"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#b03d80;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
-                                                                </tr>
-                                                            }
-                                                            <tr>
-                                                                <td class="text-center" style="background-color:#b03d80;">Total</td>
-                                                                <td class="text-center" style="background-color:#b03d80;">@RowTotal</td>
-                                                                <td class="text-center" style="background-color:#b03d80;"></td>
-                                                            </tr>
-                                                        }
-                                                        else
-                                                        {
-                                                            <tr>
-                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="xl:w-1/1 w-full ">
-                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                                <div class="overflow-x-auto table-scroll">
-                                    <div class="dataTables_wrapper">
-                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th class="text-center" style="background-color:#e8f4f6;">Testing Result</th>
-                                                    <th class="text-center" style="background-color:#e8f4f6;">Number</th>
-                                                    <th class="text-center" style="background-color:#e8f4f6;">%</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    if (dt2.Rows.Count > 0)
-                                                    {
-                                                        var sno = 1;
-                                                        DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 4);
-                                                        int RowTotal = 0;
-                                                        if (dr1.Length > 0)
-                                                        {
-                                                            foreach (DataRow dr in dr1)
-                                                            {
-                                                                RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                                <tr>
-                                                                    <td class="text-center" style="background-color:#e8f4f6;">@dr["Label"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#e8f4f6;">@dr["Value"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#e8f4f6;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
-                                                                </tr>
-                                                            }
-                                                            <tr>
-                                                                <td class="text-center" style="background-color:#e8f4f6;">Total</td>
-                                                                <td class="text-center" style="background-color:#e8f4f6;">@RowTotal</td>
-                                                                <td class="text-center" style="background-color:#e8f4f6;"></td>
-                                                            </tr>
-                                                        }
-                                                        else
-                                                        {
-                                                            <tr>
-                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="xl:w-1/1 w-full ">
-                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                                <div class="overflow-x-auto table-scroll">
-                                    <div class="dataTables_wrapper">
-                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th class="text-center" style="background-color:#fdefec;">Medication Status</th>
-                                                    <th class="text-center" style="background-color:#fdefec;">Number</th>
-                                                    <th class="text-center" style="background-color:#fdefec;">%</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    if (dt2.Rows.Count > 0)
-                                                    {
-                                                        var sno = 1;
-                                                        DataRow[] dr1 = dt2.Select("Type = " + 2 + " and TableNo=" + 5);
-                                                        int RowTotal = 0;
-                                                        if (dr1.Length > 0)
-                                                        {
-                                                            foreach (DataRow dr in dr1)
-                                                            {
-                                                                RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                                <tr>
-                                                                    <td class="text-center" style="background-color:#fdefec;">@dr["Label"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#fdefec;">@dr["Value"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#fdefec;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitBP)%</td>
-                                                                </tr>
-                                                            }
-                                                            <tr>
-                                                                <td class="text-center" style="background-color:#fdefec;">Total</td>
-                                                                <td class="text-center" style="background-color:#fdefec;">@RowTotal</td>
-                                                                <td class="text-center" style="background-color:#fdefec;"></td>
-                                                            </tr>
-                                                        }
-                                                        else
-                                                        {
-                                                            <tr>
-                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="xl:w-1/3 w-full">
-                        <div class="xl:w-1/1 w-full ">
-                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-                                <h5 class="text-center">
-                                    <strong class="text-primary">Details Of Follow-Ups: Comorbidity Suspects</strong>
-                                </h5>
-                                <div class="overflow-x-auto table-scroll">
-                                    <div class="dataTables_wrapper">
-                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl5">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th class="text-center" colspan="2"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    if (dt3.Rows.Count > 0)
-                                                    {
-                                                        var sno = 1;
-                                                        DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 1);
-                                                        DataRow[] dr2 = dt3.Select("Type = " + 2 + " and TableNo=" + 2);
-                                                        if (dr1.Length > 0 && dr2.Length > 0)
-                                                        {
-                                                            foreach (DataRow dr in dr1)
-                                                            {
-                                                                <tr>
-                                                                    <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@dr["Label"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#f3987a;color: #fff !important;">@Convert.ToInt32(dr["Value"]).ToString("N0")</td>
-                                                                </tr>
-                                                            }
-                                                            foreach (DataRow dr in dr2)
-                                                            {
-                                                                <tr>
-                                                                    <td class="text-center" style="background-color:#faddd7;">@dr["Label"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#faddd7;">@Convert.ToInt32(dr["Value"]) (@((Convert.ToInt32(dr["Value"]) * 100) / @TotalFollowUp)%)</td>
-                                                                </tr>
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            <tr>
-                                                                <td colspan="2"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="xl:w-1/1 w-full ">
-                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                                <div class="overflow-x-auto table-scroll">
-                                    <div class="dataTables_wrapper">
-                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4" style="color: #fff !important;">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th class="text-center" style="background-color:#b03d80;">Place Of Visit</th>
-                                                    <th class="text-center" style="background-color:#b03d80;">Number</th>
-                                                    <th class="text-center" style="background-color:#b03d80;">%</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    if (dt3.Rows.Count > 0)
-                                                    {
-                                                        var sno = 1;
-                                                        DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 3);
-                                                        int RowTotal = 0;
-                                                        if (dr1.Length > 0)
-                                                        {
-                                                            foreach (DataRow dr in dr1)
-                                                            {
-                                                                RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                                <tr>
-                                                                    <td class="text-center" style="background-color:#b03d80;">@dr["Label"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#b03d80;">@dr["Value"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#b03d80;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
-                                                                </tr>
-                                                            }
-                                                            <tr>
-                                                                <td class="text-center" style="background-color:#b03d80;">Total</td>
-                                                                <td class="text-center" style="background-color:#b03d80;">@RowTotal</td>
-                                                                <td class="text-center" style="background-color:#b03d80;"></td>
-                                                            </tr>
-                                                        }
-                                                        else
-                                                        {
-                                                            <tr>
-                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="xl:w-1/1 w-full ">
-                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                                <div class="overflow-x-auto table-scroll">
-                                    <div class="dataTables_wrapper">
-                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th class="text-center" style="background-color:#e8f4f6;">Testing Result</th>
-                                                    <th class="text-center" style="background-color:#e8f4f6;">Number</th>
-                                                    <th class="text-center" style="background-color:#e8f4f6;">%</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    if (dt3.Rows.Count > 0)
-                                                    {
-                                                        var sno = 1;
-                                                        DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 4);
-                                                        int RowTotal = 0;
-                                                        if (dr1.Length > 0)
-                                                        {
-                                                            foreach (DataRow dr in dr1)
-                                                            {
-                                                                RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                                <tr>
-                                                                    <td class="text-center" style="background-color:#e8f4f6;">@dr["Label"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#e8f4f6;">@dr["Value"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#e8f4f6;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
-                                                                </tr>
-                                                            }
-                                                            <tr>
-                                                                <td class="text-center" style="background-color:#e8f4f6;">Total</td>
-                                                                <td class="text-center" style="background-color:#e8f4f6;">@RowTotal</td>
-                                                                <td class="text-center" style="background-color:#e8f4f6;"></td>
-                                                            </tr>
-                                                        }
-                                                        else
-                                                        {
-                                                            <tr>
-                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="xl:w-1/1 w-full ">
-                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
-
-                                <div class="overflow-x-auto table-scroll">
-                                    <div class="dataTables_wrapper">
-                                        <table class="table table-bordered table-striped cell-border small tblfont" id="tbl4">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th class="text-center" style="background-color:#fdefec;">Medication Status</th>
-                                                    <th class="text-center" style="background-color:#fdefec;">Number</th>
-                                                    <th class="text-center" style="background-color:#fdefec;">%</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    if (dt3.Rows.Count > 0)
-                                                    {
-                                                        var sno = 1;
-                                                        DataRow[] dr1 = dt3.Select("Type = " + 2 + " and TableNo=" + 5);
-                                                        int RowTotal = 0;
-                                                        if (dr1.Length > 0)
-                                                        {
-                                                            foreach (DataRow dr in dr1)
-                                                            {
-                                                                RowTotal += Convert.ToInt32(dr["Value"].ToString());
-                                                                <tr>
-                                                                    <td class="text-center" style="background-color:#fdefec;">@dr["Label"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#fdefec;">@dr["Value"].ToString()</td>
-                                                                    <td class="text-center" style="background-color:#fdefec;">@((Convert.ToInt32(dr["Value"]) * 100) / TotalSuspectedVisitCOMorb)%</td>
-                                                                </tr>
-                                                            }
-                                                            <tr>
-                                                                <td class="text-center" style="background-color:#fdefec;">Total</td>
-                                                                <td class="text-center" style="background-color:#fdefec;">@RowTotal</td>
-                                                                <td class="text-center" style="background-color:#fdefec;"></td>
-                                                            </tr>
-                                                        }
-                                                        else
-                                                        {
-                                                            <tr>
-                                                                <td colspan="3"><strong class="text-danger">Record Not Found !!</strong></td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>*@
             </div>
         </div>
     </div>
@@ -802,10 +389,10 @@
             $("table").attr("width", "100%");
         });
         $(document).ready(function () {
-            BindBlock("BlockId", '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)', '0');
+            BindBlock("BlockId", '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)', '1');
+
 
             //$('select[name="BlockId"]').find('option').eq(2).attr("selected", true).change();
-
 
             //$.ajax({
             //    method: 'POST',
@@ -843,21 +430,21 @@
                     'This Year': [moment().startOf('year'), moment().endOf('year')],
                     'All Time': [moment('2024-01-01'), moment()]
                 }
-            }, cb);
-
-
-            setTimeout(function () {
-                if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
-                    // BindSubcenter("SCId", '', "1", "1", $('#BlockId').val(), 0, 0,);
-                    //$('select[name="SCId"]').find('option').eq(2).attr("selected", true).change();
-                    cb(start, end);
-                }
-            }, 200);
-
-            $('#BlockId').change(function () {
-                $('#spinner').show();
-                cb(start, end);
+          /*  }, cb);*/
             });
+
+            //setTimeout(function () {
+            //    if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
+            //        // BindSubcenter("SCId", '', "1", "1", $('#BlockId').val(), 0, 0,);
+            //        //$('select[name="SCId"]').find('option').eq(2).attr("selected", true).change();
+            //       // cb(start, end);
+            //    }
+            //}, 200);
+
+            //$('#BlockId').change(function () {
+            //    $('#spinner').show();
+            //    cb(start, end);
+            //});
 
             $("#downloadbtnrawall").on("click", function () {
                 debugger;
@@ -866,6 +453,7 @@
                 window.location.href = downloadUrl;
             });
 
+            BindData(startDate, endDate);
             $("#btnsubmit").click(function (e) {
                 e.preventDefault();
                 BindData(startDate, endDate);
@@ -873,12 +461,14 @@
 
         });
         function BindData(startDate, endDate) {
+            debugger;
+            $('#spinner').show();
             BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? '0' : $("#BlockId").val();
             TypeOfPatient = $("#TypeOfPatient").val() == "" || $("#TypeOfPatient").val() == null ? 0 : $("#TypeOfPatient").val();
             GenderId = $("#GenderId").val() == "" || $("#GenderId").val() == null ? '0' : $("#GenderId").val();
             Ageyrs = $("#Ageyrs").val() == "" || $("#Ageyrs").val() == null ? '0' : $("#Ageyrs").val();
             console.log(startDate); console.log(endDate);
-            $('#spinner').show();
+
             $.ajax({
                 method: 'POST',
                 url: document.baseURI + '/Home/GetFollowupDataSummmary',
@@ -889,123 +479,137 @@
                 success: onsucess,
                 error: onerror
             });
-            $('#spinner').hide();
+
         }
 
         function onsucess(resp) {
             debugger;
             $('#spinner').hide();
             var categories = []; var dataS = []; var dataSplinePresent = []; GandTotal = 0;
-            var DataList = JSON.parse(resp.Data);
-            var Table1Total = (DataList.Table);
-            var Table2 = (DataList.Table1);
-            var Table3 = (DataList.Table2);
-            var Table4 = (DataList.Table3);
-            var Table5 = (DataList.Table4);
-            var Table6 = (DataList.Table5);
-            var Table7 = (DataList.Table6);
+            if (resp.IsSuccess) {
 
-            var Table8Basic = (DataList.Table7);//Basic Total
 
-            if (Table1Total != null) {
-                $('#TotalFollowupHP').html(format(Table1Total[0].TotalFollowupHP));
-                $('#TotalSuspectedVisitHP').html(format(Table1Total[0].TotalSuspectedVisitHP));
-                $('#TotalFollowupHPPercentage').html(format(Table1Total[0].TotalFollowupHPPercentage));
+                var DataList = JSON.parse(resp.Data);
+                var Table1Total = (DataList.Table);
+                var Table2 = (DataList.Table1);
+                var Table3 = (DataList.Table2);
+                var Table4 = (DataList.Table3);
+                var Table5 = (DataList.Table4);
+                var Table6 = (DataList.Table5);
+                var Table7 = (DataList.Table6);
 
-                $('#TotalFollowupBS').html(format(Table1Total[0].TotalFollowupBS));
-                $('#TotalSuspectedVisitBS').html(format(Table1Total[0].TotalSuspectedVisitBS));
-                $('#TotalFollowupBSPercentage').html(format(Table1Total[0].TotalFollowupBSPercentage));
+                var Table8Basic = (DataList.Table7);//Basic Total
 
-                $('#TotalFollowupCOM').html(format(Table1Total[0].TotalFollowupCOM));
-                $('#TotalSuspectedVisitCOMorb').html(format(Table1Total[0].TotalSuspectedVisitCOMorb));
-                $('#TotalFollowupCOMPercentage').html(format(Table1Total[0].TotalFollowupCOMPercentage));
+                if (Table1Total != null) {
+                    $('#TotalFollowupHP').html(format(Table1Total[0].TotalFollowupHP));
+                    $('#TotalSuspectedVisitHP').html(format(Table1Total[0].TotalSuspectedVisitHP));
+                    $('#TotalFollowupHPPercentage').html(format(Table1Total[0].TotalFollowupHPPercentage));
 
-            }
-            if (Table2 != null) {
-                for (var i = 0; i < Table2.length; i++) {
-                    categories.push(Table2[i].Label);
-                    dataS.push({ y: Table2[i].NoofPlaceofvisitBP, percentage: Table2[i].Percentage });
-                    dataSplinePresent.push(Table2[i].Percentage);
+                    $('#TotalFollowupBS').html(format(Table1Total[0].TotalFollowupBS));
+                    $('#TotalSuspectedVisitBS').html(format(Table1Total[0].TotalSuspectedVisitBS));
+                    $('#TotalFollowupBSPercentage').html(format(Table1Total[0].TotalFollowupBSPercentage));
+
+                    $('#TotalFollowupCOM').html(format(Table1Total[0].TotalFollowupCOM));
+                    $('#TotalSuspectedVisitCOMorb').html(format(Table1Total[0].TotalSuspectedVisitCOMorb));
+                    $('#TotalFollowupCOMPercentage').html(format(Table1Total[0].TotalFollowupCOMPercentage));
+
                 }
-                BindBar('HYPlaceVisitBPBar', categories, dataS, dataSplinePresent, 'Place of visit: Hypertensive Suspects', "#F06F6A", "#9f3575");
-            }
-            if (Table3 != null) {
-                categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
-                for (var i = 0; i < Table3.length; i++) {
-                    GandTotal += Table3[i].TestingresultBP;
-                    categories.push(Table3[i].Label);
-                    dataS.push({ name: Table3[i].Label, d: format(Table3[i].TestingresultBP), y: Table3[i].Percentage });
-                    dataSplinePresent.push(Table3[i].Percentage);
+                if (Table2 != null) {
+                    var strp = '';
+                    for (var i = 0; i < Table2.length; i++) {
+                        categories.push(Table2[i].ShortLabel);
+                        dataS.push({ lblname: Table2[i].Label, y: Table2[i].NoofPlaceofvisitBP, percentage: Table2[i].Percentage });
+                        dataSplinePresent.push(Table2[i].Percentage);
+                        strp += strp == '' ? Table2[i].Label + ' (' + Table2[i].ShortLabel + ')' : ' , ' + Table2[i].Label + ' (' + Table2[i].ShortLabel + ')';
+                    }
+                    $('#p-bpbar').html(strp);
+                    BindBar('HYPlaceVisitBPBar', categories, dataS, dataSplinePresent, 'Place of visit: Hypertensive Suspects', "#F06F6A", "#9f3575");
                 }
-                BindPie('HYCheckBPPie', categories, dataS, dataSplinePresent, 'Testing result: Hypertensive Suspects', 'Testing result', '<b> Total suspects : ' + format(GandTotal) + '</b>');
+                if (Table3 != null) {
+                    categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                    for (var i = 0; i < Table3.length; i++) {
+                        GandTotal += Table3[i].TestingresultBP;
+                        categories.push(Table3[i].Label);
+                        dataS.push({ name: Table3[i].Label, d: format(Table3[i].TestingresultBP), y: Table3[i].Percentage });
+                        dataSplinePresent.push(Table3[i].Percentage);
+                    }
+                    BindPie('HYCheckBPPie', categories, dataS, dataSplinePresent, 'Testing result: Hypertensive Suspects', 'Testing result', '<b> Toal no. of Suspects visited Health Facility: ' + format(GandTotal) + '</b>');
 
-            }
-            if (Table4 != null) {
-                categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
-                for (var i = 0; i < Table4.length; i++) {
-                    GandTotal += Table4[i].MedicationBP;
-                    categories.push(Table4[i].Label);
-                    dataS.push({ name: Table4[i].Label, d: format(Table4[i].MedicationBP), y: Table4[i].Percentage });
-                    dataSplinePresent.push(Table4[i].Percentage);
                 }
-                BindPie('HYMedicationBPPie', categories, dataS, dataSplinePresent, 'Medication status: Hypertensive Suspects', 'Medication status', '<b> Total suspects : ' + format(GandTotal) + '</b>');
-            }
-            //Started FOR Diabetic suspects
-            if (Table5 != null) {
-                categories = []; dataS = []; dataSplinePresent = [];
-                for (var i = 0; i < Table5.length; i++) {
-                    categories.push(Table5[i].Label);
-                    // dataS.push(Table5[i].NoofPlaceofvisitBS);
-                    dataS.push({ y: Table5[i].NoofPlaceofvisitBS, percentage: Table5[i].Percentage });
-                    dataSplinePresent.push(Table5[i].Percentage);
+                if (Table4 != null) {
+                    categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                    for (var i = 0; i < Table4.length; i++) {
+                        GandTotal += Table4[i].MedicationBP;
+                        categories.push(Table4[i].Label);
+                        dataS.push({ name: Table4[i].Label, d: format(Table4[i].MedicationBP), y: Table4[i].Percentage });
+                        dataSplinePresent.push(Table4[i].Percentage);
+                    }
+                    BindPie('HYMedicationBPPie', categories, dataS, dataSplinePresent, 'Medication status: Hypertensive Suspects', 'Medication status', '<b> Total no. of Patients: ' + format(GandTotal) + '</b>');
                 }
-                BindBar('HYPlaceVisitBSBar', categories, dataS, dataSplinePresent, 'Place of visit: Diabetic suspects', "#eb9532", '#9746af');
-            }
-            if (Table6 != null) {
-                categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
-                for (var i = 0; i < Table6.length; i++) {
-                    GandTotal += Table6[i].TestingresultBS;
-                    categories.push(Table6[i].Label);
-                    dataS.push({ name: Table6[i].Label, d: format(Table6[i].TestingresultBS), y: Table6[i].Percentage });
-                    dataSplinePresent.push(Table6[i].Percentage);
+                //Started FOR Diabetic suspects
+                if (Table5 != null) {
+                    categories = []; dataS = []; dataSplinePresent = [];
+                    var strp = '';
+                    for (var i = 0; i < Table5.length; i++) {
+                        categories.push(Table5[i].ShortLabel);
+                        // dataS.push(Table5[i].NoofPlaceofvisitBS);
+                        dataS.push({ lblname: Table5[i].Label, y: Table5[i].NoofPlaceofvisitBS, percentage: Table5[i].Percentage });
+                        dataSplinePresent.push(Table5[i].Percentage);
+                        strp += strp == '' ? Table5[i].Label + ' (' + Table5[i].ShortLabel + ')' : ' , ' + Table5[i].Label + ' (' + Table5[i].ShortLabel + ')';
+                    }
+                    $('#p-bsbar').html(strp);
+                    BindBar('HYPlaceVisitBSBar', categories, dataS, dataSplinePresent, 'Place of visit: Diabetic suspects', "#eb9532", '#9746af');
                 }
-                BindPie('HYCheckBSPie', categories, dataS, dataSplinePresent, 'Testing result: Diabetic suspects', 'Testing result', '<b> Total suspects : ' + format(GandTotal) + '</b>', ['#da5c2d', '#DDDF00', '#2f628a', '#24CBE5', '#914518', '#489631']);
-            }
-            if (Table7 != null) {
-                categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
-                for (var i = 0; i < Table7.length; i++) {
-                    GandTotal += Table7[i].MedicationBS;
-                    categories.push(Table7[i].Label);
-                    dataS.push({ name: Table7[i].Label, d: format(Table7[i].MedicationBS), y: Table7[i].Percentage });
-                    dataSplinePresent.push(Table7[i].Percentage);
+                if (Table6 != null) {
+                    categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                    for (var i = 0; i < Table6.length; i++) {
+                        GandTotal += Table6[i].TestingresultBS;
+                        categories.push(Table6[i].Label);
+                        dataS.push({ name: Table6[i].Label, d: format(Table6[i].TestingresultBS), y: Table6[i].Percentage });
+                        dataSplinePresent.push(Table6[i].Percentage);
+                    }
+                    BindPie('HYCheckBSPie', categories, dataS, dataSplinePresent, 'Testing result: Diabetic suspects', 'Testing result', '<b> Toal no. of Suspects visited Health Facility: ' + format(GandTotal) + '</b>', ['#da5c2d', '#DDDF00', '#2f628a', '#24CBE5', '#914518', '#489631']);
                 }
-                BindPie('HYMedicationBSPie', categories, dataS, dataSplinePresent, 'Medication status: Diabetic suspects', 'Medication status', '<b> Total suspects : ' + format(GandTotal) + '</b>');
+                if (Table7 != null) {
+                    categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                    for (var i = 0; i < Table7.length; i++) {
+                        GandTotal += Table7[i].MedicationBS;
+                        categories.push(Table7[i].Label);
+                        dataS.push({ name: Table7[i].Label, d: format(Table7[i].MedicationBS), y: Table7[i].Percentage });
+                        dataSplinePresent.push(Table7[i].Percentage);
+                    }
+                    BindPie('HYMedicationBSPie', categories, dataS, dataSplinePresent, 'Medication status: Diabetic suspects', 'Medication status', '<b> Total no. of Patients: ' + format(GandTotal) + '</b>');
+                }
+
+                //Basic Total
+                if (Table8Basic != null && Table8Basic != undefined) {
+                    $('#TotalNooofScreening').html(Table8Basic[0].TotalNooofScreening);
+                    $('#TotalNoofSuspectBPYes').html(Table8Basic[0].TotalNoofSuspectBPYes);
+                    $('#TotalNoofSuspectBSYes').html(Table8Basic[0].TotalNoofSuspectBSYes);
+                    $('#ComBothTotalNoofSuspectBPBS').html(Table8Basic[0].ComBothTotalNoofSuspectBPBS);
+
+                    //Follow-up - BP
+                    $('#NotfupNoofMembersBPYes').html(Table8Basic[0].NotfupNoofMembersBPYes);
+                    $('#TotalnooffupNCDMitraYesNoBP').html(Table8Basic[0].TotalnooffupNCDMitraYesNoBP);
+                    $('#TotalnooffupNCDMitraYesBP').html(Table8Basic[0].TotalnooffupNCDMitraYesBP);
+                    $('#TotalNotnooffupNCDMitraYesNotBP').html(Table8Basic[0].TotalNotnooffupNCDMitraYesNotBP);
+                    //Follow-up - BS
+                    $('#NotfupNotNoofMembersBSYes').html(Table8Basic[0].NotfupNotNoofMembersBSYes);
+                    $('#TotalnoofNCDMitraBS').html(Table8Basic[0].TotalnoofNCDMitraBS);
+                    $('#TotalnoofNCDMitraYesBS').html(Table8Basic[0].TotalnoofNCDMitraYesBS);
+                    $('#TotalNotnoofNCDMitraYesNoBS').html(Table8Basic[0].TotalNotnoofNCDMitraYesNoBS);
+
+
+                }
             }
-
-            //Basic Total
-            if (Table8Basic != null && Table8Basic != undefined) {
-                $('#TotalNooofScreening').html(Table8Basic[0].TotalNooofScreening);
-                $('#TotalNoofSuspectBPYes').html(Table8Basic[0].TotalNoofSuspectBPYes);
-                $('#TotalNoofSuspectBSYes').html(Table8Basic[0].TotalNoofSuspectBSYes);
-                $('#ComBothTotalNoofSuspectBPBS').html(Table8Basic[0].ComBothTotalNoofSuspectBPBS);
-
-                //Follow-up - BP
-                $('#NotfupNoofMembersBPYes').html(Table8Basic[0].NotfupNoofMembersBPYes);
-                $('#TotalnooffupNCDMitraYesNoBP').html(Table8Basic[0].TotalnooffupNCDMitraYesNoBP);
-                $('#TotalnooffupNCDMitraYesBP').html(Table8Basic[0].TotalnooffupNCDMitraYesBP);
-                $('#TotalNotnooffupNCDMitraYesNotBP').html(Table8Basic[0].TotalNotnooffupNCDMitraYesNotBP);
-                //Follow-up - BS
-                $('#NotfupNotNoofMembersBSYes').html(Table8Basic[0].NotfupNotNoofMembersBSYes);
-                $('#TotalnoofNCDMitraBS').html(Table8Basic[0].TotalnoofNCDMitraBS);
-                $('#TotalnoofNCDMitraYesBS').html(Table8Basic[0].TotalnoofNCDMitraYesBS);
-                $('#TotalNotnoofNCDMitraYesNoBS').html(Table8Basic[0].TotalNotnoofNCDMitraYesNoBS);
-
-
+            else {
+                toastr.error("Error", resp.Data);
+               // alert("Oops!! Something went Wrong..Please Try Again.");
             }
-
         }
         function onerror(resp) {
             $('#spinner').hide();
+            toastr.error("Error", resp.Data);//resp.Data
             alert("Oops!! Something went Wrong..Please Try Again.");
         }
         function format(n) {
@@ -1020,10 +624,10 @@
         function BindBar(DivId, categories, dataS, dataSplinePresent, Title, Color, Color1) {
             Highcharts.chart(DivId, {
                 chart: {
-                    height: 500,
+                    height: 400,
                     zooming: {
                         type: 'xy',
-
+                        size: 200
                     }
                 },
                 title: {
@@ -1064,7 +668,7 @@
                         //format: '{value}°C',
                         style: {
                             color: Highcharts.getOptions().colors[1]
-                        }
+                        },
                     },
                     title: {
                         enabled: false,
@@ -1088,7 +692,8 @@
                             color: Highcharts.getOptions().colors[0]
                         }
                     },
-                    opposite: true
+                    opposite: true,
+                    gridLineColor: 'transparent',
                 }],
                 //yAxis: {
                 //    title: false
@@ -1098,10 +703,12 @@
                 //},
                 tooltip: {
                     formatter: function () {
-                        return 'Place of visit : '+ this.y + ' ( ' + this.percentage + ' % )';
+                        //return 'Place of visit : </ br>' + this.lblname +' : '+ this.y + ' ( ' + this.percentage + ' % )';
+                        return '' + this.lblname +' : '+ this.y + ' ( ' + this.percentage + ' % )';
                     }
                 },
                 plotOptions: {
+                   
                     series: {
                         //dataLabels: {
                         //    enabled: true
@@ -1190,6 +797,7 @@
                 subtitle: {
                     text: '<b>' + GandTotal + '</b>',
                     align: 'left',
+                    verticalAlign: 'bottom',
                     style: {
                         color: '#262a58',
                         //font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
@@ -1208,6 +816,9 @@
                 },
 
                 plotOptions: {
+                    pie: {
+                        size: 200
+                    },
                     series: {
                         borderRadius: 5,
                         dataLabels: [{

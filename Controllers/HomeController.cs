@@ -1280,7 +1280,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "Record Issues." }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         public ActionResult FollowDocumentDownload()

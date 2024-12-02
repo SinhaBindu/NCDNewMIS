@@ -259,7 +259,7 @@ namespace NCDNewMIS.Models
         public static List<SelectListItem> GetGender()
         {
             List<SelectListItem> list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Value = "-1", Text = "All" });
+            list.Add(new SelectListItem { Value = "0", Text = "All" });
             list.Add(new SelectListItem { Value = "1", Text = "Male" });
             list.Add(new SelectListItem { Value = "2", Text = "Female" });
             return list.OrderBy(x => Convert.ToInt16(x.Value)).ToList();
@@ -267,7 +267,7 @@ namespace NCDNewMIS.Models
         public static List<SelectListItem> GetTypeofPatient()
         {
             List<SelectListItem> list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Value = "-1", Text = "All" });
+            list.Add(new SelectListItem { Value = "0", Text = "All" });
             list.Add(new SelectListItem { Value = "1", Text = "Already Patient" });
             list.Add(new SelectListItem { Value = "2", Text = "First Timer Patient" });
             return list.OrderBy(x => Convert.ToInt16(x.Value)).ToList();
@@ -275,10 +275,10 @@ namespace NCDNewMIS.Models
         public static List<SelectListItem> GetAgeYrs()
         {
             List<SelectListItem> list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Value = "-1", Text = "All" });
-            list.Add(new SelectListItem { Value = "1", Text = "30yrs-40yrs" });
-            list.Add(new SelectListItem { Value = "2", Text = "41yrs-50yrs" });
-            list.Add(new SelectListItem { Value = "3", Text = ">50yrs" });
+            list.Add(new SelectListItem { Value = "0", Text = "All" });
+            list.Add(new SelectListItem { Value = "1", Text = "30yrs-39yrs" });
+            list.Add(new SelectListItem { Value = "2", Text = "40yrs-49yrs" });
+            list.Add(new SelectListItem { Value = "3", Text = ">=50yrs" });
             return list.OrderBy(x => Convert.ToInt16(x.Value)).ToList();
         }
         public static List<SelectListItem> GetActive()

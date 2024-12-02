@@ -51,14 +51,14 @@
             <h4>@ViewBag.Title</h4>
 
             @Html.ActionLink("Download (Till Yesterday)", "ReportFollowUPRawDataExcel", "Home", new object { },
-                   new { @id = "btnallRaw", @class = "mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" })
+                   new { @id = "btnallRaw1", @target = "_blank", @class = "mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[8px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" })
 
-            <button type="button" id="div-download"
-                    title="Click here to Download To Excel"></button>
+            @Html.ActionLink("Followup Details (Till Yesterday)", "ReportFollowUPDetailsDataExcel", "Home", new object { },
+                new { @id = "btnallRaw2", @target="_blank", @class = "mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[8px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" })
 
-            @Html.ActionLink("Download Followup Details (Till Yesterday)", "ReportFollowUPDetailsDataExcel", "Home", new object { },
-                new { @id = "btnallRaw", @class = "mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" })
-
+        <a href="javascript:void(0);" id="downloadbtnrawall" target="_blank" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[8px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">Follow-up suspected facility visit (Till Yesterday) </a>
+        <button type="button" id="div-download"
+                title="Click here to Download To Excel" target="_blank"></button>
         </div>
 
         <div class="row">
@@ -205,6 +205,12 @@
             //$('#SType').change(function () {
             //    BindData();
             //})
+            $("#downloadbtnrawall").on("click", function () {
+                debugger;
+                var StartDate = ''; var EndDate = '';
+                var downloadUrl = document.baseURI + 'Home/FollowUpSuspectedSummaryRawDataDownload';
+                window.location.href = downloadUrl;
+            });
 
             $("#btnsubmit").click(function (e) {
                 e.preventDefault();

@@ -172,6 +172,7 @@
                 data: JSON.stringify(param),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
+                async: false,
                 success: function (resp) {
                     resp = resp.Data;
                     var aData = JSON.parse(resp);
@@ -201,6 +202,7 @@
                 data: JSON.stringify(param1),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
+                async: false,
                 success: function (resp) {
                     resp = resp.Data;
                     var aData = JSON.parse(resp);

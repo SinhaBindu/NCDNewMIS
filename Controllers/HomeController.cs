@@ -73,7 +73,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
 
@@ -115,7 +115,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         public ActionResult GalleryOne()
@@ -205,74 +205,88 @@ namespace NCDNewMIS.Controllers
         //Main RawDataDownload
         public ActionResult ReportRawDataExcel()
         {
-            DataSet ds = new DataSet();
-            DataTable dt = new System.Data.DataTable();
-            FilterModel filterModel = new FilterModel();
-            //fill datatable by some data i just use empty databale
-            System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
-            ds = SP_Model.SP_AllRawDataShow(filterModel);
-            dt = ds.Tables[0];
-
-            using (XLWorkbook wb = new XLWorkbook())
+            try
             {
-                wb.Worksheets.Add(dt);
-                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                wb.Style.Font.Bold = true;
+                DataSet ds = new DataSet();
+                DataTable dt = new System.Data.DataTable();
+                FilterModel filterModel = new FilterModel();
+                //fill datatable by some data i just use empty databale
+                System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
+                ds = SP_Model.SP_AllRawDataShow(filterModel);
+                dt = ds.Tables[0];
 
-                var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
-                Response.Clear();
-                Response.Buffer = true;
-                Response.Charset = "";
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment;filename=RAWSUBMISSIONDATA" + DTDAY + ".xlsx");
-
-                using (MemoryStream MyMemoryStream = new MemoryStream())
+                using (XLWorkbook wb = new XLWorkbook())
                 {
-                    wb.SaveAs(MyMemoryStream);
-                    MyMemoryStream.WriteTo(Response.OutputStream);
-                    // memoryStream.WriteTo(Response.OutputStream);
-                    Response.Flush();
-                    Response.End();
-                }
-            }
-            return new EmptyResult();
+                    wb.Worksheets.Add(dt);
+                    wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    wb.Style.Font.Bold = true;
 
+                    var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.Charset = "";
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    Response.AddHeader("content-disposition", "attachment;filename=RAWSUBMISSIONDATA" + DTDAY + ".xlsx");
+
+                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                    {
+                        wb.SaveAs(MyMemoryStream);
+                        MyMemoryStream.WriteTo(Response.OutputStream);
+                        // memoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+                return new EmptyResult();
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return View("Error");
+            }
         }
         //FollowUp Download
         public ActionResult ReportFollowUPRawDataExcel()
         {
-            DataSet ds = new DataSet();
-            DataTable dt = new System.Data.DataTable();
-            FilterModel filterModel = new FilterModel();
-            //fill datatable by some data i just use empty databale
-            System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
-            ds = SP_Model.SP_AllRawDataFollowUpDownload(filterModel);
-            dt = ds.Tables[0];
-
-            using (XLWorkbook wb = new XLWorkbook())
+            try
             {
-                wb.Worksheets.Add(dt);
-                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                wb.Style.Font.Bold = true;
+                DataSet ds = new DataSet();
+                DataTable dt = new System.Data.DataTable();
+                FilterModel filterModel = new FilterModel();
+                //fill datatable by some data i just use empty databale
+                System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
+                ds = SP_Model.SP_AllRawDataFollowUpDownload(filterModel);
+                dt = ds.Tables[0];
 
-                var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
-                Response.Clear();
-                Response.Buffer = true;
-                Response.Charset = "";
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment;filename=RAWFOLLOWUPSUBMISSIONDATA" + DTDAY + ".xlsx");
-
-                using (MemoryStream MyMemoryStream = new MemoryStream())
+                using (XLWorkbook wb = new XLWorkbook())
                 {
-                    wb.SaveAs(MyMemoryStream);
-                    MyMemoryStream.WriteTo(Response.OutputStream);
-                    // memoryStream.WriteTo(Response.OutputStream);
-                    Response.Flush();
-                    Response.End();
-                }
-            }
-            return new EmptyResult();
+                    wb.Worksheets.Add(dt);
+                    wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    wb.Style.Font.Bold = true;
 
+                    var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.Charset = "";
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    Response.AddHeader("content-disposition", "attachment;filename=RAWFOLLOWUPSUBMISSIONDATA" + DTDAY + ".xlsx");
+
+                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                    {
+                        wb.SaveAs(MyMemoryStream);
+                        MyMemoryStream.WriteTo(Response.OutputStream);
+                        // memoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+                return new EmptyResult();
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return View("Error");
+            }
         }
 
         //public ActionResult Blockmap()
@@ -327,7 +341,7 @@ namespace NCDNewMIS.Controllers
         //    catch (Exception ex)
         //    {
         //        string er = ex.Message;
-        //        return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+        //        return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
         //    }
         //}
 
@@ -362,7 +376,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         [HttpPost]
@@ -410,7 +424,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         [HttpPost]
@@ -799,7 +813,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
 
@@ -849,7 +863,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         public ActionResult ImageUpload()
@@ -952,7 +966,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
 
@@ -993,7 +1007,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
 
@@ -1029,7 +1043,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         public ActionResult HealthEducation()
@@ -1077,7 +1091,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         public ActionResult Screening2()
@@ -1110,7 +1124,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         #endregion
@@ -1145,7 +1159,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
 
@@ -1181,7 +1195,7 @@ namespace NCDNewMIS.Controllers
             catch (Exception ex)
             {
                 string er = ex.Message;
-                return Json(new { IsSuccess = false, Data = "" }, JsonRequestBehavior.AllowGet); throw;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
         public ActionResult HealthEducation2()
@@ -1328,96 +1342,111 @@ namespace NCDNewMIS.Controllers
         }
         public ActionResult GetDownFollowImgDocZip(string MId = "", string FMId = "")
         {
-            DataTable dt = new DataTable();
-            dt = SP_Model.Usp_ZipFileFollowDownload(MId, FMId);
-            // Define the folder path where images and PDFs are stored
-            string folderPath = Server.MapPath("~/ImageUploads/SurveyImages/FollowUp"); // Example path, change as needed
-            var random = new Random();
-            int month = random.Next(1, 1200);
-            // Define the path for the temporary zip file
-            string zipPath = Server.MapPath("~/ImageUploads/SurveyImages/CombinedFilesFollowupZip" + month + ".zip");
-
-            // Make sure the TempZips directory exists, if not, create it
-            if (!Directory.Exists(Server.MapPath("~/ImageUploads/SurveyImages/TempZips")))
+            try
             {
-                Directory.CreateDirectory(Server.MapPath("~/ImageUploads/SurveyImages/TempZips"));
-            }
-            byte[] fileBytes;
-            // Create the zip file
-            using (ZipArchive zip = System.IO.Compression.ZipFile.Open(zipPath, ZipArchiveMode.Create))
-            {
-                // Get all image and PDF files from the folder
-                //var files = Directory.GetFiles(folderPath, "*.*");
-                // .Where(f => f.EndsWith(".jpg") || f.EndsWith(".jpeg") || f.EndsWith(".png") || f.EndsWith(".pdf") || f.EndsWith(".pdf"));
+                DataTable dt = new DataTable();
+                dt = SP_Model.Usp_ZipFileFollowDownload(MId, FMId);
+                // Define the folder path where images and PDFs are stored
+                string folderPath = Server.MapPath("~/ImageUploads/SurveyImages/FollowUp"); // Example path, change as needed
+                var random = new Random();
+                int month = random.Next(1, 1200);
+                // Define the path for the temporary zip file
+                string zipPath = Server.MapPath("~/ImageUploads/SurveyImages/CombinedFilesFollowupZip" + month + ".zip");
 
-                foreach (DataRow dr in dt.Rows)
+                // Make sure the TempZips directory exists, if not, create it
+                if (!Directory.Exists(Server.MapPath("~/ImageUploads/SurveyImages/TempZips")))
                 {
-                    string filePath = dr["FilePathFull"].ToString();
-                    string fileName = Path.GetFileName(filePath);
-                    // Add the file to the zip
-                    //var file = Directory.GetFiles(filePath, "*.*");
-                    string filePathc = Path.Combine(folderPath, fileName);
-
-                    zip.CreateEntryFromFile(filePathc, fileName);
+                    Directory.CreateDirectory(Server.MapPath("~/ImageUploads/SurveyImages/TempZips"));
                 }
-                // Loop through each file and add it to the zip
-                //foreach (var file in files)
-                //{
-                //    // Get the file name from the full path
-                //    string fileName = Path.GetFileName(file);
-                //    // Add the file to the zip
-                //    zip.CreateEntryFromFile(file, fileName);
-                //}
+                byte[] fileBytes;
+                // Create the zip file
+                using (ZipArchive zip = System.IO.Compression.ZipFile.Open(zipPath, ZipArchiveMode.Create))
+                {
+                    // Get all image and PDF files from the folder
+                    //var files = Directory.GetFiles(folderPath, "*.*");
+                    // .Where(f => f.EndsWith(".jpg") || f.EndsWith(".jpeg") || f.EndsWith(".png") || f.EndsWith(".pdf") || f.EndsWith(".pdf"));
+
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        string filePath = dr["FilePathFull"].ToString();
+                        string fileName = Path.GetFileName(filePath);
+                        // Add the file to the zip
+                        //var file = Directory.GetFiles(filePath, "*.*");
+                        string filePathc = Path.Combine(folderPath, fileName);
+
+                        zip.CreateEntryFromFile(filePathc, fileName);
+                    }
+                    // Loop through each file and add it to the zip
+                    //foreach (var file in files)
+                    //{
+                    //    // Get the file name from the full path
+                    //    string fileName = Path.GetFileName(file);
+                    //    // Add the file to the zip
+                    //    zip.CreateEntryFromFile(file, fileName);
+                    //}
+                }
+
+                // Return the zip file as a download
+                fileBytes = System.IO.File.ReadAllBytes(zipPath);
+                if (System.IO.File.Exists(zipPath))
+                    System.IO.File.Delete(zipPath);
+
+                return File(fileBytes, "application/zip", "CombinedFilesFollowupZip.zip");
             }
-
-            // Return the zip file as a download
-            fileBytes = System.IO.File.ReadAllBytes(zipPath);
-            if (System.IO.File.Exists(zipPath))
-                System.IO.File.Delete(zipPath);
-
-            return File(fileBytes, "application/zip", "CombinedFilesFollowupZip.zip");
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return View("Error");
+            }
         }
         public ActionResult FollowUpSuspectedSummaryRawDataDownload(string StartDate = "", string EndDate = "")
         {
-            DataSet ds = new DataSet();
-            DataTable dt = new System.Data.DataTable();
-            FilterModel filterModel = new FilterModel();
-            //fill datatable by some data i just use empty databale
-            System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
-            if (TempData["FUSData"] != null)
+            try
             {
-                dt = (DataTable)TempData["FUSData"];
-            }
-            else
-            {
-                ds = SP_Model.Sp_FollowupSuspectedSummaryInDownload(StartDate, EndDate);
-                dt = ds.Tables[0];
-            }
-
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                wb.Style.Font.Bold = true;
-
-                var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
-                Response.Clear();
-                Response.Buffer = true;
-                Response.Charset = "";
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment;filename=RawFollowUpVisitedSuspected" + DTDAY + ".xlsx");
-
-                using (MemoryStream MyMemoryStream = new MemoryStream())
+                DataSet ds = new DataSet();
+                DataTable dt = new System.Data.DataTable();
+                FilterModel filterModel = new FilterModel();
+                //fill datatable by some data i just use empty databale
+                System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
+                if (TempData["FUSData"] != null)
                 {
-                    wb.SaveAs(MyMemoryStream);
-                    MyMemoryStream.WriteTo(Response.OutputStream);
-                    // memoryStream.WriteTo(Response.OutputStream);
-                    Response.Flush();
-                    Response.End();
+                    dt = (DataTable)TempData["FUSData"];
                 }
-            }
-            return new EmptyResult();
+                else
+                {
+                    ds = SP_Model.Sp_FollowupSuspectedSummaryInDownload(StartDate, EndDate);
+                    dt = ds.Tables[0];
+                }
 
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(dt);
+                    wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    wb.Style.Font.Bold = true;
+
+                    var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.Charset = "";
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    Response.AddHeader("content-disposition", "attachment;filename=RawFollowUpVisitedSuspected" + DTDAY + ".xlsx");
+
+                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                    {
+                        wb.SaveAs(MyMemoryStream);
+                        MyMemoryStream.WriteTo(Response.OutputStream);
+                        // memoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+                return new EmptyResult();
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return View("Error");
+            }
         }
         public ActionResult RawFollowupVisitData()
         {
@@ -1467,35 +1496,43 @@ namespace NCDNewMIS.Controllers
         #endregion
         public ActionResult ReportFollowUPDetailsDataExcel()
         {
-            DataSet ds = new DataSet();
-            DataTable dt = new System.Data.DataTable();
-            System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
-            ds = SP_Model.SP_FollowUpDetailsDownload();
-            dt = ds.Tables[0];
-
-            using (XLWorkbook wb = new XLWorkbook())
+            try
             {
-                wb.Worksheets.Add(dt);
-                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                wb.Style.Font.Bold = true;
+                DataSet ds = new DataSet();
+                DataTable dt = new System.Data.DataTable();
+                System.Text.StringBuilder htmlstr = new System.Text.StringBuilder();
+                ds = SP_Model.SP_FollowUpDetailsDownload();
+                dt = ds.Tables[0];
 
-                var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
-                Response.Clear();
-                Response.Buffer = true;
-                Response.Charset = "";
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment;filename=FOLLOWUPDETAILSDATA" + DTDAY + ".xlsx");
-
-                using (MemoryStream MyMemoryStream = new MemoryStream())
+                using (XLWorkbook wb = new XLWorkbook())
                 {
-                    wb.SaveAs(MyMemoryStream);
-                    MyMemoryStream.WriteTo(Response.OutputStream);
-                    // memoryStream.WriteTo(Response.OutputStream);
-                    Response.Flush();
-                    Response.End();
+                    wb.Worksheets.Add(dt);
+                    wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    wb.Style.Font.Bold = true;
+
+                    var DTDAY = DateTime.Now.Date.ToString("dd-MMM-yyyy");
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.Charset = "";
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    Response.AddHeader("content-disposition", "attachment;filename=FOLLOWUPDETAILSDATA" + DTDAY + ".xlsx");
+
+                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                    {
+                        wb.SaveAs(MyMemoryStream);
+                        MyMemoryStream.WriteTo(Response.OutputStream);
+                        // memoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
                 }
+                return new EmptyResult();
             }
-            return new EmptyResult();
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return View("Error");
+            }
         }
     }
 }

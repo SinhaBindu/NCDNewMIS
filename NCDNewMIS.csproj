@@ -373,6 +373,7 @@
     <Compile Include="Models\CHC_Master.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomErrorHandler.cs" />
     <Compile Include="Models\DistrictBlock_Master.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>

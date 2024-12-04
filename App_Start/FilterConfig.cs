@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using NCDNewMIS.Models;
+using System.Web;
 using System.Web.Mvc;
 
 namespace NCDNewMIS
@@ -7,7 +8,8 @@ namespace NCDNewMIS
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new HandleErrorAttribute());//by default
+           // filters.Add(new CustomErrorHandler());
         }
     }
 }

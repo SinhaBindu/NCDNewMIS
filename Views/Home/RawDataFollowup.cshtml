@@ -54,11 +54,11 @@
                    new { @id = "btnallRaw1", @target = "_blank", @class = "mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[8px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" })
 
             @Html.ActionLink("Followup Details (Till Yesterday)", "ReportFollowUPDetailsDataExcel", "Home", new object { },
-                new { @id = "btnallRaw2", @target="_blank", @class = "mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[8px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" })
+                new { @id = "btnallRaw2", @target = "_blank", @class = "mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[8px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" })
 
-        <a href="javascript:void(0);" id="downloadbtnrawall" target="_blank" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[8px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">Follow-up suspected facility visit (Till Yesterday) </a>
-        <button type="button" id="div-download"
-                title="Click here to Download To Excel" target="_blank"></button>
+            <a href="javascript:void(0);" id="downloadbtnrawall" target="_blank" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[8px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">Follow-up suspected facility visit (Till Yesterday) </a>
+            <button type="button" id="div-download"
+                    title="Click here to Download To Excel" target="_blank"></button>
         </div>
 
         <div class="row">
@@ -228,11 +228,12 @@
             var FD = $("#FD").val();
             var TD = $("#TD").val();
             var BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)' : $("#BlockId").val();
+           
             $.ajax({
                 type: "Get",
                 url: document.baseURI + "/Home/GetDataRawFollowupList",
                 data: { BlockId: BlockId, SType: SType, FD: FD, TD: TD },
-                async: true,
+                async: false,
                 //cache: false,
                 success: function (res) {
                     if (res.IsSuccess) {
@@ -294,6 +295,7 @@
                     //Do To Message display
                 }
             });
+           
         }
 
         $(document).ajaxSend(function () {

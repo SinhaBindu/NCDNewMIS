@@ -468,17 +468,18 @@
             GenderId = $("#GenderId").val() == "" || $("#GenderId").val() == null ? '0' : $("#GenderId").val();
             Ageyrs = $("#Ageyrs").val() == "" || $("#Ageyrs").val() == null ? '0' : $("#Ageyrs").val();
             console.log(startDate); console.log(endDate);
-
-            $.ajax({
-                method: 'POST',
-                url: document.baseURI + '/Home/GetFollowupDataSummmary',
-                data: JSON.stringify({ 'BlockId': BlockId, 'StartDate': startDate, 'EndDate': endDate, 'TypeOfPatient': TypeOfPatient, 'GenderId': GenderId, 'Ageyrs': Ageyrs }), // Convert data to JSON string
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: true,
-                success: onsucess,
-                error: onerror
-            });
+            setTimeout(function () {
+                $.ajax({
+                    method: 'POST',
+                    url: document.baseURI + '/Home/GetFollowupDataSummmary',
+                    data: JSON.stringify({ 'BlockId': BlockId, 'StartDate': startDate, 'EndDate': endDate, 'TypeOfPatient': TypeOfPatient, 'GenderId': GenderId, 'Ageyrs': Ageyrs }), // Convert data to JSON string
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    success: onsucess,
+                    error: onerror
+                })
+            },0);
 
         }
 

@@ -11,7 +11,49 @@
     .row {
         margin: 1%;
     }
+
+    .loading {
+        position: fixed;
+        top: 0;
+        z-index: 900;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background: rgba(0,0,0,0.6);
+    }
+
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #2e93e6 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+
+    @@keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .is-hide {
+        display: none;
+    }
 </style>
+<div id="spinner" class="loading">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+    @*<img src="~/Content/assets/images/Loading_2.gif" alt="Loading" />*@
+</div>
 <div class="content-body">
     <div class="container-fluid">
         <!-- Row -->
@@ -132,15 +174,17 @@
         });
         $(document).ready(function () {
             var param = { 'ptype': 'training' };
-            $.ajax({
-                method: 'POST',
-                url: document.baseURI + '/Home/Training2',
-                data: JSON.stringify(param),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: onsucess,
-                error: onerror
-            });
+            setTimeout(function () {
+                $.ajax({
+                    method: 'POST',
+                    url: document.baseURI + '/Home/Training2',
+                    data: JSON.stringify(param),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: onsucess,
+                    error: onerror
+                })
+            }, 0);
         });
         function onsucess(response) {
             debugger;
@@ -162,14 +206,14 @@
             var d3bar = JSON.parse(response.Data).filter(function (entry) {
                 return entry.indicatorId === 3;
             });
-            if (d1.length!=0) {
-                bindgraph("g1", "<strong>Achieved</strong><br/>" + Math.round((d1[0].achieved* 100)/ d1[0].target)+ "%" , "Block wise number of " + d1[0].indicatorText + " ", "", [{ name: 'Target', y: d1[0].target, color: '#bc6ac9' },{ name: 'Achieved', y: d1[0].achieved, color: '#ffc107' }]);
+            if (d1.length != 0) {
+                bindgraph("g1", "<strong>Achieved</strong><br/>" + Math.round((d1[0].achieved * 100) / d1[0].target) + "%", "Block wise number of " + d1[0].indicatorText + " ", "", [{ name: 'Target', y: d1[0].target, color: '#bc6ac9' }, { name: 'Achieved', y: d1[0].achieved, color: '#ffc107' }]);
             }
             if (d2.length != 0) {
-                bindgraph("g2", "<strong>Achieved</strong><br/>" + Math.round((d2[0].achieved* 100)/ d2[0].target)+ "%", "Block wise number of " + d2[0].indicatorText + " ", "", [{ name: 'Target', y: d2[0].target, color: '#bc6ac9' },{ name: 'Achieved', y: d2[0].achieved, color: '#ffc107' }]);
+                bindgraph("g2", "<strong>Achieved</strong><br/>" + Math.round((d2[0].achieved * 100) / d2[0].target) + "%", "Block wise number of " + d2[0].indicatorText + " ", "", [{ name: 'Target', y: d2[0].target, color: '#bc6ac9' }, { name: 'Achieved', y: d2[0].achieved, color: '#ffc107' }]);
             }
             if (d2.length != 0) {
-                bindgraph("g3", "<strong>Achieved</strong><br/>" + Math.round((d3[0].achieved* 100)/ d3[0].target)+ "%", "Block wise number of " + d3[0].indicatorText + " ", "", [{ name: 'Target', y: d3[0].target, color: '#bc6ac9' },{ name: 'Achieved', y: d3[0].achieved, color: '#ffc107' }]);
+                bindgraph("g3", "<strong>Achieved</strong><br/>" + Math.round((d3[0].achieved * 100) / d3[0].target) + "%", "Block wise number of " + d3[0].indicatorText + " ", "", [{ name: 'Target', y: d3[0].target, color: '#bc6ac9' }, { name: 'Achieved', y: d3[0].achieved, color: '#ffc107' }]);
             }
             //Act1IndicatorChart("gbar1", "<strong>Achieved</strong><br/>", d1bar, "Block wise number of " + d1bar[0].indicatorText + " : " + ((d1bar[0].achieved)), "", "");
             //Act1IndicatorChart("gbar2", "<strong>Achieved</strong><br/>", d2bar, "Block wise number of " + d2bar[0].indicatorText + " : " + ((d2bar[0].achieved)), "","");
@@ -230,7 +274,7 @@
                     }
                 },
                 title: {
-                    text:"<span style='color:#222fb9'>" +head+"</span>",
+                    text: "<span style='color:#222fb9'>" + head + "</span>",
                     align: 'left'
                 },
                 credits: {
@@ -275,7 +319,7 @@
             });
         }
         function Act1IndicatorChart(id, label, Data, title, subtitle, tittotal) {
-             debugger;
+            debugger;
             //$('#' + id).html('');
             if (Data.length > 0) {
                 //var objd = new Object();
@@ -297,12 +341,12 @@
                     }
                 }
                 //if (targetzero.length <= 0) {
-                    //dataser.push({ type: 'column', name: 'Target', data: TotalTarget, 'color': '#bc6ac9' });//bc6ac9
-                    dataser.push({ type: 'column', name: 'Estimated Target', data: TD, 'color': '#bc6ac9' });//bc6ac9
+                //dataser.push({ type: 'column', name: 'Target', data: TotalTarget, 'color': '#bc6ac9' });//bc6ac9
+                dataser.push({ type: 'column', name: 'Estimated Target', data: TD, 'color': '#bc6ac9' });//bc6ac9
                 //}
                 //if (achievedzero <= 0) {
-                   // dataser.push({ type: 'column', name: 'Achieved', data: TotalAchieved, 'color': '#ffc107' });//fbc21d//f2c02c//008000
-                    dataser.push({ type: 'column', name: 'Achieved', data: AD, 'color': '#ffc107' });//fbc21d//f2c02c//008000
+                // dataser.push({ type: 'column', name: 'Achieved', data: TotalAchieved, 'color': '#ffc107' });//fbc21d//f2c02c//008000
+                dataser.push({ type: 'column', name: 'Achieved', data: AD, 'color': '#ffc107' });//fbc21d//f2c02c//008000
                 //}
                 Highcharts.chart(id, {
 

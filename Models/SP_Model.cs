@@ -14,12 +14,18 @@ namespace NCDNewMIS.Models
     public class SP_Model
     {
         public static SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
-        public static SqlCommand cmd;
-        public static SqlDataAdapter da;
+        public SP_Model() {
+            con = null;
+        }
         public static DataTable SPLoginCheck(LoginModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da=new SqlDataAdapter();
             ////StoredProcedure sp = new StoredProcedure("SP_LoginCheck");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -27,19 +33,27 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@MobileNo", model.UserName);
             cmd.Parameters.AddWithValue("@Password", model.Password);
             cmd.Parameters.AddWithValue("@Version", model.Version);
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             DataTable dt = new DataTable();
             da.Fill(dt);
             //sp.ExecuteDataSet().Tables[0];
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataSet SPLoginCheck1(LoginModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da=new SqlDataAdapter();
             // //StoredProcedure sp = new StoredProcedure("SP_LoginCheck1");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "SP_LoginCheck1";
@@ -47,18 +61,26 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@UserName", model.UserName);
             cmd.Parameters.AddWithValue("@Password", model.Password);
             cmd.Parameters.AddWithValue("@Version", model.Version);
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             DataSet dt = new DataSet();
             da.Fill(dt);//sp.ExecuteDataSet();
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataTable SP_JsonPostData(PostDataModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             ////StoredProcedure sp = new StoredProcedure("SP_JsonPostData");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -69,34 +91,50 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@JsonData", model.JsonData);
             cmd.Parameters.AddWithValue("@RowAfected", 0);
             DataTable dt = new DataTable();
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);// sp.ExecuteDataSet().Tables[0];
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataTable uspRegistration(PostDataModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             ////StoredProcedure sp = new StoredProcedure("uspRegistration");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
             cmd.CommandText = "uspRegistration";
             cmd.Parameters.AddWithValue("@json", model.JsonData);
             cmd.Parameters.AddWithValue("@RowAfected", 0);
-            da = new SqlDataAdapter();
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
             da.SelectCommand=cmd;
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataSet SP_BlockMapSubmission(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da= new SqlDataAdapter();
             ////StoredProcedure sp = new StoredProcedure("SP_BlockMapSubmission");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -110,12 +148,21 @@ namespace NCDNewMIS.Models
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet SP_RowDataShow(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             ////StoredProcedure sp = new StoredProcedure("SP_RowDataShow");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -126,17 +173,25 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@BlockId", model.BlockId);
             cmd.Parameters.AddWithValue("@SubCenterId", model.SCId);
             DataSet ds = new DataSet();// sp.ExecuteDataSet();
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet SP_AllRawDataShow(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da= new SqlDataAdapter();
             ////StoredProcedure sp = new StoredProcedure("SP_AllRawDataDownload");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -145,15 +200,24 @@ namespace NCDNewMIS.Models
             //sp.Command.AddParameter("@FD", model.FormDt);
             //sp.Command.AddParameter("@TD", model.ToDt);
             DataSet ds = new DataSet();// sp.ExecuteDataSet();
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet SP_AllRawDataFollowUpDownload(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             ////StoredProcedure sp = new StoredProcedure("SP_AllRawDataFollowUpDownload");
             cmd = new SqlCommand();
             cmd.Connection = con;
@@ -164,17 +228,25 @@ namespace NCDNewMIS.Models
             //sp.Command.AddParameter("@FD", model.FormDt);
             //sp.Command.AddParameter("@TD", model.ToDt);
             DataSet ds = new DataSet();// sp.ExecuteDataSet();
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataTable SP_RegLocation(RegLocationModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             ////StoredProcedure sp = new StoredProcedure("SP_RegLocation");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -183,17 +255,25 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@Isvalue", model.Isvalue);
             cmd.Parameters.AddWithValue("@value", model.value);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataSet SP_IndicatorData(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             ////StoredProcedure sp = new StoredProcedure("SP_IndicatorData");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -202,17 +282,25 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@RoundType", model.RoundType);
             cmd.Parameters.AddWithValue("@SType", model.SType);
             DataSet ds = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet SP_RegApproved(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             ////StoredProcedure sp = new StoredProcedure("SP_RegApproved");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -223,17 +311,25 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@PHCId", Convert.ToInt32(model.PHCId));
             cmd.Parameters.AddWithValue("@Approved", model.IsActive);
             DataSet ds = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet SP_DistrictBlockData(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             // //StoredProcedure sp = new StoredProcedure("Usp_DistBlockWiseData");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -245,17 +341,25 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@StartDate", model.FormDt);
             cmd.Parameters.AddWithValue("@EndDate", model.ToDt);
             DataSet ds = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet SP_PendingUserMembersSubmission(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_PendingUserMembersSubmission");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -263,34 +367,50 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@BlockId", model.BlockId);
             cmd.Parameters.AddWithValue("@SubCenterId", model.SCId);
             DataSet ds = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet SP_ACT2High(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_ACT2High");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
             cmd.CommandText = "SP_ACT2High";
             cmd.Parameters.AddWithValue("@SType", model.SType);
             DataSet ds = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet SP_ACT1Indicator(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da=new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_ACT1Indicator");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -298,50 +418,74 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@PageType", model.PageType);
             cmd.Parameters.AddWithValue("@IndicatorId", model.IndicatorId);
             DataSet ds = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataTable GetGroupACT1Indicator(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("GetGroupACT1Indicator");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
             cmd.CommandText = "GetGroupACT1Indicator";
             cmd.Parameters.AddWithValue("@PageType", model.PageType);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataTable GetGroupACT1PageType()
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("GetGroupACT1Page");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
             cmd.CommandText = "GetGroupACT1Page";
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataTable SP_GetCHCPHCSubCenter(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da=new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_GetCHCPHCSubCenter");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -351,17 +495,25 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@CHCId", model.CHCId);
             cmd.Parameters.AddWithValue("@PHCId", model.PHCId);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataSet SP_RegMapped(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_RegMapped");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -372,17 +524,25 @@ namespace NCDNewMIS.Models
            cmd.Parameters.AddWithValue("@PHCId", model.PHCId);
            cmd.Parameters.AddWithValue("@Approved", model.IsActive);
             DataSet ds = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet SP_GetPHCCHC_SubCenterWise(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_GetPHCCHC_SubCenterWise");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -391,51 +551,75 @@ namespace NCDNewMIS.Models
            cmd.Parameters.AddWithValue("@BlockId", model.BlockId);
            cmd.Parameters.AddWithValue("@SubCenterId", model.SCId);
             DataSet ds = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataTable GetHealthEducation(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_ACT1Indicator_Health");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
             cmd.CommandText = "SP_ACT1Indicator_Health";
             cmd.Parameters.AddWithValue("@PageType", model.PageType);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataTable SP_ACT2Indicator_Health(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_ACT2Indicator_Health");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
             cmd.CommandText = "SP_ACT2Indicator_Health";
             cmd.Parameters.AddWithValue("@PageType", model.PageType);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataTable SP_SummaryUserSubmission(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_SummaryUserSubmission");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -443,17 +627,25 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@FD", model.FormDt);
            cmd.Parameters.AddWithValue("@TD", model.ToDt);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataTable SP_GetImageUploadList(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da=new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_GalleryUploadList");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -462,33 +654,49 @@ namespace NCDNewMIS.Models
            cmd.Parameters.AddWithValue("@BlockId", model.BlockId);
            cmd.Parameters.AddWithValue("@RoundType", model.RoundType);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataTable SP_ACT1Block()
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da=new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_ACT1Block");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
             cmd.CommandText = "SP_ACT1Block";
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataTable GetFinUtilization(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("Usp_FinUtilizationQuaterWise");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -496,52 +704,76 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@PageType", Convert.ToInt32(model.RoundType));
            cmd.Parameters.AddWithValue("@fyear", model.PageType);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataSet GetHealthScreeing(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_ACT1Indicator_Health1112");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
             cmd.CommandText = "SP_ACT1Indicator_Health1112";
             cmd.Parameters.AddWithValue("@PageType", model.PageType);
             DataSet dt = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataSet GetHealthScreeing2(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_ACT1Indicator_HB");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
             cmd.CommandText = "SP_ACT1Indicator_HB";
             //cmd.Parameters.AddWithValue("@PageType", model.PageType);
             DataSet dt = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
 
         public static DataSet SP_RawDataFollowup(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da=new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_RowDataShowFollowUP");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -552,22 +784,29 @@ namespace NCDNewMIS.Models
            cmd.Parameters.AddWithValue("@FD", model.FormDt);
            cmd.Parameters.AddWithValue("@TD", model.ToDt);
             DataSet ds = new DataSet();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet SP_RawDataSummary()
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             // //StoredProcedure sp = new StoredProcedure("SP_RawDataSummary");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
             cmd.CommandText = "SP_RawDataSummary";
-            da = new SqlDataAdapter();
             DataSet ds = new DataSet();
             da.SelectCommand = cmd;
             da.Fill(ds);
@@ -575,12 +814,21 @@ namespace NCDNewMIS.Models
             //DataSet ds = new DataSet();// sp.ExecuteDataSet().Tables[0];
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet Sp_FollowupSuspectedSummary()
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummary");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -590,13 +838,22 @@ namespace NCDNewMIS.Models
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
 
         public static DataTable SP_UploadImgApi(string imgid = "", string filepath = "", string type = "", string Version = "")
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da=new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("Usp_SaveApiImage");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -606,17 +863,25 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@filetype", type);
             cmd.Parameters.AddWithValue("@Version", Version);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataSet Sp_FollowupSuspectedSummaryData(string BlockId, string StartDate,string EndDate, string TypeOfPatient, string GenderId,string Ageyrs)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummaryData");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -632,12 +897,21 @@ namespace NCDNewMIS.Models
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
         public static DataSet Sp_FollowupSuspectedSummaryInDownload(string StartDate, string EndDate)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("SP_Followup_UniqueFacilityVisit");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -649,13 +923,22 @@ namespace NCDNewMIS.Models
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
 
         public static DataTable Usp_FollowupImageDocumentLoad(FilterModel model)
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("Usp_FollowupImageDocumentLoad");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -668,17 +951,25 @@ namespace NCDNewMIS.Models
            cmd.Parameters.AddWithValue("@FD", model.FormDt);
            cmd.Parameters.AddWithValue("@TD", model.ToDt);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataTable Usp_ZipFileFollowDownload(string MId = "",string FMId="")
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da=new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("Usp_ZipFileFollowDownload");
-            cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 120;
@@ -686,15 +977,24 @@ namespace NCDNewMIS.Models
             cmd.Parameters.AddWithValue("@MId", MId);
            cmd.Parameters.AddWithValue("@FMId", FMId);
             DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
-            da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             da.Fill(dt);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return dt;
         }
         public static DataSet SP_FollowUpDetailsDownload()
         {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
             //StoredProcedure sp = new StoredProcedure("USP_FollowUpDetailsData");
             cmd = new SqlCommand();
             cmd.Connection = con;
@@ -706,6 +1006,10 @@ namespace NCDNewMIS.Models
             da.Fill(ds);
             da.Dispose();
             cmd.Dispose();
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             return ds;
         }
     }

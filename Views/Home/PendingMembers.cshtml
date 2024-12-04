@@ -167,57 +167,58 @@
             //filtermodel.DistrictId = "1";// $("#DistrictId").val() == "" || $("#DistrictId").val() == null ? 0 : parseInt($("#DistrictId").val());
             filtermodel.BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? '@Model.BlockId' : $("#BlockId").val();
             //filtermodel.SCId = $("#SCId").val() == "" || $("#SCId").val() == null ? '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)' : parseInt($("#SCId").val());
-
-            $.ajax({
-                url: document.baseURI + '/Home/GetPendingMembersData',
-                //url: url,
-                type: "POST",
-                data: filtermodel,
-                async: true,
-                success: function (resp) {
-                    if (resp.IsSuccess) {
-                        $('#spinner').hide();
-                        debugger;
-                        $('#result').html(resp.reshtml);
-                        if ($.fn.dataTable.isDataTable('#tbl')) {
-                            $("#tbl").dataTable().fnDestroy();
+            setTimeout(function () {
+                $.ajax({
+                    url: document.baseURI + '/Home/GetPendingMembersData',
+                    //url: url,
+                    type: "POST",
+                    data: filtermodel,
+                    // async: true,
+                    success: function (resp) {
+                        if (resp.IsSuccess) {
+                            $('#spinner').hide();
+                            debugger;
+                            $('#result').html(resp.reshtml);
+                            if ($.fn.dataTable.isDataTable('#tbl')) {
+                                $("#tbl").dataTable().fnDestroy();
+                            }
+                            table = $('#tbl').DataTable({
+                                //scrollY: "500px",
+                                //scrollX: true,
+                                //fixedHeader: true,
+                                //scrollCollapse: true,
+                                paging: false,
+                                // "bFilter": false,
+                                pageLength: 100,
+                                //fixedColumns: {
+                                //    leftColumns: 1,
+                                //    rightColumns: 1
+                                //},
+                                buttons: [{
+                                    extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Pending Submission Status ACT - II',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                    className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
+                                    filename: 'Pending Submission List',
+                                    exportOptions: { modifier: { page: 'all' } }
+                                }],
+                            });
+                            $('.dataTables_filter input[type="search"]').css(
+                                { 'width': '500px', 'display': 'inline-block' }
+                            );
+                            $('#div-download').empty();
+                            table.buttons().container().appendTo($('#div-download'));
                         }
-                        table = $('#tbl').DataTable({
-                            //scrollY: "500px",
-                            //scrollX: true,
-                            //fixedHeader: true,
-                            //scrollCollapse: true,
-                            paging: false,
-                            // "bFilter": false,
-                            pageLength: 100,
-                            //fixedColumns: {
-                            //    leftColumns: 1,
-                            //    rightColumns: 1
-                            //},
-                            buttons: [{
-                                extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Pending Submission Status ACT - II',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
-                                className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
-                                filename: 'Pending Submission List',
-                                exportOptions: { modifier: { page: 'all' } }
-                            }],
-                        });
-                        $('.dataTables_filter input[type="search"]').css(
-                            { 'width': '500px', 'display': 'inline-block' }
-                        );
-                        $('#div-download').empty();
-                        table.buttons().container().appendTo($('#div-download'));
+                        else {
+                            $('#spinner').hide();
+                            $('#tbl').html('<h4 class="text-danger">Record Not Found !!</h4>');
+                        }
+                    },
+                    error: function (req, error) {
+                        if (error === 'error') { error = req.statusText; }
+                        var errormsg = 'There was a communication error: ' + error;
+                        $('#tbl').html(errormsg); $('#spinner').hide();
                     }
-                    else {
-                        $('#spinner').hide();
-                        $('#tbl').html('<h4 class="text-danger">Record Not Found !!</h4>');
-                    }
-                },
-                error: function (req, error) {
-                    if (error === 'error') { error = req.statusText; }
-                    var errormsg = 'There was a communication error: ' + error;
-                    $('#tbl').html(errormsg); $('#spinner').hide();
-                }
-            });
+                })
+            },0);
         }
         $(document).ajaxSend(function () {
             $('#spinner').show();

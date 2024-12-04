@@ -605,73 +605,74 @@
             var FD = $("#FD").val();
             var TD = $("#TD").val();
             var BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)' : $("#BlockId").val();
+            setTimeout(function () {
+                $.ajax({
+                    type: "Get",
+                    url: document.baseURI + "/Home/GetDataRowList",
+                    data: { BlockId: BlockId, SType: SType, FD: FD, TD: TD },
+                    //cache: false,
+                    async: false,
+                    success: function (res) {
+                        if (res.IsSuccess) {
+                            $('#spinner').hide();
+                            $("#subdata").html(res.Data);
 
-            $.ajax({
-                type: "Get",
-                url: document.baseURI + "/Home/GetDataRowList",
-                data: {BlockId:BlockId, SType: SType, FD: FD, TD: TD },
-                //cache: false,
-                async: true,
-                success: function (res) {
-                    if (res.IsSuccess) {
-                        $('#spinner').hide();
-                        $("#subdata").html(res.Data);
-
-                        if ($.fn.dataTable.isDataTable('#tbl')) {
-                            $("#tbl").dataTable().fnDestroy();
+                            if ($.fn.dataTable.isDataTable('#tbl')) {
+                                $("#tbl").dataTable().fnDestroy();
+                            }
+                            table = $('#tbl').DataTable({
+                                //responsive: true,
+                                //"sDom": '<"bottom"i>rt<"top"flp><"clear">',
+                                // "searching": true,
+                                //"dom": 'rtip',
+                                //"lengthChange": false,
+                                // scrollY: "400px",
+                                // scrollX: true,
+                                //scrollCollapse: true,
+                                //paging: false,
+                                pageLength: 100,
+                                fixedHeader: true,
+                                //fixedColumns: {
+                                //    leftColumns: 1,
+                                //    rightColumns: 1
+                                //},
+                                "dom": '<"pull-left"f><"pull-right"l>tip',
+                                //"pageLength": 100,
+                                //"lengthChange": false,
+                                columnDefs: [
+                                    {
+                                        target: 1,
+                                        className: 'cell-border'
+                                    }
+                                ],
+                                order: [[0, 'asc']],
+                                //buttons: [{
+                                //    extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span>', title: 'NCD Raw Data Lists',//$('#IDDistrict option:selected').text() +
+                                //    className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
+                                //    filename: 'NCD Raw Data List',
+                                //    exportOptions: { modifier: { page: 'all' } }
+                                //}],
+                            });
+                            $('.dataTables_filter input[type="search"]').css(
+                                { 'width': '500px', 'display': 'inline-block' }
+                            );
+                            // $('#div-download').empty();
+                            // table.buttons().container().appendTo($('#div-download'));
+                            $('#spinner').hide();
                         }
-                        table = $('#tbl').DataTable({
-                            //responsive: true,
-                            //"sDom": '<"bottom"i>rt<"top"flp><"clear">',
-                            // "searching": true,
-                            //"dom": 'rtip',
-                            //"lengthChange": false,
-                            // scrollY: "400px",
-                            // scrollX: true,
-                            //scrollCollapse: true,
-                            //paging: false,
-                            pageLength: 100,
-                            fixedHeader: true,
-                            //fixedColumns: {
-                            //    leftColumns: 1,
-                            //    rightColumns: 1
-                            //},
-                            "dom": '<"pull-left"f><"pull-right"l>tip',
-                            //"pageLength": 100,
-                            //"lengthChange": false,
-                            columnDefs: [
-                                {
-                                    target: 1,
-                                    className: 'cell-border'
-                                }
-                            ],
-                            order: [[0, 'asc']],
-                            //buttons: [{
-                            //    extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span>', title: 'NCD Raw Data Lists',//$('#IDDistrict option:selected').text() +
-                            //    className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
-                            //    filename: 'NCD Raw Data List',
-                            //    exportOptions: { modifier: { page: 'all' } }
-                            //}],
-                        });
-                        $('.dataTables_filter input[type="search"]').css(
-                            { 'width': '500px', 'display': 'inline-block' }
-                        );
-                       // $('#div-download').empty();
-                       // table.buttons().container().appendTo($('#div-download'));
+                        else {
+                            $("#subdata").html("<h4 class='text-danger text-center'>" + res.Data + "</h5>");
+                            $('#spinner').hide();
+                        }
+                    },
+                    error: function (req, error) {
+                        if (error === 'error') { error = req.statusText; }
+                        var errormsg = 'There was a communication error: ' + error;
+                        //Do To Message display
                         $('#spinner').hide();
                     }
-                    else {
-                        $("#subdata").html("<h4 class='text-danger text-center'>" + res.Data + "</h5>");
-                        $('#spinner').hide();
-                    }
-                },
-                error: function (req, error) {
-                    if (error === 'error') { error = req.statusText; }
-                    var errormsg = 'There was a communication error: ' + error;
-                    //Do To Message display
-                    $('#spinner').hide();
-                }
-            });
+                })
+            },0);
         }
 
         $(document).ajaxSend(function () {

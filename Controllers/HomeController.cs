@@ -145,8 +145,19 @@ namespace NCDNewMIS.Controllers
         public ActionResult Index()
         {
             DataSet ds = new DataSet();
-            ds = SP_Model.SP_RawDataSummary();
-            return View(ds);
+            try
+            {
+                ds = SP_Model.SP_RawDataSummary();
+                if (ds.Tables.Count > 0)
+                {
+                    return View(ds);
+                }
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+            return View();
         }
         public ActionResult GetDataRowList(string BlockId, string SType, string FD, string TD)
         {

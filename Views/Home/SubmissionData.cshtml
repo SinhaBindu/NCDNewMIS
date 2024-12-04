@@ -158,7 +158,7 @@
         var startDate = "", endDate = "";
         $(document).ready(function () {
 
-            LoadReport();
+            
 
             $('#SType').change(function () {
                 LoadReport();
@@ -189,7 +189,7 @@
             var end = moment().endOf('year');//moment();
             startDate = start.format('YYYY-MM-DD');
             endDate = end.format('YYYY-MM-DD');
-
+            
             LoadReport(startDate, endDate);
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -207,62 +207,63 @@
             var SType = $("#SType").val();
             var RoundType = $("#RoundType").val();
             var DistrictBlockType = $("#DistrictBlockType").val();
-
-            $.ajax({
-                url: document.baseURI + '/Home/GetSubmissionData',
-                //url: url,
-                type: "POST",
-                async: true,
-                data: { 'DistrictBlockType': DistrictBlockType, RoundType: RoundType, SType: SType, 'StartDate': startDate, 'EndDate': endDate },
-                success: function (resp) {
-                    if (resp.IsSuccess) {
-                        $('#spinner').hide();
-                        debugger;
-                        // $('#resultmap').html(resp.Datahtml);
-                        var resD = JSON.parse(resp.resData);
-                        ChartDistBlockSub(resD);
-                        $('#result').html(resp.reshtml);
-                        if ($.fn.dataTable.isDataTable('#tbl')) {
-                            $("#tbl").dataTable().fnDestroy();
+         
+                $.ajax({
+                    url: document.baseURI + '/Home/GetSubmissionData',
+                    //url: url,
+                    type: "POST",
+                    async: false,
+                    data: { DistrictBlockType: DistrictBlockType, RoundType: RoundType, SType: SType, StartDate: startDate, EndDate: endDate },
+                    success: function (resp) {
+                        if (resp.IsSuccess) {
+                            $('#spinner').hide();
+                            debugger;
+                            // $('#resultmap').html(resp.Datahtml);
+                            var resD = JSON.parse(resp.resData);
+                            ChartDistBlockSub(resD);
+                            $('#result').html(resp.reshtml);
+                            if ($.fn.dataTable.isDataTable('#tbl')) {
+                                $("#tbl").dataTable().fnDestroy();
+                            }
+                            table = $('#tbl').DataTable({
+                                //scrollY: "500px",
+                                //scrollX: true,
+                                //fixedHeader: true,
+                                //scrollCollapse: true,
+                                paging: false,
+                                "bFilter": false,
+                                pageLength: 100,
+                                //fixedColumns: {
+                                //    leftColumns: 1,
+                                //    rightColumns: 1
+                                //},
+                                buttons: [{
+                                    extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Submission Status Lists' + '@DateTime.Now.Date',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
+                                    className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
+                                    filename: 'Submission Status List',
+                                    exportOptions: { modifier: { page: 'all' } },
+                                    footer: true
+                                }],
+                            });
+                            //$('.dataTables_filter input[type="search"]').css(
+                            //    { 'width': '500px', 'display': 'inline-block' }
+                            //);
+                            $('#div-download').empty();
+                            table.buttons().container().appendTo($('#div-download'));
                         }
-                        table = $('#tbl').DataTable({
-                            //scrollY: "500px",
-                            //scrollX: true,
-                            //fixedHeader: true,
-                            //scrollCollapse: true,
-                            paging: false,
-                            "bFilter": false,
-                            pageLength: 100,
-                            //fixedColumns: {
-                            //    leftColumns: 1,
-                            //    rightColumns: 1
-                            //},
-                            buttons: [{
-                                extend: 'excel', text: '<span><i class="fa fa-download"></i> Download To Excel</span> ', title: 'Submission Status Lists'+'@DateTime.Now.Date',///text*<span><i class="fa fa-download"></i>Export</span>*///$('#IDDistrict option:selected').text() +
-                                className: 'mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300',
-                                filename: 'Submission Status List',
-                                exportOptions: { modifier: { page: 'all' } },
-                                footer: true
-                            }],
-                        });
-                        //$('.dataTables_filter input[type="search"]').css(
-                        //    { 'width': '500px', 'display': 'inline-block' }
-                        //);
-                        $('#div-download').empty();
-                        table.buttons().container().appendTo($('#div-download'));
-                    }
-                    else {
+                        else {
+                            $('#spinner').hide();
+                            $('#result').html('<h4 class="text-danger">Record Not Found !!</h4>');
+                        }
+                    },
+                    error: function (req, error) {
+                        if (error === 'error') { error = req.statusText; }
+                        var errormsg = 'There was a communication error: ' + error;
+                        $('#result').html(errormsg);
                         $('#spinner').hide();
-                        $('#result').html('<h4 class="text-danger">Record Not Found !!</h4>');
                     }
-                },
-                error: function (req, error) {
-                    if (error === 'error') { error = req.statusText; }
-                    var errormsg = 'There was a communication error: ' + error;
-                    $('#result').html(errormsg);
-                    $('#spinner').hide();
-                }
-            });
+                })
+           
         }
 
         $(document).ajaxSend(function () {

@@ -23,7 +23,7 @@ namespace NCDNewMIS.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-            //this.Database.CommandTimeout = 600;
+            this.Database.CommandTimeout = 120;
         }
 
         public static ApplicationDbContext Create()

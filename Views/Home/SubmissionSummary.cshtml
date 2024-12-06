@@ -199,19 +199,22 @@ date-picker-input" value="" autocomplete="off" />
 
         });
         function LoadReport() {
+            $('#spinner').show();
             $('#result').html("");
             var id = '#tblList-frm'
             var url = $(id).attr("action");
             var filtermodel = new Object();
             var FD = $("#FD").val();
             var TD = $("#TD").val();
-           
+            setTimeout(function () {
                 $.ajax({
                     url: document.baseURI + "/Home/SubmissionSummary",
                     type: "POST",
                     data: { 'FD': FD, 'TD': TD },
+                    async: false,
                     success: function (resp) {
                         if (resp.IsSuccess) {
+                            $('#spinner').hide();
                             debugger;
                             // $('#resultmap').html(resp.Datahtml);
                             $('#result').html(resp.Datahtml);
@@ -243,16 +246,18 @@ date-picker-input" value="" autocomplete="off" />
                             table.buttons().container().appendTo($('#div-download'));
                         }
                         else {
-                            $('#result').html('<h4 class="text-danger">Record Not Found !!</h4>');
+                            $("#result").html("<h4 class='text-danger text-center'>" + res.Data + "</h5>");
+                            $('#spinner').hide();
                         }
                     },
                     error: function (req, error) {
                         if (error === 'error') { error = req.statusText; }
                         var errormsg = 'There was a communication error: ' + error;
                         $('#result').html(errormsg);
+                        $('#spinner').hide();
                     }
                 });
-           
+            }, 0);
         }
 
         function PostAppoved(regid, regmapid, isactive) {
@@ -296,6 +301,12 @@ date-picker-input" value="" autocomplete="off" />
 
         }
 
+        $(document).ajaxSend(function () {
+            $('#spinner').show();
+        });
 
+        $(document).ajaxComplete(function () {
+            $('#spinner').hide();
+        });
     </script>
 }

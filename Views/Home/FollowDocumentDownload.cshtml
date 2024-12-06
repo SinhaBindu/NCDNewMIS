@@ -140,8 +140,6 @@
                         </div>
                     </div>
 
-
-
                 </div>
 
                 <div class="w-full">
@@ -216,16 +214,21 @@
             //$('#DistrictId').change(function () {
             //    BindBlock("BlockId", '', "0");
             //});
-            BindBlock("BlockId", '1', "0");
+            BindBlock("BlockId", '@Convert.ToInt32(Enums.Default1stValue.BlockId)', "0");
             debugger;
+            if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
+                BindSubcenter("SCId", '', "1", "1", $('#BlockId').val(), 0, 0);
+                LoadReport();
+            }
+
             //$('select[name="BlockId"]').find('option').eq(2).attr("selected", true).change();
-            setTimeout(function () {
-                if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
-                    BindSubcenter("SCId", '', "1", "1", $('#BlockId').val(), 0, 0,);
-                    //$('select[name="SCId"]').find('option').eq(2).attr("selected", true).change();
-                    LoadReport();
-                }
-            }, 500);
+            //setTimeout(function () {
+            //    if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
+            //       // BindSubcenter("SCId", '', "1", "1", $('#BlockId').val(), 0, 0,);
+            //        //$('select[name="SCId"]').find('option').eq(2).attr("selected", true).change();
+            //        LoadReport();
+            //    }
+            //}, 500);
 
 
             $('#BlockId').change(function () {
@@ -238,6 +241,7 @@
 
         });
         function LoadReport() {
+            $('#spinner').show();
             $('#result').html("");
             var id = '#tblList-frm'
             var url = $(id).attr("action");
@@ -252,8 +256,10 @@
                     url: url,
                     type: "POST",
                     data: filtermodel,
+                    async: false,
                     success: function (resp) {
                         if (resp.IsSuccess) {
+                            $('#spinner').hide();
                             debugger;
                             // $('#resultmap').html(resp.Datahtml);
                             $('#result').html(resp.Data);
@@ -285,17 +291,26 @@
                             table.buttons().container().appendTo($('#div-download'));
                         }
                         else {
-                            $('#result').html('<h4 class="text-danger">Record Not Found !!</h4>');
+                            $("#result").html("<h4 class='text-danger text-center'>" + res.Data + "</h5>");
+                            $('#spinner').hide();
                         }
                     },
                     error: function (req, error) {
                         if (error === 'error') { error = req.statusText; }
                         var errormsg = 'There was a communication error: ' + error;
                         $('#result').html(errormsg);
+                        $('#spinner').hide();
                     }
                 })
             }, 0);
         }
+        $(document).ajaxSend(function () {
+            $('#spinner').show();
+        });
+
+        $(document).ajaxComplete(function () {
+            $('#spinner').hide();
+        });
 
     </script>
 }

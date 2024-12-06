@@ -290,7 +290,8 @@
                     },
                     error: function (req, error) {
                         if (error === 'error') { error = req.statusText; }
-                        var errormsg = 'There was a communication error: ' + error;
+                        var errormsg = 'There was a communication error: javascript' + error;
+                        $("#subdata").html("<h4 class='text-danger text-center'>" + errormsg + "</h5>");
                         $('#spinner').hide();
                         //Do To Message display
                     }

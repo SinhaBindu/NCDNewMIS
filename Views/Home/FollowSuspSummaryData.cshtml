@@ -68,6 +68,10 @@
         padding-right: calc(var(--bs-gutter-x)* .2) !important;
         padding-left: calc(var(--bs-gutter-x)* .2) !important;
     }
+    .inputshow {
+        opacity: unset !important;
+        z-index: unset !important;
+    }
 </style>
 <style>
     .loading {
@@ -114,9 +118,11 @@
     .sp {
         font-weight: 700 !important;
     }
+
     .highcharts-legend-item {
         display: none !important;
     }
+
 </style>
 <div id="spinner" class="loading" hidden>
     <div class="cv-spinner">
@@ -155,11 +161,11 @@
                                 <div class="tab__content">
                                     <div class="border-all">
 
-                                        <div class="mb-4 md:w-1/2">
+                                        <div class="mb-4 md:w-1/1">
                                             <label class="form-label">Block</label>
                                             @Html.DropDownList("BlockId", new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                                         </div>
-                                        <div class="mb-4 md:w-1/2" style="display:none;">
+                                        <div class="mb-4 md:w-1/2">
                                             <label class="form-label">Patient</label>
                                             @Html.DropDownList("TypeOfPatient", NCDNewMIS.Models.CommonModel.GetTypeofPatient(), null, new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                                         </div>
@@ -172,14 +178,27 @@
                                             <label class="form-label">Age</label>
                                             @Html.DropDownList("Ageyrs", NCDNewMIS.Models.CommonModel.GetAgeYrs(), null, new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
                                         </div>
-                                        <div class="mb-4 md:w-1/2">
-                                            <div class="title"></div>
-                                            <div class="tools">
-                                                <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; width: 100%">
-                                                    <i class="fa fa-calendar"></i>&nbsp;
-                                                    <span>January 1, 2024 - December 31, 2024</span> <i class="fa fa-caret-down"></i>
+                                        @*<div class="mb-4 md:w-1/2">
+                                                <div class="title"></div>
+                                                <div class="tools">
+                                                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; width: 100%">
+                                                        <i class="fa fa-calendar"></i>&nbsp;
+                                                        <span>January 1, 2024 - December 31, 2024</span> <i class="fa fa-caret-down"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </div>*@
+                                        <div class="mb-4 md:w-1/1">
+                                            <label class="form-label">From Date @*(App Entry)*@
+                                            </label>
+                                            <input type="text" name="FD" id="FD" class="datepicker inputshow
+                                        form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full
+                                        date-picker-input" value="" autocomplete="off" />
+                                        </div>
+                                        <div class="mb-4 md:w-1/1">
+                                            <label class="form-label">To Date @*(App Entry)*@</label>
+                                            <input type="text" name="TD" id="TD" class="datepicker inputshow
+                                                form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full
+                                                date-picker-input" value="" autocomplete="off" />
                                         </div>
                                         <div class="sm:w-1/2 mt-6">
                                             <button name="btnsubmit" id="btnsubmit"
@@ -229,9 +248,9 @@
                                     <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                                         <h5 class="text-center"><strong>For Hypertension suspect</strong> </h5>
                                         <h5 class="text-left">
-                                            <strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnooffupNCDMitraYesBP"></b> </strong><br />
+                                            @*<strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnooffupNCDMitraYesBP"></b> </strong><br />*@
                                             <strong class="fw">Total No. of suspects remaining for followup : <b class="sp" id="NotfupNoofMembersBPYes"></b> </strong><br />
-                                            <strong class="fw">Total No. of suspects Who visited health facility after followup : <b class="sp" id="TotalnooffupNCDMitraYesNoBP"></b> </strong><br />
+                                            @*<strong class="fw">Total No. of suspects Who visited health facility after followup : <b class="sp" id="TotalnooffupNCDMitraYesNoBP"></b> </strong><br />*@
                                             <strong class="fw">Total No. of suspects Who did not visited health facility even after 3 times of followup : <b class="sp" id="TotalNotnooffupNCDMitraYesNotBP"></b> </strong>
                                         </h5>
                                     </div>
@@ -241,9 +260,9 @@
                                     <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                                         <h5 class="text-center"><strong>For Diabetic suspect</strong> </h5>
                                         <h5 class="text-left">
-                                            <strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnoofNCDMitraYesBS"></b> </strong><br />
+                                            @*<strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnoofNCDMitraYesBS"></b> </strong><br />*@
                                             <strong class="fw">Total No. of suspects remaining for followup : <b class="sp" id="NotfupNotNoofMembersBSYes"></b> </strong><br />
-                                            <strong class="fw">Total No. of suspects Who visited health facility after followup : <b class="sp" id="TotalnoofNCDMitraBS"></b> </strong><br />
+                                            @*<strong class="fw">Total No. of suspects Who visited health facility after followup : <b class="sp" id="TotalnoofNCDMitraBS"></b> </strong><br />*@
                                             <strong class="fw">Total No. of suspects Who did not visited health facility even after 3 times of followup : <b class="sp" id="TotalNotnoofNCDMitraYesNoBS"></b> </strong>
                                         </h5>
                                     </div>
@@ -316,7 +335,7 @@
 
                             <div class="overflow-x-auto table-scroll">
                                 <div id="HYCheckBPPie"></div>
-                              
+
                             </div>
 
                         </div>
@@ -384,14 +403,56 @@
     <link href="~/Content/assets/css/Accordioncss.css" rel="stylesheet" />
 
     <script>
+        $(function () {
+            var dateFormat = "dd-M-yy",
+                from = $("#FD")
+                    .datepicker({
+                        defaultDate: "+1w",
+                        changeMonth: true,
+                        numberOfMonths: 1,
+                        dateFormat: 'dd-M-yy',
+                        //minDate: -3,
+                        //maxDate: "1w"
+                    })
+                    .on("change", function () {
+                        to.datepicker("option", "minDate", getDate(this));
+                    }),
+                to = $("#TD").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    numberOfMonths: 1,
+                    dateFormat: 'dd-M-yy',
+                    // minDate: -3,
+                    maxDate: "-1"
+
+                })
+                    .on("change", function () {
+                        from.datepicker("option", "maxDate", getDate(this));
+                    });
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    date = null;
+                }
+
+                return date;
+            }
+
+
+        });
         var startDate = "", endDate = "";
         $(function () {
             $("table").attr("width", "100%");
         });
         $(document).ready(function () {
-            BindBlock("BlockId", '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)', '1');
+            BindBlock("BlockId", '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)', '0');
 
-
+            $('#FD').val(moment().startOf('year').format('DD-MMM-YYYY'));
+            $('#TD').val(moment().subtract(1, 'days').endOf('day').format('DD-MMM-YYYY'));
+            startDate = moment($('#FD').val()).format('YYYY-MM-DD'); endDate = moment($('#TD').val()).format('YYYY-MM-DD');
             //$('select[name="BlockId"]').find('option').eq(2).attr("selected", true).change();
 
             //$.ajax({
@@ -405,33 +466,34 @@
             //});
             ////
 
-            var start = moment().startOf('year');//moment().subtract(29, 'days');
-            var end = moment().endOf('year');//moment();
-            startDate = start.format('YYYY-MM-DD');
-            endDate = end.format('YYYY-MM-DD');
+           // var start = moment().startOf('year');//moment().subtract(29, 'days');
+           //// var end = moment().subtract(1, 'days').endOf('day');//moment();
+           // var end = moment().endOf('year');//moment();
+           // startDate = start.format('YYYY-MM-DD');
+           // endDate = end.format('YYYY-MM-DD');
 
-            function cb(start, end) {
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                startDate = start.format('YYYY-MM-DD');
-                endDate = end.format('YYYY-MM-DD');
-                BindData(startDate, endDate);
-            }
+            //function cb(start, end) {
+            //    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            //    startDate = start.format('YYYY-MM-DD');
+            //    endDate = end.format('YYYY-MM-DD');
+            //    BindData(startDate, endDate);
+            //}
 
-            $('#reportrange').daterangepicker({
-                startDate: start,
-                endDate: end,
-                ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    'This Year': [moment().startOf('year'), moment().endOf('year')],
-                    'All Time': [moment('2024-01-01'), moment()]
-                }
-          /*  }, cb);*/
-            });
+          //  $('#reportrange').daterangepicker({
+          //      startDate: start,
+          //      endDate: end,
+          //      ranges: {
+          //          //'Today': [moment(), moment()],
+          //          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          //          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          //          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          //          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          //          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+          //          'This Year': [moment().startOf('year'), moment().subtract(1, 'days').endOf('day')],
+          //          //'All Time': [moment('2024-01-01'), moment()]
+          //      }
+          ///*  }, cb);*/
+          //  });
 
             //setTimeout(function () {
             //    if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
@@ -448,7 +510,7 @@
 
             $("#downloadbtnrawall").on("click", function () {
                 debugger;
-                var StartDate = start; var EndDate = end;
+                var StartDate = moment($('#FD').val()).format('YYYY-MM-DD'); var EndDate = moment($('#TD').val()).format('YYYY-MM-DD');
                 var downloadUrl = document.baseURI + 'Home/FollowUpSuspectedSummaryRawDataDownload?StartDate=' + StartDate + '&EndDate=' + EndDate;
                 window.location.href = downloadUrl;
             });
@@ -467,7 +529,8 @@
             TypeOfPatient = $("#TypeOfPatient").val() == "" || $("#TypeOfPatient").val() == null ? 0 : $("#TypeOfPatient").val();
             GenderId = $("#GenderId").val() == "" || $("#GenderId").val() == null ? '0' : $("#GenderId").val();
             Ageyrs = $("#Ageyrs").val() == "" || $("#Ageyrs").val() == null ? '0' : $("#Ageyrs").val();
-            console.log(startDate); console.log(endDate);
+            startDate = moment($('#FD').val()).format('YYYY-MM-DD'); endDate = moment($('#TD').val()).format('YYYY-MM-DD');
+           // console.log(startDate); console.log(endDate);
             setTimeout(function () {
                 $.ajax({
                     method: 'POST',
@@ -709,7 +772,7 @@
                     }
                 },
                 plotOptions: {
-                   
+
                     series: {
                         //dataLabels: {
                         //    enabled: true

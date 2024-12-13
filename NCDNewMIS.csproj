@@ -870,7 +870,9 @@
     <Folder Include="App_Data\" />
     <Folder Include="ImageUploads\" />
     <Folder Include="NCDRequestData\Archive\" />
+    <Folder Include="NCDRequestData\ErrorReg\" />
     <Folder Include="NCDRequestData\Error\" />
+    <Folder Include="NCDRequestData\RegData\" />
     <Folder Include="Uploads\" />
     <Folder Include="Views\Master\" />
   </ItemGroup>

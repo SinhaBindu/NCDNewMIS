@@ -279,7 +279,7 @@
                     //contentType: false,
                     //processData: false,
                     success: function (resp) {
-                        if (resp.StatusType == "success") {
+                        if (resp.IsSuccess) {
                             toastr.success("Success", resp.Message);
                             BindData();
                             //jQuery.event.trigger("ajaxStop");

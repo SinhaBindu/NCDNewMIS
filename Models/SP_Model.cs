@@ -144,6 +144,7 @@ namespace NCDNewMIS.Models
                 cmd.Parameters.AddWithValue("@RowAfected", 0);
                 DataTable dt = new DataTable();// sp.ExecuteDataSet().Tables[0];
                 da.SelectCommand = cmd;
+                da.Fill(dt);// sp.ExecuteDataSet().Tables[0];
                 da.Dispose();
                 cmd.Dispose();
                 if (con.State == ConnectionState.Open)

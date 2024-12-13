@@ -232,7 +232,8 @@
                                     <strong class="fw">Total number of Screening : <span class="sp" id="TotalNooofScreening"></span> </strong><br />
                                     <strong class="fw">Total number of Hypertension suspect : <span class="sp" id="TotalNoofSuspectBPYes"></span> </strong><br />
                                     <strong class="fw">Total number of Diabetic suspect : <span class="sp" id="TotalNoofSuspectBSYes"></span> </strong><br />
-                                    <strong class="fw">Comorbidity : <span class="sp" id="ComBothTotalNoofSuspectBPBS"></span> </strong>
+                                    <strong class="fw">Comorbidity : <span class="sp" id="ComBothTotalNoofSuspectBPBS"></span> </strong><br />
+                                    <strong class="fw" title="Total Unique Members Followup">Total Unique Members Followup : <span class="sp" id="TotalFollowupQMID"></span> </strong>
                                 </h5>
                             </div>
 
@@ -248,7 +249,7 @@
                                     <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                                         <h5 class="text-center"><strong>For Hypertension suspect</strong> </h5>
                                         <h5 class="text-left">
-                                            @*<strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnooffupNCDMitraYesBP"></b> </strong><br />*@
+                                            <strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnooffupNCDMitraYesBP"></b> </strong><br />
                                             <strong class="fw">Total No. of suspects remaining for followup : <b class="sp" id="NotfupNoofMembersBPYes"></b> </strong><br />
                                             @*<strong class="fw">Total No. of suspects Who visited health facility after followup : <b class="sp" id="TotalnooffupNCDMitraYesNoBP"></b> </strong><br />*@
                                             <strong class="fw">Total No. of suspects Who did not visited health facility even after 3 times of followup : <b class="sp" id="TotalNotnooffupNCDMitraYesNotBP"></b> </strong>
@@ -260,7 +261,7 @@
                                     <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
                                         <h5 class="text-center"><strong>For Diabetic suspect</strong> </h5>
                                         <h5 class="text-left">
-                                            @*<strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnoofNCDMitraYesBS"></b> </strong><br />*@
+                                            <strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnoofNCDMitraYesBS"></b> </strong><br />
                                             <strong class="fw">Total No. of suspects remaining for followup : <b class="sp" id="NotfupNotNoofMembersBSYes"></b> </strong><br />
                                             @*<strong class="fw">Total No. of suspects Who visited health facility after followup : <b class="sp" id="TotalnoofNCDMitraBS"></b> </strong><br />*@
                                             <strong class="fw">Total No. of suspects Who did not visited health facility even after 3 times of followup : <b class="sp" id="TotalNotnoofNCDMitraYesNoBS"></b> </strong>
@@ -324,7 +325,7 @@
 
                             <div class="overflow-x-auto table-scroll">
                                 <div id="HYPlaceVisitBPBar"></div>
-                                <p id="p-bpbar"></p>
+                                <p id="p-bpbar" style="font-size: 0.8rem !important;"></p>
                             </div>
 
                         </div>
@@ -358,7 +359,7 @@
 
                             <div class="overflow-x-auto table-scroll">
                                 <div id="HYPlaceVisitBSBar"></div>
-                                <p id="p-bsbar"></p>
+                                <p id="p-bsbar" style="font-size: 0.8rem !important;"></p>
                             </div>
 
                         </div>
@@ -577,6 +578,7 @@
                     $('#TotalSuspectedVisitCOMorb').html(format(Table1Total[0].TotalSuspectedVisitCOMorb));
                     $('#TotalFollowupCOMPercentage').html(format(Table1Total[0].TotalFollowupCOMPercentage));
 
+                    $('#TotalFollowupQMID').html(Table1Total[0].TotalFollowupQMID);
                 }
                 if (Table2 != null) {
                     var strp = '';
@@ -651,6 +653,7 @@
                     $('#TotalNoofSuspectBPYes').html(Table8Basic[0].TotalNoofSuspectBPYes);
                     $('#TotalNoofSuspectBSYes').html(Table8Basic[0].TotalNoofSuspectBSYes);
                     $('#ComBothTotalNoofSuspectBPBS').html(Table8Basic[0].ComBothTotalNoofSuspectBPBS);
+                   
 
                     //Follow-up - BP
                     $('#NotfupNoofMembersBPYes').html(Table8Basic[0].NotfupNoofMembersBPYes);

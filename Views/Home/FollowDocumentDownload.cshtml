@@ -214,7 +214,12 @@
             //$('#DistrictId').change(function () {
             //    BindBlock("BlockId", '', "0");
             //});
+              @*$('#FD').val('@DateTime.Now.Date.ToString("dd-MMM-yyyy")');//@DateTime.Now.Date.ToString("dd-MMM-yyyy")
+              $('#TD').val('@DateTime.Now.Date.ToString("dd-MMM-yyyy")');*@
+              $('#FD').val(moment('@DateTime.Now.AddDays(-2).ToString("dd-MMM-yyyy")').format('DD-MMM-YYYY'));
+              $('#TD').val(moment().subtract(1, 'days').endOf('day').format('DD-MMM-YYYY'));
             BindBlock("BlockId", '@Convert.ToInt32(Enums.Default1stValue.BlockId)', "0");
+
             debugger;
             if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
                 BindSubcenter("SCId", '', "1", "1", $('#BlockId').val(), 0, 0);

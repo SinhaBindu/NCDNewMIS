@@ -1,0 +1,1412 @@
+﻿@using System.Data
+@{
+    ViewBag.Title = "Follow-Ups Summary - ACT II";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "Follow-Ups Summary - ACT II";
+    ViewBag.SemiTitleLink = "/";
+    DateTime now = DateTime.Now;
+    var startDate = new DateTime(now.Year, now.Month, 1);
+    var endDate = startDate.AddMonths(1).AddDays(-1);
+    //DataSet ds = new DataSet();
+    //DataTable dt = new DataTable();
+    //DataTable dt1 = new DataTable();
+    //DataTable dt2 = new DataTable();
+    //DataTable dt3 = new DataTable();
+    //int TotalFollowUp = 0, TotalSuspectedVisitBP = 0, TotalSuspectedVisitBS = 0, TotalSuspectedVisitCOMorb = 0;
+    //if (Model != null)
+    //{
+    //    ds = Model;
+    //    if (ds.Tables.Count > 0)
+    //    {
+    //        if (ds.Tables[0].Rows.Count > 0)
+    //        {
+    //            dt = ds.Tables[0];
+    //            TotalFollowUp = Convert.ToInt32(dt.Rows[0][0]);
+    //            TotalSuspectedVisitBP = Convert.ToInt32(dt.Rows[0][1]);
+    //            TotalSuspectedVisitBS = Convert.ToInt32(dt.Rows[0][2]);
+    //            TotalSuspectedVisitCOMorb = Convert.ToInt32(dt.Rows[0][3]);
+    //        }
+    //        if (ds.Tables[1].Rows.Count > 0)
+    //        {
+    //            dt1 = ds.Tables[1];
+
+    //        }
+    //        if (ds.Tables[2].Rows.Count > 0)
+    //        {
+    //            dt2 = ds.Tables[2];
+    //        }
+    //        if (ds.Tables[3].Rows.Count > 0)
+    //        {
+    //            dt3 = ds.Tables[3];
+    //        }
+    //    }
+    //}
+}
+<style>
+    table {
+        text-indent: 0;
+        border-color: inherit;
+        border-collapse: separate !important;
+    }
+
+    .SizeFn {
+        font-size: 13px !important;
+    }
+
+    h6, .h6 {
+        font-size: 0.900rem !important;
+    }
+
+    .charts {
+        border: 2px solid #1d2d5b !important;
+    }
+
+    .row > * {
+        flex-shrink: 0;
+        width: 100%;
+        max-width: 100%;
+        padding-right: calc(var(--bs-gutter-x)* .2) !important;
+        padding-left: calc(var(--bs-gutter-x)* .2) !important;
+    }
+
+    .inputshow {
+        opacity: unset !important;
+        z-index: unset !important;
+    }
+</style>
+<style>
+    .loading {
+        position: fixed;
+        top: 0;
+        z-index: 900;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background: rgba(0,0,0,0.6);
+    }
+
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #2e93e6 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+
+    @@keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .is-hide {
+        display: none;
+    }
+
+    .fw {
+        font-weight: 200 !important;
+        font-size: 12px !important;
+    }
+
+    .sp {
+        font-weight: 700 !important;
+    }
+
+    .highcharts-legend-item {
+        display: none !important;
+    }
+
+    .bg-primarycl {
+        /*background-color: #eee !important;*/
+        /*background-color: #51568a !important;*/
+        background-color: #dbdef6 !important;
+    }
+
+    .tablemf {
+        width: 100%;
+        border-collapse: collapse; /* Ensures borders are merged */
+        font-size: 8px;
+    }
+
+        .tablemf th, td {
+            border: 1px solid black; /* Adds borders to cells */
+            padding: 2px; /* Adds padding for better spacing */
+            text-align: left; /* Aligns text to the left */
+        }
+
+        .tablemf td {
+            text-align: center; /* Aligns text to the left */
+        }
+
+        .tablemf th {
+            background-color: #f2f2f2; /* Adds a background color to headers */
+        }
+</style>
+<div id="spinner" class="loading" hidden>
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+    @*<img src="~/Content/assets/images/Loading_2.gif" alt="Loading" />*@
+</div>
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="page-titles dark:bg-[#1b1b1b] rounded-ss-md flex items-center justify-between relative  mb-[1.875rem] flex-wrap z-[1] py-[0.9375rem] sm:px-[0.975rem] px-[1.875rem] bg-white">
+            <h4>@ViewBag.Title</h4>
+            @*@Html.ActionLink("Raw Data Download", "FollowUpSuspectedSummaryRawDataDownload", "Home", new object { },
+                new { @id = "btnallRaw", @class = "mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300" })*@
+            @*<a href="javascript:void(0);" id="downloadbtnrawall" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[10px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">Raw Data Download</a>*@
+        </div>
+        <div class="row">
+            <div class="filter cm-content-box box-primary relative rounded-lg mb-4 bg-white dark:bg-[#1b1b1b]">
+                @*<div class="content-title flex justify-between items-center py-4 sm:px-6 px-[1.2rem] card-toggle-btn">
+                        <div class="cpa text-dark dark:text-white text-base font-semibold">
+                            <i class="fa-sharp fa-solid fa-filter mr-2"></i>Filter
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="expand SlideToolHeader inline-block"><i class="fal fa-angle-down font-['Font_Awesome_6_Free'] font-semibold text-[#c2c2c2] text-xl arrow"></i></a>
+                        </div>
+                    </div>*@
+
+
+                <div class="content form excerpt border-t border-b-color dark:border-[#ffffff1a]">
+                    <div class="p-[1.0rem] max-sm:p-4">
+
+                        <section class="accordion">
+                            <div class="tab">
+                                <input type="checkbox" name="accordionfilter-1" id="cbfilter1">
+                                <label for="cbfilter1" class="tab__label"><strong>Filter</strong> </label>
+                                <div class="tab__content">
+                                    <div class="border-all">
+
+                                        <div class="mb-4 md:w-1/2">
+                                            <label class="form-label">Block</label>
+                                            @Html.DropDownList("BlockId", new List<SelectListItem>(), "All", new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                        </div>
+                                        <div class="mb-4 md:w-1/2" style="display:none;">
+                                            <label class="form-label">Patient</label>
+                                            @Html.DropDownList("TypeOfPatient", NCDNewMIS.Models.CommonModel.GetTypeofPatient(), null, new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                        </div>
+                                        <div class="mb-4 md:w-1/1" style="display:none;">
+                                            <label class="form-label">Gender</label>
+                                            @Html.DropDownList("GenderId", NCDNewMIS.Models.CommonModel.GetGender(), null, new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                        </div>
+
+                                        <div class="mb-4 md:w-1/1" style="display:none;">
+                                            <label class="form-label">Age</label>
+                                            @Html.DropDownList("Ageyrs", NCDNewMIS.Models.CommonModel.GetAgeYrs(), null, new { @class = "form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full ", @required = "required" })
+                                        </div>
+                                        @*<div class="mb-4 md:w-1/2">
+                                                <div class="title"></div>
+                                                <div class="tools">
+                                                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; width: 100%">
+                                                        <i class="fa fa-calendar"></i>&nbsp;
+                                                        <span>January 1, 2024 - December 31, 2024</span> <i class="fa fa-caret-down"></i>
+                                                    </div>
+                                                </div>
+                                            </div>*@
+                                        <div class="mb-4 md:w-1/2">
+                                            <label class="form-label">
+                                                From Date (Sync Date) @*(App Entry)*@
+                                            </label>
+                                            <input type="text" name="FD" id="FD" class="datepicker inputshow
+                                        form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full
+                                        date-picker-input" value="" autocomplete="off" />
+                                        </div>
+                                        <div class="mb-4 md:w-1/2">
+                                            <label class="form-label">To Date (Sync Date) @*(App Entry)*@</label>
+                                            <input type="text" name="TD" id="TD" class="datepicker inputshow
+                                                form-control relative text-[13px] text-body-color h-[2.813rem] border border-b-color block rounded-lg py-1.5 px-3 duration-500  outline-none w-full
+                                                date-picker-input" value="" autocomplete="off" />
+                                        </div>
+                                        <div class="sm:w-1/2 mt-6">
+                                            <button name="btnsubmit" id="btnsubmit"
+                                                    class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[12px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-primary text-white bg-primary hover:bg-hover-primary hover:border-hover-primary duration-300">
+                                                Search
+                                            </button>
+                                            <a href="~/Home/FollowSuspSummaryNew" class="mr-1 mb-2 inline-block rounded-lg font-medium xl:text-[12px] text-xs leading-5 xl:py-[0.719rem] xl:px-[1.563rem] py-2.5 px-4 border border-warning bg-warning text-white hover:bg-[#ffa91a] duration-300"><i class="fa fa-refresh"></i></a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="w-full">
+            <div class="row">
+                <div class="xl:w-1/1 lg:w-1/1 col-xxl-12 sm:w-1/1">
+                    <div class="card text-black bg-primarycl">
+                        <table cellpadding="0" cellspacing="0" border="1">
+                            <tr>
+                                <td colspan="3" class="text-left">Total Screening : <strong id="TotalSC"></strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total number of Hypertensive suspect detected : <strong id="TotalSTHYBP"></strong></td>
+                                <td>First Timer Suspect : <strong id="TotalSTHYBPF"></strong></td>
+                                <td>Already Patient : <strong id="TotalSTHYBPA"></strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total number of Diabetic suspect detected : <strong id="TotalSTBS"></strong></td>
+                                <td>First Timer Suspect : <strong id="TotalSTBSF"></strong></td>
+                                <td>Already Patient : <strong id="TotalSTBSA"></strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-left">Total number of Co-morbidity suspect detected : <strong id="TotalSTBPBS"></strong></td>
+                                @*<td>First Timer Suspect : <strong id="TotalSTBPBSF"></strong></td>
+                                    <td>Already Patient : <strong id="TotalSTBPBSA"></strong></td>*@
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-capitalize text-center underline text-primary"><strong>Follow Up</strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Total unique number of suspects followup : <strong id="Totalfw"></strong></td>
+                            </tr>
+                            <tr>
+                                <td>Hypertensive Patient : <strong id="TotalfwBP"></strong></td>
+                                <td>First Timer Suspect : <strong id="TotalfwBPF"></strong></td>
+                                <td>Already Patient : <strong id="TotalfwBPA"></strong></td>
+                            </tr>
+                            <tr>
+                                <td>Diabetic Patient : <strong id="TotalfwBS"></strong></td>
+                                <td>First Timer Suspect : <strong id="TotalfwBSF"></strong></td>
+                                <td>Already Patient : <strong id="TotalfwBSA"></strong></td>
+                            </tr>
+                            @*<tr>
+                                    <td>Co-morbidity : <strong id=""></strong></td>
+                                    <td>First Timer Suspect : <strong id=""></strong></td>
+                                    <td>Already Patient : <strong id=""></strong></td>
+                                </tr>*@
+                            <!--Visited Facility-->
+                            <tr>
+                                <td>Total numbers of confirmed Hypertensive suspects after health facility visits : <strong id="TotalSTHYBPVisitHOP"></strong></td>
+                                <td>First Timer Suspect : <strong id="TotalSTHYBPVisitHOPF"></strong></td>
+                                <td>Already Patient : <strong id="TotalSTHYBPVisitHOPA"></strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total numbers of confirmed Diabetic patients after health facility : <strong id="TotalSTBSVisitHOP"></strong></td>
+                                <td>First Timer Suspect : <strong id="TotalSTHYBSVisitHOPF"></strong></td>
+                                <td>Already Patient : <strong id="TotalSTHYBSVisitHOPA"></strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-left">Total number of Co-morbidity suspect detected : <strong id="TotalSTBPBSHOP"></strong></td>
+                            </tr>
+                            <!--Remaining Not Follow Not Submitted Record in Follow Table-->
+                            <tr>
+                                <td colspan="3" class="text-capitalize text-center underline text-primary"><strong>Remaining Data</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total No.of suspects remaining for follow-up : <strong id="TotalRemaining"></strong></td>
+
+                            </tr>
+                            <tr>
+                                <td>Hypertensive Patient : <strong id="TotalRemainingBP"></strong></td>
+                                <td>First Timer Suspect : <strong id="TotalRemainingBPF"></strong></td>
+                                <td>Already Patient : <strong id="TotalRemainingBPA"></strong></td>
+
+                            </tr>
+                            <tr>
+                                <td>Diabetic Patient : <strong id="TotalRemainingBS"></strong></td>
+                                <td>First Timer Suspect : <strong id="TotalRemainingBSF"></strong></td>
+                                <td>Already Patient : <strong id="TotalRemainingBSA"></strong></td>
+                            </tr>
+                            <!--Follow Submitted Record in Follow Table Not Facility Visited 3 times Follow up (Question 4,3)-->
+                            <tr>
+                                <td colspan="3" class="text-capitalize text-center underline text-primary"><strong>Who did not visited health facility even after 3 times of followup </strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Total No.of Hypertensive suspects Who did not visited health facility even after 3 times of followup : <strong id="TotalNotVisitBP"></strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Total No.of Diabetic suspects Who did not visited health facility even after 3 times of followup : <strong id="TotalNotVisitBS"></strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <section class="accordion" style="display:none">
+                    <div class="tab">
+                        <input type="checkbox" name="accordion-1" id="cb1">
+                        <label for="cb1" class="tab__label"><strong>Total Screening</strong> </label>
+                        <div class="tab__content">
+                            <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px; margin:1% !important;">
+                                <h5 class="text-left">
+                                    <strong class="fw">Total number of Screening : <span class="sp" id="TotalNooofScreening"></span> </strong><br />
+                                    <div hidden id="totalHdval">
+                                        <strong class="">Total number of Screening Hypertension & Diabetic Value : <span class="sp" id="TotalNooofScreeningHVal"></span>  & <span class="sp" id="TotalNooofScreeningDVal"></span> </strong><br />
+                                    </div>
+                                    <strong class="fw">Total number of Hypertension suspect : <span class="sp" id="TotalNoofSuspectBPYes"></span> </strong><br />
+                                    <strong class="fw">Total number of Diabetic suspect : <span class="sp" id="TotalNoofSuspectBSYes"></span> </strong><br />
+                                    <strong class="fw">Comorbidity : <span class="sp" id="ComBothTotalNoofSuspectBPBS"></span> </strong><br />
+                                    <strong class="fw" title="Total Unique Members Followup">Total Unique Members Followup : <span class="sp" id="TotalFollowupQMID"></span> </strong><br />
+                                    <div hidden id="totalfwHdval">
+                                        <strong class="fw" title="Total Unique Members Followup Hypertension & Diabetic Value">Total Unique Members Followup Hypertension & Diabetic Value : <span class="sp" id="TotalFollowupQMIDHval"></span> &  <span class="sp" id="TotalFollowupQMIDDval"></span> </strong><br />
+                                    </div>
+                                </h5>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab">
+                        <input type="checkbox" name="accordion-1" id="cb2">
+                        <label for="cb2" class="tab__label"><strong>Followup Visit For Hypertension &amp; Diabetic Suspect</strong></label>
+                        <div class="tab__content">
+                            <div class="row">
+
+                                <div class="xl:w-1/2 w-full ">
+                                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                                        <h5 class="text-center"><strong>For Hypertension suspect</strong> </h5>
+                                        <h5 class="text-left">
+                                            <strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnooffupNCDMitraYesBP"></b> </strong><br />
+                                            <strong class="fw">Total No. of suspects remaining for followup : <b class="sp" id="NotfupNoofMembersBPYes"></b> </strong><br />
+                                            @*<strong class="fw">Total No. of suspects Who visited health facility after followup : <b class="sp" id="TotalnooffupNCDMitraYesNoBP"></b> </strong><br />*@
+                                            <strong class="fw">Total No. of suspects Who did not visited health facility even after 3 times of followup : <b class="sp" id="TotalNotnooffupNCDMitraYesNotBP"></b> </strong>
+                                        </h5>
+                                    </div>
+                                </div>
+
+                                <div class="xl:w-1/2 w-full">
+                                    <div class="bg-white dark:bg-[#1b1b1b]" style="padding:20px">
+                                        <h5 class="text-center"><strong>For Diabetic suspect</strong> </h5>
+                                        <h5 class="text-left">
+                                            <strong class="fw">Total No. of suspects available for followup : <b class="sp" id="TotalnoofNCDMitraYesBS"></b> </strong><br />
+                                            <strong class="fw">Total No. of suspects remaining for followup : <b class="sp" id="NotfupNotNoofMembersBSYes"></b> </strong><br />
+                                            @*<strong class="fw">Total No. of suspects Who visited health facility after followup : <b class="sp" id="TotalnoofNCDMitraBS"></b> </strong><br />*@
+                                            <strong class="fw">Total No. of suspects Who did not visited health facility even after 3 times of followup : <b class="sp" id="TotalNotnoofNCDMitraYesNoBS"></b> </strong>
+                                        </h5>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            <br />
+
+            <div class="row">
+
+                <div class="xl:w-1/3 w-full " style="padding-bottom:5px; display:none">
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b] SizeFn" style="padding:5px;">
+                            <h6 class="text-center">
+                                <strong class="text-primary">Details Of Follow-Ups: Hypertensive Suspects</strong>
+                            </h6>
+                            <div class="overflow-x-auto table-scroll SizeFn" style="">
+                                <div>Number of suspects followed-up : <strong id="TotalFollowupHP"></strong></div>
+                                <div>Number of suspects visited Health Facility : <strong id="TotalSuspectedVisitHP"></strong> &nbsp; || <strong id="TotalFollowupHPPercentage"></strong> (%) </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="xl:w-1/3 w-full " style="padding-bottom: 5px; display: none">
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b] SizeFn" style="padding:5px">
+                            <h6 class="text-center">
+                                <strong class="text-primary">Detail of follow-ups: Diabetic suspects</strong>
+                            </h6>
+                            <div class="overflow-x-auto table-scroll SizeFn">
+                                <div>Number of suspects followed-up : <strong id="TotalFollowupBS"></strong></div>
+                                <div>Number of suspects visited Health Facility :  <strong id="TotalSuspectedVisitBS" style="padding-left:1%;"></strong> &nbsp; || <strong id="TotalFollowupBSPercentage"></strong> (%) </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="xl:w-1/3 w-full " style="padding-bottom: 5px; display: none">
+                    <div class="xl:w-1/1 w-full ">
+                        <div class="bg-white dark:bg-[#1b1b1b] SizeFn" style="padding:5px">
+                            <h5 class="text-center">
+                                <strong class="text-primary">Detail of follow-ups: Comorbidity</strong>
+                            </h5>
+                            <div class="overflow-x-auto table-scroll">
+                                <div>Number of suspects followed-up : <strong id="TotalFollowupCOM"></strong></div>
+                                <div>Number of suspects visited Health Facility :  <strong id="TotalSuspectedVisitCOMorb"></strong> &nbsp; || <strong id="TotalFollowupCOMPercentage"></strong> (%) </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="xl:w-1/2 w-full ">
+                    <div class="xl:w-1/1 w-full charts">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYPlaceVisitBPBar"></div>
+                                <p id="p-bpbar" style="font-size: 0.8rem !important;"></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="xl:w-1/1 w-full charts">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYCheckBPPie"></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="xl:w-1/1 w-full charts">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYMedicationBPPie"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="xl:w-1/2 w-full ">
+                    <div class="xl:w-1/1 w-full charts">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYPlaceVisitBSBar"></div>
+                                <p id="p-bsbar" style="font-size: 0.8rem !important;"></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="xl:w-1/1 w-full charts">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYCheckBSPie"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="xl:w-1/1 w-full charts">
+                        <div class="bg-white dark:bg-[#1b1b1b]" style="padding:5px">
+
+                            <div class="overflow-x-auto table-scroll">
+                                <div id="HYMedicationBSPie"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <br />
+            <!--Table Male & Female Data-->
+            <div class="row" style="overflow:auto;">
+                @*<div class="xl:w-1/1 lg:w-1/1 col-xxl-12 sm:w-1/1">*@
+                <div class="xl:w-1/3 md:w-1/2">
+                    <div class="card text-black bg-primarycl">
+
+                        <table cellpadding="0" cellspacing="0" border="1" class="tablemf">
+                            <tr><th colspan="8" class="text-center"><strong>Total</strong></th></tr>
+                            <tr>
+                                <th rowspan="2" class="text-left">Screening setails</th>
+                                <th rowspan="2" class="text-center">Total</th>
+                                <th colspan="3" class="text-center">Male</th>
+                                <th colspan="3" class="text-center">Female</th>
+                            </tr>
+                            <tr>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of  Screening</td>
+                                <td id="TotalSCreen"></td>
+                                <td id="TGM30_39yrs"></td>
+                                <td id="TGM40_49yrs"></td>
+                                <td id="TGM50yrs"></td>
+                                <td id="TGF30_39yrs"></td>
+                                <td id="TGF40_49yrs"></td>
+                                <td id="TGF50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Hypertension suspect</td>
+                                <td id="TotalSCBP"></td>
+                                <td id="TGMBP30_39yrs"></td>
+                                <td id="TGMBP40_49yrs"></td>
+                                <td id="TGMBP50yrs"></td>
+                                <td id="TGFBP30_39yrs"></td>
+                                <td id="TGFBP40_49yrs"></td>
+                                <td id="TGFBP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Diabetic suspect</td>
+                                <td id="TotalSCBS"></td>
+                                <td id="TGMBS30_39yrs"></td>
+                                <td id="TGMBS40_49yrs"></td>
+                                <td id="TGMBS50yrs"></td>
+                                <td id="TGFBS30_39yrs"></td>
+                                <td id="TGFBS40_49yrs"></td>
+                                <td id="TGFBS50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Comorbidity</td>
+                                <td id="TotalSCBPBS"></td>
+                                <td id="TGMBPBS30_39yrs"></td>
+                                <td id="TGMBPBS40_49yrs"></td>
+                                <td id="TGMBPBS50yrs"></td>
+                                <td id="TGFBPBS30_39yrs"></td>
+                                <td id="TGFBPBS40_49yrs"></td>
+                                <td id="TGFBPBS50yrs"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <!--Table Already Patient Data-->
+                <div class="xl:w-1/3 md:w-1/2">
+                    <div class="card text-black bg-primarycl">
+
+                        <table cellpadding="0" cellspacing="0" border="1" class="tablemf">
+                            <tr><th colspan="8" class="text-center"><strong>Already Patient</strong></th></tr>
+                            <tr>
+                                <th rowspan="2" class="text-left">Screening setails</th>
+                                <th rowspan="2" class="text-center">Total</th>
+                                <th colspan="3" class="text-center">Male</th>
+                                <th colspan="3" class="text-center">Female</th>
+                            </tr>
+                            <tr>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of  Screening</td>
+                                <td id="TotalSCAP"></td>
+                                <td id="TGMAP30_39yrs"></td>
+                                <td id="TGMAP40_49yrs"></td>
+                                <td id="TGMAP50yrs"></td>
+                                <td id="TGFAP30_39yrs"></td>
+                                <td id="TGFAP40_49yrs"></td>
+                                <td id="TGFAP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Hypertension suspect</td>
+                                <td id="TotalSCBPAP"></td>
+                                <td id="TGMBPAP30_39yrs"></td>
+                                <td id="TGMBPAP40_49yrs"></td>
+                                <td id="TGMBPAP50yrs"></td>
+                                <td id="TGFBPAP30_39yrs"></td>
+                                <td id="TGFBPAP40_49yrs"></td>
+                                <td id="TGFBPAP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Diabetic suspect</td>
+                                <td id="TotalSCBSAP"></td>
+                                <td id="TGMBSAP30_39yrs"></td>
+                                <td id="TGMBSAP40_49yrs"></td>
+                                <td id="TGMBSAP50yrs"></td>
+                                <td id="TGFBSAP30_39yrs"></td>
+                                <td id="TGFBSAP40_49yrs"></td>
+                                <td id="TGFBSAP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Comorbidity</td>
+                                <td id="TotalSCBPBSAP"></td>
+                                <td id="TGMBPBSAP30_39yrs"></td>
+                                <td id="TGMBPBSAP40_49yrs"></td>
+                                <td id="TGMBPBSAP50yrs"></td>
+                                <td id="TGFBPBSAP30_39yrs"></td>
+                                <td id="TGFBPBSAP40_49yrs"></td>
+                                <td id="TGFBPBSAP50yrs"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <!--Table First Timer patient Data-->
+                <div class="xl:w-1/3 md:w-1/2">
+                    <div class="card text-black bg-primarycl">
+
+                        <table cellpadding="0" cellspacing="0" border="1" class="tablemf">
+                            <tr><th colspan="8" class="text-center"><strong>First Timer Patient</strong></th></tr>
+                            <tr>
+                                <th rowspan="2" class="text-left">Screening setails</th>
+                                <th rowspan="2" class="text-center">Total</th>
+                                <th colspan="3" class="text-center">Male</th>
+                                <th colspan="3" class="text-center">Female</th>
+                            </tr>
+                            <tr>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of  Screening</td>
+                                <td id="TotalSCFP"></td>
+                                <td id="TGMFP30_39yrs"></td>
+                                <td id="TGMFP40_49yrs"></td>
+                                <td id="TGMFP50yrs"></td>
+                                <td id="TGFFP30_39yrs"></td>
+                                <td id="TGFFP40_49yrs"></td>
+                                <td id="TGFFP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Hypertension suspect</td>
+                                <td id="TotalSCBPFP"></td>
+                                <td id="TGMBPFP30_39yrs"></td>
+                                <td id="TGMBPFP40_49yrs"></td>
+                                <td id="TGMBPFP50yrs"></td>
+                                <td id="TGFBPFP30_39yrs"></td>
+                                <td id="TGFBPFP40_49yrs"></td>
+                                <td id="TGFBPFP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Diabetic suspect</td>
+                                <td id="TotalSCBSFP"></td>
+                                <td id="TGMBSFP30_39yrs"></td>
+                                <td id="TGMBSFP40_49yrs"></td>
+                                <td id="TGMBSFP50yrs"></td>
+                                <td id="TGFBSFP30_39yrs"></td>
+                                <td id="TGFBSFP40_49yrs"></td>
+                                <td id="TGFBSFP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Comorbidity</td>
+                                <td id="TotalSCBPBSFP"></td>
+                                <td id="TGMBPBSFP30_39yrs"></td>
+                                <td id="TGMBPBSFP40_49yrs"></td>
+                                <td id="TGMBPBSFP50yrs"></td>
+                                <td id="TGFBPBSFP30_39yrs"></td>
+                                <td id="TGFBPBSFP40_49yrs"></td>
+                                <td id="TGFBPBSFP50yrs"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="~/Scripts/JS/Master.js"></script>
+
+    <link href="~/Content/assets/css/Accordioncss.css" rel="stylesheet" />
+
+    <script>
+        $(function () {
+            var dateFormat = "dd-M-yy",
+                from = $("#FD")
+                    .datepicker({
+                        defaultDate: "+1w",
+                        changeMonth: true,
+                        numberOfMonths: 1,
+                        dateFormat: 'dd-M-yy',
+                        //minDate: -3,
+                        //maxDate: "1w"
+                    })
+                    .on("change", function () {
+                        to.datepicker("option", "minDate", getDate(this));
+                    }),
+                to = $("#TD").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    numberOfMonths: 1,
+                    dateFormat: 'dd-M-yy',
+                    // minDate: -3,
+                    maxDate: "-1"
+
+                })
+                    .on("change", function () {
+                        from.datepicker("option", "maxDate", getDate(this));
+                    });
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    date = null;
+                }
+
+                return date;
+            }
+
+
+        });
+        var startDate = "", endDate = "";
+        $(function () {
+            $("table").attr("width", "100%");
+        });
+        $(document).ready(function () {
+            BindBlock("BlockId", '@Convert.ToInt16(NCDNewMIS.Models.Enums.Default1stValue.BlockId)', '0');
+
+            //$('#FD').val(moment().startOf('year').format('DD-MMM-YYYY'));
+            $('#FD').val(moment('01-Jan-2024').format('DD-MMM-YYYY'));
+            $('#TD').val(moment().subtract(1, 'days').endOf('day').format('DD-MMM-YYYY'));
+            startDate = moment($('#FD').val()).format('YYYY-MM-DD'); endDate = moment($('#TD').val()).format('YYYY-MM-DD');
+            //$('select[name="BlockId"]').find('option').eq(2).attr("selected", true).change();
+
+            //$.ajax({
+            //    method: 'POST',
+            //    url: document.baseURI + '/Home/GetFollowupDataSummmary',
+            //    data: { 'DateRange': $('#reportrange').val() },
+            //    contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    success: onsucess,
+            //    error: onerror
+            //});
+            ////
+
+           // var start = moment().startOf('year');//moment().subtract(29, 'days');
+           //// var end = moment().subtract(1, 'days').endOf('day');//moment();
+           // var end = moment().endOf('year');//moment();
+           // startDate = start.format('YYYY-MM-DD');
+           // endDate = end.format('YYYY-MM-DD');
+
+            //function cb(start, end) {
+            //    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            //    startDate = start.format('YYYY-MM-DD');
+            //    endDate = end.format('YYYY-MM-DD');
+            //    BindData(startDate, endDate);
+            //}
+
+          //  $('#reportrange').daterangepicker({
+          //      startDate: start,
+          //      endDate: end,
+          //      ranges: {
+          //          //'Today': [moment(), moment()],
+          //          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          //          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          //          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          //          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          //          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+          //          'This Year': [moment().startOf('year'), moment().subtract(1, 'days').endOf('day')],
+          //          //'All Time': [moment('2024-01-01'), moment()]
+          //      }
+          ///*  }, cb);*/
+          //  });
+
+            //setTimeout(function () {
+            //    if ($('#BlockId').val() != '' && $('#BlockId').val() != '0' && $('#BlockId').val() != null) {
+            //        // BindSubcenter("SCId", '', "1", "1", $('#BlockId').val(), 0, 0,);
+            //        //$('select[name="SCId"]').find('option').eq(2).attr("selected", true).change();
+            //       // cb(start, end);
+            //    }
+            //}, 200);
+
+            //$('#BlockId').change(function () {
+            //    $('#spinner').show();
+            //    cb(start, end);
+            //});
+
+            $("#downloadbtnrawall").on("click", function () {
+                debugger;
+                var StartDate = moment($('#FD').val()).format('YYYY-MM-DD'); var EndDate = moment($('#TD').val()).format('YYYY-MM-DD');
+                var downloadUrl = document.baseURI + 'Home/FollowUpSuspectedSummaryRawDataDownload?StartDate=' + StartDate + '&EndDate=' + EndDate;
+                window.location.href = downloadUrl;
+            });
+
+            BindData(startDate, endDate);
+            $("#btnsubmit").click(function (e) {
+                e.preventDefault();
+                BindData(startDate, endDate);
+            });
+
+        });
+        function BindData(startDate, endDate) {
+            debugger;
+            $('#spinner').show();
+            BlockId = $("#BlockId").val() == "" || $("#BlockId").val() == null ? '0' : $("#BlockId").val();
+            TypeOfPatient = $("#TypeOfPatient").val() == "" || $("#TypeOfPatient").val() == null ? 0 : $("#TypeOfPatient").val();
+            GenderId = $("#GenderId").val() == "" || $("#GenderId").val() == null ? '0' : $("#GenderId").val();
+            Ageyrs = $("#Ageyrs").val() == "" || $("#Ageyrs").val() == null ? '0' : $("#Ageyrs").val();
+            startDate = moment($('#FD').val()).format('YYYY-MM-DD'); endDate = moment($('#TD').val()).format('YYYY-MM-DD');
+           // console.log(startDate); console.log(endDate);
+            setTimeout(function () {
+                $.ajax({
+                    method: 'POST',
+                    url: document.baseURI + '/Home/GetFollowupSummmaryNew',
+                    data: JSON.stringify({ 'BlockId': BlockId, 'StartDate': startDate, 'EndDate': endDate, 'TypeOfPatient': TypeOfPatient, 'GenderId': GenderId, 'Ageyrs': Ageyrs }), // Convert data to JSON string
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    success: onsucess,
+                    error: onerror
+                })
+            },0);
+
+        }
+
+        function onsucess(resp) {
+            debugger;
+            $('#spinner').hide();
+            var categories = []; var dataS = []; var dataSplinePresent = []; GandTotal = 0;
+            if (resp.IsSuccess) {
+
+
+                var DataList = JSON.parse(resp.Data);
+                var Table1Total = (DataList.Table);
+                var Table2 = (DataList.Table1);
+                var Table3 = (DataList.Table2);
+                var Table4 = (DataList.Table3);
+                var Table5 = (DataList.Table4);
+                var Table6 = (DataList.Table5);
+                var Table7 = (DataList.Table6);
+
+                var Table8Basic = (DataList.Table7);//Basic Total
+
+                if (Table1Total != null) {
+                    $('#TotalSC').html(format(Table1Total[0].TotalSC));
+                    $('#TotalSTHYBP').html(format(Table1Total[0].TotalSTHYBP));
+                    $('#TotalSTBS').html(format(Table1Total[0].TotalSTBS));
+                    $('#TotalSTBPBS').html(format(Table1Total[0].TotalSTBPBS));
+                    $('#TotalSTHYBPF').html(format(Table1Total[0].TotalSTHYBPF));
+                    $('#TotalSTHYBPA').html(format(Table1Total[0].TotalSTHYBPA));
+                    $('#TotalSTBSF').html(format(Table1Total[0].TotalSTBSF));
+                    $('#TotalSTBSA').html(format(Table1Total[0].TotalSTBSA));
+
+                    $('#Totalfw').html(format(Table1Total[0].Totalfw));
+                    $('#TotalfwBP').html(format(Table1Total[0].TotalfwBP));
+                    $('#TotalfwBS').html(format(Table1Total[0].TotalfwBS));
+                    $('#TotalfwBPF').html(format(Table1Total[0].TotalfwBPF));
+                    $('#TotalfwBPA').html(format(Table1Total[0].TotalfwBPA));
+                    $('#TotalfwBSF').html(format(Table1Total[0].TotalfwBSF));
+                    $('#TotalfwBSA').html(format(Table1Total[0].TotalfwBSA));
+                    $('#TotalSTHYBPVisitHOP').html(format(Table1Total[0].TotalSTHYBPVisitHOP));
+                    $('#TotalSTBSVisitHOP').html(format(Table1Total[0].TotalSTBSVisitHOP));
+                    $('#TotalSTBPBSHOP').html(format(Table1Total[0].TotalSTBPBSHOP));
+                    $('#TotalSTHYBPVisitHOPF').html(format(Table1Total[0].TotalSTHYBPVisitHOPF));
+                    $('#TotalSTHYBPVisitHOPA').html(format(Table1Total[0].TotalSTHYBPVisitHOPA));
+                    $('#TotalSTBSVisitHOPF').html(format(Table1Total[0].TotalSTBSVisitHOPF));
+                    $('#TotalSTBSVisitHOPA').html(format(Table1Total[0].TotalSTBSVisitHOPA));
+                    $('#TotalRemaining').html(format(Table1Total[0].TotalRemaining));
+                    $('#TotalRemainingBP').html(format(Table1Total[0].TotalRemainingBP));
+                    $('#TotalRemainingBS').html(format(Table1Total[0].TotalRemainingBS));
+                    $('#TotalRemainingBPF').html(format(Table1Total[0].TotalRemainingBPF));
+                    $('#TotalRemainingBPA').html(format(Table1Total[0].TotalRemainingBPA));
+                    $('#TotalRemainingBSF').html(format(Table1Total[0].TotalRemainingBSF));
+                    $('#TotalRemainingBSA').html(format(Table1Total[0].TotalRemainingBSA));
+                    $('#TotalNotVisitBP').html(format(Table1Total[0].TotalNotVisitBP));
+                    $('#TotalNotVisitBS').html(format(Table1Total[0].TotalNotVisitBS));
+                    $('#TotalSC').html(format(Table1Total[0].TotalSC));
+
+                    //$('#TotalFollowupHP').html(format(Table1Total[0].TotalFollowupHP));
+                    //$('#TotalSuspectedVisitHP').html(format(Table1Total[0].TotalSuspectedVisitHP));
+                    //$('#TotalFollowupHPPercentage').html(format(Table1Total[0].TotalFollowupHPPercentage));
+
+                    //$('#TotalFollowupBS').html(format(Table1Total[0].TotalFollowupBS));
+                    //$('#TotalSuspectedVisitBS').html(format(Table1Total[0].TotalSuspectedVisitBS));
+                    //$('#TotalFollowupBSPercentage').html(format(Table1Total[0].TotalFollowupBSPercentage));
+
+                    //$('#TotalFollowupCOM').html(format(Table1Total[0].TotalFollowupCOM));
+                    //$('#TotalSuspectedVisitCOMorb').html(format(Table1Total[0].TotalSuspectedVisitCOMorb));
+                    //$('#TotalFollowupCOMPercentage').html(format(Table1Total[0].TotalFollowupCOMPercentage));
+
+                    ////follow up
+                    //$('#TotalFollowupQMID').html(Table1Total[0].TotalFollowupQMID);
+
+                    //$('#totalfwHdval').hide(); $('#totalfwHdval').removeClass('fw');
+                    //$('#TotalFollowupQMIDHval').html(''); $('#TotalFollowupQMIDDval').html('');
+                    //if ($('#TypeOfPatient').val() != '' && $('#TypeOfPatient').val() != '0' && $('#TypeOfPatient') != null) {
+                    //    //follow up
+                    //    $('#totalfwHdval').show(); $('#totalfwHdval').addClass('fw');
+                    //    $('#TotalFollowupQMIDHval').html(Table1Total[0].TotalFollowupQMIDHval);
+                    //    $('#TotalFollowupQMIDDval').html(Table1Total[0].TotalFollowupQMIDDval);
+                    //}
+
+                }
+                if (Table2 != null) {
+                    var strp = '';
+                    for (var i = 0; i < Table2.length; i++) {
+                        categories.push(Table2[i].ShortLabel);
+                        dataS.push({ lblname: Table2[i].Label, y: Table2[i].NoofPlaceofvisitBP, percentage: Table2[i].Percentage });
+                        dataSplinePresent.push(Table2[i].Percentage);
+                        strp += strp == '' ? Table2[i].Label + ' (' + Table2[i].ShortLabel + ')' : ' , ' + Table2[i].Label + ' (' + Table2[i].ShortLabel + ')';
+                    }
+                    $('#p-bpbar').html(strp);
+                    BindBar('HYPlaceVisitBPBar', categories, dataS, dataSplinePresent, 'Place of visit: Hypertensive Suspects', "#F06F6A", "#9f3575");
+                }
+                if (Table3 != null) {
+                    categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                    for (var i = 0; i < Table3.length; i++) {
+                        GandTotal += Table3[i].TestingresultBP;
+                        categories.push(Table3[i].Label);
+                        dataS.push({ name: Table3[i].Label, d: format(Table3[i].TestingresultBP), y: Table3[i].Percentage });
+                        dataSplinePresent.push(Table3[i].Percentage);
+                    }
+                    BindPie('HYCheckBPPie', categories, dataS, dataSplinePresent, 'Testing result: Hypertensive Suspects', 'Testing result', '<b> Toal no. of Suspects visited Health Facility: ' + format(GandTotal) + '</b>');
+
+                }
+                if (Table4 != null) {
+                    categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                    for (var i = 0; i < Table4.length; i++) {
+                        GandTotal += Table4[i].MedicationBP;
+                        categories.push(Table4[i].Label);
+                        dataS.push({ name: Table4[i].Label, d: format(Table4[i].MedicationBP), y: Table4[i].Percentage });
+                        dataSplinePresent.push(Table4[i].Percentage);
+                    }
+                    BindPie('HYMedicationBPPie', categories, dataS, dataSplinePresent, 'Medication status: Hypertensive Suspects', 'Medication status', '<b> Total no. of Patients: ' + format(GandTotal) + '</b>');
+                }
+                //Started FOR Diabetic suspects
+                if (Table5 != null) {
+                    categories = []; dataS = []; dataSplinePresent = [];
+                    var strp = '';
+                    for (var i = 0; i < Table5.length; i++) {
+                        categories.push(Table5[i].ShortLabel);
+                        // dataS.push(Table5[i].NoofPlaceofvisitBS);
+                        dataS.push({ lblname: Table5[i].Label, y: Table5[i].NoofPlaceofvisitBS, percentage: Table5[i].Percentage });
+                        dataSplinePresent.push(Table5[i].Percentage);
+                        strp += strp == '' ? Table5[i].Label + ' (' + Table5[i].ShortLabel + ')' : ' , ' + Table5[i].Label + ' (' + Table5[i].ShortLabel + ')';
+                    }
+                    $('#p-bsbar').html(strp);
+                    BindBar('HYPlaceVisitBSBar', categories, dataS, dataSplinePresent, 'Place of visit: Diabetic suspects', "#eb9532", '#9746af');
+                }
+                if (Table6 != null) {
+                    categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                    for (var i = 0; i < Table6.length; i++) {
+                        GandTotal += Table6[i].TestingresultBS;
+                        categories.push(Table6[i].Label);
+                        dataS.push({ name: Table6[i].Label, d: format(Table6[i].TestingresultBS), y: Table6[i].Percentage });
+                        dataSplinePresent.push(Table6[i].Percentage);
+                    }
+                    BindPie('HYCheckBSPie', categories, dataS, dataSplinePresent, 'Testing result: Diabetic suspects', 'Testing result', '<b> Toal no. of Suspects visited Health Facility: ' + format(GandTotal) + '</b>', ['#da5c2d', '#DDDF00', '#2f628a', '#24CBE5', '#914518', '#489631']);
+                }
+                if (Table7 != null) {
+                    categories = []; dataS = []; dataSplinePresent = []; GandTotal = 0;
+                    for (var i = 0; i < Table7.length; i++) {
+                        GandTotal += Table7[i].MedicationBS;
+                        categories.push(Table7[i].Label);
+                        dataS.push({ name: Table7[i].Label, d: format(Table7[i].MedicationBS), y: Table7[i].Percentage });
+                        dataSplinePresent.push(Table7[i].Percentage);
+                    }
+                    BindPie('HYMedicationBSPie', categories, dataS, dataSplinePresent, 'Medication status: Diabetic suspects', 'Medication status', '<b> Total no. of Patients: ' + format(GandTotal) + '</b>');
+                }
+
+                //Basic Total
+                if (Table8Basic != null && Table8Basic != undefined) {
+                    //TOTAL MALE && FEMALE AND AGE WISE DATA 30-39YRS,40-49YRS,>=50YRS
+                    $('#TotalSCreen').html(format(Table8Basic[0].TotalSCreen));
+                    $('#TGM30_39yrs').html(format(Table8Basic[0].TGM30_39yrs));
+                    $('#TGM40_49yrs').html(format(Table8Basic[0].TGM40_49yrs));
+                    $('#TGM50yrs').html(format(Table8Basic[0].TGM50yrs));
+                    $('#TGF30_39yrs').html(format(Table8Basic[0].TGF30_39yrs));
+                    $('#TGF40_49yrs').html(format(Table8Basic[0].TGF40_49yrs));
+                    $('#TGF50yrs').html(format(Table8Basic[0].TGF50yrs));
+                    $('#TotalSCBP').html(format(Table8Basic[0].TotalSCBP));
+                    $('#TGMBP30_39yrs').html(format(Table8Basic[0].TGMBP30_39yrs));
+                    $('#TGMBP40_49yrs').html(format(Table8Basic[0].TGMBP40_49yrs));
+                    $('#TGMBP50yrs').html(format(Table8Basic[0].TGMBP50yrs));
+                    $('#TGFBP30_39yrs').html(format(Table8Basic[0].TGFBP30_39yrs));
+                    $('#TGFBP40_49yrs').html(format(Table8Basic[0].TGFBP40_49yrs));
+                    $('#TGFBP50yrs').html(format(Table8Basic[0].TGFBP50yrs));
+                    $('#TotalSCBS').html(format(Table8Basic[0].TotalSCBS));
+                    $('#TGMBS30_39yrs').html(format(Table8Basic[0].TGMBS30_39yrs));
+                    $('#TGMBS40_49yrs').html(format(Table8Basic[0].TGMBS40_49yrs));
+                    $('#TGMBS50yrs').html(format(Table8Basic[0].TGMBS50yrs));
+                    $('#TGFBS30_39yrs').html(format(Table8Basic[0].TGFBS30_39yrs));
+                    $('#TGFBS40_49yrs').html(format(Table8Basic[0].TGFBS40_49yrs));
+                    $('#TGFBS50yrs').html(format(Table8Basic[0].TGFBS50yrs));
+                    $('#TotalSCBPBS').html(format(Table8Basic[0].TotalSCBPBS));
+                    $('#TGMBPBS30_39yrs').html(format(Table8Basic[0].TGMBPBS30_39yrs));
+                    $('#TGMBPBS40_49yrs').html(format(Table8Basic[0].TGMBPBS40_49yrs));
+                    $('#TGMBPBS50yrs').html(format(Table8Basic[0].TGMBPBS50yrs));
+                    $('#TGFBPBS30_39yrs').html(format(Table8Basic[0].TGFBPBS30_39yrs));
+                    $('#TGFBPBS40_49yrs').html(format(Table8Basic[0].TGFBPBS40_49yrs));
+                    $('#TGFBPBS50yrs').html(format(Table8Basic[0].TGFBPBS50yrs));
+                    //Already Patient
+                    $('#TotalSCAP').html(format(Table8Basic[0].TotalSCAP));
+                    $('#TGMAP30_39yrs').html(format(Table8Basic[0].TGMAP30_39yrs));
+                    $('#TGMAP40_49yrs').html(format(Table8Basic[0].TGMAP40_49yrs));
+                    $('#TGMAP50yrs').html(format(Table8Basic[0].TGMAP50yrs));
+                    $('#TGFAP30_39yrs').html(format(Table8Basic[0].TGFAP30_39yrs));
+                    $('#TGFAP40_49yrs').html(format(Table8Basic[0].TGFAP40_49yrs));
+                    $('#TGFAP50yrs').html(format(Table8Basic[0].TGFAP50yrs));
+
+                    $('#TotalSCBPAP').html(format(Table8Basic[0].TotalSCBPAP));
+                    $('#TGMBPAP30_39yrs').html(format(Table8Basic[0].TGMBPAP30_39yrs));
+                    $('#TGMBPAP40_49yrs').html(format(Table8Basic[0].TGMBPAP40_49yrs));
+                    $('#TGMBPAP50yrs').html(format(Table8Basic[0].TGMBPAP50yrs));
+                    $('#TGFBPAP30_39yrs').html(format(Table8Basic[0].TGFBPAP30_39yrs));
+                    $('#TGFBPAP40_49yrs').html(format(Table8Basic[0].TGFBPAP40_49yrs));
+                    $('#TGFBPAP50yrs').html(format(Table8Basic[0].TGFBPAP50yrs));
+
+                    $('#TotalSCBSAP').html(format(Table8Basic[0].TotalSCBSAP));
+                    $('#TGMBSAP30_39yrs').html(format(Table8Basic[0].TGMBSAP30_39yrs));
+                    $('#TGMBSAP40_49yrs').html(format(Table8Basic[0].TGMBSAP40_49yrs));
+                    $('#TGMBSAP50yrs').html(format(Table8Basic[0].TGMBSAP50yrs));
+                    $('#TGFBSAP30_39yrs').html(format(Table8Basic[0].TGFBSAP30_39yrs));
+                    $('#TGFBSAP40_49yrs').html(format(Table8Basic[0].TGFBSAP40_49yrs));
+                    $('#TGFBSAP50yrs').html(format(Table8Basic[0].TGFBSAP50yrs));
+
+                    $('#TotalSCBPBSAP').html(format(Table8Basic[0].TotalSCBPBSAP));
+                    $('#TGMBPBSAP30_39yrs').html(format(Table8Basic[0].TGMBPBSAP30_39yrs));
+                    $('#TGMBPBSAP40_49yrs').html(format(Table8Basic[0].TGMBPBSAP40_49yrs));
+                    $('#TGMBPBSAP50yrs').html(format(Table8Basic[0].TGMBPBSAP50yrs));
+                    $('#TGFBPBSAP30_39yrs').html(format(Table8Basic[0].TGFBPBSAP30_39yrs));
+                    $('#TGFBPBSAP40_49yrs').html(format(Table8Basic[0].TGFBPBSAP40_49yrs));
+                    $('#TGFBPBSAP50yrs').html(format(Table8Basic[0].TGFBPBSAP50yrs));
+
+                    //First Timer patient
+                    $('#TotalSCFP').html(format(Table8Basic[0].TotalSCFP));
+                    $('#TGMFP30_39yrs').html(format(Table8Basic[0].TGMFP30_39yrs));
+                    $('#TGMFP40_49yrs').html(format(Table8Basic[0].TGMFP40_49yrs));
+                    $('#TGMFP50yrs').html(format(Table8Basic[0].TGMFP50yrs));
+                    $('#TGFFP30_39yrs').html(format(Table8Basic[0].TGFFP30_39yrs));
+                    $('#TGFFP40_49yrs').html(format(Table8Basic[0].TGFFP40_49yrs));
+                    $('#TGFFP50yrs').html(format(Table8Basic[0].TGFFP50yrs));
+
+                    $('#TotalSCBPFP').html(format(Table8Basic[0].TotalSCBPFP));
+                    $('#TGMBPFP30_39yrs').html(format(Table8Basic[0].TGMBPFP30_39yrs));
+                    $('#TGMBPFP40_49yrs').html(format(Table8Basic[0].TGMBPFP40_49yrs));
+                    $('#TGMBPFP50yrs').html(format(Table8Basic[0].TGMBPFP50yrs));
+                    $('#TGFBPFP30_39yrs').html(format(Table8Basic[0].TGFBPFP30_39yrs));
+                    $('#TGFBPFP40_49yrs').html(format(Table8Basic[0].TGFBPFP40_49yrs));
+                    $('#TGFBPFP50yrs').html(format(Table8Basic[0].TGFBPFP50yrs));
+
+                    $('#TotalSCBSFP').html(format(Table8Basic[0].TotalSCBSFP));
+                    $('#TGMBSFP30_39yrs').html(format(Table8Basic[0].TGMBSFP30_39yrs));
+                    $('#TGMBSFP40_49yrs').html(format(Table8Basic[0].TGMBSFP40_49yrs));
+                    $('#TGMBSFP50yrs').html(format(Table8Basic[0].TGMBSFP50yrs));
+                    $('#TGFBSFP30_39yrs').html(format(Table8Basic[0].TGFBSFP30_39yrs));
+                    $('#TGFBSFP40_49yrs').html(format(Table8Basic[0].TGFBSFP40_49yrs));
+                    $('#TGFBSFP50yrs').html(format(Table8Basic[0].TGFBSFP50yrs));
+
+                    $('#TotalSCBPBSFP').html(format(Table8Basic[0].TotalSCBPBSFP));
+                    $('#TGMBPBSFP30_39yrs').html(format(Table8Basic[0].TGMBPBSFP30_39yrs));
+                    $('#TGMBPBSFP40_49yrs').html(format(Table8Basic[0].TGMBPBSFP40_49yrs));
+                    $('#TGMBPBSFP50yrs').html(format(Table8Basic[0].TGMBPBSFP50yrs));
+                    $('#TGFBPBSFP30_39yrs').html(format(Table8Basic[0].TGFBPBSFP30_39yrs));
+                    $('#TGFBPBSFP40_49yrs').html(format(Table8Basic[0].TGFBPBSFP40_49yrs));
+                    $('#TGFBPBSFP50yrs').html(format(Table8Basic[0].TGFBPBSFP50yrs));
+
+                    //$('#TotalSCreen').html(format(Table8Basic[0].TotalSCreen));
+
+
+
+
+                    //$('#TotalNooofScreening').html(Table8Basic[0].TotalNooofScreening);
+                    //$('#TotalNoofSuspectBPYes').html(Table8Basic[0].TotalNoofSuspectBPYes);
+                    //$('#TotalNoofSuspectBSYes').html(Table8Basic[0].TotalNoofSuspectBSYes);
+                    //$('#ComBothTotalNoofSuspectBPBS').html(Table8Basic[0].ComBothTotalNoofSuspectBPBS);
+
+
+                    ////Follow-up - BP
+                    //$('#NotfupNoofMembersBPYes').html(Table8Basic[0].NotfupNoofMembersBPYes);
+                    //$('#TotalnooffupNCDMitraYesNoBP').html(Table8Basic[0].TotalnooffupNCDMitraYesNoBP);
+                    //$('#TotalnooffupNCDMitraYesBP').html(Table8Basic[0].TotalnooffupNCDMitraYesBP);
+                    //$('#TotalNotnooffupNCDMitraYesNotBP').html(Table8Basic[0].TotalNotnooffupNCDMitraYesNotBP);
+                    ////Follow-up - BS
+                    //$('#NotfupNotNoofMembersBSYes').html(Table8Basic[0].NotfupNotNoofMembersBSYes);
+                    //$('#TotalnoofNCDMitraBS').html(Table8Basic[0].TotalnoofNCDMitraBS);
+                    //$('#TotalnoofNCDMitraYesBS').html(Table8Basic[0].TotalnoofNCDMitraYesBS);
+                    //$('#TotalNotnoofNCDMitraYesNoBS').html(Table8Basic[0].TotalNotnoofNCDMitraYesNoBS);
+
+                    //$('#totalHdval').hide(); $('#totalHdval').removeClass('fw');
+                    //$('#TotalNooofScreeningHVal').html(''); $('#TotalNooofScreeningDVal').html('');
+                    //if ($('#TypeOfPatient').val() != '' && $('#TypeOfPatient').val() != '0' && $('#TypeOfPatient') != null) {
+                    //    $('#totalHdval').show(); $('#totalHdval').addClass('fw');
+                    //    $('#TotalNooofScreeningHVal').html(Table8Basic[0].TotalNooofScreeningHVal);
+                    //    $('#TotalNooofScreeningDVal').html(Table8Basic[0].TotalNooofScreeningDVal);
+                    //}
+                }
+            }
+            else {
+                toastr.error("Error", resp.Data);
+               // alert("Oops!! Something went Wrong..Please Try Again.");
+            }
+        }
+        function onerror(resp) {
+            $('#spinner').hide();
+            toastr.error("Error", resp.Data);//resp.Data
+            alert("Oops!! Something went Wrong..Please Try Again.");
+        }
+        function format(n) {
+            n = n.toString()
+            while (true) {
+                var n2 = n.replace(/(\d)(\d{3})($|,|\.)/g, '$1,$2$3')
+                if (n == n2) break
+                n = n2
+            }
+            return n
+        }
+        function BindBar(DivId, categories, dataS, dataSplinePresent, Title, Color, Color1) {
+            Highcharts.chart(DivId, {
+                chart: {
+                    height: 400,
+                    zooming: {
+                        type: 'xy',
+                        size: 200
+                    }
+                },
+                title: {
+                    text: '<b>' + Title + '</b>',
+                    align: 'left',
+                    style: {
+                        color: '#c57e31',
+                        font: 'bold 16px "Trebuchet MS", Verdana, sans-serif',
+                        textdecoration: 'underline',
+                    },
+                },
+                //subtitle: {
+                //    text: '',
+                //    align: 'left'
+                //},
+                credits: {
+                    enabled: false,
+                },
+                xAxis: [{
+                    categories: categories,
+                    crosshair: true,
+                    //labels: {
+                    //    //rotation: 10,
+                    //    //align: 'right',
+                    //   // step: 10,
+                    //    // enabled: true
+
+                    //},
+                    //tickColor: '#FF0000',
+                    //tickWidth: 3,
+                    style: {
+                        fontSize: '8px'
+                    },
+                }],
+                yAxis: [{ // Primary yAxis
+                    labels: {
+                        enabled: false,
+                        //format: '{value}°C',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        },
+                    },
+                    title: {
+                        enabled: false,
+                        //text: 'Temperature',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    }
+                }, { // Secondary yAxis
+                    title: {
+                        enabled: false,
+                        //text: 'Precipitation',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    labels: {
+                        enabled: false,
+                        //format: '{value} mm',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    opposite: true,
+                    gridLineColor: 'transparent',
+                }],
+                //yAxis: {
+                //    title: false
+                //},
+                //tooltip: {
+                //    shared: true
+                //},
+                tooltip: {
+                    formatter: function () {
+                        //return 'Place of visit : </ br>' + this.lblname +' : '+ this.y + ' ( ' + this.percentage + ' % )';
+                        return '' + this.lblname +' : '+ this.y + ' ( ' + this.percentage + ' % )';
+                    }
+                },
+                plotOptions: {
+
+                    series: {
+                        //dataLabels: {
+                        //    enabled: true
+                        //}
+                        dataLabels: {
+                            enabled: true,
+                            borderRadius: 5,
+                            backgroundColor: 'rgba(252, 255, 197, 0.7)',
+                            borderWidth: 1,
+                            borderColor: '#AAA',
+                            y: -6,
+                            formatter: function () {
+                                //debugger
+                                return  this.percentage + ' %';
+                            }
+                        }
+                    }
+                    //series: {
+                    //    dataLabels: {
+                    //        enabled: true,
+                    //        align: 'right',
+                    //        color: '#FFFFFF',
+                    //        x: -10
+                    //    },
+                    //    pointPadding: 0.2,
+                    //    groupPadding: 0
+                    //}
+                },
+                legend: {
+                    align: 'left',
+                    x: 80,
+                    verticalAlign: 'top',
+                    y: 60,
+                    floating: true,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || // theme
+                        'rgba(255,255,255,0.25)'
+                },
+                series: [{
+                    name: 'Place of visit',
+                    type: 'column',
+                    yAxis: 1,
+                    data: dataS,
+                    color: Color
+                    //tooltip: {
+                    //    valueSuffix: ' mm'
+                    //}
+
+                }
+                    //, {
+                    //name: 'Place of visit %',
+                    //type: 'spline',
+                    //data: dataSplinePresent,
+                    //color: Color1
+
+                    ////tooltip: {
+                    ////    valueSuffix: '°C'
+                    ////}
+                    //}
+                ]
+            });
+        }
+        Highcharts.setOptions({
+            lang: {
+                thousandsSep: ','
+            }
+        });
+        Highcharts.setOptions({
+            colors: ['#da5c2d', '#DDDF00', '#2f628a', '#24CBE5', '#914518', '#489631']
+            // colors: ['#489631', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+        });
+        function BindPie(DivId, categories, dataS, dataSplinePresent, Title, NM, GandTotal, colorarry) {
+            Highcharts.chart(DivId, {
+                chart: {
+                    type: 'pie'
+                },
+                title: {
+                    text: '<b>' + Title + '</b>',
+                    align: 'left',
+                    style: {
+                        color: '#c57e31',
+                        font: 'bold 16px "Trebuchet MS", Verdana, sans-serif',
+                        textdecoration: 'underline',
+                    },
+                },
+                subtitle: {
+                    text: '<b>' + GandTotal + '</b>',
+                    align: 'left',
+                    verticalAlign: 'bottom',
+                    style: {
+                        color: '#262a58',
+                        //font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+                    },
+                },
+                credits: {
+                    enabled: false,
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    },
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+
+                plotOptions: {
+                    pie: {
+                        size: 200
+                    },
+                    series: {
+                        borderRadius: 5,
+                        dataLabels: [{
+                            enabled: true,
+                            distance: 15,
+                            format: '{point.name}'
+                        }, {
+                            enabled: true,
+                            distance: '-30%',
+                            filter: {
+                                property: 'percentage',
+                                operator: '>',
+                                value: 5
+                            },
+                            format: '{point.y:.1f}%',
+                            style: {
+                                fontSize: '0.9em',
+                                textOutline: 'none'
+                            }
+                        }]
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
+                        '<b>{point.d} | {point.y:.2f}%</b> of total<br/>'
+                },
+
+                series: [
+                    {
+                        name: NM,
+                        colorByPoint: true,
+                        data: dataS,
+                        color: colorarry
+
+                    }
+                ],
+
+            });
+        }
+
+
+        $(document).ajaxSend(function () {
+            $('#spinner').show();
+        });
+
+        $(document).ajaxComplete(function () {
+            $('#spinner').hide();
+        });
+    </script>
+}

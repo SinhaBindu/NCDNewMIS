@@ -1047,6 +1047,52 @@ namespace NCDNewMIS.Models
                 return ds;
             }
         }
+        //1 Mar 2025 Started Add Stored Procedure
+        public static DataSet Sp_FollowupSuspectedSummaryNew(string BlockId, string StartDate, string EndDate, string TypeOfPatient, string GenderId, string Ageyrs)
+        {
+            //using (var context = new ApplicationDbContext())
+            //{
+            //    con = (SqlConnection)context.Database.Connection;
+            //    if (con.State == ConnectionState.Closed)
+            //    {
+            //        con.Open();
+            //    }
+            //    SqlCommand cmd = new SqlCommand();
+            //    SqlDataAdapter da = new SqlDataAdapter();
+            //    //StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummaryData");
+            //    cmd.Connection = con;
+            //    cmd.CommandType = CommandType.StoredProcedure;
+            //    cmd.CommandTimeout = 9000;
+            //    cmd.CommandText = "Usp_FollowupSuspectedSummaryData_New";
+            //    cmd.Parameters.AddWithValue("@BlockId", BlockId);
+            //    cmd.Parameters.AddWithValue("@StartDate", StartDate);
+            //    cmd.Parameters.AddWithValue("@EndDate", EndDate);
+            //    cmd.Parameters.AddWithValue("@TypeOfPatient", TypeOfPatient);
+            //    cmd.Parameters.AddWithValue("@GenderId", GenderId);
+            //    cmd.Parameters.AddWithValue("@Ageyrs", Ageyrs);
+            //    DataSet ds = new DataSet();
+            //    da.SelectCommand = cmd;
+            //    da.Fill(ds);
+            //    da.Dispose();
+            //    cmd.Dispose();
+            //    if (con.State == ConnectionState.Open)
+            //    {
+            //        con.Close();
+            //    }
+            //    return ds;
+            //}
+            StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummaryData_New");
+            sp.Command.AddParameter("BlockId", BlockId, DbType.String);
+            sp.Command.AddParameter("@StartDate", StartDate, DbType.String);
+            sp.Command.AddParameter("@EndDate", EndDate, DbType.String);
+            sp.Command.AddParameter("@TypeOfPatient", TypeOfPatient, DbType.String);
+            sp.Command.AddParameter("@GenderId", GenderId, DbType.String);
+            sp.Command.AddParameter("@Ageyrs",Ageyrs, DbType.String);
+            var dbCommand = sp.Command.ToDbCommand();
+            dbCommand.CommandTimeout = 9000;
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
         public static DataSet Sp_FollowupSuspectedSummaryInDownload(string StartDate, string EndDate)
         {
             using (var context = new ApplicationDbContext())

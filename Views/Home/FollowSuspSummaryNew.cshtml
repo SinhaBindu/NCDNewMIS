@@ -267,7 +267,7 @@
                             <tr>
                                 <td colspan="3" class="text-left">Total number of Co-morbidity suspect detected : <strong id="TotalSTBPBS"></strong></td>
                                 @*<td>First Timer Suspect : <strong id="TotalSTBPBSF"></strong></td>
-                                    <td>Already Patient : <strong id="TotalSTBPBSA"></strong></td>*@
+                            <td>Already Patient : <strong id="TotalSTBPBSA"></strong></td>*@
                             </tr>
                             <tr>
                                 <td colspan="3" class="text-capitalize text-center underline text-primary"><strong>Follow Up</strong></td>
@@ -286,10 +286,10 @@
                                 <td>Already Patient : <strong id="TotalfwBSA"></strong></td>
                             </tr>
                             @*<tr>
-                                    <td>Co-morbidity : <strong id=""></strong></td>
-                                    <td>First Timer Suspect : <strong id=""></strong></td>
-                                    <td>Already Patient : <strong id=""></strong></td>
-                                </tr>*@
+                            <td>Co-morbidity : <strong id=""></strong></td>
+                            <td>First Timer Suspect : <strong id=""></strong></td>
+                            <td>Already Patient : <strong id=""></strong></td>
+                        </tr>*@
                             <!--Visited Facility-->
                             <tr>
                                 <td>Total numbers of confirmed Hypertensive suspects after health facility visits : <strong id="TotalSTHYBPVisitHOP"></strong></td>
@@ -510,7 +510,8 @@
             </div>
 
             <br />
-            <!--Table Male & Female Data-->
+            <!--Table Male & Female Data Screening details-->
+            <h4 class="text-capitalize text-center">Screening Details</h4>
             <div class="row" style="overflow:auto;">
                 @*<div class="xl:w-1/1 lg:w-1/1 col-xxl-12 sm:w-1/1">*@
                 <div class="xl:w-1/3 md:w-1/2">
@@ -519,7 +520,7 @@
                         <table cellpadding="0" cellspacing="0" border="1" class="tablemf">
                             <tr><th colspan="8" class="text-center"><strong>Total</strong></th></tr>
                             <tr>
-                                <th rowspan="2" class="text-left">Screening setails</th>
+                                <th rowspan="2" class="text-left">Screening Details</th>
                                 <th rowspan="2" class="text-center">Total</th>
                                 <th colspan="3" class="text-center">Male</th>
                                 <th colspan="3" class="text-center">Female</th>
@@ -706,8 +707,206 @@
                 </div>
             </div>
 
+            <!--Table Male & Female Data Follow UP details-->
+            <h4 class="text-capitalize text-center">Follow Up Details</h4>
+            <div class="row" style="overflow:auto;">
+                @*<div class="xl:w-1/1 lg:w-1/1 col-xxl-12 sm:w-1/1">*@
+                <div class="xl:w-1/3 md:w-1/2">
+                    <div class="card text-black bg-primarycl">
+
+                        <table cellpadding="0" cellspacing="0" border="1" class="tablemf">
+                            <tr><th colspan="8" class="text-center"><strong>Total</strong></th></tr>
+                            <tr>
+                                <th rowspan="2" class="text-left">Follow Up Details</th>
+                                <th rowspan="2" class="text-center">Total</th>
+                                <th colspan="3" class="text-center">Male</th>
+                                <th colspan="3" class="text-center">Female</th>
+                            </tr>
+                            <tr>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of  Screening</td>
+                                <td id="FTotalSCreen"></td>
+                                <td id="FTGM30_39yrs"></td>
+                                <td id="FTGM40_49yrs"></td>
+                                <td id="FTGM50yrs"></td>
+                                <td id="FTGF30_39yrs"></td>
+                                <td id="FTGF40_49yrs"></td>
+                                <td id="FTGF50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Hypertension suspect</td>
+                                <td id="FTotalSCBP"></td>
+                                <td id="FTGMBP30_39yrs"></td>
+                                <td id="FTGMBP40_49yrs"></td>
+                                <td id="FTGMBP50yrs"></td>
+                                <td id="FTGFBP30_39yrs"></td>
+                                <td id="FTGFBP40_49yrs"></td>
+                                <td id="FTGFBP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Diabetic suspect</td>
+                                <td id="FTotalSCBS"></td>
+                                <td id="FTGMBS30_39yrs"></td>
+                                <td id="FTGMBS40_49yrs"></td>
+                                <td id="FTGMBS50yrs"></td>
+                                <td id="FTGFBS30_39yrs"></td>
+                                <td id="FTGFBS40_49yrs"></td>
+                                <td id="FTGFBS50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Comorbidity</td>
+                                <td id="FTotalSCBPBS"></td>
+                                <td id="FTGMBPBS30_39yrs"></td>
+                                <td id="FTGMBPBS40_49yrs"></td>
+                                <td id="FTGMBPBS50yrs"></td>
+                                <td id="FTGFBPBS30_39yrs"></td>
+                                <td id="FTGFBPBS40_49yrs"></td>
+                                <td id="FTGFBPBS50yrs"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <!--Table Already Patient Data-->
+                <div class="xl:w-1/3 md:w-1/2">
+                    <div class="card text-black bg-primarycl">
+
+                        <table cellpadding="0" cellspacing="0" border="1" class="tablemf">
+                            <tr><th colspan="8" class="text-center"><strong>Already Patient</strong></th></tr>
+                            <tr>
+                                <th rowspan="2" class="text-left">Screening setails</th>
+                                <th rowspan="2" class="text-center">Total</th>
+                                <th colspan="3" class="text-center">Male</th>
+                                <th colspan="3" class="text-center">Female</th>
+                            </tr>
+                            <tr>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of  Screening</td>
+                                <td id="FTotalSCAP"></td>
+                                <td id="FTGMAP30_39yrs"></td>
+                                <td id="FTGMAP40_49yrs"></td>
+                                <td id="FTGMAP50yrs"></td>
+                                <td id="FTGFAP30_39yrs"></td>
+                                <td id="FTGFAP40_49yrs"></td>
+                                <td id="FTGFAP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Hypertension suspect</td>
+                                <td id="FTotalSCBPAP"></td>
+                                <td id="FTGMBPAP30_39yrs"></td>
+                                <td id="FTGMBPAP40_49yrs"></td>
+                                <td id="FTGMBPAP50yrs"></td>
+                                <td id="FTGFBPAP30_39yrs"></td>
+                                <td id="FTGFBPAP40_49yrs"></td>
+                                <td id="FTGFBPAP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Diabetic suspect</td>
+                                <td id="FTotalSCBSAP"></td>
+                                <td id="FTGMBSAP30_39yrs"></td>
+                                <td id="FTGMBSAP40_49yrs"></td>
+                                <td id="FTGMBSAP50yrs"></td>
+                                <td id="FTGFBSAP30_39yrs"></td>
+                                <td id="FTGFBSAP40_49yrs"></td>
+                                <td id="FTGFBSAP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Comorbidity</td>
+                                <td id="FTotalSCBPBSAP"></td>
+                                <td id="FTGMBPBSAP30_39yrs"></td>
+                                <td id="FTGMBPBSAP40_49yrs"></td>
+                                <td id="FTGMBPBSAP50yrs"></td>
+                                <td id="FTGFBPBSAP30_39yrs"></td>
+                                <td id="FTGFBPBSAP40_49yrs"></td>
+                                <td id="FTGFBPBSAP50yrs"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <!--Table First Timer patient Data-->
+                <div class="xl:w-1/3 md:w-1/2">
+                    <div class="card text-black bg-primarycl">
+
+                        <table cellpadding="0" cellspacing="0" border="1" class="tablemf">
+                            <tr><th colspan="8" class="text-center"><strong>First Timer Patient</strong></th></tr>
+                            <tr>
+                                <th rowspan="2" class="text-left">Screening setails</th>
+                                <th rowspan="2" class="text-center">Total</th>
+                                <th colspan="3" class="text-center">Male</th>
+                                <th colspan="3" class="text-center">Female</th>
+                            </tr>
+                            <tr>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                                <th>30-39yrs</th>
+                                <th>40-49yrs</th>
+                                <th>>=50yrs</th>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of  Screening</td>
+                                <td id="FTotalSCFP"></td>
+                                <td id="FTGMFP30_39yrs"></td>
+                                <td id="FTGMFP40_49yrs"></td>
+                                <td id="FTGMFP50yrs"></td>
+                                <td id="FTGFFP30_39yrs"></td>
+                                <td id="FTGFFP40_49yrs"></td>
+                                <td id="FTGFFP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Hypertension suspect</td>
+                                <td id="FTotalSCBPFP"></td>
+                                <td id="FTGMBPFP30_39yrs"></td>
+                                <td id="FTGMBPFP40_49yrs"></td>
+                                <td id="FTGMBPFP50yrs"></td>
+                                <td id="FTGFBPFP30_39yrs"></td>
+                                <td id="FTGFBPFP40_49yrs"></td>
+                                <td id="FTGFBPFP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Total number of Diabetic suspect</td>
+                                <td id="FTotalSCBSFP"></td>
+                                <td id="FTGMBSFP30_39yrs"></td>
+                                <td id="FTGMBSFP40_49yrs"></td>
+                                <td id="FTGMBSFP50yrs"></td>
+                                <td id="FTGFBSFP30_39yrs"></td>
+                                <td id="FTGFBSFP40_49yrs"></td>
+                                <td id="FTGFBSFP50yrs"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Comorbidity</td>
+                                <td id="FTotalSCBPBSFP"></td>
+                                <td id="FTGMBPBSFP30_39yrs"></td>
+                                <td id="FTGMBPBSFP40_49yrs"></td>
+                                <td id="FTGMBPBSFP50yrs"></td>
+                                <td id="FTGFBPBSFP30_39yrs"></td>
+                                <td id="FTGFBPBSFP40_49yrs"></td>
+                                <td id="FTGFBPBSFP50yrs"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
 
         </div>
+
     </div>
 </div>
 
@@ -885,6 +1084,7 @@
                 var Table7 = (DataList.Table6);
 
                 var Table8Basic = (DataList.Table7);//Basic Total
+                var Table9FupBasic = (DataList.Table8);//Basic Total
 
                 if (Table1Total != null) {
                     $('#TotalSC').html(format(Table1Total[0].TotalSC));
@@ -1013,7 +1213,7 @@
                     BindPie('HYMedicationBSPie', categories, dataS, dataSplinePresent, 'Medication status: Diabetic suspects', 'Medication status', '<b> Total no. of Patients: ' + format(GandTotal) + '</b>');
                 }
 
-                //Basic Total
+                //Basic Total Screening Data
                 if (Table8Basic != null && Table8Basic != undefined) {
                     //TOTAL MALE && FEMALE AND AGE WISE DATA 30-39YRS,40-49YRS,>=50YRS
                     $('#TotalSCreen').html(format(Table8Basic[0].TotalSCreen));
@@ -1139,6 +1339,108 @@
                     //    $('#TotalNooofScreeningHVal').html(Table8Basic[0].TotalNooofScreeningHVal);
                     //    $('#TotalNooofScreeningDVal').html(Table8Basic[0].TotalNooofScreeningDVal);
                     //}
+                }
+
+                //Basic Total Screening Data
+                if (Table9FupBasic != null && Table9FupBasic != undefined) {
+                    //TOTAL MALE && FEMALE AND AGE WISE DATA 30-39YRS,40-49YRS,>=50YRS
+                    $('#FTotalSCreen').html(format(Table9FupBasic[0].FTotalSCreen));
+                    $('#FTGM30_39yrs').html(format(Table9FupBasic[0].FTGM30_39yrs));
+                    $('#FTGM40_49yrs').html(format(Table9FupBasic[0].FTGM40_49yrs));
+                    $('#FTGM50yrs').html(format(Table9FupBasic[0].FTGM50yrs));
+                    $('#FTGF30_39yrs').html(format(Table9FupBasic[0].FTGF30_39yrs));
+                    $('#FTGF40_49yrs').html(format(Table9FupBasic[0].FTGF40_49yrs));
+                    $('#FTGF50yrs').html(format(Table9FupBasic[0].FTGF50yrs));
+                    $('#FTotalSCBP').html(format(Table9FupBasic[0].FTotalSCBP));
+                    $('#FTGMBP30_39yrs').html(format(Table9FupBasic[0].FTGMBP30_39yrs));
+                    $('#FTGMBP40_49yrs').html(format(Table9FupBasic[0].FTGMBP40_49yrs));
+                    $('#FTGMBP50yrs').html(format(Table9FupBasic[0].FTGMBP50yrs));
+                    $('#FTGFBP30_39yrs').html(format(Table9FupBasic[0].FTGFBP30_39yrs));
+                    $('#FTGFBP40_49yrs').html(format(Table9FupBasic[0].FTGFBP40_49yrs));
+                    $('#FTGFBP50yrs').html(format(Table9FupBasic[0].FTGFBP50yrs));
+                    $('#FTotalSCBS').html(format(Table9FupBasic[0].FTotalSCBS));
+                    $('#FTGMBS30_39yrs').html(format(Table9FupBasic[0].FTGMBS30_39yrs));
+                    $('#FTGMBS40_49yrs').html(format(Table9FupBasic[0].FTGMBS40_49yrs));
+                    $('#FTGMBS50yrs').html(format(Table9FupBasic[0].FTGMBS50yrs));
+                    $('#FTGFBS30_39yrs').html(format(Table9FupBasic[0].FTGFBS30_39yrs));
+                    $('#FTGFBS40_49yrs').html(format(Table9FupBasic[0].FTGFBS40_49yrs));
+                    $('#FTGFBS50yrs').html(format(Table9FupBasic[0].FTGFBS50yrs));
+                    $('#FTotalSCBPBS').html(format(Table9FupBasic[0].FTotalSCBPBS));
+                    $('#FTGMBPBS30_39yrs').html(format(Table9FupBasic[0].FTGMBPBS30_39yrs));
+                    $('#FTGMBPBS40_49yrs').html(format(Table9FupBasic[0].FTGMBPBS40_49yrs));
+                    $('#FTGMBPBS50yrs').html(format(Table9FupBasic[0].FTGMBPBS50yrs));
+                    $('#FTGFBPBS30_39yrs').html(format(Table9FupBasic[0].FTGFBPBS30_39yrs));
+                    $('#FTGFBPBS40_49yrs').html(format(Table9FupBasic[0].FTGFBPBS40_49yrs));
+                    $('#FTGFBPBS50yrs').html(format(Table9FupBasic[0].FTGFBPBS50yrs));
+                    //Already Patient
+                    $('#FTotalSCAP').html(format(Table9FupBasic[0].FTotalSCAP));
+                    $('#FTGMAP30_39yrs').html(format(Table9FupBasic[0].FTGMAP30_39yrs));
+                    $('#FTGMAP40_49yrs').html(format(Table9FupBasic[0].FTGMAP40_49yrs));
+                    $('#FTGMAP50yrs').html(format(Table9FupBasic[0].FTGMAP50yrs));
+                    $('#FTGFAP30_39yrs').html(format(Table9FupBasic[0].FTGFAP30_39yrs));
+                    $('#FTGFAP40_49yrs').html(format(Table9FupBasic[0].FTGFAP40_49yrs));
+                    $('#FTGFAP50yrs').html(format(Table9FupBasic[0].FTGFAP50yrs));
+
+                    $('#FTotalSCBPAP').html(format(Table9FupBasic[0].FTotalSCBPAP));
+                    $('#FTGMBPAP30_39yrs').html(format(Table9FupBasic[0].FTGMBPAP30_39yrs));
+                    $('#FTGMBPAP40_49yrs').html(format(Table9FupBasic[0].FTGMBPAP40_49yrs));
+                    $('#FTGMBPAP50yrs').html(format(Table9FupBasic[0].FTGMBPAP50yrs));
+                    $('#FTGFBPAP30_39yrs').html(format(Table9FupBasic[0].FTGFBPAP30_39yrs));
+                    $('#FTGFBPAP40_49yrs').html(format(Table9FupBasic[0].FTGFBPAP40_49yrs));
+                    $('#FTGFBPAP50yrs').html(format(Table9FupBasic[0].FTGFBPAP50yrs));
+
+                    $('#FTotalSCBSAP').html(format(Table9FupBasic[0].FTotalSCBSAP));
+                    $('#FTGMBSAP30_39yrs').html(format(Table9FupBasic[0].FTGMBSAP30_39yrs));
+                    $('#FTGMBSAP40_49yrs').html(format(Table9FupBasic[0].FTGMBSAP40_49yrs));
+                    $('#FTGMBSAP50yrs').html(format(Table9FupBasic[0].FTGMBSAP50yrs));
+                    $('#FTGFBSAP30_39yrs').html(format(Table9FupBasic[0].FTGFBSAP30_39yrs));
+                    $('#FTGFBSAP40_49yrs').html(format(Table9FupBasic[0].FTGFBSAP40_49yrs));
+                    $('#FTGFBSAP50yrs').html(format(Table9FupBasic[0].FTGFBSAP50yrs));
+
+                    $('#TotalSCBPBSAP').html(format(Table9FupBasic[0].FTotalSCBPBSAP));
+                    $('#TGMBPBSAP30_39yrs').html(format(Table9FupBasic[0].FTGMBPBSAP30_39yrs));
+                    $('#TGMBPBSAP40_49yrs').html(format(Table9FupBasic[0].FTGMBPBSAP40_49yrs));
+                    $('#TGMBPBSAP50yrs').html(format(Table9FupBasic[0].FTGMBPBSAP50yrs));
+                    $('#TGFBPBSAP30_39yrs').html(format(Table9FupBasic[0].FTGFBPBSAP30_39yrs));
+                    $('#TGFBPBSAP40_49yrs').html(format(Table9FupBasic[0].FTGFBPBSAP40_49yrs));
+                    $('#TGFBPBSAP50yrs').html(format(Table9FupBasic[0].FTGFBPBSAP50yrs));
+
+                    //First Timer patient
+                    $('#FTotalSCFP').html(format(Table9FupBasic[0].FTotalSCFP));
+                    $('#FTGMFP30_39yrs').html(format(Table9FupBasic[0].FTGMFP30_39yrs));
+                    $('#FTGMFP40_49yrs').html(format(Table9FupBasic[0].FTGMFP40_49yrs));
+                    $('#FTGMFP50yrs').html(format(Table9FupBasic[0].FTGMFP50yrs));
+                    $('#FTGFFP30_39yrs').html(format(Table9FupBasic[0].FTGFFP30_39yrs));
+                    $('#FTGFFP40_49yrs').html(format(Table9FupBasic[0].FTGFFP40_49yrs));
+                    $('#FTGFFP50yrs').html(format(Table9FupBasic[0].FTGFFP50yrs));
+
+                    $('#FTotalSCBPFP').html(format(Table9FupBasic[0].FTotalSCBPFP));
+                    $('#FTGMBPFP30_39yrs').html(format(Table9FupBasic[0].FTGMBPFP30_39yrs));
+                    $('#FTGMBPFP40_49yrs').html(format(Table9FupBasic[0].FTGMBPFP40_49yrs));
+                    $('#FTGMBPFP50yrs').html(format(Table9FupBasic[0].FTGMBPFP50yrs));
+                    $('#FTGFBPFP30_39yrs').html(format(Table9FupBasic[0].FTGFBPFP30_39yrs));
+                    $('#FTGFBPFP40_49yrs').html(format(Table9FupBasic[0].FTGFBPFP40_49yrs));
+                    $('#FTGFBPFP50yrs').html(format(Table9FupBasic[0].FTGFBPFP50yrs));
+
+                    $('#FTotalSCBSFP').html(format(Table9FupBasic[0].FTotalSCBSFP));
+                    $('#FTGMBSFP30_39yrs').html(format(Table9FupBasic[0].FTGMBSFP30_39yrs));
+                    $('#FTGMBSFP40_49yrs').html(format(Table9FupBasic[0].FTGMBSFP40_49yrs));
+                    $('#FTGMBSFP50yrs').html(format(Table9FupBasic[0].FTGMBSFP50yrs));
+                    $('#FTGFBSFP30_39yrs').html(format(Table9FupBasic[0].FTGFBSFP30_39yrs));
+                    $('#FTGFBSFP40_49yrs').html(format(Table9FupBasic[0].FTGFBSFP40_49yrs));
+                    $('#FTGFBSFP50yrs').html(format(Table9FupBasic[0].FTGFBSFP50yrs));
+
+                    $('#FTotalSCBPBSFP').html(format(Table9FupBasic[0].FTotalSCBPBSFP));
+                    $('#FTGMBPBSFP30_39yrs').html(format(Table9FupBasic[0].FTGMBPBSFP30_39yrs));
+                    $('#FTGMBPBSFP40_49yrs').html(format(Table9FupBasic[0].FTGMBPBSFP40_49yrs));
+                    $('#FTGMBPBSFP50yrs').html(format(Table9FupBasic[0].FTGMBPBSFP50yrs));
+                    $('#FTGFBPBSFP30_39yrs').html(format(Table9FupBasic[0].FTGFBPBSFP30_39yrs));
+                    $('#FTGFBPBSFP40_49yrs').html(format(Table9FupBasic[0].FTGFBPBSFP40_49yrs));
+                    $('#FTGFBPBSFP50yrs').html(format(Table9FupBasic[0].FTGFBPBSFP50yrs));
+
+                    //$('#TotalSCreen').html(format(Table8Basic[0].TotalSCreen));
+
+
                 }
             }
             else {

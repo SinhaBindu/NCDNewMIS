@@ -285,6 +285,7 @@
                                 <td>First Timer Suspect : <strong id="TotalfwBSF"></strong></td>
                                 <td>Already Patient : <strong id="TotalfwBSA"></strong></td>
                             </tr>
+                            <tr><td colspan="3" class="text-capitalize text-center underline text-primary"><strong> Hypertensive & Diabetic Suspects after health facility visits</strong></td></tr>
                             @*<tr>
                             <td>Co-morbidity : <strong id=""></strong></td>
                             <td>First Timer Suspect : <strong id=""></strong></td>
@@ -298,8 +299,8 @@
                             </tr>
                             <tr>
                                 <td>Total numbers of confirmed Diabetic patients after health facility : <strong id="TotalSTBSVisitHOP"></strong></td>
-                                <td>First Timer Suspect : <strong id="TotalSTHYBSVisitHOPF"></strong></td>
-                                <td>Already Patient : <strong id="TotalSTHYBSVisitHOPA"></strong></td>
+                                <td>First Timer Suspect : <strong id="TotalSTBSVisitHOPF"></strong></td>
+                                <td>Already Patient : <strong id="TotalSTBSVisitHOPA"></strong></td>
                             </tr>
                             <tr>
                                 <td colspan="3" class="text-left">Total number of Co-morbidity suspect detected : <strong id="TotalSTBPBSHOP"></strong></td>
@@ -511,7 +512,7 @@
 
             <br />
             <!--Table Male & Female Data Screening details-->
-            <h4 class="text-capitalize text-center">Screening Details</h4>
+            <h4 class="text-capitalize text-center text-decoration-underline">Screening Details</h4>
             <div class="row" style="overflow:auto;">
                 @*<div class="xl:w-1/1 lg:w-1/1 col-xxl-12 sm:w-1/1">*@
                 <div class="xl:w-1/3 md:w-1/2">
@@ -708,7 +709,7 @@
             </div>
 
             <!--Table Male & Female Data Follow UP details-->
-            <h4 class="text-capitalize text-center">Follow Up Details</h4>
+            <h4 class="text-capitalize text-center text-decoration-underline">Follow Up Details</h4>
             <div class="row" style="overflow:auto;">
                 @*<div class="xl:w-1/1 lg:w-1/1 col-xxl-12 sm:w-1/1">*@
                 <div class="xl:w-1/3 md:w-1/2">
@@ -1397,13 +1398,13 @@
                     $('#FTGFBSAP40_49yrs').html(format(Table9FupBasic[0].FTGFBSAP40_49yrs));
                     $('#FTGFBSAP50yrs').html(format(Table9FupBasic[0].FTGFBSAP50yrs));
 
-                    $('#TotalSCBPBSAP').html(format(Table9FupBasic[0].FTotalSCBPBSAP));
-                    $('#TGMBPBSAP30_39yrs').html(format(Table9FupBasic[0].FTGMBPBSAP30_39yrs));
-                    $('#TGMBPBSAP40_49yrs').html(format(Table9FupBasic[0].FTGMBPBSAP40_49yrs));
-                    $('#TGMBPBSAP50yrs').html(format(Table9FupBasic[0].FTGMBPBSAP50yrs));
-                    $('#TGFBPBSAP30_39yrs').html(format(Table9FupBasic[0].FTGFBPBSAP30_39yrs));
-                    $('#TGFBPBSAP40_49yrs').html(format(Table9FupBasic[0].FTGFBPBSAP40_49yrs));
-                    $('#TGFBPBSAP50yrs').html(format(Table9FupBasic[0].FTGFBPBSAP50yrs));
+                    $('#FTotalSCBPBSAP').html(format(Table9FupBasic[0].FTotalSCBPBSAP));
+                    $('#FTGMBPBSAP30_39yrs').html(format(Table9FupBasic[0].FTGMBPBSAP30_39yrs));
+                    $('#FTGMBPBSAP40_49yrs').html(format(Table9FupBasic[0].FTGMBPBSAP40_49yrs));
+                    $('#FTGMBPBSAP50yrs').html(format(Table9FupBasic[0].FTGMBPBSAP50yrs));
+                    $('#FTGFBPBSAP30_39yrs').html(format(Table9FupBasic[0].FTGFBPBSAP30_39yrs));
+                    $('#FTGFBPBSAP40_49yrs').html(format(Table9FupBasic[0].FTGFBPBSAP40_49yrs));
+                    $('#FTGFBPBSAP50yrs').html(format(Table9FupBasic[0].FTGFBPBSAP50yrs));
 
                     //First Timer patient
                     $('#FTotalSCFP').html(format(Table9FupBasic[0].FTotalSCFP));
@@ -1454,11 +1455,13 @@
             alert("Oops!! Something went Wrong..Please Try Again.");
         }
         function format(n) {
-            n = n.toString()
-            while (true) {
-                var n2 = n.replace(/(\d)(\d{3})($|,|\.)/g, '$1,$2$3')
-                if (n == n2) break
-                n = n2
+            if (n) {
+                n = n.toString()
+                while (true) {
+                    var n2 = n.replace(/(\d)(\d{3})($|,|\.)/g, '$1,$2$3')
+                    if (n == n2) break
+                    n = n2
+                }
             }
             return n
         }

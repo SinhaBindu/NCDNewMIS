@@ -1570,5 +1570,39 @@ namespace NCDNewMIS.Controllers
             }
         }
 
+        public ActionResult FollowSuspSummaryNew2()
+        {
+            return View();
+        }
+        public ActionResult GetFollowupSummmaryNew2(string BlockId, string StartDate, string EndDate, string TypeOfPatient, string GenderId, string Ageyrs)
+        {
+            DataSet ds = new DataSet();
+            DataTable tbllist = new DataTable();
+            try
+            {
+                ds = SP_Model.Sp_FollowupSuspectedSummaryNew2(BlockId, StartDate, EndDate, TypeOfPatient, GenderId, Ageyrs);
+                bool IsCheck = false;
+                if (ds.Tables.Count > 0)
+                {
+                    IsCheck = true;
+                    var resData = JsonConvert.SerializeObject(ds);
+                    var res1 = Json(new { IsSuccess = IsCheck, Data = resData }, JsonRequestBehavior.AllowGet);
+                    res1.MaxJsonLength = int.MaxValue;
+                    return res1;
+                }
+                else
+                {
+                    var res = Json(new { IsSuccess = IsCheck, Data = "Record Not Found !!" }, JsonRequestBehavior.AllowGet);
+                    res.MaxJsonLength = int.MaxValue;
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "There are communication error." }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+
     }
 }

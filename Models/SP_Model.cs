@@ -1093,6 +1093,23 @@ namespace NCDNewMIS.Models
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
+
+        public static DataSet Sp_FollowupSuspectedSummaryNew2(string BlockId, string StartDate, string EndDate, string TypeOfPatient, string GenderId, string Ageyrs)
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_FollowupSuspectedSummaryData_New_Test");
+            sp.Command.AddParameter("BlockId", BlockId, DbType.String);
+            sp.Command.AddParameter("@StartDate", StartDate, DbType.String);
+            sp.Command.AddParameter("@EndDate", EndDate, DbType.String);
+            sp.Command.AddParameter("@TypeOfPatient", TypeOfPatient, DbType.String);
+            sp.Command.AddParameter("@GenderId", GenderId, DbType.String);
+            sp.Command.AddParameter("@Ageyrs", Ageyrs, DbType.String);
+            var dbCommand = sp.Command.ToDbCommand();
+            dbCommand.CommandTimeout = 9000;
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
+
+
         public static DataSet Sp_FollowupSuspectedSummaryInDownload(string StartDate, string EndDate)
         {
             using (var context = new ApplicationDbContext())

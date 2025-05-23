@@ -866,6 +866,7 @@
     <Content Include="Views\Home\_RawFollowupVisitSuspData.cshtml" />
     <Content Include="Views\Home\RawFollowupVisitData.cshtml" />
     <Content Include="Views\Home\FollowSuspSummaryNew.cshtml" />
+    <Content Include="Views\Home\FollowSuspSummaryNew2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
